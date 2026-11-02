@@ -2,28 +2,20 @@
 
 _Updated after every work session: what changed, what is unresolved, and what the author must decide next._
 
-## 2026-11-02 (Proofreading & GUI Screenshots): Full book proofread, 11 GUI screenshots added, rebuilt, and deployed (27 sections, 30 figures, 206 PDF pages)
+## 2026-11-02 (Student Practice Workflow & Mandatory Assignment): Raw `.zip` packages, 1-page Mandatory Assignment (due Nov 16), and MCP grading rubric deployed
 
 **Done**
-- Detailed section outlines for **Part 5: The Part of Tens (Chapters 19–21)** and **Back Matter: Appendices A–E** added to `OUTLINE.md`.
-- Drafted and verified Chapters 19–21 and Appendices A–E in `src/content/chapters/`:
-  - `ch19-ten-mistakes-that-break-your-data-trail.mdx`
-  - `ch20-ten-checks-before-you-sign-or-submit.mdx`
-  - `ch21-ten-things-an-agent-can-and-cannot-do.mdx`
-  - `appendix-a-icons-reference.mdx`
-  - `appendix-b-instrument-viewers-and-file-formats.mdx`
-  - `appendix-c-value-sources-units-and-formulas.mdx`
-  - `appendix-d-keyboard-shortcuts.mdx`
-  - `appendix-e-glossary.mdx`
+- Packaged `public/data/Study-A-261015A-raw.zip` (11 raw files + `checksums.md5`) and `public/data/Study-B-261014B-raw.zip` (7 raw files + `checksums.md5`, excluding `XRR-fit_Co-C(261014B).xrcx` so students fit the `.xrdml` scan via `XRC_MCP`).
+- Created 1-page **Mandatory ELN Practice Assignment** (`src/pages/assignment.mdx` at `/MasteringELN/assignment/` and standalone 1-page printable `public/ELN-Mandatory-Assignment.pdf`) with **Deadline: November 16, 2026** and starting instructions.
+- Updated `src/pages/index.astro`, `introduction.mdx`, `ch4-your-first-complete-sample-record.mdx`, `ch17-study-b-xrr-fitting-with-provenance.mdx`, and `OUTLINE.md` with the `Practice` group (`Study A Practice` + `Study B Practice`) student workflow.
+- Added `STUDENT-GRADING.md` specifying the MCP verification sequence and per-student report template.
 - Verified across all gates:
   - Vitest: 8 test files, 73 tests passed;
   - pytest: 43 tests passed;
-  - Playwright e2e: 8 tests passed;
-  - `check:links`: 29 pages, 1,243 internal links, 0 literal `$$`, 0 e-notation;
+  - `check:links`: 30 pages, 1,257 internal links, 0 literal `$$`, 0 e-notation;
   - `check:markers`: 0 markers left;
-  - Print PDF (`pdf-build/Mastering-ELN.pdf`, 206 pages, 27 sections, 30 figures [19 SVG + 11 GUI screenshots], 166 Contents links, 703 internal PDF links): all 23 `verify_pdf.py` checks passed with 0 skips and 0 failures.
-- Completed full-book proofreading pass across `introduction.mdx`, `ch1`–`ch21`, `appendix-a`–`appendix-e`, and `OUTLINE.md` against `STYLE.md`, `NOTATION.md`, `proofreading`, and `no-ai-slop` rules, and captured/embedded 11 live GUI screenshots (`fig-3-2`, `fig-4-2`, `fig-7-2`–`fig-7-6`, `fig-9-2`, `fig-10-2`, `fig-12-2`, `fig-17-2`) from `ELNCommunity.exe` on Study A (`261015A`) and Study B (`261014B`).
-
+  - Print PDF (`pdf-build/Mastering-ELN.pdf`, 207 pages, 27 sections, 30 figures [19 SVG + 11 GUI screenshots], 166 Contents links, 704 internal PDF links): all 23 `verify_pdf.py` checks passed with 0 skips and 0 failures.
+  - Deployed updated site, `.zip` bundles, `Mastering-ELN.pdf`, and `ELN-Mandatory-Assignment.pdf` to `Z:\MasteringELN\`.
 **Chapter status**
 
 | Part | Chapters | Status |

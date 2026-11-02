@@ -1,10 +1,12 @@
 ---
-/** Layout for src/pages/sampler.mdx only: the chapter look, without the nav. */
+/** Layout for standalone non-chapter pages (sampler.mdx, assignment.mdx). */
 import 'katex/dist/katex.min.css';
 import '../styles/textbook.css';
 import { BOOK_TITLE } from '../lib/site.mjs';
 import FigureZoom from '../components/textbook/FigureZoom.astro';
 const { frontmatter } = Astro.props;
+const eyebrow = frontmatter.eyebrow ?? 'Not part of the book';
+const base = import.meta.env.BASE_URL;
 ---
 <html lang="en">
   <head>
@@ -14,8 +16,17 @@ const { frontmatter } = Astro.props;
     <title>{frontmatter.title} | {BOOK_TITLE}</title>
   </head>
   <body>
+    {frontmatter.showTopbar && (
+      <div class="topbar">
+        <span class="app-title">{BOOK_TITLE}</span>
+        <span class="sep">|</span>
+        <a href={`${base}/`}>Home</a>
+        <span class="sep">/</span>
+        <span class="crumb">{frontmatter.title}</span>
+      </div>
+    )}
     <main class="chapter">
-      <header><p class="eyebrow">Not part of the book</p><h1>{frontmatter.title}</h1></header>
+      <header><p class="eyebrow">{eyebrow}</p><h1>{frontmatter.title}</h1></header>
       <article><slot /></article>
     </main>
     <FigureZoom />

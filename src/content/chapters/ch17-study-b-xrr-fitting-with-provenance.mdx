@@ -14,6 +14,7 @@ import Remember from '../../components/textbook/Remember.astro';
 import Warning from '../../components/textbook/Warning.astro';
 import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
 import InELN from '../../components/textbook/InELN.astro';
+import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
@@ -47,6 +48,12 @@ In Part 1 of Study B (`record_agent.md`), the Inbox (`--upload-root`) holds 7 ra
 5. **Run the three audit checks:** Calls `check_value_drift` (`18 checked, 18 unchanged`), `check_storage` (`7 ok`), and `report_value_issues` (`count: 0`).
 
 <Remember>Three domain facts in Study B show why you should always extract from `.depo.json` with `is_key: true` rather than guessing from logs. First, `timeCo` ($42\,\text{s}$) and `timeC` ($108\,\text{s}$) are sputtering times rather than layer thicknesses. Second, the `Mean.*` keys in `.depo.json` average over the entire run window including pump-down, so they are not deposition setpoints. Third, the `.tsv` units header labels current columns as `A` when the numbers are in `mA`. Attach the `.tsv` for time-series plots, and extract values only from `.depo.json`.</Remember>
+
+<InTeamLab title="practicing Study B in your Practice group on the laboratory server">
+
+When you complete Study B for your laboratory practice assignment, first create the project `Study B Practice` inside your personal `Practice` group in the Desktop window (**Project > New Group** -> `Practice`, then right-click `Practice` -> **New Project...** -> `Study B Practice`). Unpack the 7 raw files from `Study-B-261014B-raw.zip` into your `--upload-root` folder. Then instruct your AI agent (`ELNMCPServer.exe` and `XRC_MCP.exe`) to use your existing `Study B Practice` project, build folder `261014B` and the four items of Part 1, fit `XRR-1_Co-C(261014B).xrdml` in `XRC_MCP.exe` (Part 2), and upload the accepted `.xrcx` file and its 4 `Reader` values under `XRR fit 261014B`.
+
+</InTeamLab>
 
 ## Part 2: Fitting Agent records `XRR fit 261014B`
 
