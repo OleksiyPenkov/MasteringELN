@@ -1,0 +1,90 @@
+---
+title: Reading Data and Auditing Drift via MCP
+part: '4'
+number: '16'
+order: 160
+inThisChapter:
+  - Browsing projects, items, and values with structured MCP read tools
+  - 'Running hybrid Semantic Search (search_semantic) with numeric value filters'
+  - Inspecting long time-series logs with list_file_columns and get_file_columns
+  - 'Auditing an entire project with check_storage, check_value_drift, and report_value_issues'
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+The safest and fastest way to start using an AI assistant with APS ELN (<a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 15: What the ELN MCP server does</a>) is through its read-only inspection and audit tools. In a single prompt, an agent can list all specimens in a folder, filter semantic search hits by numeric value ranges, summarize a 10,000-row sputtering log, and verify that every file and value across an entire project has zero storage or reader drift (<a href="#fig-16-1">Figure 16-1</a>).
+
+## Navigating and querying values
+
+When you ask an AI assistant a question about your notebook, it uses seven structured read tools to navigate the hierarchy and inspect values (<a href="#table-16-1">Table 16-1</a>):
+
+- **`list_projects` and `list_folders`:** return your readable projects (with item counts, owner, and dates) and the folder tree (`folder_id` and parent references) inside a project.
+- **`list_items` and `get_item`:** `list_items` filters a project by `folder_id`, `item_type` (`Synthesis`, `Specimen`, `Measurement`, `Testing`), or `level` (`Proc`, `Item`, `Action`). `get_item` returns one item's full details: its children, attached files (with `file_id`, `extension`, and MD5 `hash`), recorded values, note/protocol entries, and tags.
+- **`get_values` and `query_values`:** `get_values` returns all values on one item grouped into experimental conditions (`EXP_CONDITION`) and test results (`TEST_RESULT`), along with `ancestor_ids` (from the root procedure down to the direct parent) and each value's `source` object (`Reader`, `Derived`, `Manual`, or `Unknown`). `query_values` searches values across a project by `value_type` (title or symbol), `rec_type`, and item creation date (`date_from`, `date_to`).
+- **`correlate_values`:** pairs condition values and result values across items in a project (the MCP counterpart of **Tools > Analysis...** in <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13: Plotting conditions against results</a>).
+
+## Searching by text and meaning (`search` and `search_semantic`)
+
+The MCP server exposes both search engines from <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#three-ways-to-find-a-record-in-aps-eln`}>Chapter 12: Three ways to find a record in APS ELN</a>:
+
+- **`search`:** runs full-text search across items, protocols, files, values, and tags (with optional `project_id`). Every file match returns its `file_id`, `full_name` (preserving compound extensions such as `.depo.json` and `.process.log`), and `extension`.
+- **`search_semantic`:** runs hybrid semantic search (`query`, optional `top_k` from 1 to 50, and optional `project_id`) over record fields and attachment text (PDF, Office, Markdown, HTML, JSON, XML, CSV, RTF, and text) and sorts the top 20 item groups with the cross-encoder reranker when installed (`reranked: true`).
+
+Unlike the Desktop Search dialog (which offers only project, item type, and creation date filters), `search_semantic` in MCP also accepts **structured numeric value filters** before ranking:
+
+- **`folder_id`, `item_types`, `levels`, and `action_type_id`:** restrict the search to a specific folder subtree, item types (such as `["Measurement", "Testing"]`), levels (`["Proc", "Item", "Action"]`), or action type.
+- **`date_field`, `date_from`, and `date_to`:** filter by `created` (default) or `modified` ISO 8601 dates.
+- **`values`:** an array of numeric range filters, where each entry specifies `value_type` (symbol or title), `rec_type` (`EXP_CONDITION` or `TEST_RESULT`), `min`, `max`, and `requested_unit` (for example, finding all coatings related to *low friction in humid air* whose `Hardness` is between `5` and `10` `GPa`). The server converts `min` and `max` into the stored unit of the value type and echoes the converted limits in `filters_applied`.
+
+<Remember>If `search_semantic` is called on a large notebook while the indexer is still reading newly attached PDFs, the response includes `"index": {"complete": false, "pending_passages": ..., "files_pending": ...}`. Simply call `search_semantic` again after a moment to let the background index catch up.</Remember>
+
+## Reading tabular instrument logs (`list_file_columns` and `get_file_columns`)
+
+Sputtering logs (`.tsv`, `.log`) and tribometer curves often contain tens of thousands of time-series rows. Dumping an entire 8 MB `.tsv` file into an AI prompt would overflow the model's context window. Instead, APS ELN provides a two-step columnar tool pair:
+
+1. **Discover the columns (`list_file_columns`):** Pass `file_id`. The server uses the file's viewer plugin to return `total_rows`, `time_span`, and the list of columns (`index`, `name`, `units`, and `dtype`).
+2. **Fetch summary statistics or downsampled series (`get_file_columns`):** Pass `file_id`, the `columns` you want (by index or unambiguous name), and one of three modes:
+   - `mode: "stats"`: returns the count, minimum, maximum, mean, and standard deviation of each requested column.
+   - `mode: "downsample"` (the default): bins the series into `max_rows` (default `500`) min/max buckets so the agent sees every spike and drop in at most 1,000 points.
+   - `mode: "raw"`: returns unbinned rows, optionally sliced to `row_range: [start, end]`.
+
+<Tip>Always ask your agent to call `list_file_columns` and `get_file_columns` with `mode: "stats"` or `"downsample"` first, and only request `mode: "raw"` over a narrow `row_range` when inspecting a specific event such as an arc or pressure spike.</Tip>
+
+## Running the three project-wide health checks
+
+The most powerful read-only workflow in Part 4 is running all three integrity checks across a project or item subtree in one pass (<a href="#fig-16-1">Figure 16-1</a> and <a href="#table-16-1">Table 16-1</a>):
+
+1. **`check_storage`:** give `project_id`, `item_id` (which checks the item and all of its descendants), or `file_ids`. The server checks that every attachment's physical file exists in storage and computes its MD5 hash against the hash recorded at upload time, returning counts of `ok`, `missing`, `content_mismatch`, `no_hash`, and `error`.
+2. **`check_value_drift`:** give `project_id` or `item_id`. The server re-runs the current reader plugin on the source file of every `Reader` value (replaying any saved `.fibps` pixel regions or `.zrw` cycle interval from `analysis_snapshot`) and recalculates every `Derived` value recursively from its inputs (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Table 9-1</a>). In Study A (`261015A`), it returns `{"checked": 24, "unchanged": 24, "drifted": []}`; in Study B (`261014B`), it returns `{"checked": 22, "unchanged": 22, "drifted": []}`.
+3. **`report_value_issues`:** give `project_id` or `item_id`. Scans all stored values against their value type's plausible range and tolerance factor ($1000\times$), flagging `below_range`, `above_range`, `tolerance_exceeds_value`, and `tolerance_scale_mismatch`.
+
+<Figure id="fig-16-1" number="16-1" src={`${import.meta.env.BASE_URL}/figures/fig-16-1-mcp-audit-pipeline.svg`} alt="Three side-by-side audit cards: 1. check_storage (verifying file bytes and MD5 hashes), 2. check_value_drift (re-running readers and Derived formulas), and 3. report_value_issues (checking plausible ranges and 1000x tolerance factor)" caption="The three read-only MCP audit tools. Running check_storage (1), check_value_drift (2), and report_value_issues (3) verifies every file hash, reader extraction, derived formula, and unit range in a project." />
+
+<p id="table-16-1" class="table-caption"><strong>Table 16-1:</strong> Read-only MCP inspection and audit tools.</p>
+
+<DataTable
+  headers={['MCP tool', 'Key arguments', 'What it returns']}
+  rows={[
+    ['`get_item` / `get_values`', '`item_id`', 'Item metadata, children, files, and values with `ancestor_ids` and full `source` provenance.'],
+    ['`search_semantic`', '`query`, `project_id`, `folder_id`, `item_types`, `values`', 'Hybrid semantic + keyword matches across records and document text, with pre-filters and top-20 `reranked` order.'],
+    ['`list_file_columns` / `get_file_columns`', '`file_id`, `columns`, `mode` (`stats`, `downsample`, `raw`)', 'Column metadata and summary stats or min/max-binned series from tabular logs (`.tsv`, `.log`, `.dat`).'],
+    ['`check_storage`', '`project_id`, `item_id`, or `file_ids`', 'MD5 and presence check for stored attachments (`ok`, `missing`, `content_mismatch`, `no_hash`, `error`).'],
+    ['`check_value_drift`', '`project_id` or `item_id`', 'Re-runs readers and `Derived` formulas; returns `checked`, `unchanged`, and any `drifted` rows with status codes.'],
+    ['`report_value_issues`', '`project_id` or `item_id`', 'Lists stored values failing `below_range`, `above_range`, `tolerance_exceeds_value`, or `tolerance_scale_mismatch`.'],
+  ]}
+/>
+
+<Warning title="scope check_value_drift and check_storage to item_id in legacy projects">If you add a new sample to an older project that contains historical records from before file hashes or reader tracking were enforced, running `check_value_drift` or `check_storage` on the whole `project_id` will report those old items alongside your new work. Pass `item_id` (your new root **Procedure** or **Action**) to verify your new subtree cleanly.</Warning>
+
+## Sources
+
+- **APS ELN Community Help:** `MCP.html` (`search_semantic` indexing and filters `folder_id`, `item_types`, `levels`, `action_type_id`, `date_field`, `date_from`, `date_to`, and `values` with `requested_unit` and `filters_applied`, `list_file_columns` and `get_file_columns` modes `stats`, `downsample`, and `raw`, `get_values` and `query_values` with `ancestor_ids`, and `check_value_drift`, `check_storage`, and `report_value_issues`).
+- **APS ELN Commercial ("For Teams") Help:** `AIIntegration.html` (navigation, value, file, metadata, and check tools).
+- **Zenodo demonstration deposit (`doi:10.5281/zenodo.23466959`):** `tribo_study/reports/record_report.md` and `xrr_study/reports/record_report.md` (verbatim outputs of `check_value_drift`, `check_storage`, and `report_value_issues`, and why Part 3 of Study B scopes `check_value_drift` and `check_storage` to `item_id = 12`).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Checking value sources and understanding drift codes</a>; <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#searching-by-meaning-semantic-search-and-reranking`}>Chapter 12: Searching by meaning and reranking</a>; <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13: Plotting conditions against results</a>; <a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 15: Connecting an AI Agent to Your Notebook</a>; <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17: Study B: XRR Fitting with Provenance</a>.

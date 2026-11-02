@@ -1,0 +1,22 @@
+<svg viewBox="0 0 600 255" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="12" width="274" height="230" rx="6" fill="#dbe5fb" stroke="#1a5276" stroke-width="1.8"/>
+  <text x="24" y="38" font-size="15" font-weight="700" fill="#1a5276">Part 1: Record Agent (ELN MCP)</text>
+  <text x="24" y="68" font-size="14" fill="#222">1. Create Proc Deposition 261014B</text>
+  <text x="24" y="94" font-size="14" fill="#222">2. Create Cleaning, Specimen, XRR-1</text>
+  <text x="24" y="120" font-size="14" fill="#222">3. upload_file (7 raw files in Inbox)</text>
+  <text x="24" y="146" font-size="14" fill="#222">4. extract_file_key_values (.depo.json)</text>
+  <text x="24" y="172" font-size="14" fill="#222">5. add_values (14 + 4 Reader values)</text>
+  <text x="24" y="212" font-size="14" font-weight="600" fill="#00695c">18 Reader values · 0 drifted</text>
+
+  <line x1="284" y1="127" x2="314" y2="127" stroke="#00695c" stroke-width="2.5"/>
+  <polygon points="314,127 306,122 306,132" fill="#00695c"/>
+
+  <rect x="316" y="12" width="274" height="230" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.8"/>
+  <text x="330" y="38" font-size="15" font-weight="700" fill="#00695c">Part 2: Fitting Agent (XRC + ELN)</text>
+  <text x="330" y="68" font-size="14" fill="#222">1. download_file (.xrdml) -&gt; XRC_MCP</text>
+  <text x="330" y="94" font-size="14" fill="#222">2. fit_xrr + check_acceptance (v5.6)</text>
+  <text x="330" y="120" font-size="14" fill="#222">3. save_project (curves.job_id, FITRESULT)</text>
+  <text x="330" y="146" font-size="14" fill="#222">4. Create Action XRR fit + upload .xrcx</text>
+  <text x="330" y="172" font-size="14" fill="#222">5. extract + add_values (aps.xrcx v2)</text>
+  <text x="330" y="212" font-size="14" font-weight="600" fill="#1a5276">Period, Co H, C H, Chi2 = 0.943</text>
+</svg>

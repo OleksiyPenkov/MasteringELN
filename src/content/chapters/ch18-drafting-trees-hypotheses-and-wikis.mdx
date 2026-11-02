@@ -1,0 +1,118 @@
+---
+title: Drafting Trees, Hypotheses, and Wikis
+part: '4'
+number: '18'
+order: 180
+inThisChapter:
+  - 'Passing viewer selections (selection) and analysis_snapshot in Study A (261015A)'
+  - 'Computing Derived values (add_derived_value) and editing values safely via MCP'
+  - 'Drafting and updating Project Wiki pages (wiki_create_page, wiki_update_page)'
+  - Proposing hypotheses and citing evidence via MCP while keeping approvals in the GUI
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+In <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17</a>, every extracted value in Study B (`261014B`) came directly from a file's default reader output. What if an agent needs to extract a step height from specific pixel rectangles on a `.fibps` map, compute a `Derived` wear rate from three wear-track scans, update a value after a reader upgrade, draft a five-section Project Wiki page, or prepare a hypothesis with cited evidence? This chapter covers the MCP write tools for all four tasks and explains where the agent stops so the human scientist takes over (<a href="#fig-18-1">Figure 18-1</a>).
+
+## Passing viewer selections and Derived inputs
+
+When the Record Agent built **Study A (`261015A`)** through `ELNCommunityMCP.exe` (`tribo_study/reports/record_report.md`), it had to handle two things beyond plain key extraction: viewer evaluation selections and multi-input `Derived` formulas.
+
+First, on `Thickness 261015A` (`Item 3`), scan `3.fibps` had a clean automatic step, while `1.fibps` and `2.fibps` needed the standard left and right pixel rectangles (`rect_a` and `rect_b` on the $556 \times 484$ pixel map). In MCP, `extract_file_key_values` accepts an optional `selection` JSON object for that call:
+
+```json
+{
+  "file_id": 6,
+  "selection": {
+    "rect_a": [69, 80, 208, 403],
+    "rect_b": [347, 80, 486, 403],
+    "pix_w": 556,
+    "pix_h": 484
+  }
+}
+```
+
+When `selection` is passed, `aps.fibps` (version 3) computes `Step Height` and `Step Height STD` from those exact rectangles and returns an `analysis_snapshot` object with `"mode": "regions"` and the rectangle coordinates. Similarly, on `BN-DLC.zrw` (`file_id = 5`), `aps.zrw` returns an `analysis_snapshot` recording the plateau cycle interval and file hash, and on `BN-DLC(261015A).mit` (`file_id = 4`), `aps.mit` returns an `analysis_snapshot` recording the 9 evaluated indents.
+
+The agent passes that `analysis_snapshot` object **unchanged** into `add_values`. Because the snapshot is stored on the value, running `check_value_drift` later replays those exact rectangles, indents, or cycles without opening the GUI!
+
+Second, after storing the three `Wear Area` values (`value_id` `21`, `22`, and `23` on `Wear track 261015A`) and `Fn` (`value_id` `15`) and `Cycles` (`value_id` `16`) on `Friction test 261015A` (`Item 5`), the agent computes the reciprocating wear rate by calling `add_derived_value`:
+
+```json
+{
+  "item_id": 5,
+  "formula_id": "wear_rate_reciprocating",
+  "inputs": {
+    "area": [21, 22, 23],
+    "normal_force": 15,
+    "cycles": 16
+  }
+}
+```
+
+The server averages the three `Wear Area` inputs, calculates $K = A / (2 \cdot F_n \cdot N) = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$, and stores `value_id = 24` with source kind `Derived` and all five input value IDs (`21, 22, 23, 15, 16`).
+
+<Remember>Never pass a `value` field to `add_derived_value`. The server calculates the number from the stored input values and refuses any call that tries to supply the result number from the client.</Remember>
+
+## Updating and removing values and files safely
+
+When you extract values interactively in the Desktop viewer (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>), re-extracting from the same file updates the existing `Reader` value in place. The MCP write tools behave differently by design:
+
+<Warning title="add_value and add_values in MCP always insert new rows">Calling `add_value` or `add_values` through MCP always creates a new value record; it never overwrites an existing `Reader` value from the same file and key. If you need to update an existing value in place (for example, after a reader version upgrade) or remove obsolete values, use `update_value`, `remove_value`, or `remove_values` instead of calling `add_values` a second time.</Warning>
+
+APS ELN provides four dedicated MCP tools for maintaining existing values and files (<a href="#table-18-1">Table 18-1</a>):
+
+- **`update_value`:** takes `value_id` and updates one or more of `value`, `tolerance`, `description`, `rec_type`, `value_type_id`, and (for a `Reader` value) `reader_version` and `analysis_snapshot`. It preserves the old fields in the audit log (`entity_type: "Value"`) and returns them in `previous`, alongside any `dependent_derived_value_ids` that use this value as an input. (The number of a `Derived` value cannot be edited with `update_value`; call `add_derived_value` to compute a new one.)
+- **`remove_value` and `remove_values`:** hard-delete one value or up to 200 values in an all-or-nothing transaction, recording an optional `reason` and the old value, tolerance, type, and source in the owning item's audit log.
+- **`delete_file`:** permanently deletes an attached file and all `Reader` values extracted from it (leaving `Manual` and `Unknown` values intact). By default, `dry_run` is `true`, so your first call previews `values_to_delete` without deleting anything; to execute the deletion, pass `dry_run: false` and `confirm_hash` (the file's MD5 hash from `list_files`).
+
+All four tools refuse to touch signed items, deleted items, or records attached to or cited by a hypothesis in `InReview` or `Accepted`.
+
+## Drafting and updating Wiki pages
+
+An AI assistant is ideal for turning raw project data and literature notes into well-structured Project Wiki pages (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11: The five-section Project Wiki</a>):
+
+- **`wiki_create_page`:** takes `project_id`, `section` (`Goals`, `Ideas`, `Literature`, `Analysis`, or `References`), `title`, `body_md`, and optional `attachments` (paths inside `--upload-root`). It idempotently creates the `Wiki/` and `Wiki/<section>/` folders if they do not exist yet, creates the `Wiki` item, and writes the `.md` body and any attachments.
+- **`wiki_get_page`:** downloads the page's `.md` body and returns it inline as UTF-8 `body_md` along with item metadata and non-Markdown attachment records.
+- **`wiki_update_page`:** replaces `body_md` in place and optionally uploads additional attachments.
+
+Both `wiki_create_page` and `wiki_update_page` are **all-or-nothing**: they validate every file type and upload-root path before writing, and if any step fails, they roll back the new records and restore the previous `.md` body text automatically.
+
+## Preparing hypotheses and the human-in-the-loop boundary
+
+In <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 10</a>, you saw how a hypothesis links a proposal, experimental runs, cited evidence, and a conclusion across two human review gates. Through MCP, an agent can prepare every part of that record for you (<a href="#fig-18-1">Figure 18-1</a> and <a href="#table-18-1">Table 18-1</a>):
+
+1. **Propose (`propose_hypothesis` and `update_hypothesis`):** the agent creates a root or child hypothesis (`statement` and `change`) in `Proposed` (`Needs approval`) state.
+2. **Wait for Gate 1 in the GUI:** you (or your supervisor) read the proposal in the Desktop **Hypotheses** view and click **Approve**.
+3. **Attach runs and cite evidence (`attach_run` and `cite_evidence`):** once the hypothesis is `Approved`, the agent attaches the `Run` or `Reference` items and cites the key items, files (`file_id`), or values (`value_id`), recording their MD5 hashes and numbers at citation time. Each write bumps the hypothesis's integer `version`.
+4. **Submit the conclusion (`submit_conclusion`):** the agent calls `get_hypothesis` to read the current `version`, then calls `submit_conclusion` with the Markdown `conclusion` (including `[[item:N]]` links), `outcome` (`Supported`, `Refuted`, or `Inconclusive`), and `version`. The hypothesis moves to `InReview` (`Needs acceptance`).
+5. **Wait for Gate 2 in the GUI:** you (or your supervisor) inspect the cited curves and values in the Desktop GUI and click **Accept** to seal the conclusion.
+
+<Figure id="fig-18-1" number="18-1" src={`${import.meta.env.BASE_URL}/figures/fig-18-1-human-agent-division.svg`} alt="Two columns comparing what the AI Agent does via MCP (build trees, upload raw files, run readers, compute Derived values, draft Wiki pages, propose hypotheses, cite evidence, audit drift) versus what the Human Scientist does in the Desktop GUI (inspect previews, approve protocols, Gate 1 Approve proposal, Gate 2 Accept and Seal conclusion, apply Electronic Signature)" caption="The division of labor between an AI agent and a human scientist in APS ELN. The agent handles mechanical tree creation, reader extraction, derived calculations, Wiki drafting, evidence citation, and drift audits. The human scientist owns every visual inspection, review gate, and signature." />
+
+<p id="table-18-1" class="table-caption"><strong>Table 18-1:</strong> Key MCP write tools for values, files, Wiki pages, and hypotheses.</p>
+
+<DataTable
+  headers={['MCP tool', 'Key arguments', 'Safety and provenance behavior']}
+  rows={[
+    ['`add_value` / `add_values`', '`item_id`, `value`, `value_type_id`, `source_kind`, `source_file_id`, `reader_id`, `reader_version`, `key_name`, `reader_units`, `conversion_factor`, `analysis_snapshot`', 'All-or-nothing batch up to 200 values; enforces plausible range, $1000\\times$ tolerance check, and same-branch source file ownership.'],
+    ['`add_derived_value`', '`item_id`, `formula_id`, `inputs` (`role -> value_id` or `value_id[]`)', 'Server computes formula result (e.g. `wear_rate_reciprocating` v1) and records all input `value_id`s.'],
+    ['`update_value` / `remove_values`', '`value_id` / `value_ids[]`, `reason`', 'Updates in place or deletes up to 200 values; logs old values in audit trail and lists `dependent_derived_value_ids`.'],
+    ['`delete_file`', '`file_id`, `dry_run` (default `true`), `confirm_hash`', 'Previews `values_to_delete` on dry run; deletes file and its `Reader` values in one transaction when confirmed.'],
+    ['`wiki_create_page` / `wiki_update_page`', '`project_id`, `section`, `title`, `body_md`, `attachments`', 'Enforces the five Wiki sections (`Goals`, `Ideas`, `Literature`, `Analysis`, `References`) with atomic rollback on error.'],
+    ['`propose_hypothesis` / `attach_run` / `cite_evidence` / `submit_conclusion`', '`project_id`, `hypothesis_id`, `item_id`, `file_id`, `value_id`, `outcome`, `version`', 'Prepares proposals, runs, snapshot-hashed citations, and conclusions; optimistic `version` check prevents lost updates; human gates stay in GUI.'],
+  ]}
+/>
+
+## Sources
+
+- **APS ELN Community Help:** `MCP.html` (`extract_file_key_values` with temporary `selection` JSON and `analysis_snapshot` for `.fibps` and `.zrw`, `add_value` and `add_values` validation, `add_derived_value` with `wear_rate_reciprocating` and multi-area array inputs, `update_value`, `remove_value`, `remove_values`, `delete_file` with `dry_run` and `confirm_hash`, `find_hypotheses_for_item`, `wiki_create_page` and `wiki_update_page` atomic rollback, and write/review boundaries).
+- **APS ELN Commercial ("For Teams") Help:** `AIIntegration.html` (source field validation rules, why MCP `add_value` always inserts a new row rather than updating an earlier `Reader` value, and hypothesis tool rules); `Wiki.html` (`wiki_create_page`, `wiki_get_page`, `wiki_update_page`).
+- **Study A demonstration report (`doi:10.5281/zenodo.23466959`):** `tribo_study/reports/record_report.md` (how `1.fibps` and `2.fibps` use `selection` rectangles `[69,80,208,403]` and `[347,80,486,403]` on `556 x 484` pixels and how `value_id = 24` is computed from `area: [21, 22, 23]`, `normal_force: 15`, `cycles: 16`).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-4-compute-the-derived-wear-rate`}>Chapter 4: Step 4: Compute the Derived wear rate</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9: The four value sources and Derived formulas</a>; <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 10: The Hypothesis Tree and Evidence</a>; <a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11: The five-section Project Wiki</a>; <a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#security-upload-root-and-review-boundaries`}>Chapter 15: Security, upload-root, and review boundaries</a>; <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Study B: XRR Fitting with Provenance</a>.

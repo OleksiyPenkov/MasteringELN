@@ -447,12 +447,106 @@ Section outline:
    - Table 14-1: Comparison of Protocol Approval, Hypothesis Acceptance Seal, and Item Electronic Signature.
    - Sources: C:Help:Integrity, P:Help:Signatures.
 
-## Part 4: Working with an AI Agent (MCP) (Chapter-Level Plan)
+## Part 4: Working with an AI Agent (MCP)
 
-- **Chapter 15: Connecting an AI Assistant to Your Notebook** (`C:Help:MCP`, `P:Help:AIIntegration`)
-- **Chapter 16: Reading Data, Checking Storage, and Auditing Value Drift with an Agent** (`C:Help:MCP`, `Demo:A`, `Demo:B`)
-- **Chapter 17: Recording Analysis Results with Full Provenance (Study B Walkthrough)** (`Demo:B`, `docs/note-download-file-mcp-tool.md`)
-- **Chapter 18: Drafting Hypotheses, Wiki Pages, and Structured Records with an Agent** (`C:Help:MCP`, `C:Help:Hypotheses`)
+### Chapter 15: Connecting an AI Agent to Your Notebook (`ch15-connecting-an-ai-agent-to-your-notebook.mdx`)
+
+In This Chapter:
+- Understanding how the ELN Model Context Protocol (MCP) server works
+- Launching `ELNCommunityMCP.exe` with `--notebook`, `--upload-root`, and `--plugins`
+- Registering `ELNMCPServer.exe` with Claude Code in a team laboratory
+- Knowing the security, upload-root, and human-review boundaries enforced by the server
+
+Section outline:
+1. **What the ELN MCP server does.**
+   - How `ELNCommunityMCP.exe` (Community) and `ELNMCPServer.exe` (Commercial) expose ~70 structured tools over line-based JSON-RPC stdio transport, using the same database and the same 26 viewer `.bpl` plugins as the Desktop GUI.
+   - Fig 15-1 (`fig-15-1-mcp-architecture.svg`): Architecture of the AI client, the ELN MCP host, the `--upload-root` sandbox, and the notebook storage.
+   - Sources: C:Help:MCP, P:Help:AIIntegration.
+2. **Preparing a local session in APS ELN Community.**
+   - Closing the Desktop client first so only one writer accesses the local SQLite database, creating a dedicated `--upload-root` directory (without junctions or symbolic links), and configuring `--notebook`, `--upload-root`, `--plugins`, and optional `--storage`.
+   - Sources: C:Help:MCP.
+3. **Registering with Claude Code in a team laboratory.**
+   - In a Team Lab: Running `claude mcp add -s user eln -- "C:\Program Files\E-LabNotebook3\ELNMCPServer.exe"` and `claude mcp list`, how the server reads connection settings from the Windows Registry, and how clickable `eln://item/N` links in chat output open the record in the Desktop GUI.
+   - Sources: P:Help:AIIntegration.
+4. **Security, upload-root, and review boundaries.**
+   - How `--upload-root` confines both `upload_file` and `download_file`, how read-only sessions hide write tools, and why signed items and human review gates (`Approve` / `Accept`) can never be bypassed through MCP.
+   - Table 15-1: The nine MCP tool categories in APS ELN.
+   - Sources: C:Help:MCP, P:Help:AIIntegration, `docs/note-download-file-mcp-tool.md`.
+
+### Chapter 16: Reading Data and Auditing Drift via MCP (`ch16-reading-data-and-auditing-drift-via-mcp.mdx`)
+
+In This Chapter:
+- Browsing projects, items, and values with structured MCP read tools
+- Running hybrid Semantic Search (`search_semantic`) with numeric value filters
+- Inspecting long time-series logs with `list_file_columns` and `get_file_columns`
+- Auditing an entire project with `check_storage`, `check_value_drift`, and `report_value_issues`
+
+Section outline:
+1. **Navigating and querying values (`list_items`, `get_values`, `query_values`).**
+   - Using `list_projects`, `list_folders`, `list_items`, `get_item`, `get_values`, `query_values`, and `correlate_values`, and reading `ancestor_ids` and `source` objects.
+   - Sources: C:Help:MCP, P:Help:AIIntegration.
+2. **Searching by text and meaning (`search` and `search_semantic`).**
+   - Calling `search` (and reading `file_id`, `full_name`, and `extension` on file hits) vs. calling `search_semantic` with explicit pre-ranking filters (`folder_id`, `item_types`, `levels`, `action_type_id`, `date_from`, `date_to`, and `values` min/max in `requested_unit`).
+   - Sources: C:Help:MCP.
+3. **Reading tabular instrument logs (`list_file_columns` and `get_file_columns`).**
+   - Calling `list_file_columns` first to inspect column names, units, and row counts, then calling `get_file_columns` in `"stats"`, `"downsample"` (default `max_rows: 500`), or `"raw"` mode (`row_range: [start, end]`).
+   - Sources: C:Help:MCP, P:Help:AIIntegration.
+4. **Running the three project-wide health checks.**
+   - Auditing an entire project or item subtree in seconds with `check_storage`, `check_value_drift`, and `report_value_issues`.
+   - Fig 16-1 (`fig-16-1-mcp-audit-pipeline.svg`): The three read-only MCP audit tools and their status codes.
+   - Table 16-1: Read-only MCP inspection and audit tools.
+   - Sources: C:Help:MCP, Demo:A, Demo:B.
+
+### Chapter 17: Study B: XRR Fitting with Provenance (`ch17-study-b-xrr-fitting-with-provenance.mdx`)
+
+In This Chapter:
+- Understanding why early agent records lost value-level provenance (arXiv:2610.27859)
+- Building the Study B (`261014B` Co/C mirror) tree and extracting 18 deposition values
+- Staging the `.xrdml` scan with `download_file` and fitting it in X-Ray Calc 3
+- Uploading the accepted `.xrcx` fit and storing its `Reader` values with zero drift
+
+Section outline:
+1. **Why agent-written records need the Value Route.**
+   - What the 7-month laboratory study (`arXiv:2610.27859` Section 4.5) discovered: early agent runs recorded 14 input conditions and 0 result values because fit results were written only in text notes rather than stored through data file readers.
+   - How the **Value Route** fixes this: every number stored by an agent must come from `extract_file_key_values` with `source_kind: "Reader"`, `source_file_id`, `reader_id`, `reader_version`, `key_name`, `reader_units`, and `conversion_factor` copied verbatim.
+   - Sources: Paper§4.5, Paper§5.8, Demo:B (`record_agent.md`).
+2. **Part 1: The Record Agent builds Study B (`261014B`).**
+   - Creating the project, folder `261014B`, `Deposition 261014B` (`Proc`), `Cleaning 261014B` (`Action`), `261014B` (`Specimen`, "Co/C multilayer, N = 20, on glass"), and `XRR-1 261014B` (`Action`).
+   - Uploading the 7 raw files from `--upload-root` (`upload_file`), extracting 14 values from the deposition `.depo.json` and 4 values from the cleaning `.depo.json`, and storing all 18 values with `add_values`.
+   - Domain rules from Study B: why `Mean.*` snapshot keys and `.tsv` columns (with the control software's `A` vs. `mA` label bug) are never stored as conditions, and why `timeCo` ($42\,	ext{s}$) and `timeC` ($108\,	ext{s}$) are deposition times rather than thicknesses.
+   - Sources: Demo:B (`record_agent.md`, `record_report.md`).
+3. **Part 2: The Fitting Agent fits the curve and records `XRR fit 261014B`.**
+   - Exporting `XRR-1_Co-C(261014B).xrdml` via `download_file` to the allowed root, running the 13-step X-Ray Calc 3 fitting procedure (`XRC_MCP.exe` + `check_acceptance.py`), and saving the accepted job (`fit-20261016-153456-ea29`, polynomial order 1) with `curves.job_id` so `[FITRESULT]` and $\chi^2$ are written into `XRR-fit_Co-C(261014B).xrcx`.
+   - Creating child action `XRR fit 261014B` under `XRR-1 261014B`, uploading the `.xrcx` file, running `extract_file_key_values` (`aps.xrcx` v2), and storing the 4 `Reader` values (`Period` $= 4.940 	imes 10^{-9}\,	ext{m}$, `Co Thickness` $= 2.083 	imes 10^{-9}\,	ext{m}$, `C Thickness` $= 2.857 	imes 10^{-9}\,	ext{m}$, and `Chi2` $= 0.943$).
+   - Fig 17-1 (`fig-17-1-study-b-agent-workflow.svg`): The two-agent Study B (`261014B`) workflow from raw deposition and `.xrdml` files to verified `Reader` values.
+   - Table 17-1: The items, files, and extracted `Reader` values of Study B (`261014B`).
+   - Sources: Demo:B (`fitting_agent.md`, `record_report.md`), `docs/note-download-file-mcp-tool.md`.
+
+### Chapter 18: Drafting Trees, Hypotheses, and Wikis (`ch18-drafting-trees-hypotheses-and-wikis.mdx`)
+
+In This Chapter:
+- Passing viewer selections (`selection`) and `analysis_snapshot` in Study A (`261015A`)
+- Computing `Derived` values (`add_derived_value`) and editing values safely via MCP
+- Drafting and updating Project Wiki pages (`wiki_create_page`, `wiki_update_page`)
+- Proposing hypotheses and citing evidence via MCP while keeping approvals in the GUI
+
+Section outline:
+1. **Passing viewer selections and `Derived` inputs in Study A (`261015A`).**
+   - How the Study A agent passes explicit pixel rectangles (`selection: {"rect_a": [69,80,208,403], "rect_b": [347,80,486,403], "pix_w": 556, "pix_h": 484}`) to `extract_file_key_values` on `1.fibps` and `2.fibps`, and forwards the returned `analysis_snapshot` unchanged to `add_values`.
+   - Calling `add_derived_value` with `formula_id: "wear_rate_reciprocating"` and `inputs: {"area": [21, 22, 23], "normal_force": 15, "cycles": 16}` so the server computes $K = 3.05 	imes 10^{-7}\,	ext{mm}^3/(	ext{N}\cdot	ext{mm})$.
+   - Sources: C:Help:MCP, Demo:A (`tribo_study/reports/record_report.md`).
+2. **Updating and removing values and files safely (`update_value`, `remove_values`, `delete_file`).**
+   - When and how to use `update_value`, `remove_value`, `remove_values` (all-or-nothing up to 200 values, recording old values in the audit log and returning `dependent_derived_value_ids`), and `delete_file` (`dry_run: true` by default + `confirm_hash`).
+   - Warning: Unlike the Desktop GUI, calling `add_value` or `add_values` from MCP always inserts a new value row rather than updating an earlier `Reader` value of the same file and key in place.
+   - Sources: C:Help:MCP, P:Help:AIIntegration.
+3. **Drafting and updating Wiki pages (`wiki_create_page`, `wiki_update_page`).**
+   - Using `wiki_create_page`, `wiki_get_page`, and `wiki_update_page` to write literature reviews and cross-sample analysis pages under the five-section convention (`Goals`, `Ideas`, `Literature`, `Analysis`, `References`), with all-or-nothing rollback if an attachment check fails.
+   - Sources: C:Help:MCP, P:Help:Wiki.
+4. **Preparing hypotheses with an agent and the human-in-the-loop boundary.**
+   - Using `propose_hypothesis`, `attach_run`, `cite_evidence`, `submit_conclusion`, `abandon_hypothesis`, and `find_hypotheses_for_item`, and how the human scientist and the AI agent divide responsibilities (<a href="#fig-18-1">Figure 18-1</a> and <a href="#table-18-1">Table 18-1</a>).
+   - Fig 18-1 (`fig-18-1-human-agent-division.svg`): Division of responsibilities between the AI agent via MCP and the human scientist in the Desktop GUI.
+   - Table 18-1: MCP write tools for values, files, Wiki pages, and hypotheses.
+   - Sources: C:Help:MCP, C:Help:Hypotheses, P:Help:Experiments.
 
 ## Part 5: The Part of Tens (Chapter-Level Plan)
 
