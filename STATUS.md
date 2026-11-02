@@ -2,7 +2,7 @@
 
 _Updated after every work session: what changed, what is unresolved, and what the author must decide next._
 
-## 2026-11-02 (Part 5 & Appendices): Full book complete and verified (27 sections, 194 PDF pages)
+## 2026-11-02 (Proofreading Pass): Full book proofread, rebuilt, and verified (27 sections, 196 PDF pages)
 
 **Done**
 - Detailed section outlines for **Part 5: The Part of Tens (Chapters 19–21)** and **Back Matter: Appendices A–E** added to `OUTLINE.md`.
@@ -21,7 +21,8 @@ _Updated after every work session: what changed, what is unresolved, and what th
   - Playwright e2e: 8 tests passed;
   - `check:links`: 29 pages, 1,232 internal links, 0 literal `$$`, 0 e-notation;
   - `check:markers`: 0 markers left;
-  - Print PDF (`pdf-build/Mastering-ELN.pdf`, 194 pages, 27 sections, 19 figures, 166 Contents links, 689 internal PDF links): all 23 `verify_pdf.py` checks passed with 0 skips and 0 failures.
+  - Print PDF (`pdf-build/Mastering-ELN.pdf`, 196 pages, 27 sections, 19 figures, 166 Contents links, 688 internal PDF links): all 23 `verify_pdf.py` checks passed with 0 skips and 0 failures.
+- Completed full-book proofreading pass across `introduction.mdx`, `ch1`–`ch21`, `appendix-a`–`appendix-e`, and `OUTLINE.md` against `STYLE.md`, `NOTATION.md`, `proofreading`, and `no-ai-slop` rules (0 rhetorical questions in body text, 0 reading-management narration phrases, 0 idioms/phrasals, 0 antithesis/em-dashes/banned words, 0 second-person pronouns or contractions in Appendices A–E, and long sentences split at clause boundaries).
 
 **Chapter status**
 

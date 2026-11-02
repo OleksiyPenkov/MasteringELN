@@ -55,11 +55,11 @@ Follow these steps to set up a new project and organize its folders:
 
 <Remember>Changing a project's title or moving a project into a group updates the database record only. Never rename or move files inside your notebook's attachment storage folder in Windows Explorer to match a new project title.</Remember>
 
-<InELN>Just like rows in the **Items** panel (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Reading the item tree and its row buttons</a>), any selected Group, Project, or Folder row that has children displays three buttons on its right edge: **Collapse all below**, **Expand all below**, and **Focus** (**Focus: collapse everything else**).</InELN>
+<InELN>Like rows in the **Items** panel (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Reading the item tree and its row buttons</a>), any selected Group, Project, or Folder row with children displays three buttons on its right edge. Use them to **Collapse all below**, **Expand all below**, or **Focus** (**Focus: collapse everything else**).</InELN>
 
 <InTeamLab title="sorting and dragging projects and folders">
 
-In the Commercial ("For Teams") client, right-click any project or folder and open the **Sort** submenu to order siblings **By Name**, **By Date Created**, or manually with **Move Up** and **Move Down**. The saved order is shared across every workstation in the lab. You can also drag a root procedure (`Proc`) from the center **Items** panel and drop it onto a different folder or project in the **Projects** panel; ELN moves the entire item subtree and relocates its stored attachment files automatically.
+In the Commercial ("For Teams") client, right-click any project or folder and open the **Sort** submenu to order siblings **By Name**, **By Date Created**, or manually with **Move Up** and **Move Down**. The saved order is shared across every workstation in the lab. You can also drag a root procedure (`Proc`) from the center **Items** panel and drop it onto a different folder or project in the **Projects** panel. ELN moves the entire item subtree and relocates its stored attachment files automatically.
 
 </InTeamLab>
 
@@ -71,7 +71,7 @@ When a grant ends or a material series is complete, you want it out of your dail
 2. To view archived projects at any time, click **Show Archived** in the Projects panel toolbar (`Ctrl+Shift+A` in the team client).
 3. To reopen an archived project for new experimental work, select it while archived projects are shown and choose **Archive** again (or clear **Archived** in **Project > Edit** and click **Save**).
 
-<Tip>An archived project remains 100% readable and searchable. You can still inspect its curves, copy data from its viewers (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>), and cite its items as reference evidence, while the archive lock prevents anyone from accidentally editing or deleting its records.</Tip>
+<Tip>An archived project remains 100% readable and searchable. You can still inspect its curves, copy data from its viewers (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>), and cite its items as reference evidence. Meanwhile, the archive lock prevents anyone from accidentally editing or deleting its records.</Tip>
 
 ## Sharing projects in a team laboratory
 
@@ -85,7 +85,7 @@ Right-click a project you own in the **Projects** panel and choose **Share...** 
 - **ReadWrite access:** lets a teammate create and edit procedures, specimens, actions, files, protocols, and values inside the project.
 - **Hypothesis approval rights:** administrators and supervisors can tick **Can approve proposals** and **Can accept conclusions** for designated senior researchers who hold `ReadWrite` access on the project.
 
-Note that **Groups** in the Projects panel are personal to your account: projects that a teammate shares with you appear at the top level of your tree, and arranging your own groups never changes how teammates see the project tree.
+**Groups** in the Projects panel are personal to your account. Projects that a teammate shares with you appear at the top level of your tree, and arranging your own groups never changes how teammates see the project tree.
 
 </InTeamLab>
 
@@ -93,7 +93,7 @@ Note that **Groups** in the Projects panel are personal to your account: project
 
 APS ELN distinguishes strictly between deleting an empty container (a Group, Project, or Folder) and deleting a scientific item tree (a Procedure, Specimen, or Action):
 
-- **Deleting a Group** (**Delete Group**) never removes any projects; its projects simply return to the top level of the Projects panel.
+- **Deleting a Group** (**Delete Group**) never removes any projects; its projects return to the top level of the Projects panel.
 - **Deleting a Project or Folder** is permanent and is refused unless the container is completely empty. Even deleted items sitting in the **Recycle Bin** still belong to their original project and folder, so you must restore or permanently remove them before the container itself can be deleted.
 
 When you delete a **Procedure**, **Specimen**, or **Action** in the center **Items** panel, it is not destroyed immediately. Instead, it moves to the **Recycle Bin** (<a href="#fig-5-1">Figure 5-1</a>):
@@ -103,12 +103,11 @@ When you delete a **Procedure**, **Specimen**, or **Action** in the center **Ite
 3. If you deleted the item by mistake, choose **Tools > Recycle Bin...**, select the binned record, and click **Restore**. Close the dialog to see the restored subtree back in your project.
 4. To remove a binned record forever, open **Tools > Recycle Bin...**, select it, and click **Delete** (or click **Empty Bin** to purge all unprotected items in the bin).
 
-<Warning title="files and notes do not go to the Recycle Bin">The Recycle Bin holds deleted **Procedures**, **Specimens**, and **Actions**. Deleting an individual **File** or **Note** attached to an active item deletes that file or note permanently (along with the `Reader` values extracted from that file) after confirmation. Never use **Empty Bin** just to delete a folder faster without checking what is inside the bin.</Warning>
+<Warning title="files and notes do not go to the Recycle Bin">The Recycle Bin holds deleted **Procedures**, **Specimens**, and **Actions**. Deleting an individual **File** or **Note** attached to an active item deletes that file or note permanently (along with the `Reader` values extracted from that file) after confirmation. Never use **Empty Bin** to delete a folder faster without checking what is inside the bin.</Warning>
 
 <GoingDeeper title="why Empty Bin sometimes keeps a deleted item">
 
-APS ELN protects scientific integrity across the whole notebook. If a binned item is cited as evidence or attached as a run on a hypothesis that is currently `InReview` or `Accepted` (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#submitting-a-conclusion-and-checking-the-content-seal`}>Chapter 10: Submitting a conclusion and checking the content seal</a>), or if the item carries an electronic signature (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>), **Empty Bin** refuses to destroy that item tree while still removing unrelated binned items, and displays a message listing which records were retained and why.
-
+APS ELN protects scientific integrity across the whole notebook. A binned item may be cited as evidence or attached as a run on a hypothesis that is currently `InReview` or `Accepted` (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#submitting-a-conclusion-and-checking-the-content-seal`}>Chapter 10: Submitting a conclusion and checking the content seal</a>). It may also carry an electronic signature (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>). In either case, **Empty Bin** refuses to destroy that item tree while still removing unrelated binned items, and displays a message listing which records were retained and why.
 </GoingDeeper>
 
 ## Sources

@@ -18,7 +18,7 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Attaching raw files is the heart of an electronic laboratory notebook (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>). When you attach a measurement file in APS ELN, the program does much more than store a backup copy: it computes the file's MD5 checksum, routes the file to one of 26 built-in **Content Viewer** plugins, generates a preview thumbnail, and lets you select evaluation regions or cycle intervals that are saved right alongside the file for reproducible value extraction (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>).
+Attaching raw files is the heart of an electronic laboratory notebook (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>). When you attach a measurement file in APS ELN, the program computes the file's MD5 checksum, routes the file to one of 26 built-in **Content Viewer** plugins, and generates a preview thumbnail. In specialist viewers, you can also select evaluation regions or cycle intervals that are saved alongside the file for reproducible value extraction (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>).
 
 ## How file attachment and extension routing work
 
@@ -27,9 +27,9 @@ To attach one or more files to a **Procedure**, **Specimen**, or **Action**, sel
 - **Attaching one file:** Select the file in the built-in file browser, check **Attachment file type** and **Display name**, and click **Attach**. There is no second confirmation dialog.
 - **Attaching multiple files:** Select several files in the browser and click **Review files** to open **Files to attach**. There you can inspect each row's **Source filename**, **Display name**, and **Type**, and either keep **Keep display names** selected or choose **Use prefix:** to number a series of scans automatically.
 
-<Remember>APS ELN routes files by their longest matching extension. A deposition snapshot ending in `.depo.json` opens in the specialist **Deposition** viewer rather than the plain **JSON** viewer, and a `.process.log` file opens in the **Process Log** viewer rather than the sputtering `.log` viewer. When suggested display names are created, ELN strips the full compound suffix (`.depo.json` or `.process.log`), not just `.json` or `.log`.</Remember>
+<Remember>APS ELN routes files by their longest matching extension. A deposition snapshot ending in `.depo.json` opens in the specialist **Deposition** viewer rather than the plain **JSON** viewer, and a `.process.log` file opens in the **Process Log** viewer rather than the sputtering `.log` viewer. When suggested display names are created, ELN strips the full compound suffix (`.depo.json` or `.process.log`) instead of stripping only `.json` or `.log`.</Remember>
 
-When you select a `.depo.json` file in the file browser, APS ELN can automatically expand your selection to include its paired `.tsv` time-series log file, opening the **Files to attach** review dialog so both files are attached to the procedure together.
+When you select a `.depo.json` file in the file browser, APS ELN can automatically expand your selection to include its paired `.tsv` time-series log file. It then opens the **Files to attach** review dialog so both files are attached to the procedure together.
 
 ## Inside the five core instrument viewers
 
@@ -41,9 +41,9 @@ Five specialist viewers power the Study A (`261015A`) and Study B (`261014B`) wo
    - Attaching both the `.depo.json` snapshot and its paired `.tsv` log to the same **Procedure** unlocks the **Overview**, **Recipe**, **Pressure**, **Temperature**, **Gas Flow**, **Bias**, **V / I**, and **Stage** tabs. If the `.tsv` file is missing from the item, the viewer warns *Not attached to this item - charts unavailable*.
    - **Extract Values** reads the `.depo.json` file (`aps.deposition`) to give recipe conditions (such as pressure, power, current, gas flow, layer times, and period count $N$) and run results (`Duration` and `BasePressure`).
 2. **FIBPS 3D optical profilometer (`.fibps`, reader `aps.fibps`):**
-   - Displays the surface height map in micrometers ($\mu\text{m}$, or $\text{nm}$ below $1\,\mu\text{m}$) with six interactive tools: **Profile** (click for a horizontal line profile, `Shift`+click for vertical), **Distance**, **Roughness** ($R_a$, $R_q$, $R_z$ inside a dragged rectangle), **Flatten**, **Step Height**, and **Wear Track**.
+   - Displays the surface height map in micrometers ($\mu\text{m}$, or $\text{nm}$ below $1\,\mu\text{m}$) with six interactive tools: **Profile**, **Distance**, **Roughness** ($R_a$, $R_q$, $R_z$ inside a dragged rectangle), **Flatten**, **Step Height**, and **Wear Track**. In **Profile**, click for a horizontal line profile or `Shift`+click for a vertical profile.
    - In **Step Height**, two rectangles (**A** and **B**) mark the coated and uncoated levels. Dragging them updates the step $h \pm s$ and saves those rectangles as the *shared regions* of the file in the notebook.
-   - In **Wear Track**, the viewer automatically detects the wear groove, levels the outer surface to zero, and integrates the cross-sectional area of each row between the groove edges to give `Wear Area` (mean $\pm$ SD along the track).
+   - In **Wear Track**, the viewer automatically detects the wear groove and levels the outer surface to zero. It then integrates the cross-sectional area of each row between the groove edges to give `Wear Area` (mean $\pm$ SD along the track).
    - Clicking **Copy Data** copies the active profile to the clipboard in OriginLab's three-header-row layout (Long Name, Units, Comments).
 3. **MIT nanoindentation (`.mit`, reader `aps.mit`):**
    - Plots the contact-zeroed load-displacement curves (subtracting frame compliance when stored) and lists every indent under **Records:**.
@@ -71,7 +71,7 @@ Five specialist viewers power the Study A (`261015A`) and Study B (`261014B`) wo
 
 ## Working drafts, external edits, and conflict resolution
 
-When you double-click an attachment (or click **Open** in the viewer toolbar) to open it in an external Windows program such as OriginLab, Excel, or X-Ray Calc 3, APS ELN never hands the external program the file inside your notebook storage folder. Instead, it writes a separate **local working copy** (<a href="#fig-7-1">Figure 7-1</a>).
+When you double-click an attachment (or click **Open** in the viewer toolbar) to open it in an external Windows program such as OriginLab, Excel, or X-Ray Calc 3, APS ELN protects your stored file. It never hands the external program the file inside your notebook storage folder; instead, it writes a separate **local working copy** (<a href="#fig-7-1">Figure 7-1</a>).
 
 <Figure id="fig-7-1" number="7-1" src={`${import.meta.env.BASE_URL}/figures/fig-7-1-viewer-draft-lifecycle.svg`} alt="Three-stage diagram showing Instrument File on disk copied into Notebook Storage with MD5 hash and shared regions, and opened externally as a separate Working Draft that is saved back with Save Attachment Working Draft or discarded with Reload" caption="How APS ELN protects stored attachment bytes. Attaching a file copies it into notebook storage (2). Opening it externally creates a separate working draft (3) that only updates notebook storage when you choose Tools > Save Attachment Working Draft." />
 
@@ -79,11 +79,11 @@ To save changes from an external program back into your notebook:
 
 1. Save the file inside the external application (which updates the local working copy), and close the external editor window if required.
 2. Select the attachment in APS ELN and choose **Tools > Save Attachment Working Draft** to copy the updated bytes into notebook storage and update the attachment's MD5 hash.
-3. If you want to throw away your external edits and revert to the bytes stored in the notebook, choose **Tools > Reload Attachment Working Draft** and confirm the discard prompt.
+3. If you want to discard your external edits and revert to the bytes stored in the notebook, choose **Tools > Reload Attachment Working Draft** and confirm the discard prompt.
 
-If you close the notebook or exit APS ELN while a working draft has unsaved changes, the program prompts you before closing: clicking **Cancel** stops the close, while clicking **No** leaves your draft file at the temporary path shown in the message so you do not lose your work.
+If you close the notebook or exit APS ELN while a working draft has unsaved changes, the program prompts you before closing. Clicking **Cancel** stops the close, while clicking **No** leaves your draft file at the temporary path shown in the message so you do not lose your work.
 
-For `.md` attachments and project Wiki pages (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11: The five-section Project Wiki</a>), clicking **Edit** in the **Markdown** viewer opens the built-in **Markdown Editor** (`Ctrl+S` to save, `Ctrl+B` for bold, `Ctrl+I` for italic, `Ctrl+K` for links, and `Ctrl+V` to paste clipboard images directly as uploaded attachments). If the stored attachment was updated by another session or by an MCP agent while you were editing, the conflict dialog offers three explicit choices:
+For `.md` attachments and project Wiki pages (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11: The five-section Project Wiki</a>), clicking **Edit** in the **Markdown** viewer opens the built-in **Markdown Editor**. Press `Ctrl+S` to save, `Ctrl+B` for bold, `Ctrl+I` for italic, `Ctrl+K` for links, and `Ctrl+V` to paste clipboard images directly as uploaded attachments. If the stored attachment was updated by another session or by an MCP agent while you were editing, the conflict dialog offers three explicit choices:
 
 - **Cancel:** keep your editor text open without overwriting the stored attachment.
 - **Reload (discard my edits):** replace your editor text with the current stored attachment.
@@ -100,7 +100,7 @@ When you right-click an attached file in the **Items** panel, you can manage its
 
 <InTeamLab title="inspecting files outside a notebook with ELNFileViewer.exe">
 
-The Commercial build includes a standalone personal viewer program, **`ELNFileViewer.exe`** (marked by a red notebook icon). It loads the same folder browser and all 26 viewer plugins without asking for a login or connecting to MySQL or WebDAV. Press `Ctrl+O`, drop a single file onto the window, or pass a file path on the command line (`ELNFileViewer.exe "C:\Measurements\sample.mit"`) to inspect `.mit`, `.fibps`, `.zrw`, `.xrcx`, `.vk4`, or `.depo.json` files on an instrument PC before you attach them to a notebook.
+The Commercial build includes a standalone personal viewer program, **`ELNFileViewer.exe`** (marked by a red notebook icon). It loads the same folder browser and all 26 viewer plugins without asking for a login or connecting to MySQL or WebDAV. Press `Ctrl+O`, drop a single file onto the window, or pass a file path on the command line (`ELNFileViewer.exe "C:\Measurements\sample.mit"`). You can inspect `.mit`, `.fibps`, `.zrw`, `.xrcx`, `.vk4`, or `.depo.json` files on an instrument PC before you attach them to a notebook.
 
 </InTeamLab>
 

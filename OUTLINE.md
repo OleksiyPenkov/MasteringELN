@@ -31,7 +31,7 @@ Sections (fixed by `STYLE.md §3`):
 
 ## Part 1: Getting Started
 
-### Chapter 1: What an ELN Is, and Why Links Between Files and Numbers Matter (`ch1-what-an-eln-is-and-why-links-matter.mdx`)
+### Chapter 1: What an ELN Is, and Why Links Matter (`ch1-what-an-eln-is-and-why-links-matter.mdx`)
 
 In This Chapter:
 - Tracing the four links from a physical sample to a published number
@@ -65,7 +65,7 @@ Section outline:
    - Table 1-1: 10 workflow stages, what you do in ELN Desktop (or via MCP), and which chapter covers each stage.
    - Sources: C:Help:Index, P:Help:Index.
 
-### Chapter 2: Opening a Notebook: Team Server Login and Local Community Notebooks (`ch2-opening-a-notebook.mdx`)
+### Chapter 2: Opening a Local or Team Lab Notebook (`ch2-opening-a-notebook.mdx`)
 
 In This Chapter:
 - Creating and opening a local SQLite notebook in APS ELN Community
@@ -128,7 +128,7 @@ Section outline:
    - Remember: The attachment root shown in **Tools > Preferences...** is for information only; moving a notebook requires moving its folder while the notebook is closed (`Chapter 2`).
    - Sources: C:Help:GettingStarted, C:Help:Notebooks.
 
-### Chapter 4: Your First Complete Sample Record in Twenty Minutes (`ch4-your-first-complete-sample-record.mdx`)
+### Chapter 4: Your First Sample Record in Twenty Minutes (`ch4-your-first-complete-sample-record.mdx`)
 
 In This Chapter:
 - Building the complete Study A (`BN-DLC(261015A)`) item tree before attaching files
@@ -298,7 +298,7 @@ In This Chapter:
 Section outline:
 1. **Conditions, Results, units, and plausible-range checks.**
    - Choosing **Condition** (`EXP_CONDITION`) versus **Result** (`TEST_RESULT`), using the built-in unit converter (**Convert...** and **Tools > Unit Converter...**), and entering **Tolerance** in the stored unit.
-   - How APS ELN checks plausible ranges (`range_min`, `range_max`) and the tolerance factor (default $1000	imes$) before saving.
+   - How APS ELN checks plausible ranges (`range_min`, `range_max`) and the tolerance factor (default $1000\times$) before saving.
    - Sources: C:Help:Values.
 2. **Reader mappings, unit factors, and standard deviations.**
    - How **Extract Values** and **Reference Data > Value Types... > Reader mappings...** map reader keys (including `<Material> Thickness` pattern rules) and convert units (`um` to `m`, `mTorr` to `Pa`).
@@ -513,11 +513,11 @@ Section outline:
 2. **Part 1: The Record Agent builds Study B (`261014B`).**
    - Creating the project, folder `261014B`, `Deposition 261014B` (`Proc`), `Cleaning 261014B` (`Action`), `261014B` (`Specimen`, "Co/C multilayer, N = 20, on glass"), and `XRR-1 261014B` (`Action`).
    - Uploading the 7 raw files from `--upload-root` (`upload_file`), extracting 14 values from the deposition `.depo.json` and 4 values from the cleaning `.depo.json`, and storing all 18 values with `add_values`.
-   - Domain rules from Study B: why `Mean.*` snapshot keys and `.tsv` columns (with the control software's `A` vs. `mA` label bug) are never stored as conditions, and why `timeCo` ($42\,	ext{s}$) and `timeC` ($108\,	ext{s}$) are deposition times rather than thicknesses.
+   - Domain rules from Study B: why `Mean.*` snapshot keys and `.tsv` columns (with the control software's `A` vs. `mA` label bug) are never stored as conditions, and why `timeCo` ($42\,\text{s}$) and `timeC` ($108\,\text{s}$) are deposition times rather than thicknesses.
    - Sources: Demo:B (`record_agent.md`, `record_report.md`).
 3. **Part 2: The Fitting Agent fits the curve and records `XRR fit 261014B`.**
    - Exporting `XRR-1_Co-C(261014B).xrdml` via `download_file` to the allowed root, running the 13-step X-Ray Calc 3 fitting procedure (`XRC_MCP.exe` + `check_acceptance.py`), and saving the accepted job (`fit-20261016-153456-ea29`, polynomial order 1) with `curves.job_id` so `[FITRESULT]` and $\chi^2$ are written into `XRR-fit_Co-C(261014B).xrcx`.
-   - Creating child action `XRR fit 261014B` under `XRR-1 261014B`, uploading the `.xrcx` file, running `extract_file_key_values` (`aps.xrcx` v2), and storing the 4 `Reader` values (`Period` $= 4.940 	imes 10^{-9}\,	ext{m}$, `Co Thickness` $= 2.083 	imes 10^{-9}\,	ext{m}$, `C Thickness` $= 2.857 	imes 10^{-9}\,	ext{m}$, and `Chi2` $= 0.943$).
+   - Creating child action `XRR fit 261014B` under `XRR-1 261014B`, uploading the `.xrcx` file, running `extract_file_key_values` (`aps.xrcx` v2), and storing the 4 `Reader` values (`Period` $= 4.940 \times 10^{-9}\,\text{m}$, `Co Thickness` $= 2.083 \times 10^{-9}\,\text{m}$, `C Thickness` $= 2.857 \times 10^{-9}\,\text{m}$, and `Chi2` $= 0.943$).
    - Fig 17-1 (`fig-17-1-study-b-agent-workflow.svg`): The two-agent Study B (`261014B`) workflow from raw deposition and `.xrdml` files to verified `Reader` values.
    - Table 17-1: The items, files, and extracted `Reader` values of Study B (`261014B`).
    - Sources: Demo:B (`fitting_agent.md`, `record_report.md`), `docs/note-download-file-mcp-tool.md`.
@@ -533,7 +533,7 @@ In This Chapter:
 Section outline:
 1. **Passing viewer selections and `Derived` inputs in Study A (`261015A`).**
    - How the Study A agent passes explicit pixel rectangles (`selection: {"rect_a": [69,80,208,403], "rect_b": [347,80,486,403], "pix_w": 556, "pix_h": 484}`) to `extract_file_key_values` on `1.fibps` and `2.fibps`, and forwards the returned `analysis_snapshot` unchanged to `add_values`.
-   - Calling `add_derived_value` with `formula_id: "wear_rate_reciprocating"` and `inputs: {"area": [21, 22, 23], "normal_force": 15, "cycles": 16}` so the server computes $K = 3.05 	imes 10^{-7}\,	ext{mm}^3/(	ext{N}\cdot	ext{mm})$.
+   - Calling `add_derived_value` with `formula_id: "wear_rate_reciprocating"` and `inputs: {"area": [21, 22, 23], "normal_force": 15, "cycles": 16}` so the server computes $K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$.
    - Sources: C:Help:MCP, Demo:A (`tribo_study/reports/record_report.md`).
 2. **Updating and removing values and files safely (`update_value`, `remove_values`, `delete_file`).**
    - When and how to use `update_value`, `remove_value`, `remove_values` (all-or-nothing up to 200 values, recording old values in the audit log and returning `dependent_derived_value_ids`), and `delete_file` (`dry_run: true` by default + `confirm_hash`).

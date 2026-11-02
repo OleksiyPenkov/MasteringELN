@@ -40,15 +40,15 @@ The structural links held up well: measurement actions sat under their specimens
 
 - **13 of the 26 values** matched the current reader output of an attached file after unit conversion.
 - **4 values** differed from the number the attached file gives today, for example because a reader algorithm was updated or a different evaluation interval was chosen.
-- **9 values** had no reader counterpart at all, because the source file had not been attached, a screenshot had been uploaded instead of the raw data, or the number had been typed by hand before the file existed.
+- **9 values** had no reader counterpart at all. Either the source file had not been attached, a screenshot had been uploaded instead of the raw data, or the number had been typed by hand before the file existed.
 
-<Warning title="typing numbers by hand">When you type a result by hand (`Manual` source) instead of extracting it from the attached file (`Reader` source), APS ELN cannot verify whether the number still matches the file when a reader version, calibration, or evaluation window changes. Use **Extract Values** whenever a reader supports your file format.</Warning>
+<Warning title="typing numbers by hand">When you type a result by hand (`Manual` source) instead of extracting it from the attached file (`Reader` source), APS ELN cannot check that number later. If a reader version, calibration, or evaluation window changes, a `Manual` number stays unverified. Use **Extract Values** whenever a reader supports your file format.</Warning>
 
 <GoingDeeper title="how APS ELN stores value-level provenance">
 
 Starting in APS ELN 2.1 (notebook format 5 in Community), every stored value carries a structured source record:
 
-- **`Reader`:** records the `file_id`, the file's MD5 hash at extraction time, the `reader_id` (such as `aps.mit` or `aps.xrcx`), the integer `reader_version`, the emitted key name, the emitted unit, the unit conversion factor, and an optional analysis snapshot (such as which indents were ticked in a `.mit` file or which cycle interval was selected in a `.zrw` friction curve).
+- **`Reader`:** records the `file_id`, the file's MD5 hash at extraction time, the `reader_id` (such as `aps.mit` or `aps.xrcx`), and the integer `reader_version`. It also stores the emitted key name, the emitted unit, the unit conversion factor, and an optional analysis snapshot (such as ticked `.mit` indents or a selected `.zrw` cycle interval).
 - **`Derived`:** records the `formula_id` (such as `wear_rate_reciprocating`), the `formula_version`, and the exact `value_id` list of the stored input values used in the calculation.
 - **`Manual`:** records that a person typed or edited the number. If you edit the number or tolerance of a `Reader` or `Derived` value by hand, its source switches to `Manual` while preserving the previous reader or formula note.
 - **`Unknown`:** marks legacy values created before format 5 source tracking existed.
@@ -57,12 +57,12 @@ Starting in APS ELN 2.1 (notebook format 5 in Community), every stored value car
 
 ## Two running examples: Study A and Study B
 
-- **Study A (`261015A`, a BN/DLC tribological coating):** A sputter deposition (`Deposition 261015A`) produces specimen `261015A`. Four measurement and analysis actions sit below it: `Thickness 261015A` (three Filmetrics 3D step-height scans, `1.fibps`–`3.fibps`), `Indentation 261015A` (an Anton Paar UNHT nanoindentation file, `BN-DLC(261015A).mit`), `Friction test 261015A` (a DaVinci tribometer reciprocating test, `BN-DLC.zrw`), and its child action `Wear track 261015A` (three optical profiler scans across the wear scar, `wear 1.fibps`–`wear 3.fibps`). Together they hold 11 raw files, 23 `Reader` values, and 1 `Derived` wear-rate value.
+- **Study A (`261015A`, a BN/DLC tribological coating):** A sputter deposition (`Deposition 261015A`) produces specimen `261015A`. Four measurement and analysis actions sit below it: `Thickness 261015A` (three Filmetrics 3D step-height scans, `1.fibps`–`3.fibps`), `Indentation 261015A` (an Anton Paar UNHT nanoindentation file, `BN-DLC(261015A).mit`), and `Friction test 261015A` (a DaVinci tribometer reciprocating test, `BN-DLC.zrw`). A child action under the friction test, `Wear track 261015A`, holds three optical profiler scans across the wear scar (`wear 1.fibps`–`wear 3.fibps`). Together they hold 11 raw files, 23 `Reader` values, and 1 `Derived` wear-rate value.
 - **Study B (`261014B`, a Co/C multilayer X-ray mirror):** A sputter deposition (`Deposition 261014B`) includes a plasma cleaning action (`Cleaning 261014B`) and produces specimen `261014B` (20 periods of cobalt and carbon on soda-lime glass). Under the specimen sit the X-ray reflectivity scan `XRR-1 261014B` (`XRR-1_Co-C(261014B).xrdml`) and its child analysis action `XRR fit 261014B` (`XRR-fit_Co-C(261014B).xrcx`). Together they hold 8 files and 22 `Reader` values.
 
 <Figure id="fig-1-2" number="1-2" src={`${import.meta.env.BASE_URL}/figures/fig-1-2-study-a-tree.svg`} alt="Side-by-side trees for Study A (261015A BN/DLC coating) and Study B (261014B Co/C mirror) showing Procedure, Specimen, Action, files, and value counts" caption="The item trees of the two running examples used across this book. Study A (left) records a BN/DLC coating and its mechanical and tribological tests. Study B (right) records a 20-period Co/C X-ray mirror from deposition through XRR fitting." />
 
-<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4: Your First Sample Record in Twenty Minutes</a> builds Study A step by step in the Desktop window. <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Study B: XRR Fitting with Provenance</a> walks through Study B with the MCP server and X-Ray Calc 3.
+<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4: Your First Sample Record in Twenty Minutes</a> builds Study A step by step in the Desktop window. <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Study B: XRR Fitting with Provenance</a> builds and fits Study B with the MCP server and X-Ray Calc 3.
 ## Four rules that keep your data trail unbroken
 
 Four habits prevent every broken link found in the seven-month laboratory study:
@@ -70,7 +70,7 @@ Four habits prevent every broken link found in the seven-month laboratory study:
 1. **Build the whole item tree at the start of the run.** Create the **Procedure**, the **Specimen**, and every planned **Action** before you walk to the instruments. An empty action in the tree reminds you that a file is still missing. At the end of the experiment, no action should remain empty.
 2. **Attach the raw instrument file, never a screenshot.** A `.png` screenshot of an XRR fit or an indentation curve cannot be re-analyzed, cannot be checked for drift, and gives zero values to a reader. Always attach the native file (`.depo.json`, `.tsv`, `.fibps`, `.mit`, `.zrw`, `.xrdml`, `.xrcx`).
 3. **Keep result numbers out of file names.** Name a file after the sample code, the measurement type, and the position or counterbody, such as `BN-DLC(261015A).mit` or `wear 1.fibps`. Never name a file `351.9nm.fibps`. Results belong in stored **Values**, where they carry units, tolerances, and provenance.
-4. **Extract values from files instead of typing them.** Click **Extract Values** in the viewer (or right-click several files and choose **Extract values from N files...**) so every number carries its `Reader` source, and use **Add > Derived Value...** for formula outputs.
+4. **Extract values from files instead of typing them.** Click **Extract Values** in the viewer (or right-click several files and choose **Extract values from N files...**) so every number carries its `Reader` source. Use **Add > Derived Value...** for formula outputs.
 
 <Remember>A file name tells you *which* sample and *which* spot was measured. A stored **Value** tells you *what number* the measurement gave.</Remember>
 

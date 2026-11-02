@@ -17,7 +17,7 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-In <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-1-build-the-whole-item-tree-first`}>Chapter 4: Step 1: Build the whole item tree first</a>, you built the six-item tree for Study A (`261015A`) by hand. Once you start running a series of ten or twenty samples with the same characterization sequence, building every node one click at a time is too slow and invites mistakes. This chapter shows how to structure complex multi-step trees, operate on many rows at once, and stamp out a complete experiment hierarchy in seconds from an **Experiment Template** (`.elntemplate`).
+In <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-1-build-the-whole-item-tree-first`}>Chapter 4: Step 1: Build the whole item tree first</a>, you built the six-item tree for Study A (`261015A`) by hand. Once you start running a series of ten or twenty samples with the same characterization sequence, building every node one click at a time is too slow and invites mistakes. Instead, you can structure complex multi-step trees, operate on many rows at once, and stamp out a complete experiment hierarchy in seconds from an **Experiment Template** (`.elntemplate`).
 
 ## Designing a clean item hierarchy
 
@@ -25,7 +25,7 @@ Every scientific record in the center **Items** panel is a **Procedure** (`Proc`
 
 - **Put a synthesis or deposition run at the root as a `Procedure`.** In both Study A (`Deposition 261015A`) and Study B (`Deposition 261014B`), the sputtering run is a top-level **Procedure** because it creates the sample and holds the run-wide deposition conditions and logs.
 - **Put a preparation step that happens *before* or *during* the run as a child `Action` of the `Procedure`.** In Study B, plasma substrate cleaning (`Cleaning 261014B`) is a child **Action** under `Deposition 261014B`.
-- **Put each physical sample produced by the run as a `Specimen` under the `Procedure`.** If one deposition run coats both a silicon wafer and a steel coupon with different purposes, you can list the substrates in the specimen description (as in `261015A`) or create separate **Specimen** rows under the same **Procedure**.
+- **Put each physical sample produced by the run as a `Specimen` under the `Procedure`.** If one deposition run coats both a silicon wafer and a steel coupon, you can list the substrates in the specimen description (as in `261015A`). When the substrates serve different experimental purposes, you can also create separate **Specimen** rows under the same **Procedure**.
 - **Put every measurement or test on that sample as a child `Action` under the `Specimen`.** In Study A, `Thickness 261015A`, `Indentation 261015A`, and `Friction test 261015A` sit directly under specimen `261015A`.
 - **Nest a follow-up measurement or analysis under the `Action` it depends on.** In Study A, `Wear track 261015A` measures the groove created by `Friction test 261015A`, so it sits under `Friction test 261015A`. In Study B, `XRR fit 261014B` fits the curve measured in `XRR-1 261014B`, so it sits directly under `XRR-1 261014B` (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#fig-1-2`}>Figure 1-2</a>).
 
@@ -50,7 +50,7 @@ Every scientific record in the center **Items** panel is a **Procedure** (`Proc`
 
 When you create or edit a **Procedure** or **Action** (**Item > New Procedure**, **Item > New Action**, or **Item > Edit**), the dialog asks for **Title**, **Description**, **Item type**, **Action type**, and **Equipment**.
 
-If you install a new instrument or start a new type of test and find that the drop-down list does not have your **Action type** or **Equipment** yet, you do not need to cancel the dialog and open **Reference Data**:
+If you install a new instrument or start a new type of test and find that the drop-down list lacks your **Action type** or **Equipment**, you do not need to cancel the dialog. You can add it without opening **Reference Data**:
 
 1. Select an **Item type** first. This enables the **+** button right beside **Action type** (tooltip: **Add a new action type**). Click **+**, enter a non-blank **Title**, select a **Kind**, and click **OK**.
 2. Select an **Action type** that takes equipment. This enables the **+** button right beside **Equipment** (tooltip: **Add new equipment**). Click **+**, enter **Model**, **Manufacturer**, and **Location** (all three are required), and click **OK**.
@@ -79,7 +79,7 @@ When multiple records are selected, APS ELN disables single-item commands (**New
 4. **Export**: exports all selected files into a destination folder on disk, automatically appending ` (2)`, ` (3)` if two files share the same display name so no file is ever overwritten.
 5. **Delete**: moves selected items to the Recycle Bin, or permanently deletes selected files and their extracted `Reader` values (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5: Deleting containers and using the Recycle Bin</a>).
 
-Every batch command shows a single confirmation dialog before it starts. If any selected row cannot be processed (for example, because an item is signed or sits in a read-only project), the confirmation names that row and the reason, skips it safely, and shows a summary report at the end.
+Every batch command shows a single confirmation dialog before it starts. If any selected row cannot be processed (for example, because an item is signed or sits in a read-only project), the confirmation names that row and the reason. It then skips that row safely and shows a summary report at the end.
 
 ## Building and applying Experiment Templates
 
@@ -92,7 +92,7 @@ APS ELN ships with ready-made `.elntemplate` files in `Assets/Runtime/Experiment
 1. Choose **Reference Data > Experiment Templates...**.
 2. Click **Add**, and choose whether the root of your template is a **Procedure** (`Proc`) or a **Specimen** (`Item`).
 3. Enter the template **Name** (for example, `BN-DLC Tribology Standard`), **Category**, and **Description**.
-4. Select the root node in the structure tree, set its **Title**, **Level**, **Type**, and **Action Type**, and use **Add Child** and **Add Sibling** to add the specimen and measurement action nodes (`Thickness`, `Indentation`, `Friction test`, and child `Wear track`).
+4. Select the root node in the structure tree and set its **Title**, **Level**, **Type**, and **Action Type**. Use **Add Child** and **Add Sibling** to add the specimen and measurement action nodes (`Thickness`, `Indentation`, `Friction test`, and child `Wear track`).
 5. Click **Save** and inspect the hierarchy preview.
 
 To start a new sample from your template:

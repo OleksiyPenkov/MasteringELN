@@ -9,15 +9,15 @@ inThisChapter:
   - How human scientists and agents work together without losing rigor
 ---
 
-An AI assistant connected through `ELNCommunityMCP.exe` or `ELNMCPServer.exe` (<a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 15: What the ELN MCP server does</a>) is a fast, tireless laboratory partner, provided you know which jobs belong to the agent and which decisions belong to you. Items 1 through 5 below are what an agent can do for you; items 6 through 10 are what it can never do.
+An AI assistant connected through `ELNCommunityMCP.exe` or `ELNMCPServer.exe` (<a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 15: What the ELN MCP server does</a>) is a fast, tireless laboratory partner. To use it safely, you need to know which jobs belong to the agent and which decisions belong to you. Items 1 through 5 below are what an agent can do for you; items 6 through 10 are what it can never do.
 
 ## 1. Can: Build item trees and attach raw files
 
-Given a folder of raw files inside `--upload-root` and a checklist (such as `record_agent.md` in Study A and Study B), an agent can call `create_project`, `create_folder`, `create_item`, and `upload_file` to construct an entire `Procedure -> Specimen -> Action` hierarchy and attach every `.depo.json`, `.tsv`, `.fibps`, `.mit`, `.zrw`, and `.xrdml` file with verified MD5 hashes in seconds (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17: Part 1</a>).
+Give an agent a folder of raw files inside `--upload-root` and a checklist (such as `record_agent.md` in Study A and Study B). It can call `create_project`, `create_folder`, `create_item`, and `upload_file` to construct an entire `Procedure -> Specimen -> Action` hierarchy and attach every `.depo.json`, `.tsv`, `.fibps`, `.mit`, `.zrw`, and `.xrdml` file with verified MD5 hashes in seconds (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17: Part 1</a>).
 
 ## 2. Can: Extract Reader values with snapshots
 
-By calling `extract_file_key_values` and forwarding the mapped fields (`converted_value`, `value_type_id`, `tolerance`, `source_file_id`, `reader_id`, `reader_version`, `key_name`, `reader_units`, `conversion_factor`, and `analysis_snapshot`) verbatim into `add_values`, an agent stores up to 200 `Reader` values in a single all-or-nothing transaction (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Why agent-written records need the Value Route</a>). For `.fibps` maps, it can also pass pixel rectangle coordinates in `selection` so the step height and its `regions` snapshot are recorded reproducibly (<a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>).
+An agent calls `extract_file_key_values` and forwards the mapped fields (`converted_value`, `value_type_id`, `tolerance`, `source_file_id`, `reader_id`, `reader_version`, `key_name`, `reader_units`, `conversion_factor`, and `analysis_snapshot`) verbatim into `add_values`. In a single all-or-nothing transaction, it stores up to 200 `Reader` values (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Why agent-written records need the Value Route</a>). For `.fibps` maps, it can also pass pixel rectangle coordinates in `selection` so the step height and its `regions` snapshot are recorded reproducibly (<a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>).
 
 ## 3. Can: Compute Derived values from formulas
 
@@ -25,11 +25,11 @@ An agent never needs to calculate a wear rate in its own prompt and type the res
 
 ## 4. Can: Audit storage, ranges, and drift
 
-With three read-only calls (`check_storage`, `check_value_drift`, and `report_value_issues`), an agent can check every attachment's MD5 checksum on disk, re-run every data file reader and `Derived` formula across hundreds of values, and flag any value or tolerance outside its plausible range (<a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16: Running the three project-wide health checks</a>). It can also search across PDFs, Office files, and notes with `search_semantic` and summarize long `.tsv` logs with `get_file_columns`.
+With three read-only calls (`check_storage`, `check_value_drift`, and `report_value_issues`), an agent checks every attachment's MD5 checksum on disk, re-runs every data file reader and `Derived` formula across hundreds of values, and flags any value or tolerance outside its plausible range (<a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16: Running the three project-wide health checks</a>). It can also search across PDFs, Office files, and notes with `search_semantic` and summarize long `.tsv` logs with `get_file_columns`.
 
 ## 5. Can: Stage curves to external fitting tools
 
-Using `download_file`, an agent can export a raw measurement file (such as `XRR-1_Co-C(261014B).xrdml`) from ELN storage into `--upload-root`, pass it to a domain-specific tool server such as `XRC_MCP.exe` (X-Ray Calc 3), run the multi-seed fitting procedure, upload the resulting `.xrcx` fit project back to a child action, and extract the fitted parameters as `Reader` values (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 17: Part 2</a>).
+Using `download_file`, an agent exports a raw measurement file (such as `XRR-1_Co-C(261014B).xrdml`) from ELN storage into `--upload-root` and passes it to a domain-specific tool server such as `XRC_MCP.exe` (X-Ray Calc 3). After running the multi-seed fitting procedure, it uploads the resulting `.xrcx` fit project back to a child action and extracts the fitted parameters as `Reader` values (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 17: Part 2</a>).
 
 ## 6. Cannot: Approve or accept a hypothesis
 

@@ -17,7 +17,7 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-The fastest way to learn APS ELN is to record one real sample from start to finish. In this chapter, you will build the complete record for **Study A (`261015A`)**, a boron nitride and diamond-like carbon (BN/DLC) coating grown by magnetron sputtering and characterized across three instruments. Every raw file you need is in the book's demonstration bundle (`/MasteringELN/data/study-a/`). When you finish, your notebook will hold 6 items, 11 raw files with verified MD5 hashes, 23 `Reader` values, and 1 `Derived` wear-rate value (<a href="#fig-4-1">Figure 4-1</a>).
+The fastest way to learn APS ELN is to record one real sample from start to finish. You will build the complete record for **Study A (`261015A`)**, a boron nitride and diamond-like carbon (BN/DLC) coating grown by magnetron sputtering and characterized across three instruments. Every raw file you need is in the book's demonstration bundle (`/MasteringELN/data/study-a/`). When you finish, your notebook will hold 6 items, 11 raw files with verified MD5 hashes, 23 `Reader` values, and 1 `Derived` wear-rate value (<a href="#fig-4-1">Figure 4-1</a>).
 
 ## Meet Study A: sample 261015A
 
@@ -26,7 +26,7 @@ In Study A, a student deposits a BN/DLC coating (`261015A`) onto silicon and mas
 1. **Deposition (`Deposition 261015A`):** the sputtering system writes a structured summary (`Deposition_BN-DLC_(261015A)_2026-10-15_17-21-48.depo.json`), a run metadata file (`2026-10-15_17-21-48_BN-DLC(DLCTOP).run.json`), and a time-series log (`2026-10-15_17-21-48_BN-DLC(DLCTOP).tsv`).
 2. **Coating thickness (`Thickness 261015A`):** a Filmetrics Profilm3D optical profiler scans across the masked step edge on the steel piece at three positions (`1.fibps`, `2.fibps`, `3.fibps`).
 3. **Hardness and modulus (`Indentation 261015A`):** an Anton Paar UNHT nanoindenter runs a 9-indent series on the coating (`BN-DLC(261015A).mit`).
-4. **Friction and wear (`Friction test 261015A` and `Wear track 261015A`):** a DaVinci 1000 tribometer runs a 1,000-cycle reciprocating test at $1\,\text{kgf}$ ($F_n = 9.81\,\text{N}$) (`BN-DLC.zrw`), and the optical profiler measures the cross-sectional area of the wear track at three positions (`wear 1.fibps`, `wear 2.fibps`, `wear 3.fibps`).
+4. **Friction and wear (`Friction test 261015A` and `Wear track 261015A`):** a DaVinci 1000 tribometer runs a 1,000-cycle reciprocating test at $1\,\text{kgf}$ ($F_n = 9.81\,\text{N}$) (`BN-DLC.zrw`). Next, the optical profiler measures the cross-sectional area of the wear track at three positions (`wear 1.fibps`, `wear 2.fibps`, `wear 3.fibps`).
 
 <p id="table-4-1" class="table-caption"><strong>Table 4-1:</strong> The six items and eleven raw files of Study A (<code>261015A</code>).</p>
 
@@ -44,7 +44,7 @@ In Study A, a student deposits a BN/DLC coating (`261015A`) onto silicon and mas
 
 ## Step 1: Build the whole item tree first
 
-Always build the entire item tree before you start attaching files (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>). That way, every planned measurement has a home in the tree, and you can see at a glance if any step is still missing its files.
+Always build the entire item tree before you start attaching files (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>). That way, every planned measurement has a home in the tree, and you can see immediately if any step is still missing its files.
 
 1. Open your notebook (<a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2</a>) and select your destination project and folder in the **Projects** panel on the left.
 2. Choose **Item > New Procedure**. Set **Title** to `Deposition 261015A`, select the item type `Synthesis` and **Action type** `Deposition`, and click **Save**.
@@ -57,7 +57,7 @@ Always build the entire item tree before you start attaching files (<a href={`${
 
 <Warning title="saving a new specimen before adding specimen properties">In current builds, the new-specimen dialog does not retain custom entries on the properties grid before its first **Save**. Create and **Save** the specimen first, then select it and choose **Item > Edit** if you want to enter custom specimen properties.</Warning>
 
-<InELN>If your laboratory equipment is not yet listed in the **Equipment** drop-down of a procedure or action dialog, select an **Item type** and **Action type** first, then click the **+** button beside **Equipment** (tooltip: **Add new equipment**). Fill in **Model**, **Manufacturer**, and **Location**; all three fields are required to enable **OK**.</InELN>
+<InELN>If your laboratory equipment is not yet listed in the **Equipment** drop-down, select an **Item type** and **Action type** first. Then click the **+** button beside **Equipment** (tooltip: **Add new equipment**) and fill in **Model**, **Manufacturer**, and **Location**; all three fields are required to enable **OK**.</InELN>
 
 ## Step 2: Attach the 11 raw files to their actions
 
@@ -77,7 +77,7 @@ Now attach the raw files from `/MasteringELN/data/study-a/` to the five procedur
 With all 11 files attached, extract their numbers so every stored value carries a `Reader` source (<a href="#fig-4-1">Figure 4-1</a>):
 
 1. **Deposition parameters and logs (`Deposition 261015A`):** Click the `.depo.json` attachment to preview it in the **Deposition** viewer, then click **Extract Values**. Select the 10 condition keys (`Parameters.CleaningTime` $= 60\,\text{s}$, `Parameters.P` $= 0.267\,\text{Pa}$, `Parameters.PowerBN` $= 134\,\text{W}$, `Parameters.TimeBN` $= 50\,\text{s}$, `Parameters.Bias` $= 8\,\text{V}$, `Parameters.Warmuptime` $= 500\,\text{s}$, `Parameters.N` $= 46$, `Parameters.CurrentC` $= 0.312\,\text{A}$, `Parameters.TimeC` $= 190\,\text{s}$, `Parameters.TimeCtop` $= 340\,\text{s}$) and the 2 result keys (`Duration` $= 12941.5\,\text{s}$, `BasePressure` $= 9.10 \times 10^{-5}\,\text{Pa}$). Keep **Remember choices for this reader** ticked and click **OK**.
-2. **Coating step height (`Thickness 261015A`):** In the **FIBPS** viewer, verify the step evaluation regions on `1.fibps` and `2.fibps` (and automatic step detection on `3.fibps`), then select all three `.fibps` files in the item tree (`Ctrl`+click), right-click, and choose **Extract values from 3 files...**. Map `Step Height` to the thickness/step-height value type (`m`). ELN writes one `Reader` value per file ($3.58 \times 10^{-7}\,\text{m}$, $3.16 \times 10^{-7}\,\text{m}$, and $3.55 \times 10^{-7}\,\text{m}$, each with its `Step Height STD` stored as the tolerance).
+2. **Coating step height (`Thickness 261015A`):** In the **FIBPS** viewer, verify the step evaluation regions on `1.fibps` and `2.fibps` (and automatic step detection on `3.fibps`). Select all three `.fibps` files in the item tree (`Ctrl`+click), right-click, and choose **Extract values from 3 files...**. Map `Step Height` to the thickness/step-height value type (`m`). ELN writes one `Reader` value per file ($3.58 \times 10^{-7}\,\text{m}$, $3.16 \times 10^{-7}\,\text{m}$, and $3.55 \times 10^{-7}\,\text{m}$, each with its `Step Height STD` stored as the tolerance).
 3. **Hardness and modulus (`Indentation 261015A`):** Click `BN-DLC(261015A).mit` to view the 9 loading-unloading curves in the **MIT** viewer, then click **Extract Values**. Store `Hardness` ($5.92 \pm 0.47\,\text{GPa}$) and `Modulus` ($127.17 \pm 11.06\,\text{GPa}$). The reader pairs `Hardness STD` and `Modulus STD` into the **Tolerance** field automatically.
 4. **Friction test (`Friction test 261015A`):** Click `BN-DLC.zrw` in the **ZRW** viewer, check the plateau evaluation interval, and click **Extract Values** to store the conditions `Fn` ($9.81\,\text{N}$) and `Cycles` ($1000$) and the result `COF` ($0.528 \pm 0.019$).
 5. **Wear track cross-sectional area (`Wear track 261015A`):** Select `wear 1.fibps`, `wear 2.fibps`, and `wear 3.fibps` in the item tree, right-click, and choose **Extract values from 3 files...** to store the three `Wear Area` values ($0.00620\,\text{mm}^2$, $0.00553\,\text{mm}^2$, and $0.00621\,\text{mm}^2$).
@@ -105,8 +105,8 @@ $$
 
 When you run **Check Value Sources...** on an item tree (or call `check_value_drift` through MCP), APS ELN checks both levels of provenance:
 
-- For every **`Reader`** value, it runs the current reader plugin on the stored attachment bytes, applies the saved unit conversion factor (and any saved analysis snapshot, such as ticked indents or a ZRW cycle interval), and compares the output with the stored number.
-- For every **`Derived`** value, it re-reads the `Reader` inputs from their files, computes their mean when multiple inputs fill one role (such as the three `Wear Area` scans), and runs the saved formula version (`wear_rate_reciprocating` version 1). If an input value was edited or deleted after the `Derived` value was created, the check flags `input_changed` or `input_missing`.
+- For every **`Reader`** value, it runs the current reader plugin on the stored attachment bytes and applies the saved unit conversion factor (plus any saved analysis snapshot, such as ticked indents or a ZRW cycle interval). It then compares the output with the stored number.
+- For every **`Derived`** value, it re-reads the `Reader` inputs from their files and computes their mean when multiple inputs fill one role (such as the three `Wear Area` scans). It then runs the saved formula version (`wear_rate_reciprocating` version 1). If an input value was edited or deleted after the `Derived` value was created, the check flags `input_changed` or `input_missing`.
 
 </GoingDeeper>
 

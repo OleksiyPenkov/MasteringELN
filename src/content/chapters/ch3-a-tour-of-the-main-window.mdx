@@ -26,7 +26,7 @@ The main window is divided into four areas (<a href="#fig-3-1">Figure 3-1</a>):
 
 1. **The Projects panel (left):** shows your active projects, project groups, and specimen folders as a tree. Clicking a project or folder loads its scientific records into the center panel.
 2. **The Items panel (center):** shows the scientific hierarchy inside the selected project or folder: **Procedures** (`Proc`), **Specimens** (`Item`), and **Actions** (`Action`), along with the files, rich-text notes, and protocol forms attached to each record.
-3. **The Content Viewer (right):** displays the live preview of whichever file, protocol, value list, or hypothesis you select in the center panel, using the 26 built-in viewer plugins (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>).
+3. **The Content Viewer (right):** displays the live preview of the file, protocol, value list, or hypothesis selected in the center panel, using the 26 built-in viewer plugins (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>).
 4. **The Status bar (bottom):** displays the active connection mode (**Local** or **Remote**), the open `.sqlite` database path or server address, the selected attachment, and the build version number.
 
 <Figure id="fig-3-1" number="3-1" src={`${import.meta.env.BASE_URL}/figures/fig-3-1-main-window.svg`} alt="Diagram of the APS ELN Desktop main window showing the menu bar at top, the Projects panel on the left, the Items panel in the center with Procedure, Specimen, and Action rows, the Content Viewer on the right with Extract Values, and the status bar at the bottom" caption="The three-panel workspace of APS ELN Desktop. Select a project or folder on the left (1), click a procedure, specimen, action, or attached file in the center (2), and inspect or extract data in the Content Viewer on the right (3)." />
@@ -50,7 +50,7 @@ In the center **Items** panel, every scientific record has one of three hierarch
   ]}
 />
 
-When an action holds repeated values of the same value type, record type, and description (such as the three step-height scans on `Thickness 261015A`), the item tree summarizes them automatically on one line as the mean, the sample standard deviation, and the count: for example, `d = 343.0 ± 23.5 nm (n=3)`. Opening the action dialog with **Item > Edit** still lists each individual value row and its source file.
+When an action holds repeated values of the same value type, record type, and description (such as the three step-height scans on `Thickness 261015A`), the item tree summarizes them automatically on one line. It shows the mean, the sample standard deviation, and the count: for example, `d = 343.0 ± 23.5 nm (n=3)`. Opening the action dialog with **Item > Edit** still lists each individual value row and its source file.
 
 When you select a **Procedure**, **Specimen**, or **Action** row that has child rows, three small buttons appear at the right end of that row:
 
@@ -66,7 +66,7 @@ When you select a **Procedure**, **Specimen**, or **Action** row that has child 
 
 Each panel has a search bar at the top that filters the rows shown in that panel. When a panel filter is active, clear its search box to see all rows again. For a notebook-wide search or an overview of recent work, use the **Navigate** menu and the **Dashboard**.
 
-<InELN>In **APS ELN Community**, press `Ctrl+D` (or choose **Navigate > Dashboard**) to open the notebook overview, press `Ctrl+F` (or choose **Navigate > Search...**) to search across all notebook records, press `Ctrl+G` (or choose **Navigate > Go to Item...**) to jump to an item by ID, and press `F1` for **Help > Keyboard Shortcuts...**.</InELN>
+<InELN>In **APS ELN Community**, press `Ctrl+D` (or choose **Navigate > Dashboard**) to open the notebook overview, and press `Ctrl+F` (or choose **Navigate > Search...**) to search across all notebook records. Press `Ctrl+G` (or choose **Navigate > Go to Item...**) to jump to an item by ID, and press `F1` for **Help > Keyboard Shortcuts...**.</InELN>
 
 <InTeamLab title="the Team Lab Dashboard and Ctrl+D">
 
@@ -78,7 +78,7 @@ In the Commercial ("For Teams") edition, open the Dashboard from **Edit > Dashbo
 - **Project Statistics:** item counts across your active projects.
 - **Activity Feed:** recent changes across your group (supervisors with **Super** or **Admin** roles can filter by student account and time range).
 
-Double-click any entry on the Dashboard to jump straight to that project and item. Note that in the Commercial client, pressing `Ctrl+D` while the **Items** panel has focus duplicates the selected item (**Item > Duplicate**).
+Double-click any entry on the Dashboard to jump straight to that project and item. In the Commercial client, pressing `Ctrl+D` while the **Items** panel has focus duplicates the selected item (**Item > Duplicate**).
 
 </InTeamLab>
 

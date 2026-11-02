@@ -22,7 +22,7 @@ Before you can create a project or record a sample (<a href={`${import.meta.env.
 
 ## Two ways ELN stores your laboratory work
 
-APS ELN always keeps two kinds of data in lockstep (<a href="#fig-2-1">Figure 2-1</a>):
+APS ELN always keeps two kinds of data synchronized (<a href="#fig-2-1">Figure 2-1</a>):
 
 1. **The structured database:** projects, folders, procedures, specimens, actions, values, protocols, hypotheses, tags, links, signatures, and the audit trail.
 2. **The attachment storage:** the exact bytes of every raw measurement file, note image, and analysis project you attach.
@@ -31,7 +31,7 @@ APS ELN always keeps two kinds of data in lockstep (<a href="#fig-2-1">Figure 2-
 
 In **APS ELN Community**, both parts sit in normal folders on your Windows PC: one SQLite database file (such as `notebook.sqlite`) and one separate attachment directory (such as `notebook files`). There is no server login.
 
-In **APS ELN ("For Teams")**, the structured records live on a shared MySQL server and the attachment bytes live on a shared WebDAV or server store. You log in with the username and password issued by your laboratory administrator.
+In **APS ELN ("For Teams")**, the structured records are stored on a shared MySQL server and the attachment bytes are stored on a shared WebDAV or server store. You log in with the username and password issued by your laboratory administrator.
 ## Creating a local notebook in Community
 
 When you launch `ELNCommunity.exe` for the first time, no notebook is open yet. Follow these steps to create your first notebook:
@@ -68,7 +68,7 @@ When you launch Community without command-line flags, it automatically reopens t
 
 ## Logging into a shared team server
 
-If you work in a research group that runs the Commercial team edition (`ELabNotebook3.exe`), your notebooks live on the laboratory server so your teammates and supervisor can see projects, review protocols, and approve hypotheses.
+If you work in a research group that runs the Commercial team edition (`ELabNotebook3.exe`), your notebooks are stored on the laboratory server so your teammates and supervisor can see projects, review protocols, and approve hypotheses.
 
 <InTeamLab title="first-run connection and server login">
 
@@ -93,19 +93,19 @@ In a team laboratory, your account carries one of five roles (<a href="#table-2-
   ]}
 />
 
-<Tip>If you want to practice creating items or testing value extraction without touching your group's live server database, use **Demo Mode** on the login screen (or open the Study A and Study B local `.sqlite` demonstration notebooks in **APS ELN Community**).</Tip>
+<Tip>To practice creating items or testing value extraction without touching your group's live server database, use **Demo Mode** on the login screen. You can also open the Study A and Study B local `.sqlite` demonstration notebooks in **APS ELN Community**.</Tip>
 
 ## How to back up a local notebook safely
 
-In APS ELN Community, records are saved to the `.sqlite` database as soon as you complete each dialog. There is no **File > Save Notebook** menu command. However, a database file without its attachment folder is only half a notebook: it knows the names and MD5 hashes of your files, but the curves and images themselves live in the attachment directory.
+In APS ELN Community, records are saved to the `.sqlite` database as soon as you complete each dialog. There is no **File > Save Notebook** menu command. However, a database file without its attachment folder is only half a notebook. The database stores the names and MD5 hashes of your files, while the curves and images themselves are stored in the attachment directory.
 
 Follow these five steps whenever you back up or move a local notebook:
 
 1. **Save open editors.** Save any open Markdown note or external working draft (`Tools > Save Attachment Working Draft`), and resolve any conflict prompts.
-2. **Close the notebook and stop MCP processes.** Close `ELNCommunity.exe` and make sure no `ELNCommunityMCP.exe` agent process is using the database. Never copy a SQLite database while a program is writing to it.
+2. **Close the notebook and stop MCP processes.** Close `ELNCommunity.exe` and verify that no `ELNCommunityMCP.exe` agent process is using the database. Never copy a SQLite database while a program is writing to it.
 3. **Copy the database and attachment folder together.** Copy both the `.sqlite` file and the entire `<name> files` folder (keeping its subfolder structure and filenames unchanged) into one backup folder or archive.
 4. **Copy retained working drafts if needed.** If you declined to save a working draft at close and kept its temporary recovery path, copy that draft folder separately.
-5. **Test your backup in a new folder.** When restoring, extract both the `.sqlite` file and the attachment folder into a new directory rather than overwriting an existing notebook in place, then open it with **File > Open Notebook...** and check a few files in the viewer.
+5. **Test your backup in a new folder.** When restoring, extract both the `.sqlite` file and the attachment folder into a new directory instead of overwriting an existing notebook in place. Then open it with **File > Open Notebook...** and check a few files in the viewer.
 
 <Remember>To move a closed Community notebook to another folder or drive, move the parent folder that holds both the `.sqlite` database and its attachment folder. Because the notebook saves a relative path on the same drive, it will find its attachments at the new location automatically.</Remember>
 

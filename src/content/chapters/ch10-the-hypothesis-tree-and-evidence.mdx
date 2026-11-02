@@ -18,20 +18,20 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Recording procedures, specimens, actions, files, and values (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6</a> and <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9</a>) tells you *what* you made and *what numbers* you measured. Still, when you look at a project with thirty depositions six months later, the item tree alone does not explain *why* you changed the bias voltage in run 12 or *which* hypothesis that series of samples tested. The **Hypothesis Tree** connects your scientific reasoning to the exact runs, files, and values that tested it.
+Recording procedures, specimens, actions, files, and values (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6</a> and <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9</a>) tells you *what* you made and *what numbers* you measured. Six months later, however, an item tree with thirty depositions does not explain *why* you changed the bias voltage in run 12 or *which* idea that series of samples tested. The **Hypothesis Tree** connects your scientific reasoning to the exact runs, files, and values that tested it.
 
 ## Why connect experiments to a hypothesis tree?
 
 In APS ELN, a **hypothesis** is a first-class record inside a project that links four things (<a href="#fig-10-1">Figure 10-1</a>):
 
 1. **The Proposal:** what you expect to happen and why (`Statement`), plus what changed compared to the parent hypothesis (`Change`) when you are refining an earlier idea.
-2. **The Runs and References:** the experimental **Procedures**, **Specimens**, or **Actions** you carried out to test the hypothesis (`Run`), or earlier records from any readable project that provide background context (`Reference`).
+2. **The Runs and References:** the experimental **Procedures**, **Specimens**, or **Actions** you ran to test the hypothesis (`Run`), or earlier records from any readable project that provide background context (`Reference`).
 3. **The Cited Evidence:** the specific items, attached files (`.mit`, `.zrw`, `.xrcx`), or stored values ($H_{\text{IT}}$, $\text{COF}$, $K$, $D$) that support or refute the expectation.
 4. **The Conclusion:** what you found (`What we found`) and the outcome (`Supported`, `Refuted`, or `Inconclusive`).
 
 <Figure id="fig-10-1" number="10-1" src={`${import.meta.env.BASE_URL}/figures/fig-10-1-hypothesis-lifecycle.svg`} alt="Flowchart of the four hypothesis stages: Proposed (Needs approval), Gate 1, Approved (Attach Runs and Cite), In Review (Needs acceptance), and Sealed OK, with Evidence Snapshot and Human Gate rules below" caption="The lifecycle of a hypothesis in APS ELN. Every hypothesis passes through two human decisions in the GUI: Gate 1 approves the proposal before laboratory runs are attached, and Gate 2 accepts and seals the conclusion after evidence is cited." />
 
-Because a root hypothesis can have **follow-up** hypotheses nested beneath it, an entire multi-month research campaign forms a tree where you can see which ideas were supported, which were refuted, and how each result led to the next experiment.
+A root hypothesis can have **follow-up** hypotheses nested beneath it. Across a multi-month research campaign, the tree shows which ideas were supported, which were refuted, and how each result led to the next experiment.
 
 ## Proposing a hypothesis and passing the first gate
 
@@ -43,11 +43,11 @@ To open the hypothesis view for a project, select the project in the **Projects*
 4. Click **OK**. The new hypothesis starts in `Needs approval` (`Proposed`). While it waits for approval, its author can click **Edit...** on the **Proposal** tab to refine the wording, and can attach background **Reference** items.
 5. In the **Your decision** panel, the reviewer reads the proposal and clicks **Approve** (so laboratory runs can begin) or **Reject** (which requires a comment explaining why).
 
-<InELN>Just like the **Projects** and **Items** panels (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Reading the item tree and its row buttons</a>), selecting a parent hypothesis row that has follow-ups reveals the three row buttons on its right edge: **Collapse all below**, **Expand all below**, and **Focus**.</InELN>
+<InELN>Like the **Projects** and **Items** panels (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Reading the item tree and its row buttons</a>), selecting a parent hypothesis row with follow-ups reveals the three row buttons on its right edge: **Collapse all below**, **Expand all below**, and **Focus**.</InELN>
 
 <InTeamLab title="who approves proposals and conclusions in a team lab">
 
-In **APS ELN Community**, you review and approve your own hypotheses locally inside the Desktop GUI. In the Commercial ("For Teams") edition, an administrator or supervisor configures **Administration > Approval Policy...** (including an optional **Four-eyes** rule that prevents anyone from approving their own hypothesis) or ticks **Can approve proposals** and **Can accept conclusions** on a project's **Share...** dialog (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#sharing-projects-in-a-team-laboratory`}>Chapter 5: Sharing projects in a team laboratory</a>). By default, a student with a `Standard` role submits proposals and conclusions, and their supervisor sees them immediately in the Dashboard's **Waiting for You** list (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-dashboard-and-keyboard-navigation`}>Chapter 3: The Dashboard and keyboard navigation</a>) and in the mobile web app's **Waiting for me** tab (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#submitting-protocols-from-the-instrument-in-a-team-lab`}>Chapter 8</a>). Projects that hold hypotheses display a **HYP** badge in the project tree, which turns solid when a decision is waiting on you.
+In **APS ELN Community**, you review and approve your own hypotheses locally inside the Desktop GUI. In the Commercial ("For Teams") edition, an administrator or supervisor configures **Administration > Approval Policy...** (including an optional **Four-eyes** rule that prevents anyone from approving their own hypothesis). They can also tick **Can approve proposals** and **Can accept conclusions** on a project's **Share...** dialog (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#sharing-projects-in-a-team-laboratory`}>Chapter 5: Sharing projects in a team laboratory</a>). By default, a student with a `Standard` role submits proposals and conclusions. Their supervisor sees them immediately in the Dashboard's **Waiting for You** list (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-dashboard-and-keyboard-navigation`}>Chapter 3: The Dashboard and keyboard navigation</a>) and in the mobile web app's **Waiting for me** tab (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#submitting-protocols-from-the-instrument-in-a-team-lab`}>Chapter 8</a>). Projects that hold hypotheses display a **HYP** badge in the project tree, which turns solid when a decision is waiting on you.
 
 </InTeamLab>
 
@@ -59,14 +59,14 @@ To connect your experimental items to the hypothesis:
 
 1. Select the **Procedure**, **Specimen**, or **Action** in the **Items** panel (for example, `Deposition 261015A` in Study A).
 2. Either right-click the item in the item tree and choose **Hypothesis > Attach to hypothesis...**, or open **Project > Hypotheses**, select the hypothesis, open the **Runs** tab, and click **Attach selected item...**.
-3. Choose **Run** (an experiment carried out in this project to test the hypothesis) or **Reference** (existing context from any readable project) and confirm. Items attached as runs display a **HYP** badge in the item tree.
+3. Choose **Run** (an experiment run in this project to test the hypothesis) or **Reference** (existing context from any readable project) and confirm. Items attached as runs display a **HYP** badge in the item tree.
 
 <Tip>If an unexpected result in an existing experiment sparks a new idea, right-click that item in the **Items** panel and choose **Hypothesis > New hypothesis from this item...**. APS ELN opens the new-hypothesis dialog with that item already attached as a `Reference` from the very first draft.</Tip>
 
 After your measurements and value extractions are complete, cite the specific records that test the hypothesis:
 
 1. In **Project > Hypotheses**, select the approved hypothesis, switch to the **Evidence** tab, and click **Add evidence...**.
-2. In the left list of the dialog, select an attached `Run` or `Reference` (or any indented child action beneath a run, such as `Indentation 261015A` or `Friction test 261015A`). You do not need to attach every child action as a separate `Run` just to cite its files or values.
+2. In the left list of the dialog, select an attached `Run` or `Reference` (or any indented child action beneath a run, such as `Indentation 261015A` or `Friction test 261015A`). You do not need to attach every child action as a separate `Run` to cite its files or values.
 3. In the right list, pick what you are citing: the **item as a whole**, one of its **attached files** (such as `BN-DLC.zrw` or `XRR-fit_Co-C(261014B).xrcx`), or one of its **stored values** (such as $K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$).
 4. Type a short note explaining why this evidence matters and click **OK**.
 
@@ -80,7 +80,7 @@ When your runs and cited evidence are in place, you are ready to write the concl
 2. In **What we found**, write your summary of the results (you can include Markdown and `[[item:N]]` links).
 3. Under **Outcome**, select **Supported**, **Refuted**, or **Inconclusive**.
 4. Click **Submit conclusion**. APS ELN requires at least one cited piece of evidence before it allows submission. The status changes to `Needs acceptance` (`InReview`).
-5. In **Your decision**, the reviewer inspects the runs, the cited evidence (checking for any `changed` or `missing` warnings), and the conclusion text, then clicks **Accept** or **Return for more work** (which requires a comment and sends the hypothesis back to the lab so the author can add runs or revise the conclusion).
+5. In **Your decision**, the reviewer inspects the runs, the cited evidence (checking for any `changed` or `missing` warnings), and the conclusion text. The reviewer then clicks **Accept** or **Return for more work**. Returning a hypothesis requires a comment and sends it back to the lab so the author can add runs or revise the conclusion.
 
 <p id="table-10-1" class="table-caption"><strong>Table 10-1:</strong> Hypothesis states and human review gates.</p>
 

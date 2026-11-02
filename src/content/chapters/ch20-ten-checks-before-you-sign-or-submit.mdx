@@ -9,7 +9,7 @@ inThisChapter:
   - Ensuring a colleague can trace every number back to its raw file
 ---
 
-Electronic signatures (`SIGNED`) and protocol or hypothesis approvals lock your record permanently (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>). Run through these ten checks before you click **Sign** or ask your supervisor to review your experiment.
+Electronic signatures (`SIGNED`) and protocol or hypothesis approvals lock your record permanently (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>). Complete these ten checks before you click **Sign** or ask your supervisor to review your experiment.
 
 ## 1. Every action has its raw files attached
 
@@ -17,7 +17,7 @@ Expand your **Procedure** row in the **Items** panel with **Expand all below** (
 
 ## 2. Every file opens in its built-in viewer
 
-Click through the attached files in the **Items** panel and check the **Content Viewer** on the right (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>). Confirm that `.depo.json` opens in the **Deposition** viewer (not plain JSON), `.fibps` shows its height map, `.mit` plots the load-displacement curves, `.zrw` plots the friction curve, and `.xrcx` shows both the reflectivity curves and the **Structure** table. If you edited any attachment in an external program or the **Markdown Editor**, make sure you saved your working draft (**Tools > Save Attachment Working Draft**).
+Click through the attached files in the **Items** panel and check the **Content Viewer** on the right (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>). Confirm that `.depo.json` opens in the **Deposition** viewer (rather than plain JSON), `.fibps` shows its height map, `.mit` plots the load-displacement curves, `.zrw` plots the friction curve, and `.xrcx` shows both the reflectivity curves and the **Structure** table. If you edited any attachment in an external program or the **Markdown Editor**, verify that you saved your working draft (**Tools > Save Attachment Working Draft**).
 
 ## 3. Shared regions and intervals are applied
 
@@ -25,11 +25,11 @@ In the **FIBPS** viewer, check that the step-height rectangles **A** and **B** s
 
 ## 4. Headline values carry Reader or Derived sources
 
-Open each **Procedure** and **Action** with **Item > Edit** and inspect its **Values** tab (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9: The four value sources and Derived formulas</a>). Every measurement that has a file reader should show a `Reader` source naming the reader ID, version, key, and file, and every formula output (such as reciprocating wear rate $K$) should show a `Derived` source naming the formula ID, version, and input values. If a value shows `Manual`, verify that it is a quantity with no file reader and that its **Description** explains how it was measured.
+Open each **Procedure** and **Action** with **Item > Edit** and inspect its **Values** tab (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9: The four value sources and Derived formulas</a>). Every measurement that has a file reader should show a `Reader` source naming the reader ID, version, key, and file. Every formula output (such as reciprocating wear rate $K$) should show a `Derived` source naming the formula ID, version, and input values. If a value shows `Manual`, verify that it is a quantity with no file reader and that its **Description** explains how it was measured.
 
 ## 5. Repeated measurements show mean and SD
 
-When an action holds multiple measurements of the same quantity (such as the three step-height scans `1.fibps`–`3.fibps` or the three wear-track scans `wear 1.fibps`–`wear 3.fibps` in Study A), check the summary on the item tree row. Because all three values share the same Value Type, Record Type (`Result`), and Description, the tree row should display their mean, sample standard deviation, and count: for example, `d = 343.0 ± 23.5 nm (n=3)` (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3</a>). If `(n=6)` appears when you attached only 3 files, check for duplicate manual entries.
+When an action holds multiple measurements of the same quantity (such as the three step-height scans `1.fibps`–`3.fibps` or the three wear-track scans `wear 1.fibps`–`wear 3.fibps` in Study A), check the summary on the item tree row. Because all three values share the same Value Type, Record Type (`Result`), and Description, the tree row displays their mean, sample standard deviation, and count: for example, `d = 343.0 ± 23.5 nm (n=3)` (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3</a>). If `(n=6)` appears when you attached only 3 files, check for duplicate manual entries.
 
 ## 6. Sample codes match across items and files
 
@@ -37,7 +37,7 @@ Check that the sample code in the **Specimen** title (such as `261015A` or `2610
 
 ## 7. Required protocol forms are completed
 
-If your procedure or action uses a structured **Protocol** (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8: Adding and completing a protocol on an item</a>), click the protocol row and read its rendered HTML in the **Content Viewer**. If the template uses `AutoFill` fields such as `values.all`, make sure the protocol was created *after* you extracted the item's values so the summary snapshot is populated, and move **Validation Status** from `Draft` to `In Review` when ready.
+If your procedure or action uses a structured **Protocol** (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8: Adding and completing a protocol on an item</a>), click the protocol row and read its rendered HTML in the **Content Viewer**. If the template uses `AutoFill` fields such as `values.all`, verify that the protocol was created *after* you extracted the item's values so the summary snapshot is populated. Then move **Validation Status** from `Draft` to `In Review` when ready.
 
 ## 8. Data Completeness reports zero missing items
 
@@ -49,7 +49,7 @@ Right-click the root **Procedure** of your experiment and choose **Check Value S
 
 ## 10. Hypothesis runs and citations are current
 
-If your experiment tests a hypothesis (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#attaching-runs-and-citing-evidence`}>Chapter 10: Attaching Runs and citing Evidence</a>), open **Project > Hypotheses**, select the hypothesis, and check its **Runs** and **Evidence** tabs. Confirm that the procedure or specimen is attached as a `Run`, that the final files and values are cited on the **Evidence** tab, and that no cited row shows a `changed` or `missing` warning before you click **Submit conclusion**.
+If your experiment tests a hypothesis (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#attaching-runs-and-citing-evidence`}>Chapter 10: Attaching Runs and citing Evidence</a>), open **Project > Hypotheses**, select the hypothesis, and check its **Runs** and **Evidence** tabs. Confirm that the procedure or specimen is attached as a `Run` and that the final files and values are cited on the **Evidence** tab. Verify that no cited row shows a `changed` or `missing` warning before you click **Submit conclusion**.
 
 ## Sources
 

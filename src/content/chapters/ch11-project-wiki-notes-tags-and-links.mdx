@@ -17,7 +17,7 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Not every piece of laboratory knowledge belongs inside a single deposition or measurement action. Project goals, literature reviews, substrate-cleaning standard operating procedures, and cross-sample comparisons span an entire project. At the same time, individual items often need quick visual badges (`Tags`), team discussion threads (`Comments`), or explicit links to the target or substrate batch they came from (`Links`). This chapter shows how to use all four tools without cluttering your experimental tree (<a href="#fig-11-1">Figure 11-1</a>).
+Not every piece of laboratory knowledge belongs inside a single deposition or measurement action. Project goals, literature reviews, substrate-cleaning standard operating procedures, and cross-sample comparisons span an entire project. Individual items also need visual category badges (`Tags`), team discussion threads (`Comments`), or explicit links to the target or substrate batch they came from (`Links`). Together, the **Project Wiki**, **Tags**, **Comments**, and **Typed Links** organize that context without cluttering your experimental tree (<a href="#fig-11-1">Figure 11-1</a>).
 
 ## The five-section Project Wiki
 
@@ -62,7 +62,7 @@ While folders group items by location, **Tags** let you label items across diffe
 3. To create a new tag, click **Add**, enter **Name:**, pick a badge color with **Choose...**, and click **OK**.
 4. Click **Close** when finished. Assigned tags appear as colored badges right beside the item title in the **Items** panel.
 
-<Warning title="clicking Delete in the Tags dialog removes the tag from the whole notebook">In the **Tags...** dialog (and in **Reference Data > Tags...**), clicking the **Delete** button deletes that tag definition and strips it from every item in the notebook. To remove a tag from the selected item only, simply uncheck its box.</Warning>
+<Warning title="clicking Delete in the Tags dialog removes the tag from the whole notebook">In the **Tags...** dialog (and in **Reference Data > Tags...**), clicking the **Delete** button deletes that tag definition and strips it from every item in the notebook. To remove a tag from the selected item only, uncheck its box.</Warning>
 
 To bookmark a project, folder, or item that you visit every day, right-click it and choose **Add to Favorites**. It appears under the **Favorites** branch in the left **Projects** panel for one-click access. Choosing **Remove from Favorites** removes the bookmark without touching the record.
 
@@ -73,7 +73,7 @@ APS ELN provides two ways to attach prose to an item and two ways to link items 
 - **Rich-text Notes (`Item > Add Note`):** formal experimental observations stored as child entries of the item and included in signed item hashes.
 - **Comments (`Right-click > Comments...`):** a timestamped discussion thread where you and your supervisor can post questions or review notes. Select a comment you wrote and click **Edit** or **Delete** to revise or remove it; you can only edit your own comments.
 
-When one scientific item depends on another item in a way that is not a parent-child tree relationship (for example, specimen `261015A` was deposited from a specific `B4C/BN Target` item, or a repeat run `261020A` duplicates `Deposition 261015A`), create a **typed item relationship**:
+Sometimes one scientific item depends on another item outside its parent-child tree branch. For example, specimen `261015A` may be deposited from a specific `B4C/BN Target` item, or a repeat run `261020A` may duplicate `Deposition 261015A`. In those cases, create a **typed item relationship**:
 
 1. Right-click the target item in the **Items** panel and choose **Copy as Link Target**.
 2. Right-click the source item and choose **Link to...**.

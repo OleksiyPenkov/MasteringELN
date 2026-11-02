@@ -17,7 +17,7 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-When you carefully distinguish **Conditions** (`EXP_CONDITION`) from **Results** (`TEST_RESULT`) as you extract values (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9: Conditions, Results, units, and plausible-range checks</a>), you unlock cross-sample analysis right inside APS ELN. Instead of copying numbers by hand from ten depositions into a spreadsheet, you can plot any deposition condition against any characterization result in seconds, export the paired table as CSV, and generate a formatted PDF report of your experiment tree (<a href="#fig-13-1">Figure 13-1</a>).
+When you distinguish **Conditions** (`EXP_CONDITION`) from **Results** (`TEST_RESULT`) as you extract values (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9: Conditions, Results, units, and plausible-range checks</a>), you unlock cross-sample analysis right inside APS ELN. Instead of copying numbers by hand from ten depositions into a spreadsheet, you can plot any deposition condition against any characterization result in seconds. You can also export the paired table as CSV and generate a formatted PDF report of your experiment tree (<a href="#fig-13-1">Figure 13-1</a>).
 
 ## Plotting conditions against results
 
@@ -36,10 +36,10 @@ To read the plot accurately, you need to know how **Tools > Analysis...** pairs 
 
 - **One point per selected Procedure:** each point on the scatter plot represents one root **Procedure** (`Proc`).
 - **How $X$ is chosen:** $X$ is the first matching **Condition** recorded directly on that **Procedure** (such as `Parameters.Bias` $= 8\,\text{V}$ on `Deposition 261015A`).
-- **How $Y$ is calculated:** $Y$ is the arithmetic mean of all matching **Result** values recorded on direct child actions of the procedure, actions directly below child **Specimens** (such as `Thickness 261015A`, `Indentation 261015A`, and `Friction test 261015A`), and one further action level below those specimen actions (such as `Wear track 261015A` or `XRR fit 261014B`).
+- **How $Y$ is calculated:** $Y$ is the arithmetic mean of all matching **Result** values across three levels under the procedure. It includes direct child actions of the procedure, actions directly below child **Specimens** (such as `Thickness 261015A`, `Indentation 261015A`, and `Friction test 261015A`), and one further action level below those specimen actions (such as `Wear track 261015A` or `XRR fit 261014B`).
 - Any procedure that lacks either the selected $X$ condition or at least one matching $Y$ result within those levels is omitted from the plot.
 
-<Remember>Because **Tools > Analysis...** reads the **Condition** from the root **Procedure** and the **Result** from its child actions (down to two levels below a **Specimen**), always store deposition and synthesis inputs on the **Procedure** and characterization outputs on the child **Actions** (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6: Designing a clean item hierarchy</a>).</Remember>
+<Remember>**Tools > Analysis...** reads the **Condition** from the root **Procedure** and the **Result** from its child actions (down to two levels below a **Specimen**). Always store deposition and synthesis inputs on the **Procedure** and characterization outputs on the child **Actions** (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6: Designing a clean item hierarchy</a>).</Remember>
 
 When enough points are plotted, APS ELN draws a linear regression line automatically. Treat that line as a visual guide rather than a statistical proof: the regression does not weight points by their stored tolerances (`STD`). Use **Copy Data (CSV)** when you need weighted fitting or error bars in a publication figure.
 
@@ -60,7 +60,7 @@ When you need a clean document for a weekly group meeting, a thesis appendix, or
 
 APS ELN can also export and import structured JSON **scientific packages** (`File > Export...` and `File > Import scientific package...`):
 
-1. To export, select a project and folder, choose **File > Export...**, tick the **Items to export**, set the **Export path**, choose whether to include file metadata (**Include files**) and protocol status history (**Include status history**), and click **Export**.
+1. To export, select a project and folder, choose **File > Export...**, and tick the **Items to export**. Set the **Export path**, choose whether to include file metadata (**Include files**) and protocol status history (**Include status history**), and click **Export**.
 2. To import a package into another notebook, select the destination project and folder, choose **File > Import scientific package...**, browse to the JSON file, inspect the **Package preview**, and click **Import**.
 
 <p id="table-13-1" class="table-caption"><strong>Table 13-1:</strong> Comparing PDF reports, JSON scientific packages, and full notebook backups.</p>
@@ -69,12 +69,12 @@ APS ELN can also export and import structured JSON **scientific packages** (`Fil
   headers={['Output method', 'Menu command', 'What it contains', 'Can it restore a full notebook?']}
   rows={[
     ['**PDF Report**', '**File > Export Report...**', 'Formatted human-readable document of selected items, protocols, values, tolerances, file lists, and signatures', 'No (read-only PDF printout).'],
-    ['**Scientific Package**', '**File > Export...** / **Import scientific package...**', 'JSON file of top-level item metadata, protocol entries (reset to `Draft` on import), and protocol templates', 'No (`Include files` writes file metadata only, not attachment bytes or child hierarchies).'],
+    ['**Scientific Package**', '**File > Export...** / **Import scientific package...**', 'JSON file of top-level item metadata, protocol entries (reset to `Draft` on import), and protocol templates', 'No (`Include files` writes file metadata only and omits attachment bytes and child hierarchies).'],
     ['**Full Notebook Backup**', 'Close ELN and copy `.sqlite` + `<name> files` folder (<a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#how-to-back-up-a-local-notebook-safely`}>Chapter 2</a>)', 'Every project, item tree, value, provenance source, signature, audit row, and all raw attachment bytes', '**Yes** (the only complete backup and restore method).'],
   ]}
 />
 
-<Warning title="a scientific package is not a notebook backup">In **File > Export...**, ticking **Include files** writes file metadata into the JSON package, not the raw `.fibps`, `.mit`, `.zrw`, or `.xrcx` attachment bytes, and **File > Import scientific package...** restores only top-level item metadata and protocol forms/templates (always starting imported protocols as `Draft`). Never rely on a scientific package or a PDF report as a backup of your laboratory data.</Warning>
+<Warning title="a scientific package is not a notebook backup">In **File > Export...**, ticking **Include files** writes file metadata into the JSON package while omitting the raw `.fibps`, `.mit`, `.zrw`, or `.xrcx` attachment bytes. Likewise, **File > Import scientific package...** restores only top-level item metadata and protocol forms or templates (always starting imported protocols as `Draft`). Never rely on a scientific package or a PDF report as a backup of your laboratory data.</Warning>
 
 ## Sources
 

@@ -24,7 +24,7 @@ Raw instrument files record what the machine measured, and extracted **Values** 
 
 A protocol is a structured form (or free-text entry) attached to a **Procedure**, **Specimen**, or **Action** (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6: Designing a clean item hierarchy</a>). APS ELN ships with ready-to-use protocol templates across twelve categories in `Assets/Runtime/ProtocolTemplates/`, including **Deposition** (`CSMICSputtering.json`, `SputterIII_1Source.json`–`3Source.json`), **Characterization** (`XRD.json`, `XRF.json`, `SEM.json`, `TEM.json`, `AFM.json`, `3DProfiling.json`), **Testing** (`Indentation.json`, `TribotestProtocol.json`, `Adhesion.json`), **Sample Preparation**, **Safety**, **Quality**, and **Reporting** (`WeeklyLabReport.json`).
 
-Follow these steps to attach and fill out a protocol:
+Follow these steps to attach and complete a protocol:
 
 1. Select the parent **Procedure**, **Specimen**, or **Action** in the **Items** panel.
 2. Choose **Item > Add Protocol** (or press `Ctrl+Shift+P` in the team client).
@@ -32,7 +32,7 @@ Follow these steps to attach and fill out a protocol:
 4. In the **Protocol Editor**, check **Title**, **Protocol Type** (`Experiment`, `Measurement`, `Analysis`, `Synthesis`, `Testing`, `Note`, or `Other`), and **Validation Status** (`Draft`), and fill in the form fields.
 5. Click **Save**. When you select the protocol in the **Items** panel, the **Content Viewer** renders the completed form as formatted HTML.
 
-<Warning title="switching templates clears your entered form fields">Inside the **Protocol Editor**, changing the **Template** drop-down clears all saved form fields on that protocol so the new schema can load. Never switch the **Template** drop-down just to browse other templates after you have typed experimental notes into a form.</Warning>
+<Warning title="switching templates clears your entered form fields">Inside the **Protocol Editor**, changing the **Template** drop-down clears all saved form fields on that protocol so the new schema can load. Never switch the **Template** drop-down to browse other templates after you have typed experimental notes into a form.</Warning>
 
 When you edit an existing protocol, an asterisk (`*`) marks unsaved changes. If you close the editor or click another item before saving, APS ELN prompts you to save, discard, or cancel so you never lose entries by accident.
 
@@ -56,11 +56,11 @@ When a protocol is created on an item that already holds values or metadata, the
   ]}
 />
 
-<Remember>Protocol form fields do not compute formulas or create `Derived` value provenance, and `AutoFill` inserts a one-time text snapshot when the protocol is created. Always store quantitative results as item **Values** via **Extract Values** or **Add > Derived Value...** (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9: The four value sources and Derived formulas</a>), and attach the protocol after those values are in place if your template uses `values.all`.</Remember>
+<Remember>Protocol form fields do not compute formulas or create `Derived` value provenance, and `AutoFill` inserts a one-time text snapshot when the protocol is created. Store quantitative results as item **Values** via **Extract Values** or **Add > Derived Value...** (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9: The four value sources and Derived formulas</a>). Attach the protocol after those values are in place if your template uses `values.all`.</Remember>
 
 <GoingDeeper title="protocol template versioning">
 
-When you edit and save a protocol template that is already used by existing records, APS ELN automatically creates a **new template version** instead of overwriting the old schema. Existing protocols keep the exact field layout they were filled out with, while new protocols use the latest active version. Tick **Show all versions (including inactive)** in the Template Manager to inspect historical versions.
+When you edit and save a protocol template that is already used by existing records, APS ELN automatically creates a **new template version** instead of overwriting the old schema. Existing protocols keep the exact field layout they were completed with, while new protocols use the latest active version. Tick **Show all versions (including inactive)** in the Template Manager to inspect historical versions.
 
 </GoingDeeper>
 
@@ -77,11 +77,11 @@ Every protocol moves through four validation states (<a href="#fig-8-1">Figure 8
 
 <InELN>To process protocols waiting in `In Review`, choose **Tools > Protocol Review...** (`Ctrl+Shift+R` in the team client). Select a protocol to read its rendered preview, then click **Approve** or **Reject**. Inside any saved protocol's editor, click **History...** to view the timestamped log of status changes, reviewers, and rejection comments.</InELN>
 
-In **APS ELN Community**, protocol review is a local self-check by the scientist on their own notebook, and like all human review gates in APS ELN, it must be performed in the Desktop GUI (the MCP server cannot approve or reject protocols).
+In **APS ELN Community**, protocol review is a local self-check by the scientist on their own notebook. Like all human review gates in APS ELN, it must be performed in the Desktop GUI (the MCP server cannot approve or reject protocols).
 
 ## Submitting protocols from the instrument in a team lab
 
-In a team laboratory where instruments sit in a cleanroom or across the hall from your desk PC, you can fill out a protocol right at the machine from your phone or tablet.
+In a team laboratory where instruments sit in a cleanroom or across the hall from your desk PC, you can complete a protocol right at the machine from your phone or tablet.
 
 <InTeamLab title="the Quick Protocol mobile web app">
 
@@ -90,7 +90,7 @@ Laboratories running the Commercial **ELN Web API** server provide a mobile web 
 1. **Sign in** on your phone with your lab username and password (you can register your phone as a trusted web device so future visits sign in automatically).
 2. **Find the specimen** by typing a few characters of its sample code (such as `261015A`) into the autocomplete box.
 3. **Pick a template:** templates tagged for that instrument via **Tags...** and templates recently used on that specimen appear at the top of the list.
-4. **Fill the fields, optionally snap a camera photo, and submit:** the protocol and photo are written directly to the shared MySQL and WebDAV server under that specimen and appear immediately in the desktop client's **Protocols Awaiting Review** queue (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-dashboard-and-keyboard-navigation`}>Chapter 3: The Dashboard and keyboard navigation</a>).
+4. **Fill the fields, optionally snap a camera photo, and submit:** the protocol and photo are written directly to the shared MySQL and WebDAV server under that specimen. They appear immediately in the desktop client's **Protocols Awaiting Review** queue (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-dashboard-and-keyboard-navigation`}>Chapter 3: The Dashboard and keyboard navigation</a>).
 
 </InTeamLab>
 
