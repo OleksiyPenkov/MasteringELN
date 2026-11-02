@@ -43,6 +43,8 @@ if (existing.length > 0 && !existing.includes('sections.json')) {
 // earlier deploys do not accumulate.
 for (const entry of existing) rmSync(join(DEST, entry), { recursive: true, force: true });
 cpSync(SRC, DEST, { recursive: true });
+const PDF = fileURLToPath(new URL('../pdf-build/Mastering-ELN.pdf', import.meta.url));
+if (existsSync(PDF)) cpSync(PDF, join(DEST, 'Mastering-ELN.pdf'));
 
 console.log(`Deployed ${SRC} -> ${DEST} (${readdirSync(DEST).length} top-level entries).`);
 if (local.DEPLOY_URL) console.log(`Served at ${local.DEPLOY_URL} . HTML revalidates via its meta tag; assets are content-hashed.`);

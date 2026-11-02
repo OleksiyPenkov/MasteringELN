@@ -18,4 +18,5 @@ __pycache__/
 # Machine paths (the deposit, the X-Ray Calc copy, the deploy folder); see scripts/figures/local_paths.py.
 local-paths.json
 pdf-build/Mastering-ELN.pdf
+public/Mastering-ELN.pdf
 .superpowers/

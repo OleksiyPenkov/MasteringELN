@@ -508,9 +508,13 @@ def main() -> None:
 
     doc.set_toc(toc_marks)
     doc.set_metadata({"title": BOOK_TITLE, "author": AUTHOR, "subject": BOOK_SUBJECT,
-                      "keywords": "X-ray reflectivity; XRR; fitting; X-Ray Calc; multilayers; CC BY 4.0"})
+                      "keywords": "electronic laboratory notebook; ELN; data provenance; MCP; CC BY 4.0"})
     doc.save(str(DIST_FINAL), deflate=True, garbage=3)
     doc.close()
+    public_pdf = HERE.parent / "public" / DIST_FINAL.name
+    if public_pdf.parent.is_dir():
+        import shutil
+        shutil.copy2(DIST_FINAL, public_pdf)
     print(f"\nFinal: {DIST_FINAL}  ({page_count(DIST_FINAL)} pages, {len(entries)} sections)")
 
 
