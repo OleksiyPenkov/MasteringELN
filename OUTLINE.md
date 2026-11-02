@@ -314,13 +314,138 @@ Section outline:
    - Table 9-1: Meaning and action to take for each **Check Value Sources...** status code.
    - Sources: C:Help:Values, Demo:A, Demo:B.
 
-## Part 3: Thinking, Searching, and Reviewing (Chapter-Level Plan)
+## Part 3: Thinking, Searching, and Reviewing
 
-- **Chapter 10: The Hypothesis Tree: Proposals, Runs, Cited Evidence, and Conclusions** (`C:Help:Hypotheses`, `P:Help:Experiments`)
-- **Chapter 11: Project Wiki, Notes, Tags, Comments, and Links** (`C:Help:Wiki`, `C:Help:TagsAndLinks`)
-- **Chapter 12: Finding Anything: Full-Text, Panel Filters, and Semantic Search** (`C:Help:Search`, `docs/search-stage-5.md`)
-- **Chapter 13: Charts, Correlations, and PDF Reports** (`C:Help:AnalysisAndReports`)
-- **Chapter 14: Completeness Rules, Audit History, and Electronic Signatures** (`C:Help:Integrity`, `P:Help:Signatures`)
+### Chapter 10: The Hypothesis Tree and Evidence (`ch10-the-hypothesis-tree-and-evidence.mdx`)
+
+In This Chapter:
+- Proposing a root hypothesis or a follow-up refinement in a project
+- Attaching experimental Runs and context References to an approved hypothesis
+- Citing items, files, and values as evidence with snapshot checksums
+- Submitting a conclusion and passing the two human review gates
+
+Section outline:
+1. **Why connect experiments to a hypothesis tree?**
+   - How a hypothesis links *what you expected and why* (`Proposal`), the procedures and specimens you made to test it (`Runs`), the specific files and values you rely on (`Evidence`), and what you found (`Conclusion`).
+   - Fig 10-1 (`fig-10-1-hypothesis-lifecycle.svg`): The hypothesis lifecycle and its two human review gates.
+   - Sources: C:Help:Hypotheses, P:Help:Experiments.
+2. **Proposing a hypothesis and passing the first gate.**
+   - Opening **Project > Hypotheses**, clicking **New hypothesis...** (or **New follow-up...** to specify **Change - what differs from the parent hypothesis**), and selecting a headline quantity.
+   - Approving or rejecting a proposal in **Your decision** (and why MCP agents can propose hypotheses but never approve or reject them).
+   - In a Team Lab: How **Administration > Approval Policy...**, **Four-eyes**, project **Share...** checkboxes, and the Dashboard's **Waiting for You** queue govern team approvals.
+   - Sources: C:Help:Hypotheses, P:Help:Experiments.
+3. **Attaching Runs and citing Evidence.**
+   - Attaching items on the **Runs** tab (**Attach selected item...** or right-clicking an item -> **Hypothesis > Attach to hypothesis...**) as a `Run` (after approval) or `Reference`.
+   - Citing an item, an attached file, or a stored value on the **Evidence** tab (**Add evidence...**), and how ELN snapshots the file's MD5 checksum and value at citation time.
+   - Sources: C:Help:Hypotheses, P:Help:Experiments.
+4. **Submitting a conclusion and checking the content seal.**
+   - Filling in **What we found** and **Outcome** (`Supported`, `Refuted`, or `Inconclusive`), clicking **Submit conclusion**, and choosing **Accept** or **Return for more work**.
+   - Understanding **Sealed**, `changed` evidence badges, `missing` warnings, and **Abandon...**.
+   - Table 10-1: Hypothesis states, derived lab states, and who can act at each step.
+   - Sources: C:Help:Hypotheses, P:Help:Experiments.
+
+### Chapter 11: Project Wiki, Notes, Tags, and Links (`ch11-project-wiki-notes-tags-and-links.mdx`)
+
+In This Chapter:
+- Creating a five-section Project Wiki and editing Markdown pages with inline figures
+- Cross-referencing items and specimens with `[[item:N]]` and `[[specimen:CODE]]` links
+- Categorizing records with colored Tags and discussing results in Comments
+- Building typed bidirectional relationships between items with Copy as Link Target
+
+Section outline:
+1. **The five-section Project Wiki.**
+   - Seeding a project wiki with **Project > New Wiki** (or **New Topic Wiki**) to create the five standard folders: `Goals`, `Ideas`, `Literature`, `Analysis`, and `References`.
+   - Creating and editing Wiki pages in the **Markdown Editor** (`Ctrl+S`), dragging or pasting (`Ctrl+V`) images as page attachments, and why Wiki file attachments stay hidden in the item tree.
+   - Fig 11-1 (`fig-11-1-wiki-five-sections.svg`): The five-section Wiki structure alongside Tags, Comments, and typed item relationships.
+   - Sources: C:Help:Wiki, P:Help:Wiki.
+2. **Navigating between Wiki pages and experimental records.**
+   - Writing `[[item:N]]` and `[[specimen:CODE]]` (or `eln://item/N` and `eln://specimen/CODE`) inside Markdown pages to jump directly to any procedure, specimen, or action.
+   - Sources: C:Help:Wiki, P:Help:Wiki.
+3. **Classifying items with Tags and Favorites.**
+   - Right-clicking one or more items and choosing **Tags...** to assign colored badge tags (showing `k of N` across multi-selected items), and managing the catalog in **Reference Data > Tags...**.
+   - Warning: Clicking **Delete** inside the Tags dialog deletes the tag definition from the entire notebook; to remove a tag from the current item, clear its check box instead.
+   - Bookmarking frequent projects, folders, and items with **Add to Favorites**.
+   - Sources: C:Help:TagsAndLinks.
+4. **Recording Comments and typed item relationships.**
+   - Posting and editing timestamped discussion entries in **Comments...** (and how comments differ from rich-text **Notes** added via **Item > Add Note**).
+   - Creating a typed directional relationship between two items (such as linking a coated specimen to its substrate batch or target): right-click the target item and choose **Copy as Link Target**, then right-click the source item and choose **Link to...**, pick the **Relationship:** phrase, and inspect or follow links in **Item > Links...**.
+   - Table 11-1: Choosing between Wiki pages, rich-text Notes, Comments, Tags, Markdown links, and typed Item Links.
+   - Sources: C:Help:TagsAndLinks, C:Help:FilesAndNotes.
+
+### Chapter 12: Full-Text, Panel, and Semantic Search (`ch12-full-text-panel-and-semantic-search.mdx`)
+
+In This Chapter:
+- Filtering the Projects and Items panels in real time without losing context
+- Finding exact words and phrases across a notebook with Navigate > Search
+- Setting up and running offline Semantic Search (Search by meaning) across PDFs and notes
+- Using Rerank results, Project/Type/Created filters, and Go to Item
+
+Section outline:
+1. **Three ways to find a record in APS ELN.**
+   - Comparing real-time panel filters, notebook-wide text search (**Navigate > Search...**, `Ctrl+F`), and offline semantic search (**Search by meaning**).
+   - Fig 12-1 (`fig-12-1-search-architecture.svg`): Overview of panel filters, record text search, and hybrid semantic search.
+   - Sources: C:Help:Search.
+2. **Filtering panels and jumping to a known ID.**
+   - Using the search boxes at the top of the **Projects** and **Items** panels, clearing active filters, enabling **Show Archived**, and jumping directly to an item ID or `eln://` URL with **Navigate > Go to Item...** (`Ctrl+G`).
+   - Sources: C:Help:Search, C:Help:Shortcuts.
+3. **Searching notebook text (`Ctrl+F`).**
+   - How **Navigate > Search...** searches item titles, descriptions, properties, entry titles, attachment titles, value descriptions, and tag names: matching the full phrase first, then falling back to items containing all entered words (2+ characters).
+   - Sources: C:Help:Search.
+4. **Searching by meaning (Semantic Search) and reranking.**
+   - Downloading the local models (~666 MB total: 549 MB required + 117 MB optional PDFium and reranker) once via **Tools > Semantic Search Setup...** -> **Download and Install**, and how the `.search.sqlite` index stays 100% offline on your PC.
+   - Which attachment files are read inside (`PDF` with PDFium, `.docx`, `.pptx`, `.xlsx`, `.html`, `.json`, `.xml`, `.csv`, `.rtf`, `.md`, `.txt`, up to 64 MB / 200,000 characters / 2,000 PDF pages).
+   - Ticking **Search by meaning**, using **Rerank results** (which re-sorts the top 20 candidates in ~0.5 s using passage text and item path context), and narrowing by **Project**, **Type**, and UTC **Created** dates.
+   - Table 12-1: Comparison of Panel Filters, Text Search, Semantic Search, and **Tools > Analysis...**.
+   - Sources: C:Help:Search, `APS-ELN-Community/README.md`.
+
+### Chapter 13: Charts, Correlations, and PDF Reports (`ch13-charts-correlations-and-pdf-reports.mdx`)
+
+In This Chapter:
+- Plotting experimental Conditions against test Results across a project
+- Understanding how Analysis pairs procedure conditions with child action results
+- Generating formatted A4 or Letter PDF experiment reports
+- Exporting and importing JSON scientific packages safely
+
+Section outline:
+1. **Plotting conditions against results (`Tools > Analysis...`).**
+   - Selecting a project or folder, opening **Tools > Analysis...**, choosing a **Condition** value type on the **X Axis** and a **Result** value type on the **Y Axis**, selecting procedures, and clicking **Plot**.
+   - How each plotted point is computed: $X$ is the first matching `Condition` on the **Procedure**, and $Y$ is the arithmetic mean of matching `Result` values on child actions, specimen actions, and one level below specimen actions.
+   - Copying the plotted numbers with **Copy Data (CSV)** or the image with **Copy Chart**.
+   - Fig 13-1 (`fig-13-1-analysis-and-reports.svg`): How **Tools > Analysis...** pairs conditions with results and how **File > Export Report...** builds a PDF report.
+   - Sources: C:Help:AnalysisAndReports.
+2. **Exporting a formatted PDF report (`File > Export Report...`).**
+   - Selecting a **Procedure** root in the item tree (so all child specimens and actions are available), choosing **File > Export Report...**, ticking the items and sections (`Metadata`, `Protocols`, `Values`, `Files`, `Tags`, `Comments`, `Signatures`), previewing in the HTML viewer, and clicking **Export PDF**.
+   - Sources: C:Help:AnalysisAndReports.
+3. **Exporting and importing scientific packages.**
+   - Using **File > Export...** and **File > Import scientific package...** to share item metadata and protocol templates as JSON, and understanding why neither a PDF report nor a JSON scientific package replaces a full backup of your `.sqlite` database and attachment folder.
+   - Sources: C:Help:AnalysisAndReports.
+
+### Chapter 14: Completeness, Audit, and Signatures (`ch14-completeness-audit-and-signatures.mdx`)
+
+In This Chapter:
+- Defining and running Completeness Rules for each Action Type and Equipment
+- Finding missing files and missing values with Data Completeness checks
+- Inspecting the notebook Audit Log by date, entity, operation, and user
+- Applying and verifying cryptographic Electronic Signatures (`SIGNED`)
+
+Section outline:
+1. **Three layers of record integrity.**
+   - How **Completeness Rules**, **Check Value Sources** / **Audit Log**, and **Electronic Signatures** work together before a sample record is closed (<a href="#fig-14-1">Figure 14-1</a>).
+   - Fig 14-1 (`fig-14-1-integrity-layers.svg`): The three layers of record verification in APS ELN.
+   - Sources: C:Help:Integrity, P:Help:Signatures.
+2. **Completeness rules and Data Quality Checks.**
+   - Creating rules in **Tools > Completeness Rules...** that specify which **Required File Types** and **Required Value Types** must be present for a given **Action Type** and **Equipment** (with `Error` or `Warning` severity).
+   - Running **Tools > Data Completeness...** (or right-clicking a project/folder -> **Data Quality Check...** in the team client), jumping to incomplete items with **Go To**, and exporting the findings to CSV.
+   - Sources: C:Help:Integrity, P:Help:Projects.
+3. **Inspecting the Audit Log.**
+   - Opening **Tools > Audit Log...** and filtering by **From**, **To**, **Entity**, **Op** (`Create`, `Update`, `Delete`), and **User** to see when every record was written and whether it came through the desktop GUI or MCP (`arXiv:2610.27859`).
+   - Sources: C:Help:Integrity, Paper§2.4.
+4. **Signing an item and verifying signature integrity.**
+   - Right-clicking a finished item and choosing **Signature > Sign Item...**, picking a **Meaning** (`Authored`, `Reviewed`, `Approved`, or `Witnessed`), entering a comment and your password, and clicking **Sign**.
+   - Warning: Signing permanently locks the item against any further edits, file replacements, value changes, or deletion; there is no undo.
+   - Checking a signed record with **Signature > View Signature...** -> **Verify Now** (or **Signature > Verify Integrity**), and what the content hash covers.
+   - Table 14-1: Comparison of Protocol Approval, Hypothesis Acceptance Seal, and Item Electronic Signature.
+   - Sources: C:Help:Integrity, P:Help:Signatures.
 
 ## Part 4: Working with an AI Agent (MCP) (Chapter-Level Plan)
 

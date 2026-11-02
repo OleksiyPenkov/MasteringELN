@@ -1,0 +1,83 @@
+---
+title: Charts, Correlations, and PDF Reports
+part: '3'
+number: '13'
+order: 130
+inThisChapter:
+  - Plotting experimental Conditions against test Results across a project
+  - Understanding how Analysis pairs procedure conditions with child action results
+  - Generating formatted A4 or Letter PDF experiment reports
+  - Exporting and importing JSON scientific packages safely
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+When you carefully distinguish **Conditions** (`EXP_CONDITION`) from **Results** (`TEST_RESULT`) as you extract values (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9: Conditions, Results, units, and plausible-range checks</a>), you unlock cross-sample analysis right inside APS ELN. Instead of copying numbers by hand from ten depositions into a spreadsheet, you can plot any deposition condition against any characterization result in seconds, export the paired table as CSV, and generate a formatted PDF report of your experiment tree (<a href="#fig-13-1">Figure 13-1</a>).
+
+## Plotting conditions against results
+
+To plot how an experimental input affects a measured property across a project or folder:
+
+1. Select the project or specimen folder in the **Projects** panel on the left (for example, `Tribology` or its `BN-DLC Series` folder).
+2. Choose **Tools > Analysis...**.
+3. Under **X Axis**, select the **Condition** value type you varied across runs (such as `Power`, `Bias`, `Pressure`, or `Normal force`).
+4. Under **Y Axis**, select the **Result** value type you measured on the samples (such as `Hardness`, `Modulus`, `COF`, `Wear rate`, or `Period`).
+5. Tick the procedures you want to include in the list (use **All** or **None** to toggle the whole list), then click **Plot**.
+6. Click **Copy Data (CSV)** to copy the paired $(X, Y)$ data rows to the clipboard for OriginLab or Python, or click **Copy Chart** to copy the chart image.
+
+<Figure id="fig-13-1" number="13-1" src={`${import.meta.env.BASE_URL}/figures/fig-13-1-analysis-and-reports.svg`} alt="Left card showing Tools > Analysis pairing a Procedure Condition on the X Axis with the arithmetic mean of Child Results on the Y Axis; right card showing File > Export Report building an A4 or Letter PDF from a selected Procedure root" caption="Cross-experiment analysis and reporting in APS ELN. Tools > Analysis (left) plots a procedure-level Condition against the mean of matching child Results across selected runs. File > Export Report (right) compiles a Procedure tree into a formatted PDF." />
+
+To read the plot accurately, you need to know how **Tools > Analysis...** pairs $X$ and $Y$ for each point:
+
+- **One point per selected Procedure:** each point on the scatter plot represents one root **Procedure** (`Proc`).
+- **How $X$ is chosen:** $X$ is the first matching **Condition** recorded directly on that **Procedure** (such as `Parameters.Bias` $= 8\,\text{V}$ on `Deposition 261015A`).
+- **How $Y$ is calculated:** $Y$ is the arithmetic mean of all matching **Result** values recorded on direct child actions of the procedure, actions directly below child **Specimens** (such as `Thickness 261015A`, `Indentation 261015A`, and `Friction test 261015A`), and one further action level below those specimen actions (such as `Wear track 261015A` or `XRR fit 261014B`).
+- Any procedure that lacks either the selected $X$ condition or at least one matching $Y$ result within those levels is omitted from the plot.
+
+<Remember>Because **Tools > Analysis...** reads the **Condition** from the root **Procedure** and the **Result** from its child actions (down to two levels below a **Specimen**), always store deposition and synthesis inputs on the **Procedure** and characterization outputs on the child **Actions** (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6: Designing a clean item hierarchy</a>).</Remember>
+
+When enough points are plotted, APS ELN draws a linear regression line automatically. Treat that line as a visual guide rather than a statistical proof: the regression does not weight points by their stored tolerances (`STD`). Use **Copy Data (CSV)** when you need weighted fitting or error bars in a publication figure.
+
+## Exporting a formatted PDF report
+
+When you need a clean document for a weekly group meeting, a thesis appendix, or a collaborator who does not have your notebook open, generate a PDF report with **File > Export Report...**:
+
+1. In the center **Items** panel, select the **Procedure** root (`Proc`, such as `Deposition 261015A`).
+2. Choose **File > Export Report...**.
+3. Under **Items to include**, tick the child specimens and actions you want in the report.
+4. Tick the **Sections** to include: `Metadata`, `Protocols`, `Values`, `Files`, `Tags`, `Comments`, and `Signatures`. The `Values` section prints both the numeric values and their stored tolerances.
+5. Choose the page size (**A4** or **Letter**) and click **Browse...** to set the **Output path**.
+6. Click **Preview** to inspect the formatted report in the HTML viewer, then click **Export PDF**.
+
+<Warning title="select the Procedure root before opening Export Report">If you select a **Specimen** or a single **Action** in the item tree before choosing **File > Export Report...**, the **Items to include** checklist offers only that single row without its children. Always select the top-level **Procedure** (`Proc`) when you want a complete multi-action experiment report.</Warning>
+
+## Exporting and importing scientific packages
+
+APS ELN can also export and import structured JSON **scientific packages** (`File > Export...` and `File > Import scientific package...`):
+
+1. To export, select a project and folder, choose **File > Export...**, tick the **Items to export**, set the **Export path**, choose whether to include file metadata (**Include files**) and protocol status history (**Include status history**), and click **Export**.
+2. To import a package into another notebook, select the destination project and folder, choose **File > Import scientific package...**, browse to the JSON file, inspect the **Package preview**, and click **Import**.
+
+<p id="table-13-1" class="table-caption"><strong>Table 13-1:</strong> Comparing PDF reports, JSON scientific packages, and full notebook backups.</p>
+
+<DataTable
+  headers={['Output method', 'Menu command', 'What it contains', 'Can it restore a full notebook?']}
+  rows={[
+    ['**PDF Report**', '**File > Export Report...**', 'Formatted human-readable document of selected items, protocols, values, tolerances, file lists, and signatures', 'No (read-only PDF printout).'],
+    ['**Scientific Package**', '**File > Export...** / **Import scientific package...**', 'JSON file of top-level item metadata, protocol entries (reset to `Draft` on import), and protocol templates', 'No (`Include files` writes file metadata only, not attachment bytes or child hierarchies).'],
+    ['**Full Notebook Backup**', 'Close ELN and copy `.sqlite` + `<name> files` folder (<a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#how-to-back-up-a-local-notebook-safely`}>Chapter 2</a>)', 'Every project, item tree, value, provenance source, signature, audit row, and all raw attachment bytes', '**Yes** (the only complete backup and restore method).'],
+  ]}
+/>
+
+<Warning title="a scientific package is not a notebook backup">In **File > Export...**, ticking **Include files** writes file metadata into the JSON package, not the raw `.fibps`, `.mit`, `.zrw`, or `.xrcx` attachment bytes, and **File > Import scientific package...** restores only top-level item metadata and protocol forms/templates (always starting imported protocols as `Draft`). Never rely on a scientific package or a PDF report as a backup of your laboratory data.</Warning>
+
+## Sources
+
+- **APS ELN Community Help:** `AnalysisAndReports.html` (**Tools > Analysis...**, choosing **X Axis** condition and **Y Axis** result, how each procedure point pairs the first procedure-level condition with the arithmetic mean of results on direct child actions, specimen actions, and one level below specimen actions, linear regression, **Copy Data (CSV)** and **Copy Chart**, **File > Export Report...** from a `Procedure` root vs. `Specimen`/`Action`, report sections and HTML viewer requirement, and **File > Export...** / **File > Import scientific package...** scope and backup warnings).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#how-to-back-up-a-local-notebook-safely`}>Chapter 2: How to back up a local notebook safely</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6: Designing a clean item hierarchy</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8: The protocol review workflow</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9: Conditions, Results, units, and plausible-range checks</a>; <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#three-ways-to-find-a-record-in-aps-eln`}>Chapter 12: Full-Text, Panel, and Semantic Search</a>.

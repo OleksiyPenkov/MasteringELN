@@ -1,0 +1,103 @@
+---
+title: Project Wiki, Notes, Tags, and Links
+part: '3'
+number: '11'
+order: 110
+inThisChapter:
+  - Creating a five-section Project Wiki and editing Markdown pages with inline figures
+  - 'Cross-referencing items and specimens with [[item:N]] and [[specimen:CODE]] links'
+  - Categorizing records with colored Tags and discussing results in Comments
+  - Building typed bidirectional relationships between items with Copy as Link Target
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+Not every piece of laboratory knowledge belongs inside a single deposition or measurement action. Project goals, literature reviews, substrate-cleaning standard operating procedures, and cross-sample comparisons span an entire project. At the same time, individual items often need quick visual badges (`Tags`), team discussion threads (`Comments`), or explicit links to the target or substrate batch they came from (`Links`). This chapter shows how to use all four tools without cluttering your experimental tree (<a href="#fig-11-1">Figure 11-1</a>).
+
+## The five-section Project Wiki
+
+A **Wiki page** in APS ELN is an item of type **Wiki** whose body is a Markdown (`.md`) file stored right inside your notebook's attachment directory. To keep project knowledge organized across every project and every student, APS ELN enforces a standard five-section folder structure under `Wiki/` (<a href="#fig-11-1">Figure 11-1</a>):
+
+- **`Wiki / Goals`:** project objectives, grant milestones, and target specifications.
+- **`Wiki / Ideas`:** design calculations, brainstorming notes, and preliminary sketches.
+- **`Wiki / Literature`:** summaries of published papers, reference parameters, and competing structures.
+- **`Wiki / Analysis`:** cross-experiment write-ups, summary tables, and comparative plots.
+- **`Wiki / References`:** instrument manuals, calibration certificates, and standard operating procedures (SOPs).
+
+<Figure id="fig-11-1" number="11-1" src={`${import.meta.env.BASE_URL}/figures/fig-11-1-wiki-five-sections.svg`} alt="Left panel showing the five fixed Project Wiki folders (Goals, Ideas, Literature, Analysis, References) with [[item:4]] and [[specimen:261015A]] links; right panel showing Tags, Comments, and Typed Links (Copy as Link Target -> Link to...)" caption="Organizing project knowledge and item connections. The five-section Project Wiki (left) stores Markdown write-ups with inline figures and record links. Tags, Comments, and Typed Links (right) classify, discuss, and connect scientific items." />
+
+Follow these steps to create and edit a project Wiki:
+
+1. Select your project (or a folder inside it) in the **Projects** panel and choose **Project > New Wiki** (or click **New Topic Wiki** on the toolbar). Confirm **Add a Wiki to ...?**. APS ELN applies the `Wiki` template and creates the `Wiki` folder with its five section subfolders.
+2. To add a new page inside one of the five sections, open that section folder (such as `Wiki / Analysis`), click **New** (`Ins`), select **Wiki** as the item type, enter the page **Title**, and click **Save**.
+3. Single-click the Wiki item in the **Items** panel to read its rendered HTML in the **Markdown** viewer.
+4. Click **Edit** in the viewer toolbar to open the **Markdown Editor** (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#working-drafts-external-edits-and-conflict-resolution`}>Chapter 7: Working drafts, external edits, and conflict resolution</a>), write your Markdown text, and press `Ctrl+S` (or click **Save**).
+
+To include a figure, diagram, or PDF inside a Wiki page, drag the local file into the open **Markdown Editor** (or copy an image to the clipboard and press `Ctrl+V`). APS ELN uploads the file as an attachment of that Wiki item and inserts the Markdown reference (`![Caption](figure.png)`) automatically.
+
+<Remember>To keep the tree clean, a Wiki item hides its attached `.md` body and image files in the **Items** panel and hides the bottom thumbnail strip. In the item tree, **Item > Edit** edits the Wiki item's title and metadata; to edit the page text, always click the **Edit** button inside the **Markdown** viewer.</Remember>
+
+<Warning title="dropped or pasted Wiki assets upload immediately">When you drag a file or press `Ctrl+V` to paste an image into the **Markdown Editor**, APS ELN uploads that asset to the Wiki item immediately so it can generate the Markdown link. Clicking **Cancel** on your text edit later does not delete the uploaded image attachment.</Warning>
+
+## Navigating between Wiki pages and experimental records
+
+Inside any Markdown Wiki page or attachment, you can create live links that jump directly to any item or specimen in your notebook (even across different projects):
+
+- **Short bracket syntax:** write `[[item:4]]` to link to item ID `4`, or `[[specimen:261015A]]` to link to the specimen whose title is `261015A`.
+- **Standard Markdown URL syntax:** write `[Indentation 261015A](eln://item/4)` or `[Sample 261015A](eln://specimen/261015A)`.
+
+When you click the rendered link in the **Markdown** viewer, APS ELN navigates the **Projects** and **Items** panels straight to that record. You can also jump to any item ID or `eln://` URL at any time by choosing **Navigate > Go to Item...** (`Ctrl+G`).
+
+## Classifying items with Tags and Favorites
+
+While folders group items by location, **Tags** let you label items across different folders and projects (for example, `High-Hardness`, `Annealed`, `Thesis-Fig-3`, or `Repeat-Needed`):
+
+1. Right-click an item (or select multiple items with `Ctrl`+click / `Shift`+click and right-click inside the selection) and choose **Tags...**.
+2. Tick a tag's check box to assign it to the selected item(s), or clear the check box to remove it. When multiple items are selected, the **Items** column shows `k of N` (how many of the $N$ selected items currently carry that tag). Changes take effect immediately when you click the check box.
+3. To create a new tag, click **Add**, enter **Name:**, pick a badge color with **Choose...**, and click **OK**.
+4. Click **Close** when finished. Assigned tags appear as colored badges right beside the item title in the **Items** panel.
+
+<Warning title="clicking Delete in the Tags dialog removes the tag from the whole notebook">In the **Tags...** dialog (and in **Reference Data > Tags...**), clicking the **Delete** button deletes that tag definition and strips it from every item in the notebook. To remove a tag from the selected item only, simply uncheck its box.</Warning>
+
+To bookmark a project, folder, or item that you visit every day, right-click it and choose **Add to Favorites**. It appears under the **Favorites** branch in the left **Projects** panel for one-click access. Choosing **Remove from Favorites** removes the bookmark without touching the record.
+
+## Recording Comments and typed item relationships
+
+APS ELN provides two ways to attach prose to an item and two ways to link items together (<a href="#table-11-1">Table 11-1</a>):
+
+- **Rich-text Notes (`Item > Add Note`):** formal experimental observations stored as child entries of the item and included in signed item hashes.
+- **Comments (`Right-click > Comments...`):** a timestamped discussion thread where you and your supervisor can post questions or review notes. Select a comment you wrote and click **Edit** or **Delete** to revise or remove it; you can only edit your own comments.
+
+When one scientific item depends on another item in a way that is not a parent-child tree relationship (for example, specimen `261015A` was deposited from a specific `B4C/BN Target` item, or a repeat run `261020A` duplicates `Deposition 261015A`), create a **typed item relationship**:
+
+1. Right-click the target item in the **Items** panel and choose **Copy as Link Target**.
+2. Right-click the source item and choose **Link to...**.
+3. In the **Relationship:** drop-down, pick the relationship phrase (configured in **Reference Data > Link Types...**). Read the preview sentence in the dialog carefully to verify the direction (which item is the source and which is the target).
+4. Enter optional **Notes:** and click **Link**.
+5. To view, follow, edit, or remove relationships on an item, select the item and choose **Item > Links...** (or double-click an inline link row to jump to the linked item).
+
+<p id="table-11-1" class="table-caption"><strong>Table 11-1:</strong> Choosing the right annotation or link tool in APS ELN.</p>
+
+<DataTable
+  headers={['Tool', 'How to create it', 'Best used for', 'Part of signed item hash?']}
+  rows={[
+    ['**Project Wiki page**', '**Project > New Wiki**, then **New** (`Wiki` item)', 'Project goals, literature notes, SOPs, and multi-sample summaries with inline figures', 'Signed only if the Wiki item itself is signed.'],
+    ['**Rich-text Note**', '**Item > Add Note**', 'Formal experimental observations belonging to one procedure or action', 'Yes (locked when the parent item is signed).'],
+    ['**Comment**', 'Right-click item > **Comments...**', 'Discussion threads and review feedback with teammates or your supervisor', 'No (annotation outside the signed payload).'],
+    ['**Tag**', 'Right-click item(s) > **Tags...**', 'Colored category badges (`k of N` batch assignment) for visual scanning and search', 'No (annotation badge).'],
+    ['**Markdown `[[item:N]]` link**', 'Type `[[item:N]]` or `[[specimen:CODE]]` in `.md`', 'Inline navigation from a Wiki page or Markdown note to an item or specimen', 'Stored inside the `.md` attachment text.'],
+    ['**Typed Item Link**', '**Copy as Link Target**, then **Link to...**', 'Bidirectional database relationship between two items (inspected via **Item > Links...**)', 'No (relationship metadata; read-only in read-only projects).'],
+  ]}
+/>
+
+## Sources
+
+- **APS ELN Community Help:** `Wiki.html` (**Project > New Wiki**, the `Wiki` item type and `.md` body attachment, hidden file children and hidden thumbnail strip, clicking **Edit** in the Markdown viewer vs. **Item > Edit**, dragging/pasting images with `Ctrl+V`, and `[[item:N]]` / `[[specimen:CODE]]` navigation); `TagsAndLinks.html` (**Tags...**, batch `k of N` tagging, **Reference Data > Tags...**, the **Delete** vs. uncheck warning, **Comments...**, **Copy as Link Target** and **Link to...**, **Item > Links...**, **Reference Data > Link Types...**, **Add to Favorites**, and signature/read-only boundaries); `FilesAndNotes.html` (**Item > Add Note**).
+- **APS ELN Commercial ("For Teams") Help:** `Wiki.html` (the fixed five-section layout `Goals`, `Ideas`, `Literature`, `Analysis`, `References`, **New Topic Wiki**, ETag conflict detection, `eln://item/<id>` and `eln://specimen/<code>` links, and MCP wiki tools).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#working-on-multiple-records-at-once`}>Chapter 6: Working on multiple records at once</a>; <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#working-drafts-external-edits-and-conflict-resolution`}>Chapter 7: Working drafts, external edits, and conflict resolution</a>; <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#filtering-panels-and-jumping-to-a-known-id`}>Chapter 12: Full-Text, Panel, and Semantic Search</a>; <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Completeness, Audit, and Signatures</a>.

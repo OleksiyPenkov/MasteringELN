@@ -1,0 +1,25 @@
+<svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="14" width="182" height="210" rx="6" fill="#f7f9fb" stroke="#334155" stroke-width="1.6"/>
+  <text x="101" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#222">1. Panel Filters</text>
+  <text x="22" y="72" font-size="14" fill="#222">Top of Projects &amp;</text>
+  <text x="22" y="94" font-size="14" fill="#222">Items panels</text>
+  <text x="22" y="130" font-size="14" fill="#334155">Filters visible tree</text>
+  <text x="22" y="152" font-size="14" fill="#334155">titles in real time</text>
+  <text x="22" y="196" font-size="14" font-weight="600" fill="#1a5276">Clear box to restore</text>
+
+  <rect x="208" y="14" width="182" height="210" rx="6" fill="#dbe5fb" stroke="#1a5276" stroke-width="1.8"/>
+  <text x="299" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#1a5276">2. Text Search</text>
+  <text x="220" y="72" font-size="14" fill="#222">Navigate &gt; Search...</text>
+  <text x="220" y="94" font-size="14" fill="#222">(Ctrl+F)</text>
+  <text x="220" y="130" font-size="14" fill="#334155">Exact phrase, then</text>
+  <text x="220" y="152" font-size="14" fill="#334155">all-words fallback</text>
+  <text x="220" y="196" font-size="14" font-weight="600" fill="#1a5276">Titles, notes, tags</text>
+
+  <rect x="406" y="14" width="184" height="210" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.8"/>
+  <text x="498" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#00695c">3. By Meaning</text>
+  <text x="418" y="72" font-size="14" fill="#222">Hybrid E5 + BM25</text>
+  <text x="418" y="94" font-size="14" fill="#222">(.search.sqlite)</text>
+  <text x="418" y="130" font-size="14" fill="#334155">Reads PDF, Office,</text>
+  <text x="418" y="152" font-size="14" fill="#334155">Markdown, protocols</text>
+  <text x="418" y="196" font-size="14" font-weight="600" fill="#00695c">+ Rerank top 20</text>
+</svg>

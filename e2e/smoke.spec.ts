@@ -1,11 +1,12 @@
 import { expect, test } from '@playwright/test';
 import { BASE } from '../src/lib/site.mjs';
 
-test('home lists Front Matter, Part 1, and Part 2 chapters', async ({ page }) => {
+test('home lists Front Matter and Parts 1 through 3', async ({ page }) => {
   await page.goto(`${BASE}/`);
   await expect(page.getByRole('heading', { name: 'Front Matter' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Part 1: Getting Started' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Part 2: Recording Daily Lab Work' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Part 3: Thinking, Searching, and Reviewing' })).toBeVisible();
   await page.getByRole('link', { name: /Introduction/ }).click();
   await expect(page.getByRole('heading', { level: 1, name: 'Introduction' })).toBeVisible();
 });

@@ -1,0 +1,20 @@
+<svg viewBox="0 0 600 245" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="12" width="276" height="220" rx="6" fill="#f7f9fb" stroke="#1a5276" stroke-width="1.8"/>
+  <text x="24" y="38" font-size="15" font-weight="700" fill="#1a5276">Project Wiki (5 Fixed Sections)</text>
+  <text x="28" y="68" font-size="14" font-weight="600" fill="#222">Wiki / Goals</text>
+  <text x="28" y="96" font-size="14" font-weight="600" fill="#222">Wiki / Ideas</text>
+  <text x="28" y="124" font-size="14" font-weight="600" fill="#222">Wiki / Literature</text>
+  <text x="28" y="152" font-size="14" font-weight="600" fill="#00695c">Wiki / Analysis (Markdown + figs)</text>
+  <text x="28" y="180" font-size="14" font-weight="600" fill="#222">Wiki / References</text>
+  <text x="24" y="214" font-size="14" fill="#334155">Links: [[item:4]] · [[specimen:261015A]]</text>
+
+  <rect x="304" y="12" width="286" height="220" rx="6" fill="#f7f9fb" stroke="#00695c" stroke-width="1.8"/>
+  <text x="318" y="38" font-size="15" font-weight="700" fill="#00695c">Tags, Comments &amp; Typed Links</text>
+  <rect x="318" y="54" width="258" height="44" rx="4" fill="#e0f2f1" stroke="#00695c" stroke-width="1.4"/>
+  <text x="330" y="82" font-size="14" fill="#222">Tags: colored badges (batch k of N)</text>
+  <rect x="318" y="110" width="258" height="44" rx="4" fill="#dbe5fb" stroke="#1a5276" stroke-width="1.4"/>
+  <text x="330" y="138" font-size="14" fill="#222">Comments: discussion thread per item</text>
+  <rect x="318" y="166" width="258" height="50" rx="4" fill="#ede7f6" stroke="#5e35b1" stroke-width="1.4"/>
+  <text x="330" y="190" font-size="14" font-weight="600" fill="#5e35b1">Typed Link: Copy as Link Target</text>
+  <text x="330" y="208" font-size="14" fill="#222">Right-click source &gt; Link to...</text>
+</svg>

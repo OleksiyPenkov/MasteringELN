@@ -1,0 +1,103 @@
+---
+title: Completeness, Audit, and Signatures
+part: '3'
+number: '14'
+order: 140
+inThisChapter:
+  - Defining and running Completeness Rules for each Action Type and Equipment
+  - Finding missing files and missing values with Data Completeness checks
+  - Inspecting the notebook Audit Log by date, entity, operation, and user
+  - Applying and verifying cryptographic Electronic Signatures (SIGNED)
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import InTeamLab from '../../components/textbook/InTeamLab.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+When you finish an experimental campaign, how do you know that no action in the tree was left without its raw file, no value drifted from its reader output, and no record was altered after review? APS ELN provides three layers of verification that work together before you close a sample record (<a href="#fig-14-1">Figure 14-1</a>).
+
+## Three layers of record integrity
+
+Each integrity tool checks a different part of your scientific record (<a href="#fig-14-1">Figure 14-1</a>):
+
+1. **Completeness Rules (`Tools > Data Completeness...`):** checks whether every **Procedure** and **Action** in a project has the required raw **File Types** and extracted **Value Types** for its **Action Type** and **Equipment**.
+2. **Provenance and Audit (`Check Value Sources...` and `Tools > Audit Log...`):** verifies that every `Reader` and `Derived` value still matches its stored file and formula (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Checking value sources and understanding drift codes</a>), and shows the chronological log of every `Create`, `Update`, and `Delete` event in the notebook.
+3. **Electronic Signatures (`Signature > Sign Item...`):** computes a cryptographic content hash over a finished item, marks it with a dark-red **SIGNED** badge, and locks it permanently against any further edits.
+
+<Figure id="fig-14-1" number="14-1" src={`${import.meta.env.BASE_URL}/figures/fig-14-1-integrity-layers.svg`} alt="Three stacked layers: Layer 1 Completeness Rules (Tools > Data Completeness), Layer 2 Provenance and Audit (Check Value Sources and Tools > Audit Log), and Layer 3 Electronic Signature (Signature > Sign Item)" caption="The three integrity layers in APS ELN. Run Layer 1 (Completeness) and Layer 2 (Check Value Sources) while the item is still editable, then apply Layer 3 (Electronic Signature) to lock the verified record permanently." />
+
+## Completeness rules and Data Quality Checks
+
+In the seven-month laboratory audit (`arXiv:2610.27859`), one of the most common student mistakes was creating a measurement action (such as a friction test or an XRR scan) and forgetting to attach the raw `.zrw` or `.xrdml` file or extract its values. **Completeness Rules** catch those gaps automatically across an entire project.
+
+To define or inspect completeness rules:
+
+1. Choose **Tools > Completeness Rules...**.
+2. Click **Add** (or select an existing rule to edit it).
+3. Enter a **Title** and **Description**, and select the matching **Action Type** (for example, `Indentation` or `Tribotest`), **Equipment** (optional), and **Severity** (`Error` or `Warning`).
+4. In the lower lists, tick the **Required File Types** (such as `.mit` or `.zrw`) and the **Required Value Types** (such as `Hardness` and `Modulus`, or `Fn`, `Cycles`, and `COF`).
+5. Tick **Active** and click **Save**.
+
+To run a completeness check on your project before asking your supervisor for review:
+
+1. Select the project or folder in the **Projects** panel.
+2. Choose **Tools > Data Completeness...** (or right-click the project/folder and choose **Data Quality Check...** in the team client).
+3. Inspect the **Data Quality Check** table, which lists **Category**, **Severity**, **Item**, **Location**, **Rule**, and **Missing** (the exact file type or value type that is absent).
+4. Double-click any row (or select it and click **Go To**) to jump straight to the incomplete item in the main window, attach the missing file or extract the missing value, and re-run **Tools > Data Completeness...** until zero issues remain. You can also click **Export...** to save the report as a CSV file.
+
+## Inspecting the Audit Log
+
+Every time a person or an MCP agent creates, updates, or deletes a record in APS ELN, the notebook writes an entry to its **Audit Log**:
+
+1. Choose **Tools > Audit Log...**.
+2. Set the optional filters at the top of the dialog: **From** and **To** dates, **Entity** (such as `Item`, `File`, `Value`, `Protocol`, or `Hypothesis`), **Op** (`Create`, `Update`, or `Delete`), and **User**.
+3. Click **Refresh** to inspect the **Timestamp**, **Entity Type**, **Entity ID**, **Operation**, **User**, and **Description** of each event.
+
+<Tip>When you delete a stored value (or when a batch reader update replaces old values), the audit log preserves the old number, tolerance, value type, source, and description in the item's audit trail so you can always see what was removed and when.</Tip>
+
+## Signing an item and verifying signature integrity
+
+Once an item passes **Tools > Data Completeness...** and **Check Value Sources...**, you can apply an **Electronic Signature** to lock it permanently:
+
+1. In the **Items** panel, right-click the **Procedure**, **Specimen**, or **Action** itself (not an attached file or protocol row) and choose **Signature > Sign Item...**.
+2. Check the **Item Title** shown in the dialog.
+3. Select the signature **Meaning**: `Authored`, `Reviewed`, `Approved`, or `Witnessed`.
+4. Enter an optional **Comment** and type your **Password** (the signing password you set when creating your local Community notebook in <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2</a>, or your personal account password in a team lab).
+5. Click **Sign**. A dark-red **SIGNED** badge appears beside the item in the tree.
+
+<Warning title="signing is permanent and cannot be undone">Signing an item permanently locks that item against any further edits: you cannot edit its fields, attach or replace files, save working drafts, add or edit values, or delete the item. APS ELN provides no "unsign" command. Always run **Check Value Sources...** and **Tools > Data Completeness...** *before* you sign.</Warning>
+
+To inspect a signature and verify that the item's database record still matches its signed hash:
+
+1. Right-click the signed item and choose **Signature > View Signature...** (or double-click the signed badge).
+2. Read the **Signed By**, **Date**, **Meaning**, **Comment**, and **Content Hash** fields.
+3. Click **Verify Now** (or right-click the item in the tree and choose **Signature > Verify Integrity**). APS ELN recomputes the hash over the item's committed fields, attached note/protocol entries, stored file titles and MD5 hashes, and numeric values and tolerances, and reports whether the hash is `VERIFIED`.
+
+<p id="table-14-1" class="table-caption"><strong>Table 14-1:</strong> Comparing Protocol Approval, Hypothesis Acceptance, and Item Signatures.</p>
+
+<DataTable
+  headers={['Integrity mechanism', 'What it locks or seals', 'How it is applied', 'Can an MCP agent apply it?']}
+  rows={[
+    ['**Protocol Approval** (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8</a>)', 'One attached protocol form (`Approved` state)', '**Tools > Protocol Review...** > **Approve**', 'No (human GUI gate only).'],
+    ['**Hypothesis Acceptance Seal** (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#submitting-a-conclusion-and-checking-the-content-seal`}>Chapter 10</a>)', 'A hypothesis statement, conclusion, runs, and cited evidence (`Sealed` badge)', '**Project > Hypotheses** > **Accept**', 'No (human GUI gate only).'],
+    ['**Item Electronic Signature**', 'An item\'s properties, notes, protocols, file hashes, and values (`SIGNED` badge)', 'Right-click item > **Signature > Sign Item...** + password', 'No (requires interactive user password).'],
+  ]}
+/>
+
+<GoingDeeper title="what Verify Integrity checks and what check_storage checks">
+
+**Signature > Verify Integrity** checks the committed database records of that single item (including the stored MD5 hashes of its attached files), and it is not recursive over child items. To verify that every physical attachment file on disk or WebDAV still exists and matches its recorded MD5 byte-for-byte across an entire project tree, pair signature verification with the MCP `check_storage` tool (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-whole-student-workflow-on-one-page`}>Chapter 1: Table 1-1</a> and Chapter 16). Note that items signed in older versions of APS ELN before versioned canonical hashes were introduced display **Legacy signature; integrity cannot be verified** while remaining locked.
+
+</GoingDeeper>
+
+## Sources
+
+- **APS ELN Community Help:** `Integrity.html` (**Signature > Sign Item...**, meanings `Authored`, `Reviewed`, `Approved`, and `Witnessed`, permanent lock warning, **Signature > View Signature...**, **Verify Now** and **Signature > Verify Integrity**, what the content hash covers, legacy signature message, **Tools > Audit Log...**, **Tools > Completeness Rules...**, **Tools > Data Completeness...**, and recycle safety).
+- **APS ELN Commercial ("For Teams") Help:** `Signatures.html` (the dark-red **SIGNED** badge, signature verification, and regulatory context); `Projects.html` (**Data Quality Check...** on the project context menu).
+- **ELN provenance study (`arXiv:2610.27859`):** Sections 2.4 and 4 (audit log analysis of 7,710 writes and completeness gaps on empty placeholder actions).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2: Creating a local notebook in Community</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5: Deleting containers and using the Recycle Bin</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8: The protocol review workflow</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Checking value sources and understanding drift codes</a>; <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#submitting-a-conclusion-and-checking-the-content-seal`}>Chapter 10: Submitting a conclusion and checking the content seal</a>.
