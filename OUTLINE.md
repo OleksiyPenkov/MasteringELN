@@ -9,7 +9,7 @@ Reader: a graduate student or engineer recording and analyzing experiments in AP
 - **C:Help:Page**: a page of the Community built-in Help, `APS-ELN-Community\ELN.Desktop\Assets\Runtime\Help\Page.html`
 - **P:Help:Page**: a page of the Commercial built-in Help, `APS-ELN-Commercial\ELN.Desktop\Assets\Runtime\Help\Page.html`
 - **C:Code** / **P:Code**: the Delphi source in `APS-ELN-Community` or `APS-ELN-Commercial`. Code wins every conflict.
-- **Paper§n**: Penkov & Shen (2026), *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report* (`arXiv:2610.27859`), section n
+- **Paper§n**: *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report* (`arXiv:2610.27859`), section n
 - **Demo:A** / **Demo:B**: the Zenodo demonstration studies in `D:\MultilayerLab\Papers\ELN-Software-Paper\zenodo\demonstration\` (`tribo_study` sample `261015A` and `xrr_study` sample `261014B`).
 
 ---

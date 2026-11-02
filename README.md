@@ -2,7 +2,7 @@
 
 A practical textbook on recording, tracing, and analyzing laboratory data in **APS ELN**, from building your first sample hierarchy (`Procedure -> Specimen -> Action`) to extracting values with file and reader provenance, testing hypotheses, and working with an AI agent through the Model Context Protocol (MCP).
 
-The book is built around **APS ELN Community** and **APS ELN ("For Teams")**. Its provenance workflow and demonstration studies (`261015A` BN/DLC tribology coating and `261014B` Co/C X-ray multilayer mirror) are described in Penkov & Shen (2026), *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report*, [arXiv:2610.27859](https://arxiv.org/abs/2610.27859).
+The book is built around **APS ELN Community** and **APS ELN ("For Teams")**. Its provenance workflow and demonstration studies (`261015A` BN/DLC tribology coating and `261014B` Co/C X-ray multilayer mirror) are described in *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report*, [arXiv:2610.27859](https://arxiv.org/abs/2610.27859).
 
 ## What is in this repository
 

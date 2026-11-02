@@ -34,7 +34,7 @@ In APS ELN, the first three links are structural. When you create an **Action** 
 
 ## Seven months of real laboratory use
 
-Penkov and Shen (2026) measured how well these four links held up during seven months of daily work in a thin-film and tribology laboratory. Six researchers and one AI agent recorded 24 projects containing 1,283 items, 2,676 attached files, and 674 stored values across 7,710 audit-log writes.
+A seven-month audit of daily work in the author's thin-film and tribology laboratory measured how well these four links held up in practice (`arXiv:2610.27859`). Six researchers and one AI agent recorded 24 projects containing 1,283 items, 2,676 attached files, and 674 stored values across 7,710 audit-log writes.
 
 The structural links held up well: measurement actions sat under their specimens and held their raw files. However, when 26 stored values across six completed studies (`T1`–`T6`) were compared against the output of APS ELN's built-in data file readers on the attached files, three things stood out:
 
@@ -102,7 +102,7 @@ Four habits prevent every broken link found in the seven-month laboratory study:
 
 ## Sources
 
-- **Penkov, O. V. & Shen, B. (2026).** *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report.* [arXiv:2610.27859](https://arxiv.org/abs/2610.27859), and Zenodo deposit [doi:10.5281/zenodo.23466959](https://doi.org/10.5281/zenodo.23466959). Sections 1–2 (the four-link chain from sample to number); Sections 2.4 and 4.2 (7-month production counts: 24 projects, 1,283 items, 2,676 files, 674 values, 7,710 audit rows, and the 26 traced values in Table 1: 13 equal, 4 differing, 9 with no reader counterpart); Section 5 (value source metadata for `Reader`, `Derived`, `Manual`, and `Unknown`); Section 5.8 (`tribo_study` sample `261015A` and `xrr_study` sample `261014B`).
+- **The ELN provenance study and demonstration deposit:** *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report* ([arXiv:2610.27859](https://arxiv.org/abs/2610.27859); Zenodo deposit [doi:10.5281/zenodo.23466959](https://doi.org/10.5281/zenodo.23466959)). Sections 1–2 (the four-link chain from sample to number); Sections 2.4 and 4.2 (7-month production counts: 24 projects, 1,283 items, 2,676 files, 674 values, 7,710 audit rows, and the 26 traced values in Table 1: 13 equal, 4 differing, 9 with no reader counterpart); Section 5 (value source metadata for `Reader`, `Derived`, `Manual`, and `Unknown`); Section 5.8 (`tribo_study` sample `261015A` and `xrr_study` sample `261014B`).
 - **Student checklist for Study A:** `review/demo_A_student_checklist.md` in the paper repository (building the whole tree at the start, keeping results out of filenames, and extracting values rather than typing numbers).
 - **APS ELN Community Help:** `Items.html` (the `Procedure`, `Specimen`, and `Action` hierarchy, and the **Values** tab source line with **Go to file**); `Values.html` (`Condition` vs. `Result`, `Reader`, `Manual`, `Derived`, and `Unknown` sources, multi-file extraction, and **Check Value Sources...**); `FilesAndNotes.html` (the 26 viewer plugins).
 

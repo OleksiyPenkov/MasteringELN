@@ -21,7 +21,7 @@ In <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#m
 
 ## Why agent-written records need the Value Route
 
-When Penkov and Shen (2026) audited two earlier X-ray optics studies written by an AI agent (`T7` and `T8` in `arXiv:2610.27859`, Section 4.5), they found an instructive failure mode:
+An audit of two earlier X-ray optics studies written by an AI agent in the author's laboratory (`T7` and `T8` in `arXiv:2610.27859`, Section 4.5) revealed an instructive failure mode:
 
 - The agent dutifully attached the input files, ran the fits, and wrote detailed Markdown notes naming the source file, the job IDs, and the fitted thicknesses.
 - However, across both studies, the agent stored **14 input condition values and 0 test result values**. Because the fitted period, layer thicknesses, and $\chi^2$ were written only in prose paragraphs instead of structured **Values** with a `Reader` source, neither **Tools > Analysis...** (<a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13</a>) nor `check_value_drift` (<a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16</a>) could see or verify a single result.
@@ -82,7 +82,7 @@ In an X-Ray Calc 3 model that has a thin surface contamination stack (`N = 1`, s
 
 ## Sources
 
-- **Study B agent instructions and verification reports:** `zenodo/demonstration/xrr_study/agent_instructions/record_agent.md`, `fitting_agent.md`, and `reports/record_report.md` in Penkov & Shen (2026), [doi:10.5281/zenodo.23466959](https://doi.org/10.5281/zenodo.23466959). Gives the exact MCP commands, the Value Route rules, the 5 items, 8 files, 22 `Reader` values, the X-Ray Calc 3 fit job `fit-20261016-153456-ea29`, and the production laboratory notebook step (`Item 12` in Project 3 `Co/C`).
+- **Study B agent instructions and verification reports:** `zenodo/demonstration/xrr_study/agent_instructions/record_agent.md`, `fitting_agent.md`, and `reports/record_report.md` in the ELN data deposit ([doi:10.5281/zenodo.23466959](https://doi.org/10.5281/zenodo.23466959)). Gives the exact MCP commands, the Value Route rules, the 5 items, 8 files, 22 `Reader` values, the X-Ray Calc 3 fit job `fit-20261016-153456-ea29`, and the production laboratory notebook step (`Item 12` in Project 3 `Co/C`).
 - **ELN provenance study (`arXiv:2610.27859`):** Section 4.5 (why early agent studies `T7` and `T8` had 14 input values and 0 result values) and Section 5.8 (demonstration of complete provenance in Study A and Study B).
 - **MCP `download_file` specification:** `APS-ELN-Community/docs/note-download-file-mcp-tool.md` (`file_id`, `dest_path` confinement under `UploadRoot`, `overwrite`, and `storage_status`).
 - **APS ELN Community Help:** `Values.html` (`aps.xrcx` version 2 main-stack averaging, `Period`, `<Material> Thickness`, stack index suffixes, and `Chi2`).
