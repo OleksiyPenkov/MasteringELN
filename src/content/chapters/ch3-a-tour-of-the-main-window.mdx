@@ -50,8 +50,9 @@ In the center **Items** panel, every scientific record has one of three hierarch
   ]}
 />
 
-When an action holds repeated values of the same value type, record type, and description (such as the three step-height scans on `Thickness 261015A`), the item tree summarizes them automatically on one line. It shows the mean, the sample standard deviation, and the count: for example, `d = 343.0 ± 23.5 nm (n=3)`. Opening the action dialog with **Item > Edit** still lists each individual value row and its source file.
+When an action holds repeated values of the same value type, record type, and description (such as the three step-height scans on `Thickness 261015A`), the item tree summarizes them automatically on one line (<a href="#fig-3-2">Figure 3-2</a>). It shows the mean, the sample standard deviation, and the count: for example, `d = 335.4 ± 16.5 nm (n=3)` (or `d = 343.0 ± 23.5 nm (n=3)` when using the manual rectangle selections of Chapter 18). Opening the action dialog with **Item > Edit** still lists each individual value row and its source file.
 
+<Figure id="fig-3-2" number="3-2" src={`${import.meta.env.BASE_URL}/figures/fig-3-2-main-window-live.png`} alt="Screenshot of APS ELN Community displaying the Study A (261015A) notebook across the Projects panel, the expanded Items tree with automatic mean and standard deviation summaries, the MIT nanoindentation viewer, and the preview thumbnail strip" caption="The Study A (261015A) notebook open in APS ELN Community. The center Items tree shows the full Procedure -> Specimen -> Action hierarchy with inline value summaries, while the right panel previews the selected nanoindentation file and its companion thumbnails." />
 When you select a **Procedure**, **Specimen**, or **Action** row that has child rows, three small buttons appear at the right end of that row:
 
 - **Collapse all below:** closes every nested level under the selected row.

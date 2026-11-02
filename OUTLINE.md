@@ -117,6 +117,7 @@ Section outline:
    - How repeated values summarize automatically on a row as mean, sample standard deviation, and count: for example `d = 322.8 ± 22.9 nm (n=4)`.
    - The three row buttons that appear at the right of a selected parent row: **Collapse all below**, **Expand all below**, and **Focus** (**Focus: collapse everything else**).
    - In ELN: `Ctrl+Up` and `Ctrl+Down` move a selected top-level root item up or down in manual order.
+   - Fig 3-2 (`fig-3-2-main-window-live.png`): Screenshot of Study A (`261015A`) open in APS ELN Community across the three panels and thumbnail strip.
    - Sources: C:Help:Items, C:Help:Values, C:Help:Shortcuts.
 3. **The Dashboard and keyboard navigation.**
    - Opening the Dashboard to see recent work, project statistics, and pending reviews.
@@ -165,6 +166,7 @@ Section outline:
      - Normal force ($F_n = 9.81\,\text{N}$), Cycles ($1000$), and COF ($0.528 \pm 0.019$) on `Friction test 261015A` (`aps.zrw` v2);
      - 3 wear-area values on `Wear track 261015A` ($0.00620\,\text{mm}^2$, $0.00553\,\text{mm}^2$, $0.00621\,\text{mm}^2$, `aps.fibps` v3).
    - Tip: Keep **Remember choices for this reader** ticked so ELN maps those keys automatically on your next sample.
+   - Fig 4-2 (`fig-4-2-extract-values-dialog.png`): Screenshot of the **Extract Values from File** dialog on `BN-DLC(261015A).mit`.
    - Sources: C:Help:Values, Demo:A.
 5. **Step 4: Compute the reciprocating wear rate as a `Derived` value and verify the record.**
    - Right-clicking `Friction test 261015A` and choosing **Add > Derived Value...**, selecting `wear_rate_reciprocating` ($K = A / (2 \cdot F_n \cdot N)$), multi-selecting the three `Wear Area` values from `Wear track 261015A` plus `Fn` and `Cycles`, to store $K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$ with full input provenance.
@@ -249,6 +251,7 @@ Section outline:
    - **MIT nanoindentation (`.mit`):** Ticking indents in **Records:**, compliance subtraction, **Average**, and **Instrument fit**.
    - **ZRW tribometer (`.zrw`, `.zrv`):** **Automatic** plateau detection versus **Manual** cycle interval and clicking **Apply** to save the shared interval.
    - **X-Ray Calc (`.xrcx`) and XRDML (`.xrdml`):** Inspecting reflectivity curves and the fitted layer **Structure** table.
+   - Fig 7-2 through Fig 7-6 (`fig-7-2-viewer-deposition.png`, `fig-7-3-viewer-fibps-wear.png`, `fig-7-4-viewer-mit.png`, `fig-7-5-viewer-zrw.png`, `fig-7-6-viewer-xrcx.png`): Screenshots of the five specialist viewers on the Study A and Study B demonstration files.
    - Table 7-1: Summary of the specialist instrument viewers and their shared selection states.
    - Sources: C:Help:FilesAndNotes, C:Help:Values, P:Help:Plugins.
 3. **Working drafts, external edits, and conflict resolution.**
@@ -308,6 +311,7 @@ Section outline:
    - Comparing `Reader`, `Derived`, `Manual`, and `Unknown` sources (<a href="#fig-9-1">Figure 9-1</a>), and what happens if you hand-edit a `Reader` or `Derived` value.
    - Creating a `Derived` value with **Add > Derived Value...** (`wear_rate_reciprocating` version 1), including multi-value averaging over several wear-track scans.
    - Fig 9-1 (`fig-9-1-value-provenance-sources.svg`): The four value source kinds and how **Check Value Sources...** verifies them.
+   - Fig 9-2 (`fig-9-2-item-values-provenance.png`): Screenshot of the **Values** tab in **Item > Edit** showing the `Reader` provenance line and **Go to file** button.
    - Sources: C:Help:Values, Paper§5.
 4. **Checking value sources and understanding drift codes.**
    - Running **Check Value Sources...** on an item subtree and reading every diagnostic status code (`value_changed`, `reader_version_changed`, `selection_changed`, `source_changed`, `input_changed`, `input_missing`, `not_fully_rerunnable`).
@@ -337,6 +341,7 @@ Section outline:
 3. **Attaching Runs and citing Evidence.**
    - Attaching items on the **Runs** tab (**Attach selected item...** or right-clicking an item -> **Hypothesis > Attach to hypothesis...**) as a `Run` (after approval) or `Reference`.
    - Citing an item, an attached file, or a stored value on the **Evidence** tab (**Add evidence...**), and how ELN snapshots the file's MD5 checksum and value at citation time.
+   - Fig 10-2 (`fig-10-2-hypotheses-view.png`): Screenshot of **Project > Hypotheses** showing the hypothesis tree, derived status, headline key value, and **Proposal / Runs / Evidence / Conclusion** tabs.
    - Sources: C:Help:Hypotheses, P:Help:Experiments.
 4. **Submitting a conclusion and checking the content seal.**
    - Filling in **What we found** and **Outcome** (`Supported`, `Refuted`, or `Inconclusive`), clicking **Submit conclusion**, and choosing **Accept** or **Return for more work**.
@@ -395,6 +400,7 @@ Section outline:
    - Downloading the local models (~666 MB total: 549 MB required + 117 MB optional PDFium and reranker) once via **Tools > Semantic Search Setup...** -> **Download and Install**, and how the `.search.sqlite` index stays 100% offline on your PC.
    - Which attachment files are read inside (`PDF` with PDFium, `.docx`, `.pptx`, `.xlsx`, `.html`, `.json`, `.xml`, `.csv`, `.rtf`, `.md`, `.txt`, up to 64 MB / 200,000 characters / 2,000 PDF pages).
    - Ticking **Search by meaning**, using **Rerank results** (which re-sorts the top 20 candidates in ~0.5 s using passage text and item path context), and narrowing by **Project**, **Type**, and UTC **Created** dates.
+   - Fig 12-2 (`fig-12-2-search-dialog.png`): Screenshot of **Navigate > Search...** with **Search by meaning** and **Rerank results** active.
    - Table 12-1: Comparison of Panel Filters, Text Search, Semantic Search, and **Tools > Analysis...**.
    - Sources: C:Help:Search, `APS-ELN-Community/README.md`.
 
@@ -519,6 +525,7 @@ Section outline:
    - Exporting `XRR-1_Co-C(261014B).xrdml` via `download_file` to the allowed root, running the 13-step X-Ray Calc 3 fitting procedure (`XRC_MCP.exe` + `check_acceptance.py`), and saving the accepted job (`fit-20261016-153456-ea29`, polynomial order 1) with `curves.job_id` so `[FITRESULT]` and $\chi^2$ are written into `XRR-fit_Co-C(261014B).xrcx`.
    - Creating child action `XRR fit 261014B` under `XRR-1 261014B`, uploading the `.xrcx` file, running `extract_file_key_values` (`aps.xrcx` v2), and storing the 4 `Reader` values (`Period` $= 4.940 \times 10^{-9}\,\text{m}$, `Co Thickness` $= 2.083 \times 10^{-9}\,\text{m}$, `C Thickness` $= 2.857 \times 10^{-9}\,\text{m}$, and `Chi2` $= 0.943$).
    - Fig 17-1 (`fig-17-1-study-b-agent-workflow.svg`): The two-agent Study B (`261014B`) workflow from raw deposition and `.xrdml` files to verified `Reader` values.
+   - Fig 17-2 (`fig-17-2-study-b-xrcx-window.png`): Screenshot of the completed Study B (`261014B`) notebook in APS ELN Community with `XRR-fit_Co-C(261014B).xrcx` open.
    - Table 17-1: The items, files, and extracted `Reader` values of Study B (`261014B`).
    - Sources: Demo:B (`fitting_agent.md`, `record_report.md`), `docs/note-download-file-mcp-tool.md`.
 
