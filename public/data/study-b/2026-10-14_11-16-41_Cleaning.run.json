@@ -1,0 +1,14 @@
+{
+  "schema": 3,
+  "kind": "run-record",
+  "runId": "2026-10-14_11-16-41_Cleaning",
+  "recipe": "Cleaning",
+  "recipePath": "D:\\Deposition\\Recipes\\OP\\Cleaning.rcpx",
+  "embedded": false,
+  "startedAt": "2026-10-14T11:16:41.8143116+08:00",
+  "endedAt": "2026-10-14T11:19:00.5092737+08:00",
+  "outcome": "complete",
+  "message": "(02m 18s)",
+  "pauses": [],
+  "skippedSteps": []
+}

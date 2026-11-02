@@ -1,0 +1,103 @@
+---
+title: Introduction
+part: front
+number: ''
+order: 0
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import InTeamLab from '../../components/textbook/InTeamLab.astro';
+
+## About This Book
+
+This book shows you how to record, trace, and analyze laboratory work in APS ELN. You start with a sample you are about to make or measure. At the end you have a complete experimental tree, the raw instrument files with verified checksums, the extracted and derived numbers with their exact origins, and a record that a teammate, your supervisor, or your future self can check in two clicks.
+
+Every procedure in the book is something you do in the program: a menu command, a dialog field, a viewer button, or a tool call through the Model Context Protocol (MCP) server. You learn by building two real laboratory records from start to finish:
+
+- **Study A (`261015A`)** is a boron nitride and diamond-like carbon (BN/DLC) coating grown by magnetron sputtering and tested for step height, nanoindentation hardness and modulus, reciprocating friction, and wear rate.
+- **Study B (`261014B`)** is a 20-period cobalt/carbon ($\text{Co/C}$) multilayer X-ray mirror measured by X-ray reflectivity (XRR) and fitted in X-Ray Calc 3.
+
+Both studies come from the laboratory experience report by Penkov and Shen (2026). That study audited seven months of daily notebook use across 24 projects, 1,283 items, 2,676 files, and 674 stored values. It showed that while users reliably keep the link from a sample to its raw file, they frequently lose the link from the raw file to the stored number. This book teaches the workflow that keeps every link intact.
+
+APS ELN runs in two editions that share the same scientific model and the same 26 instrument viewers: **APS ELN Community** (a free, single-user local SQLite edition) and **APS ELN ("For Teams")** (the multi-user laboratory edition connected to a shared server). This book teaches the shared workflow once and marks team-server steps with a dedicated icon. Server installation and IT administration are left to administrator runbooks.
+
+The book has five Parts:
+
+- **Part 1, Getting Started**, explains why links between files and numbers matter, shows how to open a local or team notebook, tours the main window, and walks you through recording Study A (`261015A`) in twenty minutes.
+- **Part 2, Recording Daily Lab Work**, covers projects and folders, the **Procedure -> Specimen -> Action** hierarchy, experiment templates, the 26 instrument viewers, working drafts, protocols, and value extraction (`Reader`, `Derived`, and `Manual`).
+- **Part 3, Thinking, Searching, and Reviewing**, covers the hypothesis tree, the project wiki, tags and links, full-text and semantic search, correlation charts, completeness rules, and electronic signatures.
+- **Part 4, Working with an AI Agent (MCP)**, shows how to connect Claude Code or Codex to your notebook, audit storage and value drift, run the Study B (`261014B`) XRR fitting workflow, and respect the human review gates that remain in the Desktop GUI.
+- **Part 5, The Part of Tens**, gives three short checklists for avoiding broken links, preparing a record for supervisor approval, and working safely with an AI agent.
+
+### Conventions used in this book
+
+- **Menu commands are in bold**, with `>` between the levels. **Item > New Procedure** means: open the **Item** menu and choose **New Procedure**. Buttons, tab names, dialogs, and field labels are also in bold, spelled as the program shows them.
+- **File names, extensions, reader IDs, and MCP tool names** appear in code font: `agent_tribo.sqlite`, `.depo.json`, `.fibps`, `.mit`, `.zrw`, `.xrdml`, `.xrcx`, `aps.mit`, `extract_file_key_values`.
+- **Quantities and units** match the value types stored in the notebook: meters ($\text{m}$), nanometers ($\text{nm}$), or ångströms ($\Ang$) for length, gigapascals ($\text{GPa}$) for hardness and modulus, newtons ($\text{N}$) for normal force, and degrees ($^\circ$) for grazing ($\theta$) and scattering ($2\theta$) angles.
+
+Each chapter works on its own. When a chapter relies on an earlier one, it gives a direct link to the exact section. The web edition and the print PDF edition are built from the same source text.
+
+## Foolish Assumptions
+
+This book makes a few assumptions about you:
+
+- You run laboratory syntheses, depositions, measurements, or simulations, or you are about to start.
+- You know what your instruments measure, even if this is your first week using an electronic laboratory notebook.
+- You have a computer running 64-bit Windows 10 or Windows 11 with the Microsoft Edge WebView2 Runtime installed.
+- You want to spend your time doing science rather than hunting for lost files when you write your thesis or paper.
+
+You do not need to know SQL, database administration, or Delphi programming. Even in Part 4, where an AI assistant talks to the notebook through MCP, you give instructions in plain English.
+
+## Icons Used in This Book
+
+Six margin icons appear throughout the book. Each icon has one job.
+
+<Tip>A keyboard shortcut or a faster way to complete a step in APS ELN.</Tip>
+
+<Remember>A rule you'll use across many chapters to keep your records clean and searchable.</Remember>
+
+<Warning>A mistake that breaks your data trail, overwrites a draft, or stores an untraceable number without showing an error message.</Warning>
+
+<GoingDeeper>How the data model, file hashing, derived-value formulas, or semantic search work under the hood. You can skip this box and still complete every step. On the web, click its title to open it.</GoingDeeper>
+
+<InELN>The exact menu path, toolbar button, dialog, and field for an action in the Desktop window.</InELN>
+
+<InTeamLab>How a step works when you use the Commercial ("For Teams") edition connected to a shared laboratory server, including login, project permissions, mobile QR protocols, and supervisor review gates.</InTeamLab>
+
+## Beyond the Book
+
+APS ELN includes a built-in manual that covers every menu command and reference dialog.
+
+<InELN>**Help > Contents...** opens the built-in Help manual. **Help > Keyboard Shortcuts...** (shortcut `F1` in Community) opens the shortcut reference table.</InELN>
+
+The raw instrument files for both running examples (**Study A**, `261015A`, and **Study B**, `261014B`) ship with this book so you can follow every step on your own computer.
+
+:::web-only
+You can inspect the demonstration file lists and MD5 checksums directly from this site: [Study A checksums (`/data/study-a/checksums.md5`)](/MasteringELN/data/study-a/checksums.md5) and [Study B checksums (`/data/study-b/checksums.md5`)](/MasteringELN/data/study-b/checksums.md5), with all raw files in `/MasteringELN/data/study-a/` and `/MasteringELN/data/study-b/`.
+:::
+
+:::print-only
+In the web edition of this book, the Study A (`261015A`) and Study B (`261014B`) raw files and `checksums.md5` manifests are available for direct download under `/MasteringELN/data/study-a/` and `/MasteringELN/data/study-b/`, and from the Zenodo deposit (`doi:10.5281/zenodo.23466959`).
+:::
+The public source repository for **APS ELN Community** is at [github.com/APS-Techno/ELN-Community](https://github.com/APS-Techno/ELN-Community). If APS ELN supports your published research, please cite Penkov and Shen (2026) in the Sources section.
+
+## Where to Go from Here
+
+Pick the route that matches what you need today:
+
+- **You are opening ELN for the first time:** start with <a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1: What an ELN Is, and Why Links Matter</a>, then read <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#two-ways-eln-stores-your-laboratory-work`}>Chapter 2: Opening a Local or Team Lab Notebook</a> and <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3: A Tour of the Main Window</a>.
+- **You have a sample to record right now:** go straight to <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4: Your First Sample Record in Twenty Minutes</a>. It walks through every item, file, and value of Study A (`261015A`).
+- **You want to see the whole workflow on one page:** turn to <a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-whole-student-workflow-on-one-page`}>Chapter 1: The whole student workflow on one page</a> (`Table 1-1`).
+- **You are setting up your notebook or checking backups:** read <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#how-to-back-up-a-local-notebook-safely`}>Chapter 2: How to back up a local notebook safely</a>.
+
+## Sources
+
+- **The ELN provenance study and demonstration deposit:** Penkov, O. V. & Shen, B. (2026). *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report.* arXiv preprint, [arXiv:2610.27859](https://arxiv.org/abs/2610.27859). Software and data deposit: [doi:10.5281/zenodo.23466959](https://doi.org/10.5281/zenodo.23466959). Sections 2.4 and 4 give the 7-month laboratory audit counts; Section 5.8 and `zenodo/demonstration/` provide Study A (`261015A`) and Study B (`261014B`).
+- **APS ELN Community Help:** `GettingStarted.html` (system requirements, creating a notebook, main window panels); `Shortcuts.html` (`F1` for **Help > Keyboard Shortcuts...** and **Help > Contents...**); `FilesAndNotes.html` (the 26 viewer plugins).
+- **APS ELN Commercial ("For Teams") Help:** `GettingStarted.html` (64-bit Windows 10/11, WebView2 runtime, SQLite vs. remote MySQL/WebDAV connection modes, and team login).
+- **APS ELN Community repository:** `README.md` and `CITATION.cff` ([github.com/APS-Techno/ELN-Community](https://github.com/APS-Techno/ELN-Community), Apache-2.0 license).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1</a>; <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#two-ways-eln-stores-your-laboratory-work`}>Chapter 2</a>; <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3</a>; <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4</a>.

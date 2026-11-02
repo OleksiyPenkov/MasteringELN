@@ -1,0 +1,109 @@
+---
+title: What an ELN Is, and Why Links Matter
+part: '1'
+number: '1'
+order: 10
+inThisChapter:
+  - Tracing the four links from a physical sample to a published number
+  - Seeing how a notebook can keep every file and still lose the link to its numbers
+  - Following the four rules that keep your data trail unbroken
+  - Viewing the complete student workflow on one page
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+When you put a number into a thesis table or a journal figure, someone will eventually ask where it came from. Perhaps your supervisor asks why one coating wore through twice as fast as another. Perhaps a reviewer asks how many indents were averaged in your hardness value, or which period thickness came out of your X-ray reflectivity fit. An electronic laboratory notebook (ELN) does its job when you can answer that question in seconds without guessing.
+
+## The four links in every laboratory result
+
+Every experimental number rests on a chain of four records (<a href="#fig-1-1">Figure 1-1</a>):
+
+1. **The Sample (`Specimen`):** the physical piece or model you made, identified by its sample code (such as `261015A`).
+2. **The Operation (`Procedure` or `Action`):** what you did to that sample, such as a sputter deposition, a 3D profilometer scan, a nanoindentation series, or a friction test.
+3. **The Raw File:** the unaltered file written by the instrument (`.depo.json`, `.fibps`, `.mit`, `.zrw`, `.xrdml`) or by an analysis program (`.xrcx`).
+4. **The Stored Number (`Value`):** the quantity, numerical value, unit, and tolerance saved on the procedure or action (for example, an indentation hardness of $5.92 \pm 0.47\,\text{GPa}$).
+
+<Figure id="fig-1-1" number="1-1" src={`${import.meta.env.BASE_URL}/figures/fig-1-1-provenance-chain.svg`} alt="Four connected boxes showing Sample, Operation, Raw File, and Number, with the first three linked by tree structure and the fourth linked by value-level Reader or Derived provenance" caption="The four-link provenance chain for a laboratory measurement. Placing an Action under its Specimen and attaching the raw file keeps the first three links. Extracting the number through a data file reader (Reader source) or a server formula (Derived source) keeps the fourth link." />
+
+In APS ELN, the first three links are structural. When you create an **Action** under a **Specimen** and attach the instrument file to that action, the tree itself records which sample was measured, which operation ran, and where the raw bytes sit.
+
+## Seven months of real laboratory use
+
+Penkov and Shen (2026) measured how well these four links held up during seven months of daily work in a thin-film and tribology laboratory. Six researchers and one AI agent recorded 24 projects containing 1,283 items, 2,676 attached files, and 674 stored values across 7,710 audit-log writes.
+
+The structural links held up well: measurement actions sat under their specimens and held their raw files. However, when 26 stored values across six completed studies (`T1`–`T6`) were compared against the output of APS ELN's built-in data file readers on the attached files, three things stood out:
+
+- **13 of the 26 values** matched the current reader output of an attached file after unit conversion.
+- **4 values** differed from the number the attached file gives today, for example because a reader algorithm was updated or a different evaluation interval was chosen.
+- **9 values** had no reader counterpart at all, because the source file had not been attached, a screenshot had been uploaded instead of the raw data, or the number had been typed by hand before the file existed.
+
+<Warning title="typing numbers by hand">When you type a result by hand (`Manual` source) instead of extracting it from the attached file (`Reader` source), APS ELN cannot verify whether the number still matches the file when a reader version, calibration, or evaluation window changes. Use **Extract Values** whenever a reader supports your file format.</Warning>
+
+<GoingDeeper title="how APS ELN stores value-level provenance">
+
+Starting in APS ELN 2.1 (notebook format 5 in Community), every stored value carries a structured source record:
+
+- **`Reader`:** records the `file_id`, the file's MD5 hash at extraction time, the `reader_id` (such as `aps.mit` or `aps.xrcx`), the integer `reader_version`, the emitted key name, the emitted unit, the unit conversion factor, and an optional analysis snapshot (such as which indents were ticked in a `.mit` file or which cycle interval was selected in a `.zrw` friction curve).
+- **`Derived`:** records the `formula_id` (such as `wear_rate_reciprocating`), the `formula_version`, and the exact `value_id` list of the stored input values used in the calculation.
+- **`Manual`:** records that a person typed or edited the number. If you edit the number or tolerance of a `Reader` or `Derived` value by hand, its source switches to `Manual` while preserving the previous reader or formula note.
+- **`Unknown`:** marks legacy values created before format 5 source tracking existed.
+
+</GoingDeeper>
+
+## Two running examples: Study A and Study B
+
+- **Study A (`261015A`, a BN/DLC tribological coating):** A sputter deposition (`Deposition 261015A`) produces specimen `261015A`. Four measurement and analysis actions sit below it: `Thickness 261015A` (three Filmetrics 3D step-height scans, `1.fibps`–`3.fibps`), `Indentation 261015A` (an Anton Paar UNHT nanoindentation file, `BN-DLC(261015A).mit`), `Friction test 261015A` (a DaVinci tribometer reciprocating test, `BN-DLC.zrw`), and its child action `Wear track 261015A` (three optical profiler scans across the wear scar, `wear 1.fibps`–`wear 3.fibps`). Together they hold 11 raw files, 23 `Reader` values, and 1 `Derived` wear-rate value.
+- **Study B (`261014B`, a Co/C multilayer X-ray mirror):** A sputter deposition (`Deposition 261014B`) includes a plasma cleaning action (`Cleaning 261014B`) and produces specimen `261014B` (20 periods of cobalt and carbon on soda-lime glass). Under the specimen sit the X-ray reflectivity scan `XRR-1 261014B` (`XRR-1_Co-C(261014B).xrdml`) and its child analysis action `XRR fit 261014B` (`XRR-fit_Co-C(261014B).xrcx`). Together they hold 8 files and 22 `Reader` values.
+
+<Figure id="fig-1-2" number="1-2" src={`${import.meta.env.BASE_URL}/figures/fig-1-2-study-a-tree.svg`} alt="Side-by-side trees for Study A (261015A BN/DLC coating) and Study B (261014B Co/C mirror) showing Procedure, Specimen, Action, files, and value counts" caption="The item trees of the two running examples used across this book. Study A (left) records a BN/DLC coating and its mechanical and tribological tests. Study B (right) records a 20-period Co/C X-ray mirror from deposition through XRR fitting." />
+
+<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4: Your First Sample Record in Twenty Minutes</a> builds Study A step by step in the Desktop window. Chapter 17 walks through Study B with the MCP server and X-Ray Calc 3.
+## Four rules that keep your data trail unbroken
+
+Four habits prevent every broken link found in the seven-month laboratory study:
+
+1. **Build the whole item tree at the start of the run.** Create the **Procedure**, the **Specimen**, and every planned **Action** before you walk to the instruments. An empty action in the tree reminds you that a file is still missing. At the end of the experiment, no action should remain empty.
+2. **Attach the raw instrument file, never a screenshot.** A `.png` screenshot of an XRR fit or an indentation curve cannot be re-analyzed, cannot be checked for drift, and gives zero values to a reader. Always attach the native file (`.depo.json`, `.tsv`, `.fibps`, `.mit`, `.zrw`, `.xrdml`, `.xrcx`).
+3. **Keep result numbers out of file names.** Name a file after the sample code, the measurement type, and the position or counterbody, such as `BN-DLC(261015A).mit` or `wear 1.fibps`. Never name a file `351.9nm.fibps`. Results belong in stored **Values**, where they carry units, tolerances, and provenance.
+4. **Extract values from files instead of typing them.** Click **Extract Values** in the viewer (or right-click several files and choose **Extract values from N files...**) so every number carries its `Reader` source, and use **Add > Derived Value...** for formula outputs.
+
+<Remember>A file name tells you *which* sample and *which* spot was measured. A stored **Value** tells you *what number* the measurement gave.</Remember>
+
+<InELN>To check where any stored number came from, open the **Procedure** or **Action** with **Item > Edit**, select the **Values** tab, and click the value row. The line below the list names the reader, its version, the key name, and the source file, and enables **Go to file**.</InELN>
+
+## The whole student workflow on one page
+
+<a href="#table-1-1">Table 1-1</a> maps the ten stages of daily work in APS ELN to the menu commands you use and the chapters that explain each stage in detail.
+
+<p id="table-1-1" class="table-caption"><strong>Table 1-1:</strong> The complete student workflow in APS ELN.</p>
+
+<DataTable
+  headers={['Stage', 'What you do in APS ELN', 'Chapter']}
+  rows={[
+    ['1. Open or connect', 'Create or open a local `.sqlite` notebook with **File > New Notebook...** or **File > Open Notebook...**, or sign into your team laboratory server.', '2'],
+    ['2. Choose a project and folder', 'Select your research project and specimen folder in the **Projects** panel on the left.', '3, 5'],
+    ['3. Build the sample tree', 'Create the **Procedure** (**Item > New Procedure**), the **Specimen** (**Item > New Specimen**), and each planned **Action** (**Item > New Action**), or apply an **Experiment Template**.', '4, 6'],
+    ['4. Attach raw files and notes', 'Choose **Item > Add File** to copy raw instrument files into notebook storage, and inspect them in the 26 built-in **Content Viewer** plugins.', '4, 7'],
+    ['5. Complete protocols', 'Attach and fill structured **Protocol** forms for deposition, safety, or characterization checklists.', '8'],
+    ['6. Extract and derive values', 'Use **Extract Values** to store `Reader`-sourced conditions and results, and **Add > Derived Value...** for formula calculations.', '4, 9'],
+    ['7. Link to hypotheses and wiki', 'Attach experimental runs and cite file or value evidence on the **Hypothesis** tree, and summarize findings in the project **Wiki**.', '10, 11'],
+    ['8. Search and correlate', 'Find records with **Navigate > Search...** (`Ctrl+F`, full-text and semantic search) and plot correlations across samples.', '12, 13'],
+    ['9. Verify and sign', 'Run **Check Value Sources...**, check completeness rules, and lock finished records with an electronic signature.', '14, 20'],
+    ['10. Work with an AI agent', 'Connect Claude Code or Codex through the MCP server to audit drift, fit curves, and build structured records.', '15–18, 21'],
+  ]}
+/>
+
+<Tip>Keep <a href="#table-1-1">Table 1-1</a> bookmarked while you record your first few samples. Once you complete <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4</a> once from top to bottom, the sequence becomes automatic.</Tip>
+
+## Sources
+
+- **Penkov, O. V. & Shen, B. (2026).** *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report.* [arXiv:2610.27859](https://arxiv.org/abs/2610.27859), and Zenodo deposit [doi:10.5281/zenodo.23466959](https://doi.org/10.5281/zenodo.23466959). Sections 1–2 (the four-link chain from sample to number); Sections 2.4 and 4.2 (7-month production counts: 24 projects, 1,283 items, 2,676 files, 674 values, 7,710 audit rows, and the 26 traced values in Table 1: 13 equal, 4 differing, 9 with no reader counterpart); Section 5 (value source metadata for `Reader`, `Derived`, `Manual`, and `Unknown`); Section 5.8 (`tribo_study` sample `261015A` and `xrr_study` sample `261014B`).
+- **Student checklist for Study A:** `review/demo_A_student_checklist.md` in the paper repository (building the whole tree at the start, keeping results out of filenames, and extracting values rather than typing numbers).
+- **APS ELN Community Help:** `Items.html` (the `Procedure`, `Specimen`, and `Action` hierarchy, and the **Values** tab source line with **Go to file**); `Values.html` (`Condition` vs. `Result`, `Reader`, `Manual`, `Derived`, and `Unknown` sources, multi-file extraction, and **Check Value Sources...**); `FilesAndNotes.html` (the 26 viewer plugins).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/introduction#about-this-book`}>Introduction: About This Book</a>; <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#two-ways-eln-stores-your-laboratory-work`}>Chapter 2</a>; <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3</a>; <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4</a>.

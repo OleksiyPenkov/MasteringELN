@@ -1,0 +1,120 @@
+---
+title: Opening a Local or Team Lab Notebook
+part: '1'
+number: '2'
+order: 20
+inThisChapter:
+  - Understanding how local Community notebooks and shared Team servers store data
+  - Creating, opening, and switching local SQLite notebooks in APS ELN Community
+  - Logging into a shared laboratory server and using Demo Mode in a team lab
+  - Backing up your database and attachment directory together without losing files
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import InTeamLab from '../../components/textbook/InTeamLab.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+Before you can create a project or record a sample (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1: The four links in every laboratory result</a>), you need an open notebook. How you open one depends on whether you are working on your own computer in **APS ELN Community** or signing into your group's shared server in **APS ELN ("For Teams")**. Once the notebook is open, the scientific workspace is the same (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3: The three-panel workspace</a>).
+
+## Two ways ELN stores your laboratory work
+
+APS ELN always keeps two kinds of data in lockstep (<a href="#fig-2-1">Figure 2-1</a>):
+
+1. **The structured database:** projects, folders, procedures, specimens, actions, values, protocols, hypotheses, tags, links, signatures, and the audit trail.
+2. **The attachment storage:** the exact bytes of every raw measurement file, note image, and analysis project you attach.
+
+<Figure id="fig-2-1" number="2-1" src={`${import.meta.env.BASE_URL}/figures/fig-2-1-notebook-modes.svg`} alt="Comparison of APS ELN Community local storage (notebook.sqlite plus a companion notebook files folder) and Team Lab server mode (shared MySQL server plus shared WebDAV file store)" caption="The two storage modes in APS ELN. In APS ELN Community (left), your computer holds a format 5 SQLite database (.sqlite) and a companion attachment folder. In a Team Lab (right), the client connects over the network to a shared MySQL database and a shared WebDAV file store." />
+
+In **APS ELN Community**, both parts sit in normal folders on your Windows PC: one SQLite database file (such as `notebook.sqlite`) and one separate attachment directory (such as `notebook files`). There is no server login.
+
+In **APS ELN ("For Teams")**, the structured records live on a shared MySQL server and the attachment bytes live on a shared WebDAV or server store. You log in with the username and password issued by your laboratory administrator.
+## Creating a local notebook in Community
+
+When you launch `ELNCommunity.exe` for the first time, no notebook is open yet. Follow these steps to create your first notebook:
+
+1. Choose **File > New Notebook...**.
+2. In the file dialog, pick a folder on a local drive and type a new database file name, such as `notebook.sqlite`. Do not select an existing file.
+3. Select a separate, empty attachment directory. By default, the dialog creates and opens a new empty `<name> files` folder right beside your `.sqlite` file; click **Select Folder** to accept it. The `.sqlite` file itself must sit outside the attachment folder.
+4. Enter your **First name**, **Last name**, **Signing password**, and password confirmation in the local-profile dialog, then complete the dialog.
+5. Wait a moment while APS ELN checks the seven scientific reference catalogs (`ValueTypes.csv`, `FileTypes.csv`, `ActionTypes.csv`, `EquipmentTypes.csv`, `Equipment.csv`, `ActionTypeEquipment.csv`, `FileTypeLinks.csv`) and imports the reference data into your new notebook.
+
+<InELN>Use **File > New Notebook...** to create a new `.sqlite` notebook, **File > Open Notebook...** to open an existing one, and **File > Recent Notebooks** to switch among the last eight notebooks you opened.</InELN>
+
+If you accidentally choose an existing file in **File > New Notebook...**, Community stops with a warning before asking for an attachment folder and leaves the existing file untouched. Use **File > Open Notebook...** instead.
+
+When you open an existing notebook with **File > Open Notebook...**, Community checks whether the database already remembers its attachment directory:
+
+- On the same drive, the notebook stores the attachment folder as a relative path (for example, `..\Files` when `agent.sqlite` sits in a `DB` folder beside `Files`). If the folder is present, the notebook opens immediately.
+- If the notebook has no saved attachment path, or if the folder was moved separately, Community asks you to select that notebook's attachment folder and then asks whether to remember it for next time.
+
+<Warning title="your signing password is not a file-encryption password">The signing password you set when creating a local notebook is checked only when you apply an electronic signature to lock a record (Chapter 14). Opening a local `.sqlite` notebook does not ask for a password, and the database is not encrypted. Protect your computer account and backup drives with Windows access controls.</Warning>
+
+<GoingDeeper title="opening older format 2, 3, or 4 notebooks and command-line flags">
+
+Current Community builds use **local notebook format 5**, which includes schema tables for `Derived` values, default reader mappings, and the tribology value types (`Wear area`, `Normal force`, `Cycles`, and `Wear rate`). When you open an older format 2, 3, or 4 notebook, Community asks before changing anything. Clicking **Yes** first writes a timestamped backup copy beside your database (named with `.format2-backup-`, `.format3-backup-`, or `.format4-backup-`), upgrades the database to format 5, and preserves all existing values and sources. Older versions of Community cannot open a format 5 database, so keep that backup file if you ever need an older build.
+
+You can also launch Community from a script or shortcut with explicit paths:
+
+```text
+ELNCommunity.exe --config "C:\ELN\desktop.ini" --notebook "C:\ELN\notebook.sqlite" --storage "C:\ELN\notebook files" --plugins "C:\ELN\Plugins"
+```
+
+When you launch Community without command-line flags, it automatically reopens the last notebook that opened cleanly.
+</GoingDeeper>
+
+## Logging into a shared team server
+
+If you work in a research group that runs the Commercial team edition (`ELabNotebook3.exe`), your notebooks live on the laboratory server so your teammates and supervisor can see projects, review protocols, and approve hypotheses.
+
+<InTeamLab title="first-run connection and server login">
+
+1. **First-run setup:** The first time you start `ELabNotebook3.exe` on a workstation, the First-Run Connection Wizard asks how to connect. In a managed lab, select the `.elnconfig` configuration file provided by your administrator; it fills in the MySQL database and WebDAV attachment server automatically.
+2. **Logging in:** On the Login screen, enter your **Username** and case-sensitive **Password**, then click **Log in**. A **Caps Lock warning** appears automatically if Caps Lock is on. Click the **eye icon** beside the password box to check what you typed, and tick **Remember credentials** to store your login in Windows Credential Manager.
+3. **Three-strike lockout:** After three failed login attempts in a row, the program closes. Relaunch it to try again, or ask your administrator to reset a forgotten password.
+
+</InTeamLab>
+
+In a team laboratory, your account carries one of five roles (<a href="#table-2-1">Table 2-1</a>). Most students work with a **Standard** or **PowerUser** account.
+
+<p id="table-2-1" class="table-caption"><strong>Table 2-1:</strong> User roles in a shared Team laboratory notebook.</p>
+
+<DataTable
+  headers={['Role', 'What a user with this role can do']}
+  rows={[
+    ['Guest', 'Read projects granted to them; cannot create or edit scientific records or see review queues.'],
+    ['Standard', 'Create and edit procedures, specimens, actions, files, protocols, and values in projects where they have write access; submit protocols and hypotheses for review.'],
+    ['PowerUser', 'Everything a Standard user can do, plus create new projects of their own and manage reference data where permitted.'],
+    ['Super (Supervisor)', 'Review and approve student protocols and hypotheses across supervised projects, and filter the Dashboard by student and time range.'],
+    ['Admin', 'Manage user accounts, roles, permissions, audit rules, and server configuration.'],
+  ]}
+/>
+
+<Tip>If you want to practice creating items or testing value extraction without touching your group's live server database, use **Demo Mode** on the login screen (or open the Study A and Study B local `.sqlite` demonstration notebooks in **APS ELN Community**).</Tip>
+
+## How to back up a local notebook safely
+
+In APS ELN Community, records are saved to the `.sqlite` database as soon as you complete each dialog. There is no **File > Save Notebook** menu command. However, a database file without its attachment folder is only half a notebook: it knows the names and MD5 hashes of your files, but the curves and images themselves live in the attachment directory.
+
+Follow these five steps whenever you back up or move a local notebook:
+
+1. **Save open editors.** Save any open Markdown note or external working draft (`Tools > Save Attachment Working Draft`), and resolve any conflict prompts.
+2. **Close the notebook and stop MCP processes.** Close `ELNCommunity.exe` and make sure no `ELNCommunityMCP.exe` agent process is using the database. Never copy a SQLite database while a program is writing to it.
+3. **Copy the database and attachment folder together.** Copy both the `.sqlite` file and the entire `<name> files` folder (keeping its subfolder structure and filenames unchanged) into one backup folder or archive.
+4. **Copy retained working drafts if needed.** If you declined to save a working draft at close and kept its temporary recovery path, copy that draft folder separately.
+5. **Test your backup in a new folder.** When restoring, extract both the `.sqlite` file and the attachment folder into a new directory rather than overwriting an existing notebook in place, then open it with **File > Open Notebook...** and check a few files in the viewer.
+
+<Remember>To move a closed Community notebook to another folder or drive, move the parent folder that holds both the `.sqlite` database and its attachment folder. Because the notebook saves a relative path on the same drive, it will find its attachments at the new location automatically.</Remember>
+
+<Warning title="never delete SQLite sidecar files by hand">If a notebook was not closed cleanly, you may see `-journal`, `-wal`, or `-shm` files next to the `.sqlite` database. Never delete those files in Windows Explorer to clear a lock warning; they hold uncommitted database pages. Open and close the database in its owning client so SQLite can recover them cleanly.</Warning>
+
+## Sources
+
+- **APS ELN Community Help:** `GettingStarted.html` (creating your first notebook, **File > New Notebook...**, the seven scientific catalogs, and the signing password); `Notebooks.html` (keeping the `.sqlite` database and attachment directory together, **File > Open Notebook...**, **File > Recent Notebooks**, relative path storage on the same drive, upgrading format 2/3/4 notebooks to format 5 with `.format4-backup-`, command-line launch flags `--config`, `--notebook`, `--storage`, `--plugins`, and the 5-step consistent backup procedure).
+- **APS ELN Commercial ("For Teams") Help:** `GettingStarted.html` (Local SQLite vs. remote MySQL and WebDAV modes, the First-Run Connection Wizard and `.elnconfig`, the Login screen with Caps Lock warning, eye icon, three-attempt close, and **Remember credentials** in Windows Credential Manager); `Administration.html` (user roles `Guest`, `Standard`, `PowerUser`, `Super`, and `Admin`).
+- **Zenodo demonstration deposit (`doi:10.5281/zenodo.23466959`):** `zenodo/README.md` (how `agent.sqlite` and `agent_tribo.sqlite` sit in `DB/` beside `Files/` or `agent_tribo files/` in format 5).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/introduction#where-to-go-from-here`}>Introduction: Where to Go from Here</a>; <a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1</a>; <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3</a>; <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4</a>.

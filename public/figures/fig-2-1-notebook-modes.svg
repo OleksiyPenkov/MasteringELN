@@ -1,0 +1,21 @@
+<svg viewBox="0 0 600 230" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="12" width="278" height="204" rx="6" fill="#f7f9fb" stroke="#1a5276" stroke-width="1.8"/>
+  <text x="149" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#1a5276">APS ELN Community (Local)</text>
+  <rect x="30" y="56" width="238" height="58" rx="5" fill="#dbe5fb" stroke="#1a5276" stroke-width="1.5"/>
+  <text x="149" y="80" text-anchor="middle" font-size="14" font-weight="600" fill="#222">notebook.sqlite (Format 5)</text>
+  <text x="149" y="102" text-anchor="middle" font-size="14" fill="#334155">Items, values, hashes, audit</text>
+  <rect x="30" y="128" width="238" height="58" rx="5" fill="#e0f2f1" stroke="#00695c" stroke-width="1.5"/>
+  <text x="149" y="152" text-anchor="middle" font-size="14" font-weight="600" fill="#00695c">notebook files/ folder</text>
+  <text x="149" y="174" text-anchor="middle" font-size="14" fill="#334155">Stored attachment bytes</text>
+  <text x="149" y="204" text-anchor="middle" font-size="14" font-weight="600" fill="#c62828">Back up both together</text>
+
+  <rect x="312" y="12" width="278" height="204" rx="6" fill="#ede7f6" stroke="#5e35b1" stroke-width="1.8"/>
+  <text x="451" y="38" text-anchor="middle" font-size="15" font-weight="700" fill="#5e35b1">In a Team Lab (Server Mode)</text>
+  <rect x="332" y="56" width="238" height="58" rx="5" fill="#fff" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="451" y="80" text-anchor="middle" font-size="14" font-weight="600" fill="#222">Shared MySQL Server</text>
+  <text x="451" y="102" text-anchor="middle" font-size="14" fill="#334155">Accounts, roles, review gates</text>
+  <rect x="332" y="128" width="238" height="58" rx="5" fill="#fff" stroke="#5e35b1" stroke-width="1.5"/>
+  <text x="451" y="152" text-anchor="middle" font-size="14" font-weight="600" fill="#5e35b1">Shared WebDAV File Store</text>
+  <text x="451" y="174" text-anchor="middle" font-size="14" fill="#334155">Central attachment storage</text>
+  <text x="451" y="204" text-anchor="middle" font-size="14" font-weight="600" fill="#5e35b1">Sign in with lab credentials</text>
+</svg>

@@ -1,0 +1,20 @@
+<svg viewBox="0 0 600 290" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="8" y="10" width="282" height="270" rx="6" fill="#f7f9fb" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="22" y="36" font-size="15" font-weight="700" fill="#1a5276">Study A: BN/DLC Coating (261015A)</text>
+  <text x="22" y="68" font-size="14" font-weight="600" fill="#222">Proc: Deposition 261015A</text>
+  <text x="40" y="96" font-size="14" font-weight="600" fill="#1a5276">Specimen: 261015A</text>
+  <text x="60" y="124" font-size="14" fill="#222">Action: Thickness 261015A (3 .fibps)</text>
+  <text x="60" y="152" font-size="14" fill="#222">Action: Indentation 261015A (.mit)</text>
+  <text x="60" y="180" font-size="14" fill="#222">Action: Friction test 261015A (.zrw)</text>
+  <text x="80" y="208" font-size="14" fill="#222">Action: Wear track (3 .fibps)</text>
+  <text x="22" y="250" font-size="14" fill="#00695c">11 raw files · 23 Reader + 1 Derived</text>
+
+  <rect x="310" y="10" width="282" height="270" rx="6" fill="#f7f9fb" stroke="#cbd5e1" stroke-width="1.5"/>
+  <text x="324" y="36" font-size="15" font-weight="700" fill="#1a5276">Study B: Co/C Mirror (261014B)</text>
+  <text x="324" y="68" font-size="14" font-weight="600" fill="#222">Proc: Deposition 261014B</text>
+  <text x="342" y="96" font-size="14" fill="#222">Action: Cleaning 261014B</text>
+  <text x="342" y="124" font-size="14" font-weight="600" fill="#1a5276">Specimen: 261014B (Co/C, N=20)</text>
+  <text x="362" y="152" font-size="14" fill="#222">Action: XRR-1 261014B (.xrdml)</text>
+  <text x="382" y="180" font-size="14" fill="#222">Action: XRR fit 261014B (.xrcx)</text>
+  <text x="324" y="250" font-size="14" fill="#00695c">8 raw/fit files · 22 Reader values</text>
+</svg>

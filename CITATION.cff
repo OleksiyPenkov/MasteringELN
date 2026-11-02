@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+title: "Mastering ELN: Recording, Tracing, and Analyzing Laboratory Data with APS ELN"
+message: "If you use this book, please cite it using the metadata from this file."
+type: book
+authors:
+  - family-names: Penkov
+    given-names: Oleksiy V.
+    orcid: "https://orcid.org/0000-0003-3675-5301"
+    affiliation: "ZJU-UIUC Institute, International Campus, Zhejiang University"
+date-released: "2026-11-02"
+version: "0.1.0"
+doi: 10.5281/zenodo.23466959
+url: "https://github.com/APS-Techno/ELN-Community"
+license: CC-BY-4.0
+keywords:
+  - electronic laboratory notebook
+  - data provenance
+  - research data management
+  - Model Context Protocol
+  - thin films
+  - tribology
+  - X-ray reflectivity

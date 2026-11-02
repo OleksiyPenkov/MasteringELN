@@ -1,0 +1,60 @@
+---
+layout: ../layouts/Sampler.astro
+title: Component sampler
+---
+import Tip from '../components/textbook/Tip.astro';
+import Remember from '../components/textbook/Remember.astro';
+import Warning from '../components/textbook/Warning.astro';
+import GoingDeeper from '../components/textbook/GoingDeeper.astro';
+import InELN from '../components/textbook/InELN.astro';
+import InTeamLab from '../components/textbook/InTeamLab.astro';
+import Figure from '../components/textbook/Figure.astro';
+import DataTable from '../components/textbook/DataTable.astro';
+
+_Not part of the book. Every building block a chapter may use, rendered once, so that the web build and the print pipeline can be checked against it. Placeholder text only. Nothing here is a claim of the book._
+
+## Icons
+
+<Tip>Placeholder text for a Tip.</Tip>
+
+<Remember>Placeholder text for a Remember.</Remember>
+
+<Warning title="with a title">Placeholder text for a Warning.</Warning>
+
+<InELN>**Item > New Procedure**</InELN>
+
+<InTeamLab>In the Commercial team edition, choose **Edit > Dashboard** to inspect protocols and hypotheses awaiting supervisor review.</InTeamLab>
+
+<GoingDeeper title="the reciprocating wear rate formula">
+
+$$
+K = \frac{A}{2 \cdot F_n \cdot N}
+$$
+
+</GoingDeeper>
+
+## Math and units
+
+Inline: a multilayer period of $49.40\,\Ang$, a step height of $3.58\times10^{-7}\,\text{m}$, and a scattering angle of 2θ = 1.81° on the chart.
+
+## Figure and table
+
+<Figure id="fig-sampler-1" number="0-1" caption="A caption with *emphasis*, a subscript H_IT and a superscript mm^2.">
+  <svg viewBox="0 0 200 40" role="img" aria-label="placeholder"><rect x="2" y="2" width="196" height="36" fill="none" stroke="currentColor" /></svg>
+</Figure>
+
+<DataTable keepHeaderCase headers={['Symbol', 'Unit']} rows={[['H_IT', 'GPa'], ['K', 'mm^3/(N·mm)']]} />
+
+A link to the figure: [Figure 0-1](#fig-sampler-1).
+
+## One source, two outputs
+
+:::print-only
+PRINT-ONLY: this paragraph appears in the PDF and never on screen.
+:::
+
+:::web-only
+WEB-ONLY: this paragraph appears on screen and never in the PDF.
+:::
+
+A ratio of 1:3 in prose stays literal text.

@@ -1,0 +1,147 @@
+{
+  "schema": 2,
+  "kind": "deposition-snapshot",
+  "conditions": {
+    "fingerprint": "sha256:4903b91612536acad88d1a8fc73fa62adc860881bd458b1dd4ea3bd5fd8ac9e1",
+    "specimen": "Deposition BN-DLC (261015A)",
+    "signature": {
+      "userId": "0c57b0a0-81c9-4507-b137-a65dabd12b2f",
+      "name": "Administrator",
+      "role": "Admin",
+      "signedAtUtc": "2026-10-15T09:21:07.0436091Z",
+      "intent": "authorized"
+    },
+    "software": {
+      "control": "1.6.3.0",
+      "worker": "CSMIC_WORKER"
+    },
+    "plcSerials": [],
+    "sources": [
+      {
+        "flange": 2,
+        "material": "Co",
+        "format": "4\u0022 round",
+        "magnetronModel": "SVAC4",
+        "magnetronInstance": "4da49cb9-e8d1-432c-a445-787711fc9f20",
+        "erosionDepthMm": 2.5635980974045545,
+        "powerSupply": {
+          "id": "G3F_C",
+          "model": "DCPulseG3F",
+          "description": "Pulsed DC C",
+          "responding": true
+        },
+        "zeroDistanceMm": 78.6,
+        "liftMm": 41,
+        "targetThicknessMm": 3,
+        "targetBackingMm": 0,
+        "targetSerial": "INV-20",
+        "targetToSubstrateDistanceMm": 119.16359809740455
+      },
+      {
+        "flange": 3,
+        "material": "Graphite",
+        "format": "4\u0022 round",
+        "magnetronModel": "SVAC4",
+        "magnetronInstance": "373f7f70-0985-4bd8-9411-fe85483dab1b",
+        "erosionDepthMm": 0,
+        "powerSupply": {
+          "id": "DC4001A",
+          "model": "DC4001",
+          "description": "DC Power A",
+          "responding": true
+        },
+        "zeroDistanceMm": 43.1,
+        "liftMm": 77,
+        "targetThicknessMm": 3.175,
+        "targetBackingMm": 3.175,
+        "targetSerial": "INV-10",
+        "targetToSubstrateDistanceMm": 113.75
+      },
+      {
+        "flange": 5,
+        "material": "BN",
+        "format": "4\u0022 round",
+        "magnetronModel": "SVAC4",
+        "magnetronInstance": "9e10abc1-50f3-4ce1-addf-6559835a9ff3",
+        "erosionDepthMm": 0.5920128020501357,
+        "powerSupply": {
+          "id": "RF601",
+          "model": "LeskerRx01",
+          "description": "RF Power 601",
+          "responding": true
+        },
+        "zeroDistanceMm": 62.4,
+        "liftMm": 58,
+        "targetThicknessMm": 3,
+        "targetBackingMm": 0,
+        "targetSerial": "INV-04",
+        "targetToSubstrateDistanceMm": 117.99201280205014
+      },
+      {
+        "flange": 6,
+        "material": "W",
+        "format": "Rect",
+        "magnetronModel": "RECT",
+        "magnetronInstance": "280f7064-76b5-4895-82a1-6d79067ab875",
+        "erosionDepthMm": 0.9382373812058808,
+        "powerSupply": {
+          "id": "DC4001A",
+          "model": "DC4001",
+          "description": "DC Power A",
+          "responding": true
+        },
+        "targetThicknessMm": 3,
+        "targetBackingMm": 0,
+        "targetSerial": "INV-31"
+      }
+    ],
+    "recipe": {
+      "name": "BN-DLC(DLCTOP)",
+      "format": "rcpx",
+      "content": "\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n\u003CRecipe\u003E\n\t\u003CDescription type=\u0022Sputtering\u0022\u003E\n\t\t\u003CTitle\u003ECleaning\u003C/Title\u003E\n\t\t\u003CAuthor\u003EAPS\u003C/Author\u003E\n\t\t\u003CCreated\u003E2026-04-08\u003C/Created\u003E\n\t\t\u003CModified\u003E2026-09-19\u003C/Modified\u003E\n\t\t\u003CNotes\u003ESubstrate cleaning recipe\u003C/Notes\u003E\n\t\u003C/Description\u003E\n\t\u003CParameters\u003E\n\t\t\u003CGroup name=\u0022Parameters\u0022\u003E\n\t\t\t\u003CParam name=\u0022CleaningTime\u0022 caption=\u0022Cleaning Time\u0022 unit=\u0022sec\u0022 type=\u0022float\u0022\u003E60\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022P\u0022 caption=\u0022Pressure\u0022 unit=\u0022mTorr\u0022 type=\u0022float\u0022\u003E2mT\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022PowerBN\u0022 caption=\u0022PowerBN\u0022 unit=\u0022W\u0022 type=\u0022float\u0022\u003E134\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022TimeBN\u0022 caption=\u0022TimeBN\u0022 unit=\u0022s\u0022 type=\u0022float\u0022\u003E50\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022Bias\u0022 caption=\u0022Bias\u0022 unit=\u0022V\u0022 type=\u0022float\u0022\u003E8\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022Warmuptime\u0022 caption=\u0022Warmuptime\u0022 unit=\u0022s\u0022 type=\u0022float\u0022\u003E500\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022N\u0022 caption=\u0022N\u0022 unit=\u0022\u0022 type=\u0022float\u0022\u003E46\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022CurrentC\u0022 caption=\u0022CurrentC\u0022 unit=\u0022mA\u0022 type=\u0022float\u0022\u003E312\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022TimeC\u0022 caption=\u0022TimeC\u0022 unit=\u0022s\u0022 type=\u0022float\u0022\u003E190\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022TimeCtop\u0022 caption=\u0022TimeCtop\u0022 unit=\u0022s\u0022 type=\u0022float\u0022\u003E340\u003C/Param\u003E\n\t\t\u003C/Group\u003E\n\t\u003C/Parameters\u003E\n\t\u003CScript\u003Estart\n#region Set gas\nvalve M3 open\nvalve M2 open\nvalve M1 open\nvalve VI open\nvalve V6 open\nwait 60s\nvalve V2 open\nvalve V3 open\nmfc Ar1 40\nmfc Ar2 40\npwait pm 1.5mT 120\n#endregion\n#region Cleaning\nmessage \u0022Set Ion current to 0.1A. Ready for cleaning\u0022\nholder Ion\ndeposit Ion $CleaningTime 1\nholder 1\nmessage \u0022Done. Set Ion current to 0\u0022\n#endregion\n#region Deposition\nvalve VI close\npwait pm 2mT 120\nbias set 1 Curr 0.5\nbias set 1 Freq 10\nbias set 1 Duty 50\nbias set 1 Delay 0\nset DC4001A Frequency 20\nset DC4001A DutyCycle 3\nset DC4001A Pulse 1\nset DC4001A Current $CurrentC\npower DC4001A on\nset RF601 Power $PowerBN\npower RF601 on\nvalve VI open\nwait $Warmuptime \u0022warmup\u0022\nvalve VI close\nvalve V5 open\nholder BN\nbias out 1 Arb $Bias\n\nloop $N\nholder C\ndeposit C $TimeC 1\nholder BN\ndeposit BN $TimeBN 1\nendloop\nholder C\ndeposit C $TimeCtop 1\nholder 1\n\nbias out 1 Arb 0\npower RF601 off\nset RF601 Power 0\npower DC4001A off\nset DC4001A Current 0\npwait pm 0 1\n#endregion\nvalve M3 close\nvalve M2 close\nvalve M1 close\nvalve V6 close\nvalve V5 close\nmfc Ar1 0\nmfc Ar2 0\nvalve V3 close\nvalve V2 close\nstate idle\nfinish\u003C/Script\u003E\n\u003C/Recipe\u003E"
+    }
+  },
+  "outcome": {
+    "result": "completed",
+    "dataFile": "2026-10-15_17-21-48_BN-DLC(DLCTOP).tsv",
+    "runRecord": "2026-10-15_17-21-48_BN-DLC(DLCTOP).run.json",
+    "window": {
+      "startedUtc": "2026-10-15T09:21:48.5301440Z",
+      "endedUtc": "2026-10-15T12:57:30.0002015Z"
+    },
+    "means": {
+      "S_pm": 0.004359,
+      "S_pl": 0.01182,
+      "S_tmp": 28.12,
+      "S_KCM91": 36.67,
+      "S_G500#1": 0.00198,
+      "TV_G500#1": 35.34,
+      "MFC_N21": 0,
+      "MFC_Ar1": 39.6,
+      "MFC_Ar2": 39.61,
+      "MFC_N22": 0,
+      "PSU_DC4001A_V": 532.7,
+      "PSU_DC4001A_I": 312.4,
+      "PSU_G3F_C_V": 0,
+      "PSU_G3F_C_I": 0,
+      "PSU_RF601_V": 0,
+      "PSU_RF601_I": 0,
+      "BIAS_N6705C_ch1_V": 11.55,
+      "BIAS_N6705C_ch1_I": -0.1193,
+      "BIAS_N6705C_ch2_V": 0.01814,
+      "BIAS_N6705C_ch2_I": 0.0003496,
+      "BIAS_N6705C_ch3_V": 0,
+      "BIAS_N6705C_ch3_I": 0,
+      "BIAS_N6705C_ch4_V": 0,
+      "BIAS_N6705C_ch4_I": 0,
+      "STG_VS": 0,
+      "STG_HS": 15,
+      "STG_rotation": 0
+    },
+    "basePressure": {
+      "channel": "S_pm",
+      "min": 6.822E-07,
+      "unit": "Torr"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+<svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="12" width="265" height="236" rx="6" fill="#f7f9fb" stroke="#1a5276" stroke-width="1.6"/>
+  <text x="24" y="38" font-size="15" font-weight="700" fill="#1a5276">Attached Raw Files (11)</text>
+  <text x="24" y="68" font-size="14" fill="#222">Deposition: .depo.json, .tsv</text>
+  <text x="24" y="96" font-size="14" fill="#222">Thickness: 1.fibps, 2.fibps, 3.fibps</text>
+  <text x="24" y="124" font-size="14" fill="#222">Indentation: BN-DLC(261015A).mit</text>
+  <text x="24" y="152" font-size="14" fill="#222">Friction: BN-DLC.zrw</text>
+  <text x="24" y="180" font-size="14" fill="#222">Wear track: wear 1..3.fibps</text>
+  <text x="24" y="220" font-size="14" font-weight="600" fill="#00695c">check_storage: 11 / 11 MD5 OK</text>
+
+  <line x1="275" y1="130" x2="315" y2="130" stroke="#00695c" stroke-width="2.5"/>
+  <polygon points="315,130 307,125 307,135" fill="#00695c"/>
+
+  <rect x="318" y="12" width="272" height="236" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.6"/>
+  <text x="332" y="38" font-size="15" font-weight="700" fill="#00695c">Extracted &amp; Derived Values (24)</text>
+  <text x="332" y="68" font-size="14" fill="#222">Deposition: 12 Reader values</text>
+  <text x="332" y="96" font-size="14" fill="#222">Step height: 3 Reader (aps.fibps 3)</text>
+  <text x="332" y="124" font-size="14" fill="#222">H = 5.92 GPa, E = 127.2 GPa</text>
+  <text x="332" y="152" font-size="14" fill="#222">Fn = 9.81 N, N = 1000, COF = 0.528</text>
+  <text x="332" y="180" font-size="14" fill="#222">Wear area: 3 Reader (aps.fibps 3)</text>
+  <text x="332" y="216" font-size="14" font-weight="700" fill="#1a5276">Derived K = A / (2 · Fn · N)</text>
+</svg>
