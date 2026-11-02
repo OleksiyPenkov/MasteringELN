@@ -1,0 +1,95 @@
+---
+title: Value Sources, Units, and Formulas
+part: back
+number: C
+order: 920
+inThisChapter:
+  - Value source kinds (Reader, Derived, Manual, Unknown) and their fields
+  - Standard Value Types, symbols, stored units, and reader conversion factors
+  - Server-calculated Derived formulas and Check Value Sources status codes
+---
+import DataTable from '../../components/textbook/DataTable.astro';
+
+This appendix summarizes the value-level provenance fields, unit conversions, server formulas, and diagnostic status codes used when storing and auditing numeric values in APS ELN (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9</a> and <a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16</a>).
+
+## Value source kinds and provenance fields
+
+Every numeric value stored on a **Procedure** (`Proc`) or **Action** (`Action`) carries a record type (`EXP_CONDITION` for inputs or `TEST_RESULT` for outputs) and one of four `source_kind` values (<a href="#table-c-1">Table C-1</a>).
+
+<p id="table-c-1" class="table-caption"><strong>Table C-1:</strong> Value source kinds and their stored provenance fields.</p>
+
+<DataTable
+  headers={['Source kind', 'How it is created', 'Required and optional provenance fields']}
+  rows={[
+    ['`Reader`', '**Extract Values** in the GUI, or `extract_file_key_values` + `add_value` / `add_values` in MCP', 'Requires `source_file_id` (must belong to the item, an ancestor, or a descendant in the same project), `reader_id`, `key_name`, `reader_units`, and finite non-zero `conversion_factor`; optional `reader_version` and `analysis_snapshot` (JSON with matching `file_id` and `file_hash`).'],
+    ['`Derived`', 'Right-click item > **Add > Derived Value...**, or `add_derived_value` in MCP', 'Created by the server from `formula_id`, `formula_version`, and `inputs` (role -> stored `value_id` or `value_id[]`). Client-supplied result numbers are refused.'],
+    ['`Manual`', '**Item > Add Value** in the GUI, `add_value` in MCP without `reader_id`, or hand-editing a `Reader`/`Derived` value', 'Optional `source_file_id` and `source_note` (up to 1,000 characters, such as a script or job identifier). Reader and conversion fields are refused on `Manual` values.'],
+    ['`Unknown`', 'Legacy records created before format 5 source tracking', 'No source fields; cannot be re-evaluated from files by `check_value_drift`.'],
+  ]}
+/>
+
+## Standard quantities, units, and conversions
+
+<a href="#table-c-2">Table C-2</a> lists the principal quantities extracted in Study A (`261015A`) and Study B (`261014B`), their emitted reader units, the conversion factors applied during extraction, and the units stored in the notebook (`ValueTypes.csv`).
+
+<p id="table-c-2" class="table-caption"><strong>Table C-2:</strong> Quantities, reader units, conversion factors, and stored units in Study A and Study B.</p>
+
+<DataTable
+  keepHeaderCase
+  headers={['Quantity / Reader key', 'Reader ID', 'Emitted unit', 'Conversion factor', 'Stored unit']}
+  rows={[
+    ['Sputtering pressure (`Parameters.P`, `Deposition Conditions.P`)', '`aps.deposition`', '`mTorr`', '$0.133322$', '$\\text{Pa}$'],
+    ['Base pressure (`BasePressure`)', '`aps.deposition`', '`Torr`', '$133.322$', '$\\text{Pa}$'],
+    ['Target current (`Layer Co.currentCo`, `Layer C.currentC`)', '`aps.deposition`', '`mA`', '$0.001$', '$\\text{A}$'],
+    ['Pulse frequency (`Layer Co.freqCo`, `Layer C.freqC`)', '`aps.deposition`', '`kHz`', '$1000$', '$\\text{Hz}$'],
+    ['Step height (`Step Height`)', '`aps.fibps`', '`um` or `m`', 'Automatic to target unit', '$\\text{m}$ (or $\\text{nm}$)'],
+    ['Wear track cross-sectional area (`Wear Area`)', '`aps.fibps`', '`um2` or `mm2`', '$10^{-6}$ (from $\\mu\\text{m}^2$)', '$\\text{mm}^2$'],
+    ['Indentation hardness (`Hardness`, $H_{\\text{IT}}$)', '`aps.mit`', '`GPa`', '$1$', '$\\text{GPa}$'],
+    ['Indentation modulus (`Modulus`, $E_{\\text{IT}}$)', '`aps.mit`', '`GPa`', '$1$', '$\\text{GPa}$'],
+    ['Normal load (`Fn`)', '`aps.zrw`', '`gf`, `kgf`, `mN`, or `N`', '$9.80665$ (from $\\text{kgf}$)', '$\\text{N}$'],
+    ['Coefficient of friction (`COF`)', '`aps.zrw`', 'Dimensionless', '$1$', 'Dimensionless'],
+    ['Multilayer period (`Period`) and layer thickness (`<Material> Thickness`)', '`aps.xrcx`', '`A` ($\\Ang$)', '$10^{-10}$', '$\\text{m}$'],
+    ['Goodness of fit (`Chi2`, $\\chi^2$)', '`aps.xrcx`', 'Dimensionless', '$1$', 'Dimensionless'],
+  ]}
+/>
+
+## Derived value formulas
+
+When you choose **Add > Derived Value...** in the Desktop GUI or call `add_derived_value` through MCP, the notebook evaluates a versioned server formula (<a href="#table-c-3">Table C-3</a>).
+
+<p id="table-c-3" class="table-caption"><strong>Table C-3:</strong> Built-in Derived value formula specification.</p>
+
+<DataTable
+  keepHeaderCase
+  headers={['Formula ID & Version', 'Equation', 'Input roles and required units', 'Output Value Type and unit']}
+  rows={[
+    ['`wear_rate_reciprocating` (version 1)', '$K = \\dfrac{A}{2 \\cdot F_n \\cdot N}$', '`area`: `Wear area` in $\\text{mm}^2$ (accepts one value ID or an array of value IDs, using their arithmetic mean; $A \\ge 0$); `normal_force`: `Normal force` in $\\text{N}$ ($F_n > 0$); `cycles`: `Cycles` without unit ($N > 0$). All inputs must sit on the target item or its descendants in the same project.', '`Wear rate` (`TEST_RESULT`) in $\\text{mm}^3/(\\text{N}\\cdot\\text{mm})$'],
+  ]}
+/>
+
+## Plausible-range and drift diagnostic codes
+
+<a href="#table-c-4">Table C-4</a> lists the diagnostic codes returned by value entry validation (`add_value`, `add_values`, `report_value_issues`), storage verification (`check_storage`), and provenance drift auditing (**Check Value Sources...** / `check_value_drift`).
+
+<p id="table-c-4" class="table-caption"><strong>Table C-4:</strong> Validation, storage, and drift status codes.</p>
+
+<DataTable
+  headers={['Tool / Check', 'Code', 'Condition that triggers the code']}
+  rows={[
+    ['`add_value` / `report_value_issues`', '`below_range`, `above_range`', 'The stored value is below `range_min` or above `range_max` of its Value Type.'],
+    ['`add_value` / `report_value_issues`', '`tolerance_exceeds_value`', 'A non-zero tolerance is strictly larger than $|\\text{value}|$.'],
+    ['`add_value` / `report_value_issues`', '`tolerance_scale_mismatch`', 'A non-zero tolerance is smaller than $|\\text{value}| / \\text{tolerance\\_factor}$ (default $1000$).'],
+    ['`check_storage` / `download_file`', '`ok`, `missing`, `content_mismatch`, `no_hash`, `error`', 'Attachment bytes match stored MD5 (`ok`), file is absent from storage (`missing`), bytes on disk differ from stored MD5 (`content_mismatch`), legacy file record has no hash (`no_hash`), or I/O error (`error`).'],
+    ['`check_value_drift` (`Reader`)', '`value_changed`, `reader_version_changed`, `reader_changed`, `reader_units_changed`', 'Re-running the current reader on the stored file produces a different number, uses a newer reader version or different reader plugin, or emits a different unit.'],
+    ['`check_value_drift` (`Reader`)', '`key_missing`, `file_missing`, `read_failed`', 'The source key is no longer emitted, the source file is missing, or the reader could not parse the file.'],
+    ['`check_value_drift` (Snapshot)', '`source_changed`, `selection_changed`, `interval_unusable`', 'The file hash differs from `analysis_snapshot`, the shared `.fibps` regions or `.zrw` interval changed after extraction, or the stored interval has fewer than 2 samples in the file.'],
+    ['`check_value_drift` (`Derived`)', '`input_changed`, `input_missing`, `formula_version_changed`, `formula_version_mismatch`, `dependency_cycle`, `not_fully_rerunnable`', 'An input value drifted or was deleted, a newer formula version exists, the saved formula version is unavailable, a cycle exists in inputs, or an input in the chain is `Manual` / `Unknown`.'],
+  ]}
+/>
+
+## Sources
+
+- **APS ELN Community Help:** `Values.html` (units, plausible ranges, tolerance factor, reader mappings, `Reader` / `Derived` / `Manual` / `Unknown` sources, `wear_rate_reciprocating` v1, and **Check Value Sources...** codes); `MCP.html` (`add_value`, `add_values`, `add_derived_value`, `check_value_drift`, `check_storage`, and `report_value_issues`).
+- **APS ELN Commercial ("For Teams") Help:** `AIIntegration.html` (source field validation limits and refusal rules).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9</a>; <a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16</a>; <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17</a>; <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>; <a href={`${import.meta.env.BASE_URL}/appendix-b-instrument-viewers-and-file-formats#extracted-keys-and-shared-viewer-selections`}>Appendix B</a>.

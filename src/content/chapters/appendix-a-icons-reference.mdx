@@ -1,0 +1,112 @@
+---
+title: Toolbar, Menu, and Tree Icons Reference
+part: back
+number: A
+order: 900
+inThisChapter:
+  - Icons and row buttons in the Projects and Items panels
+  - Scientific item-type icons and tree status badges
+  - Main menu and administration icons
+---
+import DataTable from '../../components/textbook/DataTable.astro';
+
+This appendix lists the toolbar controls, item-type icons, tree row buttons, status badges, and menu icons displayed in the APS ELN Desktop window (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3: The three-panel workspace</a>). Both light-theme and dark-theme variants are supplied in the runtime icon assets.
+
+## Projects and Items panel toolbars
+
+<a href="#table-a-1">Table A-1</a> lists the toolbar buttons at the top of the **Projects** panel (left) and the **Items** panel (center).
+
+<p id="table-a-1" class="table-caption"><strong>Table A-1:</strong> Toolbar buttons in the Projects and Items panels.</p>
+
+<DataTable
+  headers={['Panel', 'Button name', 'Function and menu equivalent']}
+  rows={[
+    ['**Projects**', '**New Project** / **Add Folder**', 'Creates a new project (**Project > New Project**) or a folder inside the selected project (**New Folder**).'],
+    ['**Projects**', '**New Topic Wiki**', 'Seeds the five-section `Wiki/` folder hierarchy inside the selected project (**Project > New Wiki**).'],
+    ['**Projects**', '**Hypotheses**', 'Opens the Hypothesis Tree view for the selected project (**Project > Hypotheses**).'],
+    ['**Projects**', '**Move Up**', 'Moves the selected folder one level higher toward the project root (**Move Folder Up**).'],
+    ['**Projects**', '**Show Archived**', 'Toggles display of archived projects in the tree (`Ctrl+Shift+A` in the Team client).'],
+    ['**Items**', '**New**', 'Opens creation choices (**Procedure**, **Specimen**, **Action**, or **Wiki**) for the current selection.'],
+    ['**Items**', '**Edit**', 'Opens the property editor for the selected item (**Item > Edit**, `F2` in the Team client).'],
+    ['**Items**', '**Delete**', 'Moves the selected item tree to the Recycle Bin, or permanently deletes a selected file or note (**Item > Delete**).'],
+    ['**Items**', '**Add File**', 'Opens the file browser to attach one or more files (**Item > Add File**).'],
+    ['**Items**', '**Add Note**', 'Creates a rich-text note entry on the selected item (**Item > Add Note**).'],
+    ['**Items**', '**Add Protocol**', 'Attaches a structured protocol form from a template (**Item > Add Protocol**).'],
+    ['**Items**', '**Add Value**', 'Opens the value entry dialog on a procedure or action (**Item > Add Value**).'],
+    ['**Items**', '**Duplicate**', 'Duplicates the selected item into a chosen project or folder (**Item > Duplicate**).'],
+    ['**Items**', '**Export**', 'Exports the selected item tree as a JSON scientific package (**File > Export...**).'],
+    ['**Items**', '**Refresh**', 'Reloads the item tree from the database (`F5` in the Team client).'],
+    ['**Items**', '**Expand / Collapse**', 'Expands or collapses all branches of the current item tree.'],
+  ]}
+/>
+
+## Item type icons in the tree
+
+Every row in the **Projects** and **Items** panels carries a color-coded icon that identifies its container or scientific item type (<a href="#table-a-2">Table A-2</a>).
+
+<p id="table-a-2" class="table-caption"><strong>Table A-2:</strong> Container and item-type icons in the project and item trees.</p>
+
+<DataTable
+  headers={['Icon name', 'Hierarchy level', 'Scientific role in the notebook']}
+  rows={[
+    ['**Project**', 'Project container', 'Top-level container for a research topic, grant, or material system (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#how-groups-projects-and-folders-fit-together`}>Chapter 5</a>).'],
+    ['**Folder**', 'Folder container', 'Subfolder organizing procedures and specimens inside a project.'],
+    ['**Synthesis**', '`Proc` or `Action`', 'Material synthesis or thin-film deposition run (such as `Deposition 261015A` or `Deposition 261014B`).'],
+    ['**Treatment**', '`Proc` or `Action`', 'Pre-treatment or post-processing step (such as plasma cleaning `Cleaning 261014B` or annealing).'],
+    ['**Specimen**', '`Item` (**Specimen**)', 'Physical sample, coated coupon, or substrate piece produced or studied in a procedure.'],
+    ['**Model**', '`Item` (**Specimen**)', 'Reference structure or computational model under investigation.'],
+    ['**Characterization**', '`Action`', 'Structural, optical, or surface characterization step (such as `Thickness 261015A` or `Wear track 261015A`).'],
+    ['**Measurement**', '`Action`', 'Quantitative physical measurement (such as `XRR-1 261014B`).'],
+    ['**Testing**', '`Action`', 'Mechanical, tribological, or functional test (such as `Indentation 261015A` or `Friction test 261015A`).'],
+    ['**Computing**', '`Action`', 'Data fitting, simulation, or numerical modeling step (such as `XRR fit 261014B`).'],
+    ['**Wiki**', '`Item`', 'Markdown knowledge-base page inside one of the five project Wiki sections (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11</a>).'],
+    ['**Protocol**', 'Attached entry', 'Structured protocol form attached to an item (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8</a>).'],
+    ['**Note / Other**', 'Attached entry or `Item`', 'Rich-text note entry attached to an item, or an uncategorized general item.'],
+  ]}
+/>
+
+## Tree row buttons and status badges
+
+When a row with children is selected in the **Projects** panel, the **Items** panel, or the **Hypotheses** list, three action buttons appear at the right end of that row, alongside any status or tag badges (<a href="#table-a-3">Table A-3</a>).
+
+<p id="table-a-3" class="table-caption"><strong>Table A-3:</strong> Inline row buttons and tree badges.</p>
+
+<DataTable
+  headers={['Button or badge', 'Where it appears', 'Meaning and behavior']}
+  rows={[
+    ['**Collapse all below**', 'Right edge of selected parent row', 'Collapses every nested level under the selected row.'],
+    ['**Expand all below**', 'Right edge of selected parent row', 'Expands every nested level under the selected row.'],
+    ['**Focus**', 'Right edge of selected parent row', 'Tooltip: **Focus: collapse everything else**. Collapses all other branches and scrolls the selected row into view.'],
+    ['**SIGNED** badge', 'Beside item title in Items panel', 'Dark-red rounded badge indicating that the item carries a cryptographic electronic signature and is permanently locked (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14</a>).'],
+    ['**HYP** badge', 'Beside project or item title', 'Indicates hypotheses in a project (solid when a decision awaits you in Team mode) or an item attached as a hypothesis `Run` (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#attaching-runs-and-citing-evidence`}>Chapter 10</a>).'],
+    ['**Tag** badge(s)', 'Beside item title in Items panel', 'Colored label(s) assigned via right-click > **Tags...** (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#classifying-items-with-tags-and-favorites`}>Chapter 11</a>).'],
+  ]}
+/>
+
+## Main menu and administration icons
+
+<a href="#table-a-4">Table A-4</a> summarizes the navigation, analysis, integrity, and reference-data icons used across the main menu bar (**File**, **Project**, **Item**, **Navigate**, **Reference Data**, **Tools**, and **Help**).
+
+<p id="table-a-4" class="table-caption"><strong>Table A-4:</strong> Navigation, analysis, integrity, and reference-data menu icons.</p>
+
+<DataTable
+  headers={['Menu command / icon', 'Menu location', 'Purpose']}
+  rows={[
+    ['**Dashboard**', '**Navigate > Dashboard** (Community) or **Edit > Dashboard** (Team)', 'Opens the overview of recent items, project counts, and pending protocol/hypothesis reviews.'],
+    ['**Search...**', '**Navigate > Search...** (`Ctrl+F`)', 'Opens the full-text and semantic (**Search by meaning**) search dialog (<a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#three-ways-to-find-a-record-in-aps-eln`}>Chapter 12</a>).'],
+    ['**Analysis...**', '**Tools > Analysis...**', 'Plots procedure-level `Condition` values against child action `Result` values (<a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13</a>).'],
+    ['**Unit Converter...**', '**Tools > Unit Converter...**', 'Converts values between compatible physical units (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9</a>).'],
+    ['**Protocol Review...**', '**Tools > Protocol Review...** (`Ctrl+Shift+R`)', 'Opens the queue of protocols in `In Review` state awaiting approval or rejection (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8</a>).'],
+    ['**Data Completeness...**', '**Tools > Data Completeness...**', 'Scans a project or folder against active completeness rules (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#completeness-rules-and-data-quality-checks`}>Chapter 14</a>).'],
+    ['**Audit Log...**', '**Tools > Audit Log...**', 'Displays timestamped `Create`, `Update`, and `Delete` events across the notebook (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#inspecting-the-audit-log`}>Chapter 14</a>).'],
+    ['**Recycle Bin...**', '**Tools > Recycle Bin...**', 'Restores or permanently deletes binned item subtrees (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5</a>).'],
+    ['**Value Types / File Types / Equipment**', '**Reference Data** menu', 'Manages the scientific dictionaries, plausible ranges, and reader mappings (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>).'],
+  ]}
+/>
+
+## Sources
+
+- **APS ELN Commercial ("For Teams") Help:** `IconReference.html` (Item Toolbar, Projects Panel Toolbar, Item Type Icons, and Menu Icons); `Signatures.html` (**SIGNED** badge); `Experiments.html` (**HYP** badge).
+- **APS ELN Community Help:** `Items.html` and `Projects.html` (the three inline row buttons **Collapse all below**, **Expand all below**, and **Focus**).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#how-groups-projects-and-folders-fit-together`}>Chapter 5</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8</a>; <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 10</a>; <a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11</a>; <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#three-layers-of-record-integrity`}>Chapter 14</a>.

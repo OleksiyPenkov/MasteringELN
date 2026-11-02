@@ -1,0 +1,91 @@
+---
+title: Instrument Viewers and File Formats
+part: back
+number: B
+order: 910
+inThisChapter:
+  - All 26 built-in viewer plugins and their registered file extensions
+  - Data file reader IDs, versions, and extracted key names
+  - Shared viewer selection modes for FIBPS, MIT, and ZRW
+---
+import DataTable from '../../components/textbook/DataTable.astro';
+
+APS ELN ships with 26 built-in **Content Viewer** plugins (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#how-file-attachment-and-extension-routing-work`}>Chapter 7: How file attachment and extension routing work</a>). When a file is selected in the **Items** panel (or opened in the standalone `ELNFileViewer.exe`), the host selects the viewer matching the longest registered extension of the filename. Viewers that implement a data file reader (DFR) also extract structured numeric conditions and results via **Extract Values** (`extract_file_key_values` in MCP).
+
+## General document, image, and data viewers
+
+<a href="#table-b-1">Table B-1</a> lists the 11 general-purpose viewers for documents, images, spreadsheets, notes, protocols, and tabular text.
+
+<p id="table-b-1" class="table-caption"><strong>Table B-1:</strong> General-purpose document, media, and record viewers.</p>
+
+<DataTable
+  headers={['Viewer plugin', 'Registered extensions', 'Rendering and editing capabilities']}
+  rows={[
+    ['**PDF**', '`.pdf`', 'Renders PDF documents inline via WebView2; indexed by **Search by meaning** when PDFium is installed (up to 2,000 pages).'],
+    ['**Image**', '`.png`, `.bmp`, `.jpg`, `.jpeg`, `.tif`, `.tiff`', 'WIC-based image display with zoom and automatic preview thumbnail generation.'],
+    ['**HTML**', '`.html`, `.htm`', 'Renders HTML documents via WebView2; also used to preview **File > Export Report...** output.'],
+    ['**Markdown**', '`.md`', 'Renders Markdown to HTML, resolves attached images and `[[item:N]]` / `eln://` links, and opens the **Markdown Editor** (`Ctrl+S`).'],
+    ['**Columnar Data**', '`.dat`, `.csv`, `.txt`, `.ascii`', 'Auto-detects delimiters and headers; displays tabular data and interactive charts; supports `list_file_columns` and `get_file_columns`.'],
+    ['**JSON**', '`.json`', 'Formatted JSON viewer (files ending in `.depo.json` route to the specialist **Deposition** viewer instead).'],
+    ['**OLE**', '`.xlsx`, `.docx`, `.pptx`', 'Embeds Microsoft Office documents via OLE when the matching Office application is installed; text is indexed by **Search by meaning**.'],
+    ['**OriginLab (OPJU)**', '`.opju`', 'Displays embedded graph preview thumbnails from OriginLab project files.'],
+    ['**Note**', 'Internal rich-text entry', 'Displays formatted rich-text notes created with **Item > Add Note**.'],
+    ['**Protocol**', '`.protocol` (internal entry)', 'Renders structured protocol forms created with **Item > Add Protocol** (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8</a>).'],
+    ['**File**', 'Fallback (any extension)', 'Uses the Windows shell preview handler when no specialist plugin matches the file extension.'],
+  ]}
+/>
+
+## Deposition, recipe, and process log viewers
+
+<a href="#table-b-2">Table B-2</a> lists the five viewers dedicated to thin-film deposition recipes, run snapshots, and time-series process logs.
+
+<p id="table-b-2" class="table-caption"><strong>Table B-2:</strong> Deposition, recipe, and process log viewers.</p>
+
+<DataTable
+  headers={['Viewer plugin', 'Extensions', 'Reader ID', 'Displayed views and extracted keys']}
+  rows={[
+    ['**Deposition**', '`.depo.json`, `.tsv`', '`aps.deposition` (v1)', 'Displays **Overview**, **Recipe**, **Pressure**, **Temperature**, **Gas Flow**, **Bias**, **V / I**, and **Stage** tabs when `.depo.json` and its paired `.tsv` are attached to the same item. Extracts recipe conditions (`Parameters.*`, `Deposition Conditions.*`, `Layer <Mat>.*`) and run results (`Duration`, `BasePressure`) from `.depo.json`.'],
+    ['**Recipe**', '`.rcpx`', '`aps.recipe`', 'Displays read-only XML process recipes with line numbers; extracts numeric parameters as `Group.Parameter` conditions.'],
+    ['**Process Log**', '`.process.log`', 'Built-in extractor', 'Displays process event logs and outcome; extracts `Process.Duration`, `Process.AlarmCount`, and `Process.Outcome` (1 complete, 2 failed, 3 aborted, 4 incomplete).'],
+    ['**DSC**', '`.dsc`', '`aps.dsc` (v2)', 'Syntax-highlighted sputtering script viewer; extracts top-level `var` declarations as `<Kind>.<Name>` conditions (with `#2` disambiguation and power-supply pulse units).'],
+    ['**DSR**', '`.dsr`', 'None', 'Structured XML form viewer for sputtering deposition result files.'],
+  ]}
+/>
+
+## Characterization, tribology, and simulation viewers
+
+<a href="#table-b-3">Table B-3</a> lists the ten specialist viewers for X-ray optics, surface profilometry, nanoindentation, tribometry, electron microscopy, and molecular dynamics simulations.
+
+<p id="table-b-3" class="table-caption"><strong>Table B-3:</strong> Characterization, tribology, microscopy, and simulation viewers.</p>
+
+<DataTable
+  headers={['Viewer plugin', 'Extensions', 'Reader ID', 'Displayed views and extracted keys']}
+  rows={[
+    ['**XRDML**', '`.xrdml`', '`aps.xrdml`', 'Interactive chart of X-ray diffraction and reflectivity scans; reads scan metadata (`Wavelength`, `Tube Voltage`, `Tube Current`).'],
+    ['**X-Ray Calc**', '`.xrcx`', '`aps.xrcx` (v2)', 'Log-scale reflectivity chart (measured and calculated curves) plus layer **Structure** table ($H$, $\\sigma$, $\\rho$). Extracts main-stack mean `Period`, `<Material> Thickness`, `<Material> Roughness`, substrate roughness, `Chi2` (when `[FITRESULT]` is present), and calculation conditions.'],
+    ['**XRFX**', '`.xrfx`', '`aps.xrfx`', 'Multi-panel chart view of X-ray fluorescence mirror optimization results (peak positions, reflectivity, FWHM, SNR).'],
+    ['**FIBPS**', '`.fibps`', '`aps.fibps` (v3)', 'Filmetrics Profilm3D height map with **Profile**, **Distance**, **Roughness** ($R_a$, $R_q$, $R_z$), **Flatten**, **Step Height**, and **Wear Track** tools. Extracts optical conditions plus `Step Height` ($\\pm$ `Step Height STD`) or `Wear Area` ($\\pm$ `Wear Area STD`).'],
+    ['**VK4**', '`.vk4`', '`aps.vk4`', 'Keyence laser confocal microscope viewer showing height, intensity, and color channels with line-profile and roughness tools.'],
+    ['**MIT**', '`.mit`', '`aps.mit` (v2/v3)', 'Anton Paar UNHT nanoindentation load-displacement curves with frame-compliance subtraction and **Records:** indent checklist. Extracts mean `Hardness` ($H_{\\text{IT}}$), `Modulus` ($E_{\\text{IT}}$), `Reduced Modulus` ($E_r$), `Max Force`, `Indent Count`, and `Indents Excluded` with `STD` tolerances.'],
+    ['**ZRW**', '`.zrw`, `.zrv`', '`aps.zrw` (v2)', 'DaVinci / Tribo Tester reciprocating and rotating friction viewer (`Data.dat` and logger ZIP formats). Extracts conditions `Fn` (converted to $\\text{N}$), `Cycles`, `Stroke`, `Speed`, and `Sampling Rate`/`Interval`, plus result `COF` (with `COF STD` as tolerance).'],
+    ['**Tribo**', '`.raw`', '`aps.tribo`', 'Plain-text tribometer viewer plotting Cycles against COF with test parameters in the status bar.'],
+    ['**DM3**', '`.dm3`', '`aps.dm3`', 'Gatan DigitalMicrograph TEM image viewer with calibrated pixel dimensions and scale bar metadata.'],
+    ['**LAMMPS**', '`.lmpin`, `.dump`, `.data`, `.lammps`', '`aps.lammps`', 'Molecular dynamics input script and trajectory/structure viewer with XZ cross-section controls.'],
+  ]}
+/>
+
+## Extracted keys and shared viewer selections
+
+Three instrument readers (`aps.fibps`, `aps.mit`, and `aps.zrw`) depend on an evaluation selection that is saved in the notebook and recorded in each extracted value's `analysis_snapshot` (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#table-7-1`}>Chapter 7: Table 7-1</a> and <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>):
+
+- **FIBPS (`aps.fibps` v3):** When the **Step Height** tool is active or shared step rectangles exist on the file, extraction emits `Step Height` and `Step Height STD` with snapshot mode `regions` (storing `rect_a`, `rect_b`, `pix_w`, and `pix_h`) or `automatic`. Otherwise, if a wear groove is detected, it emits `Wear Area` and `Wear Area STD`.
+- **MIT (`aps.mit` v2/v3):** Averages `Hardness`, `Modulus`, and `Reduced Modulus` over the indents ticked in **Records:** and records the selected indent list in the value's source snapshot.
+- **ZRW (`aps.zrw` v2):** Computes `COF` and `COF STD` over the cycle interval saved by clicking **Apply** (or the `Automatic` plateau if no manual interval was applied), storing the interval bounds and file hash in `analysis_snapshot`.
+
+## Sources
+
+- **APS ELN Community Help:** `FilesAndNotes.html` (the 26 shipped viewers and compound extension routing); `Values.html` (reader outputs and snapshots for `aps.zrw`, `aps.mit`, `aps.dsc`, and `aps.xrcx`).
+- **APS ELN Commercial ("For Teams") Help:** `Plugins.html` (general-purpose plugins, instrument plugins, FIBPS tools and limits, ZRW interval rules, Recipe/Process Log/Deposition pairing, and X-Ray Calc viewer).
+- **APS ELN Community README:** `APS-ELN-Community/README.md` (viewer plugin list and cleanroom provenance of the MIT, FIBPS, and VK4 readers).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>; <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17</a>; <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>; <a href={`${import.meta.env.BASE_URL}/appendix-c-value-sources-units-and-formulas#value-source-kinds-and-provenance-fields`}>Appendix C</a>.

@@ -1,0 +1,60 @@
+---
+title: Ten Mistakes That Break Your Data Trail
+part: '5'
+number: '19'
+order: 190
+inThisChapter:
+  - Ten real laboratory mistakes that silently break provenance
+  - How each mistake shows up in APS ELN
+  - Which chapter and check prevent each one
+---
+
+A notebook can look full on screen and still fail the moment you try to trace a published number back to its raw instrument curve. Every mistake in this chapter appeared in the seven-month laboratory audit (`arXiv:2610.27859`) or during student onboarding for Study A (`261015A`) and Study B (`261014B`).
+
+## 1. Leaving an action empty
+
+A student creates a `Friction test` or `Thickness` action in the item tree before going to the instrument, runs the measurement, leaves the file on a USB drive, and forgets to attach it. Months later, the action row is still an empty placeholder. Build the whole tree at the start of the experiment so every planned measurement is visible, and run **Tools > Data Completeness...** (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#completeness-rules-and-data-quality-checks`}>Chapter 14: Completeness rules and Data Quality Checks</a>) before you finish the day so no action stays empty.
+
+## 2. Attaching a screenshot instead of raw data
+
+Saving a `.png` or `.jpg` screenshot of an X-Ray Calc fit window or a nanoindenter screen gives a picture that no data file reader can parse. You cannot extract `Reader` values from a screenshot, you cannot re-evaluate its cycle interval or indent selection, and **Check Value Sources...** cannot verify a single number against it. Always attach the native raw file (`.depo.json`, `.tsv`, `.fibps`, `.mit`, `.zrw`, `.xrdml`, `.xrcx`; <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>).
+
+## 3. Putting result numbers in a file name
+
+Naming a file `BN-DLC-351.9nm.fibps` or `wear-4.3E13nm3.fibps` bakes an unverified number into a filename string. If you later adjust the step-height rectangles in the **FIBPS** viewer or fix a calibration factor, the stored **Value** updates while the filename continues to advertise the old number. Name every file after the sample code, the measurement, and the position (`1.fibps`, `wear 1.fibps`, `BN-DLC(261015A).mit`), and store results as typed **Values** (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>).
+
+## 4. Typing a number that a reader can extract
+
+When a student reads `Hardness = 5.92 GPa` off the **MIT** viewer and types `5.92` into **Item > Add Value** by hand, APS ELN records the value with source kind `Manual` instead of `Reader`. That value has no link to `BN-DLC(261015A).mit`, no `reader_version`, and no record of which indents were ticked. Use **Extract Values** (or `extract_file_key_values` + `add_values` in MCP) whenever a reader plugin supports your file (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>).
+
+## 5. Typing a value before attaching its file
+
+In six traced studies of the seven-month audit (`arXiv:2610.27859`, Section 4.2), several values were typed into the notebook before their raw measurement files were attached, and the files were never uploaded afterward. Make the order strict: create the **Action**, attach the **File** (<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-2-attach-the-11-raw-files-to-their-actions`}>Chapter 4: Step 2</a>), and extract the **Values** from that attached file (<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-3-extract-reader-values-from-the-files`}>Chapter 4: Step 3</a>).
+
+## 6. Hiding results inside prose notes
+
+In the two early agent studies (`T7` and `T8` in `arXiv:2610.27859`, Section 4.5), every fitted thickness and $\chi^2$ was written inside a Markdown text note while zero result **Values** were stored on the action. Prose notes are invisible to **Tools > Analysis...** (<a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13</a>), invisible to `query_values` and `correlate_values` (<a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#navigating-and-querying-values`}>Chapter 16</a>), and invisible to drift checks. Write your narrative in notes and Wiki pages, and always store the numbers themselves as **Values**.
+
+## 7. Putting a fit under the wrong sample
+
+An analysis project file (such as `XRR-fit_Co-C(261014B).xrcx` or a `Wear track` action) belongs to the specific measurement action it analyzed. If you attach a fit of sample `261014B` under sample `261014A`, **Tools > Analysis...** will pair `261014B`'s period with `261014A`'s deposition conditions. Always create `XRR fit <Code>` as a child action of `XRR-1 <Code>` (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6: Designing a clean item hierarchy</a>) and include the sample code in both the action title and the `.xrcx` filename.
+
+## 8. Mixing angstroms, nanometers, and meters
+
+X-ray multilayer thicknesses are quoted in ångströms ($\Ang$), optical profiler step heights are displayed in nanometers ($\text{nm}$) or micrometers ($\mu\text{m}$), and general `Thickness` and `Period` value types in the database store meters ($\text{m}$). Meanwhile, the `.tsv` sputtering log in Study B labels current columns as `A` when the numbers are `mA`. Never convert units in your head and type the result; let **Extract Values** apply the verified reader mapping factor (`10^-10` for $\Ang \rightarrow \text{m}$, `0.001` for $\text{mA} \rightarrow \text{A}$), and check the conversion line in the dialog (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>).
+
+## 9. Renaming storage files in Windows Explorer
+
+Your notebook database tracks every attached file by its relative storage path and MD5 checksum. If you open the `<name> files` attachment directory in Windows Explorer and rename, move, or edit a file directly on disk, `check_storage` will report `missing` or `content_mismatch`. Always rename, replace, or move attachments inside APS ELN using **Edit**, **Reupload...**, or **Move to...** (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#replacing-moving-exporting-and-viewing-files-outside-a-notebook`}>Chapter 7: Replacing, moving, exporting, and viewing files</a>).
+
+## 10. Backing up the database without its files
+
+Copying `notebook.sqlite` onto a backup drive without copying its `<name> files` attachment folder saves your item titles and numbers while leaving every raw curve and image behind. Worse, exported PDF reports and JSON scientific packages (`File > Export...`) do not contain raw attachment bytes either (<a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#exporting-and-importing-scientific-packages`}>Chapter 13: Table 13-1</a>). Always close APS ELN and copy the `.sqlite` file and its entire attachment folder together (<a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#how-to-back-up-a-local-notebook-safely`}>Chapter 2: How to back up a local notebook safely</a>).
+
+## Sources
+
+- **Penkov, O. V. & Shen, B. (2026).** *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report.* [arXiv:2610.27859](https://arxiv.org/abs/2610.27859). Section 4.1 (empty placeholder actions and screenshots in place of raw XRR data); Section 4.2 (values entered before source files, manual typing without reader links, and unit/scale errors); Section 4.3 (misplaced analysis files); Section 4.5 (agent records `T7` and `T8` with 14 input values and 0 result values).
+- **Study A and Study B checklists and instructions:** `review/demo_A_student_checklist.md` and `zenodo/demonstration/xrr_study/agent_instructions/record_agent.md` (keeping results out of filenames, building the full tree at the start, and `.tsv` current unit label warning).
+- **APS ELN Community Help:** `Notebooks.html` (backing up `.sqlite` and the attachment folder together); `FilesAndNotes.html` (never editing storage files directly on disk); `AnalysisAndReports.html` (scientific packages do not back up attachment bytes).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1</a>; <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#how-to-back-up-a-local-notebook-safely`}>Chapter 2</a>; <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6</a>; <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>; <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#exporting-and-importing-scientific-packages`}>Chapter 13</a>; <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#completeness-rules-and-data-quality-checks`}>Chapter 14</a>; <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17</a>.

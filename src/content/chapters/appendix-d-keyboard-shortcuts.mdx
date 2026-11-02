@@ -1,0 +1,102 @@
+---
+title: Keyboard Shortcuts
+part: back
+number: D
+order: 930
+inThisChapter:
+  - Global and navigation shortcuts in Community and Team editions
+  - Projects panel and Items panel shortcuts and multi-select keys
+  - Markdown Editor, Help window, and ELN File Viewer shortcuts
+---
+import DataTable from '../../components/textbook/DataTable.astro';
+
+This appendix lists the keyboard shortcuts supported in **APS ELN Community** and **APS ELN ("For Teams")** (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-dashboard-and-keyboard-navigation`}>Chapter 3: The Dashboard and keyboard navigation</a>). Shortcuts that operate on a specific panel require that panel to have keyboard focus and are inactive while you are typing inside a search box or text field.
+
+## Global and main window shortcuts
+
+<a href="#table-d-1">Table D-1</a> lists the global navigation and window shortcuts. Note where **APS ELN Community** and the **Commercial ("For Teams")** edition assign different actions to `Ctrl+D` and `F5`.
+
+<p id="table-d-1" class="table-caption"><strong>Table D-1:</strong> Global and main window shortcuts.</p>
+
+<DataTable
+  headers={['Shortcut', 'Action in APS ELN Community', 'Action in Team Lab (Commercial)']}
+  rows={[
+    ['`F1`', '**Help > Keyboard Shortcuts...**', '**Help > Keyboard Shortcuts...**'],
+    ['`Ctrl+F`', '**Navigate > Search...** (notebook search)', 'Full-text / semantic **Search** across projects'],
+    ['`Ctrl+G`', '**Navigate > Go to Item...** (by ID or `eln://` URL)', '**Go to item** by ID or `eln://` URL'],
+    ['`Ctrl+D`', '**Navigate > Dashboard**', 'Duplicates the selected item when the **Items** panel has focus (use **Edit > Dashboard** for the Dashboard)'],
+    ['`F5`', 'Not bound (use **Refresh** in the menu or toolbar)', 'Refreshes the active panel'],
+    ['`Ctrl+E`', 'Use **File > Export...** from the menu', '**File > Export Package**'],
+    ['`Ctrl+Shift+A`', 'Use **Show Archived** in the Projects panel', 'Toggles archived projects visibility'],
+    ['`Ctrl+Shift+C`', 'Not bound', 'Copies the selected file path'],
+    ['`Ctrl+Shift+R`', 'Use **Tools > Protocol Review...** from the menu', 'Opens the **Protocol Review Queue**'],
+  ]}
+/>
+
+## Projects panel and Items panel shortcuts
+
+<a href="#table-d-2">Table D-2</a> lists the keyboard and mouse-modifier bindings for the **Projects** panel and the **Items** panel (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#creating-sorting-and-moving-projects-and-folders`}>Chapter 5</a> and <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#working-on-multiple-records-at-once`}>Chapter 6</a>).
+
+<p id="table-d-2" class="table-caption"><strong>Table D-2:</strong> Projects panel, Items panel, and multi-selection shortcuts.</p>
+
+<DataTable
+  headers={['Shortcut', 'Required focus / scope', 'Action']}
+  rows={[
+    ['`Ctrl+Up` / `Ctrl+Down`', 'Focused root item in **Items** panel (both editions)', 'Moves the selected top-level root procedure up or down in manual order.'],
+    ['`Ctrl`+click', '**Items** panel (both editions)', 'Adds or removes the clicked row from the current multi-row selection.'],
+    ['`Shift`+click', '**Items** panel (both editions)', 'Selects the contiguous range of rows from the focused row to the clicked row.'],
+    ['`Shift+Up` / `Shift+Down`', '**Items** panel (both editions)', 'Extends the multi-row selection up or down by one row.'],
+    ['`Ins`', '**Projects** or **Items** panel (Team edition)', 'Creates a new project (in Projects panel) or a new item/action (in Items panel).'],
+    ['`F2`', '**Projects** or **Items** panel (Team edition)', 'Opens the **Edit** dialog for the selected project, folder, or single item.'],
+    ['`Del`', '**Projects** or **Items** panel (Team edition)', 'Deletes the selected empty folder, or deletes all selected items/files/notes.'],
+    ['`Ctrl+Shift+D`', '**Projects** panel (Team edition)', 'Creates a **New Folder** inside the selected project or folder.'],
+    ['`Ctrl+N`', '**Items** panel (Team edition)', 'Creates a new item.'],
+    ['`Ctrl+Shift+F`', '**Items** panel (Team edition)', 'Attaches a file (**Item > Add File**).'],
+    ['`Ctrl+Shift+N`', '**Items** panel (Team edition)', 'Adds a rich-text note (**Item > Add Note**).'],
+    ['`Ctrl+Shift+P`', '**Items** panel (Team edition)', 'Attaches a protocol (**Item > Add Protocol**).'],
+    ['`Ctrl+Shift+V`', '**Items** panel (Team edition)', 'Adds a numeric value (**Item > Add Value**).'],
+  ]}
+/>
+
+## Markdown Editor shortcuts
+
+<a href="#table-d-3">Table D-3</a> lists the shortcuts active when the **Markdown Editor** has focus (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#working-drafts-external-edits-and-conflict-resolution`}>Chapter 7</a> and <a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11</a>).
+
+<p id="table-d-3" class="table-caption"><strong>Table D-3:</strong> Markdown Editor shortcuts (both editions).</p>
+
+<DataTable
+  headers={['Shortcut', 'Action']}
+  rows={[
+    ['`Ctrl+S`', 'Saves the edited Markdown body through the notebook attachment service (prompting on conflict).'],
+    ['`Ctrl+B`', 'Wraps the selected text in Markdown bold markers (`**...**`).'],
+    ['`Ctrl+I`', 'Wraps the selected text in Markdown italic markers (`*...*`).'],
+    ['`Ctrl+K`', 'Inserts a Markdown link (`[label](url)`) using the selected text as the label.'],
+    ['`Ctrl+V`', 'Pastes text normally; if the clipboard holds an image and no text, uploads the image as an item attachment and inserts its Markdown image reference.'],
+  ]}
+/>
+
+## Help window and ELN File Viewer shortcuts
+
+<a href="#table-d-4">Table D-4</a> lists the shortcuts in the built-in **Help** viewer window, the **FIBPS** viewer, and the standalone **ELN File Viewer** (`ELNFileViewer.exe`).
+
+<p id="table-d-4" class="table-caption"><strong>Table D-4:</strong> Help window, FIBPS viewer, and ELN File Viewer shortcuts.</p>
+
+<DataTable
+  headers={['Window / Viewer', 'Shortcut', 'Action']}
+  rows={[
+    ['**Help window**', '`/` or `Ctrl+F`', 'Moves keyboard focus to the **Search Help** box.'],
+    ['**Help window**', '`Up`, `Down`, `Enter`', 'Selects a Help search result and navigates to its section.'],
+    ['**Help window**', '`Esc`', 'Clears the **Search Help** box, or closes **Contents** in a narrow window.'],
+    ['**Help window**', '`Alt+Left` / `Alt+Right`', 'Navigates back or forward between viewed Help pages.'],
+    ['**FIBPS viewer**', '`Shift`+click (in **Profile** tool)', 'Plots a vertical line profile instead of a horizontal line profile.'],
+    ['**FIBPS viewer**', '`Esc`', 'Cancels the active tool, turns **Flatten** off, and clears temporary chart regions.'],
+    ['**ELN File Viewer**', '`Ctrl+O`', 'Opens a local file in `ELNFileViewer.exe`.'],
+  ]}
+/>
+
+## Sources
+
+- **APS ELN Community Help:** `Shortcuts.html` (main window bindings `Ctrl+F`, `Ctrl+G`, `Ctrl+D`, `F1`, item-tree `Ctrl+Up`/`Ctrl+Down`, Markdown Editor `Ctrl+S`, `Ctrl+B`, `Ctrl+I`, `Ctrl+K`, `Ctrl+V`, and Help window keys); `Items.html` (`Ctrl`+click, `Shift`+click, `Shift+Up`/`Shift+Down`).
+- **APS ELN Commercial ("For Teams") Help:** `Shortcuts.html` (global, Projects panel, Items panel, Help window, and `ELNFileViewer.exe` `Ctrl+O` shortcuts); `Plugins.html` (FIBPS viewer `Shift`+click and `Esc`).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-dashboard-and-keyboard-navigation`}>Chapter 3</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#creating-sorting-and-moving-projects-and-folders`}>Chapter 5</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#working-on-multiple-records-at-once`}>Chapter 6</a>; <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#working-drafts-external-edits-and-conflict-resolution`}>Chapter 7</a>; <a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11</a>; <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#searching-notebook-text-ctrlf`}>Chapter 12</a>.

@@ -1,0 +1,107 @@
+---
+title: Glossary
+part: back
+number: E
+order: 940
+inThisChapter:
+  - Definitions of APS ELN and data-provenance terms in alphabetical order
+  - Cross-references to the chapters where each concept is introduced
+---
+
+Each entry defines a term as this book uses it and links to the chapter section where it is introduced. Toolbar and tree icons are listed in <a href={`${import.meta.env.BASE_URL}/appendix-a-icons-reference#projects-and-items-panel-toolbars`}>Appendix A</a>. Viewer plugins and file extensions are listed in <a href={`${import.meta.env.BASE_URL}/appendix-b-instrument-viewers-and-file-formats#general-document-image-and-data-viewers`}>Appendix B</a>. Value sources, units, and formulas are listed in <a href={`${import.meta.env.BASE_URL}/appendix-c-value-sources-units-and-formulas#value-source-kinds-and-provenance-fields`}>Appendix C</a>.
+
+## A
+
+**Action (`Action`).** A preparation, treatment, measurement, test, or analysis step in the scientific hierarchy, placed below a **Procedure**, a **Specimen**, or a parent **Action**. See <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Reading the item tree and its row buttons</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6: Designing a clean item hierarchy</a>.
+
+**Analysis snapshot (`analysis_snapshot`).** A JSON object stored on a `Reader` value that records the exact viewer evaluation state used when the number was extracted, such as the pixel rectangles (`regions`) in a `.fibps` height map, the ticked indents in a `.mit` nanoindentation file, or the cycle interval and file hash in a `.zrw` friction file. See <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Table 7-1</a>; <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18: Passing viewer selections and Derived inputs</a>.
+
+**Audit log.** The chronological table of `Create`, `Update`, and `Delete` operations across the notebook, inspected via **Tools > Audit Log...** or `get_audit_log`. See <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#inspecting-the-audit-log`}>Chapter 14: Inspecting the Audit Log</a>.
+
+**AutoFill.** A binding on a protocol template field (such as `values.all`, `conditions.all`, `results.all`, or `values.<Symbol>`) that copies a snapshot of the owning item's values or metadata into the form when the protocol is created. See <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#how-protocol-templates-and-autofill-work`}>Chapter 8: How protocol templates and AutoFill work</a>.
+
+## C
+
+**Check Value Sources (`check_value_drift`).** A verification command that re-runs the current data file readers on the source files of all `Reader` values in an item subtree and recalculates all `Derived` values recursively from their inputs, reporting any drift or changed selections. See <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Checking value sources and understanding drift codes</a>; <a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16: Running the three project-wide health checks</a>.
+
+**Completeness rules.** Rules configured in **Tools > Completeness Rules...** that specify which **Required File Types** and **Required Value Types** must exist on an item for a given **Action Type** and **Equipment**. Checked via **Tools > Data Completeness...**. See <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#completeness-rules-and-data-quality-checks`}>Chapter 14: Completeness rules and Data Quality Checks</a>.
+
+**Compound extension.** A multi-part filename ending such as `.depo.json` or `.process.log` that routes the attachment to a specialist viewer (**Deposition** or **Process Log**) rather than a generic `.json` or `.log` viewer. See <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#how-file-attachment-and-extension-routing-work`}>Chapter 7: How file attachment and extension routing work</a>.
+
+**Condition (`EXP_CONDITION`).** A numeric value that records an experimental input or setpoint, such as sputtering power, gas pressure, deposition time, normal load, or cycle count. Plotted on the horizontal ($X$) axis in **Tools > Analysis...**. See <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9: Conditions, Results, units, and plausible-range checks</a>.
+
+**Content seal (`Sealed`).** A checksum computed over an accepted hypothesis's statement, change description, conclusion, outcome, attached runs, and cited evidence at Gate 2 (**Accept**). See <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#submitting-a-conclusion-and-checking-the-content-seal`}>Chapter 10: Submitting a conclusion and checking the content seal</a>.
+
+## D
+
+**Data file reader (DFR).** The code inside a viewer plugin (identified by `reader_id` and integer `reader_version`, such as `aps.deposition` v1, `aps.fibps` v3, `aps.mit` v2/v3, `aps.zrw` v2, or `aps.xrcx` v2) that extracts numeric keys and units from an attached file. See <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>; <a href={`${import.meta.env.BASE_URL}/appendix-b-instrument-viewers-and-file-formats#deposition-recipe-and-process-log-viewers`}>Appendix B</a>.
+
+**Derived value (`Derived`).** A numeric value calculated by APS ELN from stored input values using a versioned server formula (such as `wear_rate_reciprocating` version 1), storing the `formula_id`, `formula_version`, and input `value_id` list. See <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9: The four value sources and Derived formulas</a>.
+
+## E
+
+**Electronic signature (`SIGNED`).** A permanent cryptographic seal applied to an item via **Signature > Sign Item...** with a user password and meaning (`Authored`, `Reviewed`, `Approved`, or `Witnessed`). Locks the item against all further edits. See <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>.
+
+**Experiment template (`.elntemplate`).** A reusable hierarchy blueprint managed in **Reference Data > Experiment Templates...** and applied via **Item > New from Template...** to create a complete `Procedure -> Specimen -> Action` tree in one atomic operation. See <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#building-and-applying-experiment-templates`}>Chapter 6: Building and applying Experiment Templates</a>.
+
+## F
+
+**Folder.** A container inside a project in the left **Projects** panel that organizes procedures and specimens. Distinct from scientific items in the center **Items** panel. See <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#how-groups-projects-and-folders-fit-together`}>Chapter 5: How Groups, Projects, and Folders fit together</a>.
+
+**Format 5.** The current local SQLite schema version used by **APS ELN Community**, supporting `Derived` value provenance, default reader mappings, and tribology value types. See <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2: Creating a local notebook in Community</a>.
+
+## G
+
+**Group.** A top-level organizational heading in the left **Projects** panel (**Project > New Group**) that groups projects visually without holding scientific records or affecting permissions. See <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#how-groups-projects-and-folders-fit-together`}>Chapter 5: How Groups, Projects, and Folders fit together</a>.
+
+## H
+
+**Hypothesis.** A project record (**Project > Hypotheses**) that links an expectation (`Proposal`), the experimental items that test it (`Runs`), the specific files and values cited (`Evidence`), and the final outcome (`Conclusion`) across two human review gates. See <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 10: Why connect experiments to a hypothesis tree?</a>.
+
+## M
+
+**Manual value (`Manual`).** A value whose number was typed by a person in **Item > Add Value** (or edited by hand after extraction), carrying no automated reader or formula link. See <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9: The four value sources and Derived formulas</a>.
+
+**Model Context Protocol (MCP).** The line-based JSON-RPC 2.0 standard over stdio used by `ELNCommunityMCP.exe` and `ELNMCPServer.exe` to expose notebook tools to AI assistants. See <a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 15: What the ELN MCP server does</a>.
+
+## P
+
+**Procedure (`Proc`).** A top-level experimental record in a project or folder representing a synthesis, deposition run, or experimental campaign (such as `Deposition 261015A`). See <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Table 3-1</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6: Designing a clean item hierarchy</a>.
+
+**Protocol.** A structured form (or free-text entry) attached to an item via **Item > Add Protocol** and reviewed through `Draft`, `In Review`, `Approved`, and `Rejected` states. See <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8: Adding and completing a protocol on an item</a>.
+
+## R
+
+**Reader value (`Reader`).** A value extracted from an attached file by a data file reader, recording `source_file_id`, file MD5, `reader_id`, `reader_version`, `key_name`, `reader_units`, `conversion_factor`, and optional `analysis_snapshot`. See <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9: The four value sources and Derived formulas</a>.
+
+**Result (`TEST_RESULT`).** A numeric value that records a measured observation or calculated output, such as step height, hardness, friction coefficient, wear rate, or fitted period. Averaged on the vertical ($Y$) axis in **Tools > Analysis...**. See <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9: Conditions, Results, units, and plausible-range checks</a>.
+
+## S
+
+**Search by meaning (`search_semantic`).** The local, offline hybrid semantic search engine (`ELN.Search`) that indexes record text and attached documents (`.pdf`, `.docx`, `.pptx`, `.xlsx`, `.md`, `.html`, `.json`, `.xml`, `.csv`, `.rtf`, `.txt`) into `.search.sqlite` and optionally re-ranks the top 20 item groups with a cross-encoder model. See <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#searching-by-meaning-semantic-search-and-reranking`}>Chapter 12: Searching by meaning and reranking</a>.
+
+**Specimen (`Item`).** A physical sample, substrate piece, or model produced or studied inside a **Procedure** (such as `261015A` or `261014B`), holding child measurement and test **Actions**. See <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Table 3-1</a>.
+
+## T
+
+**Tolerance.** A non-negative numeric field on a stored value, expressed in the stored unit of the Value Type. Automatically populated from `<Key> STD` during reader extraction. See <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>.
+
+## U
+
+**Upload root (`--upload-root` / `MCPUploadRoot`).** The local folder to which MCP file uploads (`upload_file`) and file downloads (`download_file`) are strictly confined. See <a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#security-upload-root-and-review-boundaries`}>Chapter 15: Security, upload-root, and review boundaries</a>.
+
+## V
+
+**Value Route.** The laboratory rule for agent-written records requiring every stored number to come from `extract_file_key_values` (`Reader` source) or `add_derived_value` (`Derived` source) with zero hand-typed `Manual` values. See <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Why agent-written records need the Value Route</a>.
+
+## W
+
+**Wiki page.** A Markdown-backed item of type **Wiki** stored inside one of the five standard project Wiki folders (`Goals`, `Ideas`, `Literature`, `Analysis`, `References`). See <a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11: The five-section Project Wiki</a>.
+
+**Working draft.** The separate local copy created when an attached file is opened in an external program or the **Markdown Editor**, saved back into notebook storage via **Tools > Save Attachment Working Draft**. See <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#working-drafts-external-edits-and-conflict-resolution`}>Chapter 7: Working drafts, external edits, and conflict resolution</a>.
+
+## Sources
+
+- **Canonical terminology:** `NOTATION.md` in this repository, compiled from the **APS ELN Community** and **APS ELN Commercial** built-in Help manuals and Penkov & Shen (2026), [arXiv:2610.27859](https://arxiv.org/abs/2610.27859).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/appendix-a-icons-reference#projects-and-items-panel-toolbars`}>Appendix A</a>; <a href={`${import.meta.env.BASE_URL}/appendix-b-instrument-viewers-and-file-formats#general-document-image-and-data-viewers`}>Appendix B</a>; <a href={`${import.meta.env.BASE_URL}/appendix-c-value-sources-units-and-formulas#value-source-kinds-and-provenance-fields`}>Appendix C</a>; <a href={`${import.meta.env.BASE_URL}/appendix-d-keyboard-shortcuts#global-and-main-window-shortcuts`}>Appendix D</a>.

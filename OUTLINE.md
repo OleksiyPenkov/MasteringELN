@@ -548,16 +548,125 @@ Section outline:
    - Table 18-1: MCP write tools for values, files, Wiki pages, and hypotheses.
    - Sources: C:Help:MCP, C:Help:Hypotheses, P:Help:Experiments.
 
-## Part 5: The Part of Tens (Chapter-Level Plan)
+## Part 5: The Part of Tens
 
-- **Chapter 19: Ten Mistakes That Break Your Data Trail** (`Paper§4`, `review/demo_A_student_checklist.md`)
-- **Chapter 20: Ten Checks Before You Sign a Record or Ask Your Supervisor for Approval** (`C:Help:Integrity`, `C:Help:Values`, `Demo:A`)
-- **Chapter 21: Ten Things an AI Agent Can and Cannot Do in ELN** (`C:Help:MCP`, `P:Help:AIIntegration`)
+### Chapter 19: Ten Mistakes That Break Your Data Trail (`ch19-ten-mistakes-that-break-your-data-trail.mdx`)
 
-## Back Matter: Appendices (Chapter-Level Plan)
+In This Chapter:
+- Ten real laboratory mistakes that silently break provenance
+- How each mistake shows up in APS ELN
+- Which chapter and check prevent each one
 
-- **Appendix A: Toolbar, Menu, and Tree Icons Reference** (`P:Help:IconReference`, `C:Code`)
-- **Appendix B: Instrument Viewers and Supported File Formats** (`C:Help:FilesAndNotes`, `C:Help:Values`, `P:Help:Plugins`)
-- **Appendix C: Value Sources, Units, Plausible Ranges, and Derived Formulas** (`C:Help:Values`, `C:Help:ReferenceData`, `ValueTypes.csv`)
-- **Appendix D: Keyboard Shortcuts** (`C:Help:Shortcuts`, `P:Help:Shortcuts`)
-- **Appendix E: Glossary** (`NOTATION.md`)
+Section outline (ten numbered headings):
+1. **1. Leaving an action empty**
+2. **2. Attaching a screenshot instead of raw data**
+3. **3. Putting result numbers in a file name**
+4. **4. Typing a number that a reader can extract**
+5. **5. Typing a value before attaching its file**
+6. **6. Hiding results inside prose notes**
+7. **7. Putting a fit under the wrong sample**
+8. **8. Mixing angstroms, nanometers, and meters**
+9. **9. Renaming storage files in Windows Explorer**
+10. **10. Backing up the database without its files**
+
+### Chapter 20: Ten Checks Before You Sign or Submit (`ch20-ten-checks-before-you-sign-or-submit.mdx`)
+
+In This Chapter:
+- Ten checks to run before signing an item or submitting to your supervisor
+- Verifying files, viewer intervals, provenance badges, and drift
+- Ensuring a colleague can trace every number back to its raw file
+
+Section outline (ten numbered headings):
+1. **1. Every action has its raw files attached**
+2. **2. Every file opens in its built-in viewer**
+3. **3. Shared regions and intervals are applied**
+4. **4. Headline values carry Reader or Derived sources**
+5. **5. Repeated measurements show mean and SD**
+6. **6. Sample codes match across items and files**
+7. **7. Required protocol forms are completed**
+8. **8. Data Completeness reports zero missing items**
+9. **9. Check Value Sources reports zero drift**
+10. **10. Hypothesis runs and citations are current**
+
+### Chapter 21: Ten Things an Agent Can and Cannot Do (`ch21-ten-things-an-agent-can-and-cannot-do.mdx`)
+
+In This Chapter:
+- Five high-leverage tasks an AI agent can run through the MCP server
+- Five hard safety and scientific boundaries an agent can never cross
+- How human scientists and agents work together without losing rigor
+
+Section outline (ten numbered headings):
+1. **1. Can: Build item trees and attach raw files**
+2. **2. Can: Extract Reader values with snapshots**
+3. **3. Can: Compute Derived values from formulas**
+4. **4. Can: Audit storage, ranges, and drift**
+5. **5. Can: Stage curves to external fitting tools**
+6. **6. Cannot: Approve or accept a hypothesis**
+7. **7. Cannot: Sign an item or edit signed data**
+8. **8. Cannot: Read or write outside its scope**
+9. **9. Cannot: Access files outside upload-root**
+10. **10. Cannot: Judge physical sample quality**
+
+---
+
+## Back Matter: Appendices
+
+### Appendix A: Toolbar, Menu, and Tree Icons Reference (`appendix-a-icons-reference.mdx`)
+
+In This Chapter:
+- Icons and row buttons in the Projects and Items panels
+- Scientific item-type icons and tree status badges
+- Main menu and administration icons
+
+Sections:
+1. **Projects and Items panel toolbars**
+2. **Item type icons in the tree**
+3. **Tree row buttons and status badges**
+4. **Main menu and administration icons**
+
+### Appendix B: Instrument Viewers and File Formats (`appendix-b-instrument-viewers-and-file-formats.mdx`)
+
+In This Chapter:
+- All 26 built-in viewer plugins and their registered file extensions
+- Data file reader IDs, versions, and extracted key names
+- Shared viewer selection modes for FIBPS, MIT, and ZRW
+
+Sections:
+1. **General document, image, and data viewers**
+2. **Deposition, recipe, and process log viewers**
+3. **Characterization, tribology, and simulation viewers**
+4. **Extracted keys and shared viewer selections**
+
+### Appendix C: Value Sources, Units, and Formulas (`appendix-c-value-sources-units-and-formulas.mdx`)
+
+In This Chapter:
+- Value source kinds (`Reader`, `Derived`, `Manual`, `Unknown`) and their fields
+- Standard Value Types, symbols, stored units, and reader conversion factors
+- Server-calculated Derived formulas and Check Value Sources status codes
+
+Sections:
+1. **Value source kinds and provenance fields**
+2. **Standard quantities, units, and conversions**
+3. **Derived value formulas**
+4. **Plausible-range and drift diagnostic codes**
+
+### Appendix D: Keyboard Shortcuts (`appendix-d-keyboard-shortcuts.mdx`)
+
+In This Chapter:
+- Global and navigation shortcuts in Community and Team editions
+- Projects panel and Items panel shortcuts and multi-select keys
+- Markdown Editor, Help window, and ELN File Viewer shortcuts
+
+Sections:
+1. **Global and main window shortcuts**
+2. **Projects panel and Items panel shortcuts**
+3. **Markdown Editor shortcuts**
+4. **Help window and ELN File Viewer shortcuts**
+
+### Appendix E: Glossary (`appendix-e-glossary.mdx`)
+
+In This Chapter:
+- Definitions of APS ELN and data-provenance terms in alphabetical order
+- Cross-references to the chapters where each concept is introduced
+
+Sections: Alphabetical letter headings (`A` through `W`).
