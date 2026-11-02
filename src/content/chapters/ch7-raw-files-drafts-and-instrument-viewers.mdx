@@ -1,0 +1,113 @@
+---
+title: Raw Files, Drafts, and Instrument Viewers
+part: '2'
+number: '7'
+order: 70
+inThisChapter:
+  - Attaching single and multiple files and understanding compound extensions
+  - 'Inspecting data in the specialist viewers: Deposition, FIBPS, MIT, ZRW, and X-Ray Calc'
+  - Saving and reloading working drafts when editing attachments in external programs
+  - Using the Markdown Editor and the standalone ELN File Viewer
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import InTeamLab from '../../components/textbook/InTeamLab.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+Attaching raw files is the heart of an electronic laboratory notebook (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>). When you attach a measurement file in APS ELN, the program does much more than store a backup copy: it computes the file's MD5 checksum, routes the file to one of 26 built-in **Content Viewer** plugins, generates a preview thumbnail, and lets you select evaluation regions or cycle intervals that are saved right alongside the file for reproducible value extraction (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>).
+
+## How file attachment and extension routing work
+
+To attach one or more files to a **Procedure**, **Specimen**, or **Action**, select the item in the **Items** panel and choose **Item > Add File** (or click **Add File**):
+
+- **Attaching one file:** Select the file in the built-in file browser, check **Attachment file type** and **Display name**, and click **Attach**. There is no second confirmation dialog.
+- **Attaching multiple files:** Select several files in the browser and click **Review files** to open **Files to attach**. There you can inspect each row's **Source filename**, **Display name**, and **Type**, and either keep **Keep display names** selected or choose **Use prefix:** to number a series of scans automatically.
+
+<Remember>APS ELN routes files by their longest matching extension. A deposition snapshot ending in `.depo.json` opens in the specialist **Deposition** viewer rather than the plain **JSON** viewer, and a `.process.log` file opens in the **Process Log** viewer rather than the sputtering `.log` viewer. When suggested display names are created, ELN strips the full compound suffix (`.depo.json` or `.process.log`), not just `.json` or `.log`.</Remember>
+
+When you select a `.depo.json` file in the file browser, APS ELN can automatically expand your selection to include its paired `.tsv` time-series log file, opening the **Files to attach** review dialog so both files are attached to the procedure together.
+
+## Inside the five core instrument viewers
+
+APS ELN ships with 26 viewer plugins (`NOTATION.md`, Section 5). General-purpose viewers handle `.pdf`, `.html`, `.md` (Markdown), images (`.png`, `.jpg`, `.bmp`, `.tif`), columnar text (`.dat`, `.csv`, `.txt`, `.ascii`), `.json`, Office documents (`.xlsx`, `.docx`, `.pptx` via OLE), OriginLab projects (`.opju`), Gatan TEM images (`.dm3`), and LAMMPS simulations (`.lmpin`, `.dump`, `.data`).
+
+Five specialist viewers power the Study A (`261015A`) and Study B (`261014B`) workflows (<a href="#table-7-1">Table 7-1</a>):
+
+1. **Deposition (`.depo.json`, `.tsv`), Recipe (`.rcpx`), and DSC (`.dsc`):**
+   - Attaching both the `.depo.json` snapshot and its paired `.tsv` log to the same **Procedure** unlocks the **Overview**, **Recipe**, **Pressure**, **Temperature**, **Gas Flow**, **Bias**, **V / I**, and **Stage** tabs. If the `.tsv` file is missing from the item, the viewer warns *Not attached to this item - charts unavailable*.
+   - **Extract Values** reads the `.depo.json` file (`aps.deposition`) to give recipe conditions (such as pressure, power, current, gas flow, layer times, and period count $N$) and run results (`Duration` and `BasePressure`).
+2. **FIBPS 3D optical profilometer (`.fibps`, reader `aps.fibps`):**
+   - Displays the surface height map in micrometers ($\mu\text{m}$, or $\text{nm}$ below $1\,\mu\text{m}$) with six interactive tools: **Profile** (click for a horizontal line profile, `Shift`+click for vertical), **Distance**, **Roughness** ($R_a$, $R_q$, $R_z$ inside a dragged rectangle), **Flatten**, **Step Height**, and **Wear Track**.
+   - In **Step Height**, two rectangles (**A** and **B**) mark the coated and uncoated levels. Dragging them updates the step $h \pm s$ and saves those rectangles as the *shared regions* of the file in the notebook.
+   - In **Wear Track**, the viewer automatically detects the wear groove, levels the outer surface to zero, and integrates the cross-sectional area of each row between the groove edges to give `Wear Area` (mean $\pm$ SD along the track).
+   - Clicking **Copy Data** copies the active profile to the clipboard in OriginLab's three-header-row layout (Long Name, Units, Comments).
+3. **MIT nanoindentation (`.mit`, reader `aps.mit`):**
+   - Plots the contact-zeroed load-displacement curves (subtracting frame compliance when stored) and lists every indent under **Records:**.
+   - Use **All**, **None**, or individual checkboxes to tick the valid indents, and click **Average** or **Instrument fit** to overlay the mean curve or the unloading power-law fit. The ticked indents are saved as the file's shared selection and recorded in the provenance snapshot of the extracted `Hardness` ($H_{\text{IT}}$), `Modulus` ($E_{\text{IT}}$), and `Reduced Modulus` ($E_r$) values.
+4. **ZRW tribometer (`.zrw`, `.zrv`, reader `aps.zrw`):**
+   - Reads both classic `Data.dat` archives and logger packages (`force.raw`, `resistance.tsv`, `test.json`) and plots friction coefficient (`COF`) against cycles.
+   - In the **Interval** bar, choose **Automatic** (first stable plateau covering at least 20% of cycles) or **Manual** (**From** / **To** cycles), then click **Apply** to save the shared interval. **Extract Values** uses the applied interval to compute `COF` and its tolerance (`COF STD`).
+5. **X-Ray Calc (`.xrcx`, reader `aps.xrcx`) and XRDML (`.xrdml`):**
+   - The **XRDML** viewer plots raw X-ray diffraction and reflectivity scans.
+   - The **X-Ray Calc** viewer opens `.xrcx` project archives, plotting the measured and calculated reflectivity curves on a log axis alongside the **Structure** table ($H$, $\sigma$, and $\rho$ of each layer). **Extract Values** reads the main periodic stack's mean `Period`, layer thicknesses, and `Chi2`.
+
+<p id="table-7-1" class="table-caption"><strong>Table 7-1:</strong> Shared selection states in the specialist instrument viewers.</p>
+
+<DataTable
+  headers={['Viewer & Extension', 'Reader ID', 'What you can adjust in the viewer', 'How the selection is saved for provenance']}
+  rows={[
+    ['**FIBPS** (`.fibps`)', '`aps.fibps`', 'Step-height rectangles **A** and **B**, or automatic **Wear Track** groove', 'Dragged step rectangles become the file\'s shared regions (`regions` snapshot mode).'],
+    ['**MIT** (`.mit`)', '`aps.mit`', 'Ticked indents in the **Records:** list', 'Ticked indent indices are saved as the shared selection and stored on extracted values.'],
+    ['**ZRW** (`.zrw`, `.zrv`)', '`aps.zrw`', '**Automatic** plateau or **Manual** cycle range (**From** / **To**)', 'Clicking **Apply** saves the shared cycle interval with the file hash; unapplied drafts are ignored.'],
+    ['**X-Ray Calc** (`.xrcx`)', '`aps.xrcx`', 'Zoom on reflectivity chart and inspect **Structure** table', 'Read-only display; extracts mean layer thicknesses, `Period`, and `Chi2` from the saved fit.'],
+  ]}
+/>
+
+<Warning title="always click Apply in the ZRW viewer after changing the cycle interval">In the **ZRW** viewer, typing new **From** and **To** cycle numbers previews the mean COF in the status line, but **Extract Values** never reads an unapplied draft. Click **Apply** first so your interval is saved as the shared selection of the file. If a file is later replaced via **Reupload...**, its old interval is marked stale until you click **Apply** again.</Warning>
+
+## Working drafts, external edits, and conflict resolution
+
+When you double-click an attachment (or click **Open** in the viewer toolbar) to open it in an external Windows program such as OriginLab, Excel, or X-Ray Calc 3, APS ELN never hands the external program the file inside your notebook storage folder. Instead, it writes a separate **local working copy** (<a href="#fig-7-1">Figure 7-1</a>).
+
+<Figure id="fig-7-1" number="7-1" src={`${import.meta.env.BASE_URL}/figures/fig-7-1-viewer-draft-lifecycle.svg`} alt="Three-stage diagram showing Instrument File on disk copied into Notebook Storage with MD5 hash and shared regions, and opened externally as a separate Working Draft that is saved back with Save Attachment Working Draft or discarded with Reload" caption="How APS ELN protects stored attachment bytes. Attaching a file copies it into notebook storage (2). Opening it externally creates a separate working draft (3) that only updates notebook storage when you choose Tools > Save Attachment Working Draft." />
+
+To save changes from an external program back into your notebook:
+
+1. Save the file inside the external application (which updates the local working copy), and close the external editor window if required.
+2. Select the attachment in APS ELN and choose **Tools > Save Attachment Working Draft** to copy the updated bytes into notebook storage and update the attachment's MD5 hash.
+3. If you want to throw away your external edits and revert to the bytes stored in the notebook, choose **Tools > Reload Attachment Working Draft** and confirm the discard prompt.
+
+If you close the notebook or exit APS ELN while a working draft has unsaved changes, the program prompts you before closing: clicking **Cancel** stops the close, while clicking **No** leaves your draft file at the temporary path shown in the message so you do not lose your work.
+
+For `.md` attachments and project Wiki pages (Chapter 11), clicking **Edit** in the **Markdown** viewer opens the built-in **Markdown Editor** (`Ctrl+S` to save, `Ctrl+B` for bold, `Ctrl+I` for italic, `Ctrl+K` for links, and `Ctrl+V` to paste clipboard images directly as uploaded attachments). If the stored attachment was updated by another session or by an MCP agent while you were editing, the conflict dialog offers three explicit choices:
+
+- **Cancel:** keep your editor text open without overwriting the stored attachment.
+- **Reload (discard my edits):** replace your editor text with the current stored attachment.
+- **Save Anyway (overwrite server):** overwrite the stored attachment with your draft (if write permissions and signature guards allow it).
+
+## Replacing, moving, exporting, and viewing files outside a notebook
+
+When you right-click an attached file in the **Items** panel, you can manage its lifecycle without breaking links:
+
+- **Reupload...:** replaces the stored bytes of the attachment with a new file from disk (keeping the same `file_id` and preserving compound file types such as `.depo.json`).
+- **Edit:** renames the attachment's display title or updates its description.
+- **Move to...:** moves the attachment to another writable, unsigned item in the project.
+- **Export:** copies the stored attachment bytes out to a folder on disk (adding ` (2)`, ` (3)` if a filename already exists there).
+
+<InTeamLab title="inspecting files outside a notebook with ELNFileViewer.exe">
+
+The Commercial build includes a standalone personal viewer program, **`ELNFileViewer.exe`** (marked by a red notebook icon). It loads the same folder browser and all 26 viewer plugins without asking for a login or connecting to MySQL or WebDAV. Press `Ctrl+O`, drop a single file onto the window, or pass a file path on the command line (`ELNFileViewer.exe "C:\Measurements\sample.mit"`) to inspect `.mit`, `.fibps`, `.zrw`, `.xrcx`, `.vk4`, or `.depo.json` files on an instrument PC before you attach them to a notebook.
+
+</InTeamLab>
+
+## Sources
+
+- **APS ELN Community Help:** `FilesAndNotes.html` (**Item > Add File**, single-file attach vs. **Review files** -> **Files to attach**, compound extensions `.depo.json` and `.process.log`, the 26 shipped viewers, local working copies with **Tools > Save Attachment Working Draft** and **Tools > Reload Attachment Working Draft**, the **Markdown Editor** conflict choices **Cancel**, **Reload (discard my edits)**, and **Save Anyway (overwrite server)**, and **Reupload...**, **Edit**, **Move to...**, **Export**, and **Delete**); `Values.html` (ZRW plateau intervals, **Apply**, **Reload**, stale selections, MIT **Records:** selection and compliance, and X-Ray Calc `.xrcx` extraction); `Shortcuts.html` (Markdown editor shortcuts `Ctrl+S`, `Ctrl+B`, `Ctrl+I`, `Ctrl+K`, `Ctrl+V`).
+- **APS ELN Commercial ("For Teams") Help:** `Plugins.html` (FIBPS tools **Profile**, **Distance**, **Roughness**, **Flatten**, **Step Height** shared regions, **Wear Track** groove integration, and **Copy Data** OriginLab layout; ZRW automatic vs. manual intervals; Recipe `.rcpx`, Process Log `.process.log`, and Deposition `.depo.json` + `.tsv` pairing; X-Ray Calc `.xrcx` viewer; preview thumbnails; and standalone `ELNFileViewer.exe`).
+- **APS ELN Commercial README:** `APS-ELN-Commercial/README.md` (building and using `ELNFileViewer.exe`).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>; <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-2-attach-the-11-raw-files-to-their-actions`}>Chapter 4: Step 2: Attach the 11 raw files</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#working-on-multiple-records-at-once`}>Chapter 6: Working on multiple records at once</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Values, Units, Formulas, and Provenance</a>.

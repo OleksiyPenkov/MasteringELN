@@ -1,0 +1,26 @@
+<svg viewBox="0 0 600 250" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="14" width="184" height="146" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.8"/>
+  <text x="102" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#00695c">Reader Source</text>
+  <text x="22" y="68" font-size="14" fill="#222">File ID + MD5 hash</text>
+  <text x="22" y="92" font-size="14" fill="#222">Reader ID + version</text>
+  <text x="22" y="116" font-size="14" fill="#222">Key + unit factor</text>
+  <text x="22" y="140" font-size="14" fill="#00695c">Snapshot (indents/COF)</text>
+
+  <rect x="208" y="14" width="184" height="146" rx="6" fill="#dbe5fb" stroke="#1a5276" stroke-width="1.8"/>
+  <text x="300" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#1a5276">Derived Source</text>
+  <text x="220" y="68" font-size="14" fill="#222">Formula ID + version</text>
+  <text x="220" y="92" font-size="14" fill="#222">Input value IDs list</text>
+  <text x="220" y="116" font-size="14" fill="#222">Mean over multi-inputs</text>
+  <text x="220" y="140" font-size="14" fill="#1a5276">Server-calculated</text>
+
+  <rect x="406" y="14" width="184" height="146" rx="6" fill="#fdecea" stroke="#c62828" stroke-width="1.8"/>
+  <text x="498" y="40" text-anchor="middle" font-size="15" font-weight="700" fill="#c62828">Manual / Unknown</text>
+  <text x="418" y="68" font-size="14" fill="#222">Typed by a person</text>
+  <text x="418" y="92" font-size="14" fill="#222">or edited after Reader</text>
+  <text x="418" y="116" font-size="14" fill="#c62828">Not rerunnable from</text>
+  <text x="418" y="140" font-size="14" fill="#c62828">raw attachment files</text>
+
+  <rect x="10" y="176" width="580" height="58" rx="6" fill="#f7f9fb" stroke="#334155" stroke-width="1.6"/>
+  <text x="300" y="202" text-anchor="middle" font-size="14" font-weight="700" fill="#222">Check Value Sources... (Right-click Item or MCP check_value_drift)</text>
+  <text x="300" y="224" text-anchor="middle" font-size="14" fill="#334155">Re-runs readers on stored files and re-evaluates Derived formulas recursively</text>
+</svg>

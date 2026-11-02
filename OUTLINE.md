@@ -174,13 +174,145 @@ Section outline:
 
 ---
 
-## Part 2: Recording Daily Lab Work (Chapter-Level Plan; Section Outlines Before Drafting Part 2)
+## Part 2: Recording Daily Lab Work
 
-- **Chapter 5: Projects, Groups, and Folders** (`C:Help:Projects`, `P:Help:Projects`)
-- **Chapter 6: The Procedure -> Specimen -> Action Tree and Experiment Templates** (`C:Help:Items`, `C:Help:Templates`)
-- **Chapter 7: Attaching Raw Files, Working Drafts, and Using the Instrument Viewers** (`C:Help:FilesAndNotes`, `P:Help:Plugins`)
-- **Chapter 8: Filling Out Protocols and Checklists** (`C:Help:Protocols`, `P:Help:Protocols`)
-- **Chapter 9: Values, Units, Tolerances, Derived Formulas, and Value Provenance** (`C:Help:Values`, `Paper§5`)
+### Chapter 5: Projects, Groups, and Folders (`ch5-projects-groups-and-folders.mdx`)
+
+In This Chapter:
+- Creating and organizing Projects, Groups, and Folders in the left panel
+- Archiving finished projects without losing access to their records
+- Sharing projects and setting review permissions in a team laboratory
+- Restoring deleted items from the Recycle Bin safely
+
+Section outline:
+1. **How Groups, Projects, and Folders fit together.**
+   - **Groups** organize projects at the top of the **Projects** panel (`Project > New Group`); **Projects** hold all scientific work (`Project > New Project`); **Folders** organize procedures and specimens inside a project (`New Folder`).
+   - Fig 5-1 (`fig-5-1-project-containers.svg`): Container hierarchy in the Projects panel and item recovery through the Recycle Bin.
+   - Sources: C:Help:Projects, P:Help:Projects.
+2. **Creating, sorting, and moving projects and folders.**
+   - Numbered steps for creating a project, creating nested folders, and moving folders with **Move Folder Up** or drag and drop in the Projects panel.
+   - Sorting siblings (`Move Up`, `Move Down`, `By Name`, `By Date Created`) in the team client.
+   - Sources: C:Help:Projects, P:Help:Projects.
+3. **Archiving finished projects.**
+   - Why you archive a completed project (`Archive` / `Show Archived` or `Ctrl+Shift+A`) instead of deleting it: archived projects remain readable and searchable while blocking accidental edits.
+   - Sources: C:Help:Projects, P:Help:Projects.
+4. **Sharing projects in a team laboratory.**
+   - In a Team Lab: Using **Share...** on a project to grant teammates `Read` or `ReadWrite` access, and setting **Can approve proposals** and **Can accept conclusions** for hypothesis reviewers.
+   - Sources: P:Help:Projects, P:Help:Administration.
+5. **Deleting containers and using the Recycle Bin.**
+   - Why only empty projects and folders can be deleted (items in the Recycle Bin still count).
+   - Restoring deleted item trees with **Tools > Recycle Bin...** -> **Restore**, and why hypotheses in review or accepted protect cited items from permanent deletion.
+   - Sources: C:Help:Projects, C:Help:Items.
+
+### Chapter 6: The Item Tree and Experiment Templates (`ch6-the-item-tree-and-experiment-templates.mdx`)
+
+In This Chapter:
+- Choosing between Procedures, Specimens, and Actions for each step of an experiment
+- Adding missing Action Types and Equipment without leaving the item dialog
+- Selecting multiple items for batch value extraction, tagging, moving, or deletion
+- Creating and reusing Experiment Templates (`.elntemplate`) for repeatable workflows
+
+Section outline:
+1. **Designing a clean item hierarchy.**
+   - Comparing Study A (`261015A`, where `Wear track` nests under `Friction test`) and Study B (`261014B`, where `Cleaning` sits under `Deposition` and `XRR fit` sits under `XRR-1`).
+   - Table 6-1: Which level (`Procedure`, `Specimen`, `Action`), item type, and action type to choose for common laboratory operations.
+   - Sources: C:Help:Items, Demo:A, Demo:B.
+2. **Creating, duplicating, and moving items safely.**
+   - Using **Item > New Procedure**, **Item > New Specimen**, **Item > New Action**, **Item > Duplicate**, and the context-menu **Move to...** dialog.
+   - Quick-adding an **Action type** or **Equipment** (`Model`, `Manufacturer`, `Location`) with the **+** buttons inside the item dialog.
+   - Sources: C:Help:Items.
+3. **Working on multiple records at once.**
+   - Selecting multiple rows with `Ctrl`+click, `Shift`+click, or `Shift+Up`/`Down`, and running batch **Extract values**, **Move to...**, **Tags...**, **Export**, or **Delete** with one confirmation and one summary report.
+   - Sources: C:Help:Items.
+4. **Building and applying Experiment Templates.**
+   - Creating a reusable blueprint in **Reference Data > Experiment Templates...** and applying it in one atomic step with **Item > New from Template...**.
+   - Exporting and importing `.elntemplate` files (`Deposition_Mechanical.elntemplate`, `Deposition_XRayOptics.elntemplate`).
+   - Fig 6-1 (`fig-6-1-experiment-template.svg`): Stamping out a multi-action experiment hierarchy from an `.elntemplate` blueprint.
+   - Sources: C:Help:Templates.
+
+### Chapter 7: Raw Files, Drafts, and Instrument Viewers (`ch7-raw-files-drafts-and-instrument-viewers.mdx`)
+
+In This Chapter:
+- Attaching single and multiple files and understanding compound extensions
+- Inspecting data in the specialist viewers: Deposition, FIBPS, MIT, ZRW, and X-Ray Calc
+- Saving and reloading working drafts when editing attachments in external programs
+- Using the Markdown Editor and the standalone ELN File Viewer
+
+Section outline:
+1. **How file attachment and extension routing work.**
+   - Single-file attach versus **Review files** -> **Files to attach** (with **Keep display names** or **Use prefix:**).
+   - How compound extensions (`.depo.json`, `.process.log`) route to specialist viewers instead of generic JSON or log viewers, and how paired `.depo.json` + `.tsv` files unlock time-series charts.
+   - Sources: C:Help:FilesAndNotes, P:Help:Plugins.
+2. **Inside the five core instrument viewers.**
+   - **Deposition (`.depo.json`, `.tsv`), Recipe (`.rcpx`), and DSC (`.dsc`):** Overview, Recipe, and time-series tabs.
+   - **FIBPS 3D optical profiler (`.fibps`):** **Profile**, **Distance**, **Roughness**, **Flatten**, **Step Height** (shared regions A and B), and **Wear Track** (automatic groove area), plus **Copy Data** in OriginLab layout.
+   - **MIT nanoindentation (`.mit`):** Ticking indents in **Records:**, compliance subtraction, **Average**, and **Instrument fit**.
+   - **ZRW tribometer (`.zrw`, `.zrv`):** **Automatic** plateau detection versus **Manual** cycle interval and clicking **Apply** to save the shared interval.
+   - **X-Ray Calc (`.xrcx`) and XRDML (`.xrdml`):** Inspecting reflectivity curves and the fitted layer **Structure** table.
+   - Table 7-1: Summary of the specialist instrument viewers and their shared selection states.
+   - Sources: C:Help:FilesAndNotes, C:Help:Values, P:Help:Plugins.
+3. **Working drafts, external edits, and conflict resolution.**
+   - Why opening an attachment launches a separate working copy rather than editing notebook storage in place.
+   - Using **Tools > Save Attachment Working Draft** and **Tools > Reload Attachment Working Draft**, and resolving conflicts in the **Markdown Editor** (`Ctrl+S`, `Cancel`, `Reload (discard my edits)`, `Save Anyway`).
+   - Fig 7-1 (`fig-7-1-viewer-draft-lifecycle.svg`): The lifecycle of a file from instrument disk to stored notebook bytes and local working draft.
+   - Sources: C:Help:FilesAndNotes.
+4. **Replacing, moving, exporting, and viewing files outside a notebook.**
+   - Using **Reupload...**, **Move to...**, and **Export** on attached files.
+   - In a Team Lab: Using `ELNFileViewer.exe` to preview local instrument files without opening a notebook.
+   - Sources: C:Help:FilesAndNotes, P:Help:Plugins, `APS-ELN-Commercial/README.md`.
+
+### Chapter 8: Filling Out Protocols and Checklists (`ch8-filling-out-protocols-and-checklists.mdx`)
+
+In This Chapter:
+- Attaching a structured protocol form to a procedure, specimen, or action
+- Using AutoFill fields (`values.all`, `conditions.all`, `results.all`) in protocol templates
+- Moving a protocol through Draft, In Review, Approved, and Rejected states
+- Submitting protocols from a phone at the instrument with the Quick Protocol web app
+
+Section outline:
+1. **Adding and completing a protocol on an item.**
+   - Choosing **Item > Add Protocol** (or `Ctrl+Shift+P` in the team client), picking a category and template (such as Sputter Deposition, Indentation, Tribotest, XRD, or Safety Assessment), and filling the form fields.
+   - Warning: Switching the **Template** drop-down inside the Protocol Editor clears the form fields you already entered.
+   - Sources: C:Help:Protocols, P:Help:Protocols.
+2. **How protocol templates and AutoFill work.**
+   - Designing or inspecting a template in **Reference Data > Protocol Templates...** (`+Section`, `+Row`, `+Field`, and **Tags...** for equipment types).
+   - How `AutoFill` expressions (`values.all`, `conditions.all`, `results.all`, `values.<Symbol>`) copy a snapshot of the item's values into the form when the protocol is created, and why formulas belong in **Add > Derived Value...** rather than protocol fields.
+   - Table 8-1: Protocol field types and `AutoFill` value sources.
+   - Sources: C:Help:Templates, P:Help:Protocols.
+3. **The protocol review workflow.**
+   - Moving a protocol from `Draft` to `In Review`, opening **Tools > Protocol Review...** (or `Ctrl+Shift+R`), and choosing **Approve** (which locks the protocol permanently) or **Reject** (which requires a rejection reason and returns it to `Draft`).
+   - Fig 8-1 (`fig-8-1-protocol-workflow.svg`): The four validation states of a protocol and their transitions.
+   - Sources: C:Help:Protocols, P:Help:Protocols.
+4. **Submitting protocols from the instrument in a team lab.**
+   - In a Team Lab: Using the **Quick Protocol** mobile web app at the instrument (signing in, searching the specimen code, picking an equipment-tagged template, and attaching a photo) and reviewing the submission in the desktop client.
+   - Sources: P:Help:Protocols.
+
+### Chapter 9: Values, Units, Formulas, and Provenance (`ch9-values-units-formulas-and-provenance.mdx`)
+
+In This Chapter:
+- Recording Conditions and Results with the right Value Type, unit, and tolerance
+- Mapping reader keys and converting units automatically during Extract Values
+- Computing Derived values from stored inputs with server formulas
+- Auditing your items with Check Value Sources to catch drift and changed selections
+
+Section outline:
+1. **Conditions, Results, units, and plausible-range checks.**
+   - Choosing **Condition** (`EXP_CONDITION`) versus **Result** (`TEST_RESULT`), using the built-in unit converter (**Convert...** and **Tools > Unit Converter...**), and entering **Tolerance** in the stored unit.
+   - How APS ELN checks plausible ranges (`range_min`, `range_max`) and the tolerance factor (default $1000	imes$) before saving.
+   - Sources: C:Help:Values.
+2. **Reader mappings, unit factors, and standard deviations.**
+   - How **Extract Values** and **Reference Data > Value Types... > Reader mappings...** map reader keys (including `<Material> Thickness` pattern rules) and convert units (`um` to `m`, `mTorr` to `Pa`).
+   - How `<Key>` and `<Key> STD` pair automatically so the standard deviation becomes the value's tolerance.
+   - Sources: C:Help:Values, Demo:A, Demo:B.
+3. **The four value sources and Derived formulas.**
+   - Comparing `Reader`, `Derived`, `Manual`, and `Unknown` sources (<a href="#fig-9-1">Figure 9-1</a>), and what happens if you hand-edit a `Reader` or `Derived` value.
+   - Creating a `Derived` value with **Add > Derived Value...** (`wear_rate_reciprocating` version 1), including multi-value averaging over several wear-track scans.
+   - Fig 9-1 (`fig-9-1-value-provenance-sources.svg`): The four value source kinds and how **Check Value Sources...** verifies them.
+   - Sources: C:Help:Values, Paper§5.
+4. **Checking value sources and understanding drift codes.**
+   - Running **Check Value Sources...** on an item subtree and reading every diagnostic status code (`value_changed`, `reader_version_changed`, `selection_changed`, `source_changed`, `input_changed`, `input_missing`, `not_fully_rerunnable`).
+   - Table 9-1: Meaning and action to take for each **Check Value Sources...** status code.
+   - Sources: C:Help:Values, Demo:A, Demo:B.
 
 ## Part 3: Thinking, Searching, and Reviewing (Chapter-Level Plan)
 

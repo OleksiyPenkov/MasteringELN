@@ -1,0 +1,108 @@
+---
+title: Values, Units, Formulas, and Provenance
+part: '2'
+number: '9'
+order: 90
+inThisChapter:
+  - Recording Conditions and Results with the right Value Type, unit, and tolerance
+  - Mapping reader keys and converting units automatically during Extract Values
+  - Computing Derived values from stored inputs with server formulas
+  - Auditing your items with Check Value Sources to catch drift and changed selections
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+Stored **Values** turn your notebook from a folder of files into a searchable scientific database (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1: The four links in every laboratory result</a>). When every deposition pressure, layer thickness, hardness, friction coefficient, and wear rate is stored as a typed value with its unit, tolerance, and provenance source, APS ELN can summarize repeated measurements in the item tree, plot correlations across an entire project, and verify months later that every number still matches the raw file that produced it.
+
+## Conditions, Results, units, and plausible-range checks
+
+Every value stored on a **Procedure** or **Action** has one of two record types:
+
+- **Condition (`EXP_CONDITION`):** an experimental input or setting you chose for the run, such as sputtering pressure ($0.267\,\text{Pa}$), target power ($134\,\text{W}$), bias voltage ($8\,\text{V}$), normal force ($F_n = 9.81\,\text{N}$), or cycle count ($N = 1000$).
+- **Result (`TEST_RESULT`):** an outcome measured by the instrument or calculated from measurements, such as base pressure ($9.10 \times 10^{-5}\,\text{Pa}$), coating step height ($3.58 \times 10^{-7}\,\text{m}$), indentation hardness ($5.92 \pm 0.47\,\text{GPa}$), coefficient of friction ($0.528 \pm 0.019$), wear rate ($K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$), or fitted XRR period ($D = 4.94 \times 10^{-9}\,\text{m}$).
+
+Always extract values from attached files when a reader plugin supports your format (<a href="#reader-mappings-unit-factors-and-standard-deviations">Reader mappings, unit factors, and standard deviations</a>). When you need to record a condition or measurement that has no file reader (such as a substrate batch weight or a manual micrometer reading), choose **Item > Add Value**:
+
+1. Select the **Procedure** or **Action** in the **Items** panel and choose **Item > Add Value** (or open **Item > Edit**, switch to the **Values** tab, and click **Add**).
+2. Select the **Category** and **Value type**. Each value type displays its symbol, title, and stored unit (from `ValueTypes.csv`, managed in **Reference Data > Value Types...**).
+3. Under **Record type**, choose **Condition** or **Result**.
+4. Enter the **Value** in the stored unit (or click **Convert...** to convert from another compatible unit of the same physical quantity).
+5. Enter a numeric **Tolerance** in the stored unit (with no unit suffix) and a clear **Description**, then click **Save**.
+
+<Warning title="value edits inside an existing item dialog save immediately">When you open an existing **Procedure** or **Action** with **Item > Edit** and add, edit, or delete a row on its **Values** tab, that value change is written to the database immediately. Clicking **Cancel** on the parent procedure/action dialog does not undo value changes already made on the **Values** tab.</Warning>
+
+Before saving any value, APS ELN checks the number and its tolerance against three plausible-range rules defined on its **Value Type**:
+
+1. **Out of range:** the value lies below the minimum or above the maximum configured for that value type in **Reference Data > Value Types...**.
+2. **Tolerance larger than the value:** the tolerance exceeds the magnitude of the value itself (for example, a value of $2.28 \times 10^{-5}$ with a tolerance of $0.0602$).
+3. **Tolerance scale mismatch:** a non-zero tolerance is more than the configured tolerance factor (default $1000\times$) smaller than the value (for example, a value of $300$ with a tolerance of $0.0001$).
+
+If any rule triggers during **Add Value** or interactive **Extract Values**, APS ELN names the issue and asks whether to store the value anyway (**Yes**) or return to the dialog to fix the unit or value type (**No**). Automatic background extraction after **Add File** cannot prompt you, so it skips out-of-range values until you run **Extract Values** interactively on that file.
+
+## Reader mappings, unit factors, and standard deviations
+
+When you click **Extract Values** in a viewer (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>) or right-click multiple files in the tree and choose **Extract values from N files...** (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#working-on-multiple-records-at-once`}>Chapter 6: Working on multiple records at once</a>), APS ELN matches each key emitted by the reader plugin to a notebook **Value Type**:
+
+- **Automatic unit conversion:** When the reader's unit and the target Value Type's stored unit measure the same physical quantity, the dialog converts the number automatically and shows the conversion factor above **Category**. For example, in Study B (`261014B`), the deposition reader (`aps.deposition`) emits sputtering pressure in `mTorr`, which ELN multiplies by $0.133322$ to store `Pa`, and coil current in `mA`, which ELN multiplies by $0.001$ to store `A`. In `aps.fibps`, wear area in $\mu\text{m}^2$ converts to $\text{mm}^2$ ($\times 10^{-6}$).
+- **Ambiguous or offset units are never guessed:** Because the letter `A` means ampere to the general unit parser, an ångström (`A`) key requires an explicit reader mapping rule (`10^-10` to `m`) rather than blind unit parsing, and offset temperatures ($^\circ\text{C}$ to $\text{K}$) are not auto-converted.
+- **Pattern rules with `<Material>`:** In **Reference Data > Value Types... > Reader mappings...**, pattern rules such as `<Material> Thickness` or `Layer <Material>.<Any>` map layer keys for any chemical element or compound (such as `Co Thickness` and `C Thickness` in Study B) and place the material name (`Co` or `C`) in the value's **Description** automatically.
+- **Automatic `<Key> STD` pairing:** Whenever a reader emits both `<Key>` and `<Key> STD` with the same unit (such as `Hardness` and `Hardness STD` from `aps.mit`, `COF` and `COF STD` from `aps.zrw`, or `Step Height` and `Step Height STD` from `aps.fibps`), APS ELN multiplies the standard deviation by the same unit factor and stores it in the **Tolerance** field of the main value rather than creating a separate value row.
+
+<Tip>Keep **Remember choices for this reader** ticked at the bottom of the **Extract Values** dialog. When you click **OK**, APS ELN saves your key-to-Value-Type mappings in **Reference Data > Value Types... > Reader mappings...** so future files from that instrument map with one click.</Tip>
+
+<Remember>An item keeps at most one `Reader` value for each key of each attached file. Extracting values from the same file a second time updates the existing `Reader` value in place instead of adding a duplicate row. Deleting an attached file automatically deletes the `Reader` values that came from that file while leaving `Manual` values untouched.</Remember>
+
+## The four value sources and Derived formulas
+
+Every value in APS ELN records how its number entered the notebook (<a href="#fig-9-1">Figure 9-1</a>):
+
+1. **`Reader`:** extracted from an attached file. Keeps the `file_id`, the file's MD5 hash, the `reader_id` and `reader_version`, the original key name, the emitted unit, the applied conversion factor, and any viewer analysis snapshot (such as ticked indents in `.mit`, step rectangles in `.fibps`, or the applied cycle interval in `.zrw`).
+2. **`Derived`:** calculated by APS ELN from stored input values using a versioned formula (`formula_id`, `formula_version`, and input `value_id` list).
+3. **`Manual`:** typed by hand in **Add Value**, or created when a user edits the number or tolerance of an existing `Reader` or `Derived` value.
+4. **`Unknown`:** recorded in an older notebook before value-level source tracking was introduced.
+
+<Figure id="fig-9-1" number="9-1" src={`${import.meta.env.BASE_URL}/figures/fig-9-1-value-provenance-sources.svg`} alt="Three columns comparing Reader Source, Derived Source, and Manual/Unknown Source, all feeding into Check Value Sources at the bottom" caption="The value provenance model in APS ELN. Reader values link to an attached file, reader version, and viewer snapshot. Derived values link to a versioned formula and stored input value IDs. Check Value Sources verifies both automatically." />
+
+<InELN>When you select any value on the **Values** tab of **Item > Edit**, the source line at the bottom of the dialog shows its origin. For a `Reader` value, the **Go to file** button becomes active: clicking **Go to file** and confirming **Yes** closes the dialog and opens that exact source file in the **Content Viewer**.</InELN>
+
+To compute a **Derived** value (as you did for Study A's reciprocating wear rate in <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-4-compute-the-derived-wear-rate`}>Chapter 4: Step 4: Compute the Derived wear rate</a>):
+
+1. Right-click the **Procedure** or **Action** and choose **Add > Derived Value...**.
+2. Select the formula (`wear_rate_reciprocating`, version 1: $K = A / (2 \cdot F_n \cdot N)$, returning `Wear rate` in $\text{mm}^3/(\text{N}\cdot\text{mm})$).
+3. Select the stored input value(s) for each role (`area` in $\text{mm}^2$, `normal_force` in $\text{N}$, and `cycles`) from the item or its child actions. When you select two or more `Wear area` values with `Ctrl`+click or `Shift`+click, the dialog uses their mean and records every selected `value_id` in the `Derived` source.
+4. Click **Save**. You cannot type or alter the calculated number in **Add > Derived Value...**.
+
+<Warning title="a Derived value is a stored snapshot, not a live spreadsheet cell">If you later edit or delete one of the input values that fed a `Derived` value, APS ELN does not silently overwrite the historical `Derived` number. Instead, **Check Value Sources...** flags `input_changed` or `input_missing` so you can inspect the change and create a new `Derived` value if needed.</Warning>
+
+## Checking value sources and understanding drift codes
+
+Before you sign an experiment or cite its numbers in a paper, right-click the root **Procedure** in the **Items** panel and choose **Check Value Sources...** (or run `check_value_drift` through MCP in Part 4).
+
+APS ELN re-reads every source file of every `Reader` value in the subtree using the currently installed viewer plugins, and re-calculates every `Derived` value recursively from its inputs. If all values match, a dialog reports how many values were verified with zero differences. If any value differs, a table lists the value ID, item, file, key, stored vs. current numbers, and the diagnostic code (<a href="#table-9-1">Table 9-1</a>).
+
+<p id="table-9-1" class="table-caption"><strong>Table 9-1:</strong> Diagnostic codes reported by <strong>Check Value Sources...</strong> (<code>check_value_drift</code>).</p>
+
+<DataTable
+  headers={['Status code', 'Applies to', 'What changed and how to resolve it']}
+  rows={[
+    ['`value_changed`', '`Reader` / `Derived`', 'Re-running the reader or formula today gives a different number than the stored value. Re-extract or create an updated `Derived` value if the new reader/input is intended.'],
+    ['`reader_version_changed`', '`Reader`', 'The installed plugin has a newer `reader_version` than the version recorded when the value was extracted (for example `aps.mit` v3 vs. v2).'],
+    ['`selection_changed`', '`Reader`', 'The shared evaluation region (`.fibps`) or cycle interval (`.zrw`) on the file was modified after the value was extracted.'],
+    ['`source_changed`', '`Reader`', 'The attachment bytes changed (for example via **Reupload...**) after the value\'s analysis snapshot was saved.'],
+    ['`file_missing` / `read_failed`', '`Reader`', 'The source attachment record or its file bytes in storage could not be read; run `check_storage` or restore from backup.'],
+    ['`input_changed` / `input_missing`', '`Derived`', 'One of the input values used by the formula now has a different number or was deleted.'],
+    ['`not_fully_rerunnable`', '`Derived`', 'At least one input in the formula chain is `Manual` or `Unknown`, so the chain cannot be verified all the way back to raw files.'],
+  ]}
+/>
+
+## Sources
+
+- **APS ELN Community Help:** `Values.html` (`Condition` vs. `Result`, **Item > Add Value**, immediate save warning on the **Values** tab, **Convert...** and **Tools > Unit Converter...**, the three plausible-range and $1000\times$ tolerance-factor checks, **Extract Values** and **Extract values from N files...**, **Reference Data > Value Types... > Reader mappings...**, `<Material>` pattern rules, `<Key> STD` tolerance pairing, the four value sources `Reader`, `Manual`, `Derived`, and `Unknown`, **Add > Derived Value...** with `wear_rate_reciprocating` v1 and multi-area averaging, and **Check Value Sources...** diagnostic codes); `Items.html` (the **Values** tab source line and **Go to file** button).
+- **ELN provenance study (`arXiv:2610.27859`, `doi:10.5281/zenodo.23466959`):** Section 5 (design of value-level provenance and drift checking) and `zenodo/demonstration/` (`tribo_study/reports/record_report.md` and `xrr_study/reports/record_report.md` showing `check_value_drift` and `report_value_issues` outputs).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1: The four links in every laboratory result</a>; <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-3-extract-reader-values-from-the-files`}>Chapter 4: Step 3: Extract Reader values</a>; <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-4-compute-the-derived-wear-rate`}>Chapter 4: Step 4: Compute the Derived wear rate</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#working-on-multiple-records-at-once`}>Chapter 6: Working on multiple records at once</a>; <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#how-protocol-templates-and-autofill-work`}>Chapter 8: How protocol templates and AutoFill work</a>.
