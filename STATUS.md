@@ -6,7 +6,7 @@ _Updated after every work session: what changed, what is unresolved, and what th
 
 **Done**
 - Packaged `public/data/Study-A-261015A-raw.zip` (11 raw files + `checksums.md5`) and `public/data/Study-B-261014B-raw.zip` (7 raw files + `checksums.md5`, excluding `XRR-fit_Co-C(261014B).xrcx` so students fit the `.xrdml` scan via `XRC_MCP`).
-- Created 1-page **Mandatory ELN Practice Assignment** (`src/pages/assignment.mdx` at `/MasteringELN/assignment/` and standalone 1-page printable `public/ELN-Mandatory-Assignment.pdf`) with **Deadline: November 16, 2026** and starting instructions.
+- Created 2-page **Mandatory ELN Practice Assignment** (`src/pages/assignment.mdx` at `http://10.109.92.41/MasteringELN/assignment/` and standalone 2-page printable `public/ELN-Mandatory-Assignment.pdf` with clickable `http://10.109.92.41/MasteringELN/...` links and zero `Z:` references) with **Deadline: November 16, 2026** and starting instructions.
 - Updated `src/pages/index.astro`, `introduction.mdx`, `ch4-your-first-complete-sample-record.mdx`, `ch17-study-b-xrr-fitting-with-provenance.mdx`, and `OUTLINE.md` with the `Practice` group (`Study A Practice` + `Study B Practice`) student workflow.
 - Added `STUDENT-GRADING.md` specifying the MCP verification sequence and per-student report template.
 - Verified across all gates:
