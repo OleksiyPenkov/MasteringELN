@@ -2,13 +2,14 @@
 
 _Updated after every work session: what changed, what is unresolved, and what the author must decide next._
 
-## 2026-11-04 (Chapter 4 Diagram & Specimen Dialog Update): Upgraded `Figure 4-1` and removed fixed specimen-property save warning
+## 2026-11-04 (First Public Release `v1.0.0` & GitHub Pages): Published Edition 1.0.0 on GitHub Releases and GitHub Pages
 
 **Done**
-- Upgraded `public/figures/fig-4-1-study-a-complete.svg` to show the full 4-level Study A (`261015A`) item tree (6 items, highlighting `Wear track 261015A` nested under `Friction test 261015A`) connected to its 11 raw files and 24 provenance-backed values (`23 Reader` + `1 Derived`).
-- Moved `Figure 4-1` into `## Meet Study A: sample 261015A` in `src/content/chapters/ch4-your-first-complete-sample-record.mdx` (and `OUTLINE.md`) so it appears before `Table 4-1` and `Figure 4-2`.
-- Removed the obsolete new-specimen property save warning from `src/content/chapters/ch4-your-first-complete-sample-record.mdx` and `OUTLINE.md` following the upstream desktop dialog fix.
-- Rebuilt and verified all gates (`npm test`: 74 passed; `npm run test:py`: 43 passed; `npm run check:links`: 30 pages, 1,256 internal links; `npm run check:markers`: 0 markers; `pdf-build/Mastering-ELN.pdf` & `public/Mastering-ELN.pdf`: 204 pages, all 23 `verify_pdf.py` checks passed) and deployed to `Z:\MasteringELN\`.
+- Upgraded `public/figures/fig-4-1-study-a-complete.svg` to show the full 4-level Study A (`261015A`) item tree (6 items, highlighting `Wear track 261015A` nested under `Friction test 261015A`) connected to its 11 raw files and 24 provenance-backed values (`23 Reader` + `1 Derived`), and moved `Figure 4-1` into `## Meet Study A: sample 261015A` in `src/content/chapters/ch4-your-first-complete-sample-record.mdx` (and `OUTLINE.md`).
+- Removed the obsolete new-specimen property save warning from `src/content/chapters/ch4-your-first-complete-sample-record.mdx`, `OUTLINE.md`, and `public/ELN-Cheat-Sheet.pdf` following the upstream desktop dialog fix; added 4px rounded corners to the workflow table in `ELN-Cheat-Sheet.pdf`.
+- Bumped `CITATION.cff` and `package.json` to `1.0.0` (`url: https://oleksiypenkov.github.io/MasteringELN/`) and updated `README.md` with the public web URL, PDF download link, and citation block.
+- Rebuilt and verified all gates (`npm test`: 74 passed; `npm run test:py`: 43 passed; `npm run check:links`: 30 pages, 1,256 internal links; `npm run check:markers`: 0 markers; `pdf-build/Mastering-ELN.pdf` & `public/Mastering-ELN.pdf`: 204 pages, all 23 `verify_pdf.py` checks passed).
+- Published the web edition + PDFs to GitHub Pages (`https://oleksiypenkov.github.io/MasteringELN/` via `gh-pages`), created GitHub Release `v1.0.0`, and deployed to `Z:\MasteringELN\`.
 
 ## 2026-11-04 (Full-Book Clarity Pass): Split long sentences and tightened step-by-step instructions across 24 files
 
