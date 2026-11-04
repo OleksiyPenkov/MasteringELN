@@ -9,7 +9,7 @@ inThisChapter:
   - Which chapter and check prevent each one
 ---
 
-A notebook can look full on screen and still fail the moment you try to trace a published number back to its raw instrument curve. Each of the ten mistakes below appeared in the seven-month laboratory audit (`arXiv:2610.27859`) or during student onboarding for Study A (`261015A`) and Study B (`261014B`).
+A notebook can look full on screen and still fail the moment you try to trace a published number back to its raw instrument curve. The ten mistakes below come directly from daily laboratory work and student onboarding for Study A (`261015A`) and Study B (`261014B`).
 
 ## 1. Leaving an action empty
 
@@ -29,11 +29,11 @@ When a student reads `Hardness = 5.92 GPa` off the **MIT** viewer and types `5.9
 
 ## 5. Typing a value before attaching its file
 
-In six traced studies of the seven-month audit (`arXiv:2610.27859`, Section 4.2), several values were typed into the notebook before their raw measurement files were attached. Those source files were never uploaded afterward. Make the order strict: create the **Action**, attach the **File** (<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-2-attach-the-11-raw-files-to-their-actions`}>Chapter 4: Step 2</a>), and extract the **Values** from that attached file (<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-3-extract-reader-values-from-the-files`}>Chapter 4: Step 3</a>).
+If you type a number into the notebook right after a measurement and plan to upload the raw file later, that file often stays on the instrument PC forever. Make the order strict: create the **Action**, attach the **File** (<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-2-attach-the-11-raw-files-to-their-actions`}>Chapter 4: Step 2</a>), and extract the **Values** from that attached file (<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-3-extract-reader-values-from-the-files`}>Chapter 4: Step 3</a>).
 
 ## 6. Hiding results inside prose notes
 
-In the two early agent studies (`T7` and `T8` in `arXiv:2610.27859`, Section 4.5), every fitted thickness and $\chi^2$ was written inside a Markdown text note. Zero result **Values** were stored on the action. Prose notes are invisible to **Tools > Analysis...** (<a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13</a>), invisible to `query_values` and `correlate_values` (<a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#navigating-and-querying-values`}>Chapter 16</a>), and invisible to drift checks. Write your narrative in notes and Wiki pages, and always store the numbers themselves as **Values**.
+Writing fitted thicknesses, $\chi^2$, or hardness averages inside a Markdown text note leaves zero result **Values** on the action. Prose notes are invisible to **Tools > Analysis...** (<a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13</a>), invisible to `query_values` and `correlate_values` (<a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#navigating-and-querying-values`}>Chapter 16</a>), and invisible to drift checks. Write your narrative in notes and Wiki pages, and always store the numbers themselves as **Values**.
 
 ## 7. Putting a fit under the wrong sample
 
@@ -53,7 +53,7 @@ Copying `notebook.sqlite` onto a backup drive without copying its `<name> files`
 
 ## Sources
 
-- **The ELN provenance study:** *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report* ([arXiv:2610.27859](https://arxiv.org/abs/2610.27859)). Section 4.1 (empty placeholder actions and screenshots in place of raw XRR data); Section 4.2 (values entered before source files, manual typing without reader links, and unit/scale errors); Section 4.3 (misplaced analysis files); Section 4.5 (agent records `T7` and `T8` with 14 input values and 0 result values).
+- **The ELN provenance study:** *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report* ([arXiv:2610.27859](https://arxiv.org/abs/2610.27859)). Section 4.1 (empty placeholder actions and screenshots in place of raw XRR data); Section 4.2 (values entered before source files, manual typing without reader links, and unit/scale errors); Section 4.3 (misplaced analysis files); Section 4.5 (agent records with prose results and 0 result values).
 - **Study A and Study B checklists and instructions:** `review/demo_A_student_checklist.md` and `zenodo/demonstration/xrr_study/agent_instructions/record_agent.md` (keeping results out of filenames, building the full tree at the start, and `.tsv` current unit label warning).
 - **APS ELN Community Help:** `Notebooks.html` (backing up `.sqlite` and the attachment folder together); `FilesAndNotes.html` (never editing storage files directly on disk); `AnalysisAndReports.html` (scientific packages do not back up attachment bytes).
 

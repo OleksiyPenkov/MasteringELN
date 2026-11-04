@@ -44,9 +44,8 @@ Section outline:
    - A result in a paper or thesis is a chain of four items: the physical **Sample** (`Specimen`), the **Operation** (`Procedure` or `Action`), the **Raw File** from the instrument, and the **Stored Number** (`Value`).
    - Fig 1-1 (`fig-1-1-provenance-chain.svg`): The four-link provenance chain, showing which links the folder/item tree keeps by structure and which link requires value-level provenance.
    - Sources: Paper§1, Paper§2.
-2. **What happens in seven months of real laboratory use.**
-   - Evidence from the laboratory audit in `arXiv:2610.27859` (24 projects, 1,283 items, 2,676 files, 674 values, 7,710 audit log writes across 6 researchers and 1 agent account).
-   - When 26 stored values across six studies (`T1`–`T6`) were compared against the output of the built-in data file readers, 13 matched, 4 differed, and 9 had no reader counterpart at all.
+2. **Why the fourth link is the one that breaks.**
+   - Keeping the first three links is easy; the fourth link breaks when numbers are typed by hand (`Manual`), when a screenshot is saved instead of raw data, or when an evaluation window or reader changes.
    - Warning: A number typed by hand with no file link cannot be checked when a calibration, interval, or unit changes.
    - Sources: Paper§2.4, Paper§4.2, `zenodo/README.md`.
 3. **The two running examples in this book: Study A and Study B.**
@@ -506,14 +505,14 @@ Section outline:
 ### Chapter 17: Study B: XRR Fitting with Provenance (`ch17-study-b-xrr-fitting-with-provenance.mdx`)
 
 In This Chapter:
-- Understanding why early agent records lost value-level provenance (arXiv:2610.27859)
+- Understanding why agent-written records must store Reader values instead of prose numbers
 - Building the Study B (`261014B` Co/C mirror) tree and extracting 18 deposition values
 - Staging the `.xrdml` scan with `download_file` and fitting it in X-Ray Calc 3
 - Uploading the accepted `.xrcx` fit and storing its `Reader` values with zero drift
 
 Section outline:
 1. **Why agent-written records need the Value Route.**
-   - What the 7-month laboratory study (`arXiv:2610.27859` Section 4.5) discovered: early agent runs recorded 14 input conditions and 0 result values because fit results were written only in text notes rather than stored through data file readers.
+   - Why agent runs that write fit results only inside text notes leave 0 result values in the database.
    - How the **Value Route** fixes this: every number stored by an agent must come from `extract_file_key_values` with `source_kind: "Reader"`, `source_file_id`, `reader_id`, `reader_version`, `key_name`, `reader_units`, and `conversion_factor` copied verbatim.
    - Sources: Paper§4.5, Paper§5.8, Demo:B (`record_agent.md`).
 2. **Part 1: The Record Agent builds Study B (`261014B`).**

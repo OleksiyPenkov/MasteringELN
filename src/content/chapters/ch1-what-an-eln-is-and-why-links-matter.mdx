@@ -32,15 +32,15 @@ Every experimental number rests on a chain of four records (<a href="#fig-1-1">F
 
 In APS ELN, the first three links are structural. You create an **Action** under a **Specimen** and attach the instrument file to that action. The tree then records which sample was measured, which operation ran, and where the raw bytes are stored.
 
-## Seven months of real laboratory use
+## Why the fourth link is the one that breaks
 
-A seven-month audit of daily work in the author's thin-film and tribology laboratory measured how well these four links held up in practice (`arXiv:2610.27859`). Six researchers and one AI agent recorded 24 projects containing 1,283 items, 2,676 attached files, and 674 stored values across 7,710 audit-log writes.
+Most students keep the first three links without even trying. You create a folder for your sample, drop your measurement files inside it, and move on. Weeks later, when you write a report or prepare a presentation, you open those files, calculate an average or run a fit, and type the final number into a table.
 
-The structural links held up well: measurement actions sat under their specimens and held their raw files. Next, 26 stored values across six completed studies (`T1`–`T6`) were compared against the output of APS ELN's built-in data file readers. Three things stood out:
+Six months later, that fourth link is gone:
 
-- **13 of the 26 values** matched the current reader output of an attached file after unit conversion.
-- **4 values** differed from the number the attached file gives today, for example because a reader algorithm was updated or a different evaluation interval was chosen.
-- **9 values** had no reader counterpart at all. Either the source file was missing, a screenshot had been uploaded instead of the raw data, or the number had been typed by hand.
+- **A number was typed by hand (`Manual` source) with no link to its file.** Nobody can tell which `.mit` or `.fibps` file produced it, which outliers were excluded in the viewer, or whether a unit conversion was done in someone's head.
+- **A screenshot was saved instead of the raw data.** A `.png` of a fit window looks convincing on screen, but no reader plugin can extract numbers from it or re-verify the fit.
+- **An evaluation window or reader changed.** Perhaps you changed the cycle range on a friction curve or updated a reader plugin. The stored number still shows the old value, and nothing warns you unless the notebook recorded the file hash and reader version when the number was extracted.
 
 <Warning title="typing numbers by hand">When you type a result by hand (`Manual` source) instead of extracting it from the attached file (`Reader` source), APS ELN cannot check that number later. If a reader version, calibration, or evaluation window changes, a `Manual` number stays unverified. Use **Extract Values** whenever a reader supports your file format.</Warning>
 
@@ -65,7 +65,7 @@ Starting in APS ELN 2.1 (notebook format 5 in Community), every stored value car
 <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4: Your First Sample Record in Twenty Minutes</a> builds Study A step by step in the Desktop window. <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Study B: XRR Fitting with Provenance</a> builds and fits Study B with the MCP server and X-Ray Calc 3.
 ## Four rules that keep your data trail unbroken
 
-Four habits prevent every broken link found in the seven-month laboratory study:
+Four habits prevent these broken links in daily work:
 
 1. **Build the whole item tree at the start of the run.** Create the **Procedure**, the **Specimen**, and every planned **Action** before you walk to the instruments. An empty action in the tree reminds you that a file is still missing. At the end of the experiment, no action should remain empty.
 2. **Attach the raw instrument file, never a screenshot.** A `.png` screenshot of an XRR fit or an indentation curve cannot be re-analyzed or checked for drift. It also gives zero values to a reader. Always attach the native file (`.depo.json`, `.tsv`, `.fibps`, `.mit`, `.zrw`, `.xrdml`, `.xrcx`).
@@ -102,7 +102,7 @@ Four habits prevent every broken link found in the seven-month laboratory study:
 
 ## Sources
 
-- **The ELN provenance study and demonstration deposit:** *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report* ([arXiv:2610.27859](https://arxiv.org/abs/2610.27859); Zenodo deposit [doi:10.5281/zenodo.23466959](https://doi.org/10.5281/zenodo.23466959)). Sections 1–2 (the four-link chain from sample to number); Sections 2.4 and 4.2 (7-month production counts: 24 projects, 1,283 items, 2,676 files, 674 values, 7,710 audit rows, and the 26 traced values in Table 1: 13 equal, 4 differing, 9 with no reader counterpart); Section 5 (value source metadata for `Reader`, `Derived`, `Manual`, and `Unknown`); Section 5.8 (`tribo_study` sample `261015A` and `xrr_study` sample `261014B`).
+- **The ELN provenance study and demonstration deposit:** *Value-level data provenance in an electronic laboratory notebook used by humans and language-model agents: An experience report* ([arXiv:2610.27859](https://arxiv.org/abs/2610.27859); Zenodo deposit [doi:10.5281/zenodo.23466959](https://doi.org/10.5281/zenodo.23466959)). Sections 1–2 (the four-link chain from sample to number); Section 4 (how value-level links break); Section 5 (value source metadata for `Reader`, `Derived`, `Manual`, and `Unknown`); Section 5.8 (`tribo_study` sample `261015A` and `xrr_study` sample `261014B`).
 - **Student checklist for Study A:** `review/demo_A_student_checklist.md` in the paper repository (building the whole tree at the start, keeping results out of filenames, and extracting values rather than typing numbers).
 - **APS ELN Community Help:** `Items.html` (the `Procedure`, `Specimen`, and `Action` hierarchy, and the **Values** tab source line with **Go to file**); `Values.html` (`Condition` vs. `Result`, `Reader`, `Manual`, `Derived`, and `Unknown` sources, multi-file extraction, and **Check Value Sources...**); `FilesAndNotes.html` (the 26 viewer plugins).
 
