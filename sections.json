@@ -1,0 +1,245 @@
+[
+  {
+    "slug": "introduction",
+    "title": "Introduction",
+    "number": "",
+    "label": "",
+    "order": 0,
+    "part": "front",
+    "partHeading": "Front Matter"
+  },
+  {
+    "slug": "ch1-what-an-eln-is-and-why-links-matter",
+    "title": "What an ELN Is, and Why Links Matter",
+    "number": "1",
+    "label": "Chapter 1",
+    "order": 10,
+    "part": "1",
+    "partHeading": "Part 1: Getting Started"
+  },
+  {
+    "slug": "ch2-opening-a-notebook",
+    "title": "Opening a Local or Team Lab Notebook",
+    "number": "2",
+    "label": "Chapter 2",
+    "order": 20,
+    "part": "1",
+    "partHeading": "Part 1: Getting Started"
+  },
+  {
+    "slug": "ch3-a-tour-of-the-main-window",
+    "title": "A Tour of the Main Window",
+    "number": "3",
+    "label": "Chapter 3",
+    "order": 30,
+    "part": "1",
+    "partHeading": "Part 1: Getting Started"
+  },
+  {
+    "slug": "ch4-your-first-complete-sample-record",
+    "title": "Your First Sample Record in Twenty Minutes",
+    "number": "4",
+    "label": "Chapter 4",
+    "order": 40,
+    "part": "1",
+    "partHeading": "Part 1: Getting Started"
+  },
+  {
+    "slug": "ch5-projects-groups-and-folders",
+    "title": "Projects, Groups, and Folders",
+    "number": "5",
+    "label": "Chapter 5",
+    "order": 50,
+    "part": "2",
+    "partHeading": "Part 2: Recording Daily Lab Work"
+  },
+  {
+    "slug": "ch6-the-item-tree-and-experiment-templates",
+    "title": "The Item Tree and Experiment Templates",
+    "number": "6",
+    "label": "Chapter 6",
+    "order": 60,
+    "part": "2",
+    "partHeading": "Part 2: Recording Daily Lab Work"
+  },
+  {
+    "slug": "ch7-raw-files-drafts-and-instrument-viewers",
+    "title": "Raw Files, Drafts, and Instrument Viewers",
+    "number": "7",
+    "label": "Chapter 7",
+    "order": 70,
+    "part": "2",
+    "partHeading": "Part 2: Recording Daily Lab Work"
+  },
+  {
+    "slug": "ch8-filling-out-protocols-and-checklists",
+    "title": "Filling Out Protocols and Checklists",
+    "number": "8",
+    "label": "Chapter 8",
+    "order": 80,
+    "part": "2",
+    "partHeading": "Part 2: Recording Daily Lab Work"
+  },
+  {
+    "slug": "ch9-values-units-formulas-and-provenance",
+    "title": "Values, Units, Formulas, and Provenance",
+    "number": "9",
+    "label": "Chapter 9",
+    "order": 90,
+    "part": "2",
+    "partHeading": "Part 2: Recording Daily Lab Work"
+  },
+  {
+    "slug": "ch10-the-hypothesis-tree-and-evidence",
+    "title": "The Hypothesis Tree and Evidence",
+    "number": "10",
+    "label": "Chapter 10",
+    "order": 100,
+    "part": "3",
+    "partHeading": "Part 3: Thinking, Searching, and Reviewing"
+  },
+  {
+    "slug": "ch11-project-wiki-notes-tags-and-links",
+    "title": "Project Wiki, Notes, Tags, and Links",
+    "number": "11",
+    "label": "Chapter 11",
+    "order": 110,
+    "part": "3",
+    "partHeading": "Part 3: Thinking, Searching, and Reviewing"
+  },
+  {
+    "slug": "ch12-full-text-panel-and-semantic-search",
+    "title": "Full-Text, Panel, and Semantic Search",
+    "number": "12",
+    "label": "Chapter 12",
+    "order": 120,
+    "part": "3",
+    "partHeading": "Part 3: Thinking, Searching, and Reviewing"
+  },
+  {
+    "slug": "ch13-charts-correlations-and-pdf-reports",
+    "title": "Charts, Correlations, and PDF Reports",
+    "number": "13",
+    "label": "Chapter 13",
+    "order": 130,
+    "part": "3",
+    "partHeading": "Part 3: Thinking, Searching, and Reviewing"
+  },
+  {
+    "slug": "ch14-completeness-audit-and-signatures",
+    "title": "Completeness, Audit, and Signatures",
+    "number": "14",
+    "label": "Chapter 14",
+    "order": 140,
+    "part": "3",
+    "partHeading": "Part 3: Thinking, Searching, and Reviewing"
+  },
+  {
+    "slug": "ch15-connecting-an-ai-agent-to-your-notebook",
+    "title": "Connecting an AI Agent to Your Notebook",
+    "number": "15",
+    "label": "Chapter 15",
+    "order": 150,
+    "part": "4",
+    "partHeading": "Part 4: Working with an AI Agent (MCP)"
+  },
+  {
+    "slug": "ch16-reading-data-and-auditing-drift-via-mcp",
+    "title": "Reading Data and Auditing Drift via MCP",
+    "number": "16",
+    "label": "Chapter 16",
+    "order": 160,
+    "part": "4",
+    "partHeading": "Part 4: Working with an AI Agent (MCP)"
+  },
+  {
+    "slug": "ch17-study-b-xrr-fitting-with-provenance",
+    "title": "Study B: XRR Fitting with Provenance",
+    "number": "17",
+    "label": "Chapter 17",
+    "order": 170,
+    "part": "4",
+    "partHeading": "Part 4: Working with an AI Agent (MCP)"
+  },
+  {
+    "slug": "ch18-drafting-trees-hypotheses-and-wikis",
+    "title": "Drafting Trees, Hypotheses, and Wikis",
+    "number": "18",
+    "label": "Chapter 18",
+    "order": 180,
+    "part": "4",
+    "partHeading": "Part 4: Working with an AI Agent (MCP)"
+  },
+  {
+    "slug": "ch19-ten-mistakes-that-break-your-data-trail",
+    "title": "Ten Mistakes That Break Your Data Trail",
+    "number": "19",
+    "label": "Chapter 19",
+    "order": 190,
+    "part": "5",
+    "partHeading": "Part 5: The Part of Tens"
+  },
+  {
+    "slug": "ch20-ten-checks-before-you-sign-or-submit",
+    "title": "Ten Checks Before You Sign or Submit",
+    "number": "20",
+    "label": "Chapter 20",
+    "order": 200,
+    "part": "5",
+    "partHeading": "Part 5: The Part of Tens"
+  },
+  {
+    "slug": "ch21-ten-things-an-agent-can-and-cannot-do",
+    "title": "Ten Things an Agent Can and Cannot Do",
+    "number": "21",
+    "label": "Chapter 21",
+    "order": 210,
+    "part": "5",
+    "partHeading": "Part 5: The Part of Tens"
+  },
+  {
+    "slug": "appendix-a-icons-reference",
+    "title": "Toolbar, Menu, and Tree Icons Reference",
+    "number": "A",
+    "label": "Appendix A",
+    "order": 900,
+    "part": "back",
+    "partHeading": "Appendices"
+  },
+  {
+    "slug": "appendix-b-instrument-viewers-and-file-formats",
+    "title": "Instrument Viewers and File Formats",
+    "number": "B",
+    "label": "Appendix B",
+    "order": 910,
+    "part": "back",
+    "partHeading": "Appendices"
+  },
+  {
+    "slug": "appendix-c-value-sources-units-and-formulas",
+    "title": "Value Sources, Units, and Formulas",
+    "number": "C",
+    "label": "Appendix C",
+    "order": 920,
+    "part": "back",
+    "partHeading": "Appendices"
+  },
+  {
+    "slug": "appendix-d-keyboard-shortcuts",
+    "title": "Keyboard Shortcuts",
+    "number": "D",
+    "label": "Appendix D",
+    "order": 930,
+    "part": "back",
+    "partHeading": "Appendices"
+  },
+  {
+    "slug": "appendix-e-glossary",
+    "title": "Glossary",
+    "number": "E",
+    "label": "Appendix E",
+    "order": 940,
+    "part": "back",
+    "partHeading": "Appendices"
+  }
+]

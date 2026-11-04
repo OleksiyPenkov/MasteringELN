@@ -1,0 +1,13 @@
+<svg viewBox="0 0 600 245" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="12" y="14" width="576" height="64" rx="6" fill="#dbe5fb" stroke="#1a5276" stroke-width="1.8"/>
+  <text x="26" y="40" font-size="15" font-weight="700" fill="#1a5276">Layer 1: Completeness Rules (Tools &gt; Data Completeness...)</text>
+  <text x="26" y="64" font-size="14" fill="#222">Checks that each Action Type + Equipment has its required File Types and Value Types</text>
+
+  <rect x="12" y="90" width="576" height="64" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.8"/>
+  <text x="26" y="116" font-size="15" font-weight="700" fill="#00695c">Layer 2: Provenance &amp; Audit (Check Value Sources... &amp; Tools &gt; Audit Log...)</text>
+  <text x="26" y="140" font-size="14" fill="#222">Verifies Reader/Derived numbers against stored files and logs every Create/Update/Delete</text>
+
+  <rect x="12" y="166" width="576" height="66" rx="6" fill="#fdecea" stroke="#c62828" stroke-width="2"/>
+  <text x="26" y="192" font-size="15" font-weight="700" fill="#c62828">Layer 3: Electronic Signature (Right-click Item &gt; Signature &gt; Sign Item...)</text>
+  <text x="26" y="216" font-size="14" fill="#222">Computes content hash, applies SIGNED badge, and permanently locks the item against edits</text>
+</svg>

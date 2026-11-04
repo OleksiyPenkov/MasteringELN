@@ -1,0 +1,29 @@
+<svg viewBox="0 0 600 245" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="16" width="166" height="140" rx="6" fill="#dbe5fb" stroke="#1a5276" stroke-width="1.8"/>
+  <text x="93" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="#1a5276">AI Client</text>
+  <text x="93" y="74" text-anchor="middle" font-size="14" fill="#222">Claude Code / Codex</text>
+  <text x="93" y="102" text-anchor="middle" font-size="14" fill="#334155">Line-based JSON-RPC</text>
+  <text x="93" y="126" text-anchor="middle" font-size="14" fill="#334155">over stdio</text>
+
+  <line x1="176" y1="86" x2="208" y2="86" stroke="#1a5276" stroke-width="2.2"/>
+  <polygon points="208,86 200,81 200,91" fill="#1a5276"/>
+
+  <rect x="210" y="16" width="180" height="140" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.8"/>
+  <text x="300" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="#00695c">ELN MCP Host</text>
+  <text x="300" y="72" text-anchor="middle" font-size="14" fill="#222">ELNCommunityMCP.exe</text>
+  <text x="300" y="96" text-anchor="middle" font-size="14" fill="#222">or ELNMCPServer.exe</text>
+  <text x="300" y="126" text-anchor="middle" font-size="14" font-weight="600" fill="#00695c">26 viewer plugins (.bpl)</text>
+
+  <line x1="390" y1="86" x2="422" y2="86" stroke="#00695c" stroke-width="2.2"/>
+  <polygon points="422,86 414,81 414,91" fill="#00695c"/>
+
+  <rect x="424" y="16" width="166" height="140" rx="6" fill="#f7f9fb" stroke="#334155" stroke-width="1.8"/>
+  <text x="507" y="44" text-anchor="middle" font-size="15" font-weight="700" fill="#222">Notebook &amp; Box</text>
+  <text x="507" y="72" text-anchor="middle" font-size="14" fill="#222">DB + Attachment Store</text>
+  <text x="507" y="100" text-anchor="middle" font-size="14" fill="#00695c">--upload-root sandbox</text>
+  <text x="507" y="126" text-anchor="middle" font-size="14" fill="#c62828">Human gates in GUI</text>
+
+  <rect x="10" y="172" width="580" height="58" rx="6" fill="#fdecea" stroke="#c62828" stroke-width="1.6"/>
+  <text x="300" y="198" text-anchor="middle" font-size="14" font-weight="700" fill="#c62828">Enforced Guardrails on Every Tool Call:</text>
+  <text x="300" y="220" text-anchor="middle" font-size="14" fill="#222">Project scope · Signed-item lock · Upload-root confinement · No MCP Approve/Accept</text>
+</svg>

@@ -1,0 +1,149 @@
+{
+  "schema": 2,
+  "kind": "deposition-snapshot",
+  "conditions": {
+    "fingerprint": "sha256:6e75037ec0e585d5976b76ee0bc04006d6d70e9db75b6f5fd05a05a51505fd85",
+    "specimen": "Deposition",
+    "signature": {
+      "userId": "0c57b0a0-81c9-4507-b137-a65dabd12b2f",
+      "name": "Administrator",
+      "role": "Admin",
+      "signedAtUtc": "2026-10-14T03:54:40.2993725Z",
+      "intent": "authorized"
+    },
+    "software": {
+      "control": "1.6.3.0",
+      "worker": "CSMIC_WORKER"
+    },
+    "plcSerials": [],
+    "sources": [
+      {
+        "flange": 2,
+        "material": "Co",
+        "format": "4\u0022 round",
+        "magnetronModel": "SVAC4",
+        "magnetronInstance": "4da49cb9-e8d1-432c-a445-787711fc9f20",
+        "erosionDepthMm": 2.5619984555068025,
+        "powerSupply": {
+          "id": "G3F_C",
+          "model": "DCPulseG3F",
+          "description": "Pulsed DC C",
+          "responding": true
+        },
+        "zeroDistanceMm": 78.6,
+        "liftMm": 41,
+        "targetThicknessMm": 3,
+        "targetBackingMm": 0,
+        "targetSerial": "INV-20",
+        "targetToSubstrateDistanceMm": 119.16199845550679
+      },
+      {
+        "flange": 3,
+        "material": "Graphite",
+        "format": "4\u0022 round",
+        "magnetronModel": "SVAC4",
+        "magnetronInstance": "373f7f70-0985-4bd8-9411-fe85483dab1b",
+        "erosionDepthMm": 3.835967456776569,
+        "powerSupply": {
+          "id": "G3F_B",
+          "model": "DCPulseG3F",
+          "description": "Pulsed DC B",
+          "responding": true
+        },
+        "zeroDistanceMm": 43.1,
+        "liftMm": 77,
+        "targetThicknessMm": 6,
+        "targetBackingMm": 0,
+        "targetSerial": "INV-07",
+        "targetToSubstrateDistanceMm": 117.93596745677657
+      },
+      {
+        "flange": 5,
+        "material": "BN",
+        "format": "4\u0022 round",
+        "magnetronModel": "SVAC4",
+        "magnetronInstance": "9e10abc1-50f3-4ce1-addf-6559835a9ff3",
+        "erosionDepthMm": 0.5919389713563383,
+        "powerSupply": {
+          "id": "RF601",
+          "model": "LeskerRx01",
+          "description": "RF Power 601",
+          "responding": false
+        },
+        "zeroDistanceMm": 62.4,
+        "liftMm": 58,
+        "targetThicknessMm": 3,
+        "targetBackingMm": 0,
+        "targetSerial": "INV-04",
+        "targetToSubstrateDistanceMm": 117.99193897135635
+      },
+      {
+        "flange": 6,
+        "material": "W",
+        "format": "Rect",
+        "magnetronModel": "RECT",
+        "magnetronInstance": "280f7064-76b5-4895-82a1-6d79067ab875",
+        "erosionDepthMm": 0.9382373812058808,
+        "powerSupply": {
+          "id": "DC4001A",
+          "model": "DC4001",
+          "description": "DC Power A",
+          "responding": true
+        },
+        "targetThicknessMm": 3,
+        "targetBackingMm": 0,
+        "targetSerial": "INV-31"
+      }
+    ],
+    "recipe": {
+      "name": "StudyB_CoC_Co42s_C108s_N20_2mT",
+      "format": "rcpx",
+      "content": "\u003C?xml version=\u00221.0\u0022 encoding=\u0022utf-8\u0022?\u003E\n\u003CRecipe\u003E\n\t\u003CDescription type=\u0022\u0022\u003E\n\t\t\u003CTitle\u003E\u003C/Title\u003E\n\t\t\u003CAuthor\u003E\u003C/Author\u003E\n\t\t\u003CCreated\u003E2026-10-14\u003C/Created\u003E\n\t\t\u003CModified\u003E2026-10-14\u003C/Modified\u003E\n\t\t\u003CNotes\u003E\u003C/Notes\u003E\n\t\u003C/Description\u003E\n\t\u003CParameters\u003E\n\t\t\u003CGroup name=\u0022Deposition Conditions\u0022\u003E\n\t\t\t\u003CParam name=\u0022P\u0022 caption=\u0022Working pressure\u0022 unit=\u0022mTorr\u0022 type=\u0022float\u0022\u003E2.00mT\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022Pbase\u0022 caption=\u0022Release pressure\u0022 unit=\u0022mTorr\u0022 type=\u0022float\u0022\u003E0mT\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022ArFlow\u0022 caption=\u0022Ar flow per line\u0022 unit=\u0022sccm\u0022 type=\u0022float\u0022\u003E20\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022N\u0022 caption=\u0022Periods\u0022 unit=\u0022N\u0022 type=\u0022float\u0022\u003E20\u003C/Param\u003E\n\t\t\u003C/Group\u003E\n\t\t\u003CGroup name=\u0022Layer Co\u0022\u003E\n\t\t\t\u003CParam name=\u0022currentCo\u0022 caption=\u0022Current\u0022 unit=\u0022mA\u0022 type=\u0022float\u0022\u003E50\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022freqCo\u0022 caption=\u0022Pulse frequency\u0022 unit=\u0022kHz\u0022 type=\u0022float\u0022\u003E40\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022dutyCo\u0022 caption=\u0022Duty cycle\u0022 unit=\u0022%\u0022 type=\u0022float\u0022\u003E70\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022timeCo\u0022 caption=\u0022Time per layer\u0022 unit=\u0022sec\u0022 type=\u0022float\u0022\u003E42.0\u003C/Param\u003E\n\t\t\u003C/Group\u003E\n\t\t\u003CGroup name=\u0022Layer C\u0022\u003E\n\t\t\t\u003CParam name=\u0022currentC\u0022 caption=\u0022Current\u0022 unit=\u0022mA\u0022 type=\u0022float\u0022\u003E300\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022freqC\u0022 caption=\u0022Pulse frequency\u0022 unit=\u0022kHz\u0022 type=\u0022float\u0022\u003E50\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022dutyC\u0022 caption=\u0022Duty cycle\u0022 unit=\u0022%\u0022 type=\u0022float\u0022\u003E60\u003C/Param\u003E\n\t\t\t\u003CParam name=\u0022timeC\u0022 caption=\u0022Time per layer\u0022 unit=\u0022sec\u0022 type=\u0022float\u0022\u003E108.0\u003C/Param\u003E\n\t\t\u003C/Group\u003E\n\t\u003C/Parameters\u003E\n\t\u003CScript\u003E# Repeat of P2-05 (ELN project 33, item 1397) for demonstration study B, without its raised-pressure C strike: glass / [Co / C] x N, C on top\npower G3F_C off\npower G3F_B off\nshutter Home\nholder Home\nvalve V1 close\nvalve V4 close\nvalve V5 close\nvalve VI close\nmfc N21 0\nmfc N22 0\nvalve V2 open\nvalve V6 open\nvalve M1 open\nvalve V3 open\nvalve M2 open\nmfc Ar1 ArFlow\nmfc Ar2 ArFlow\npwait P 300\nset G3F_C Current currentCo\nset G3F_C Frequency freqCo\nset G3F_C DutyCycle dutyCo\nshutter Co\npower G3F_C on\ndelay 120s\nset G3F_B Current currentC\nset G3F_B Frequency freqC\nset G3F_B DutyCycle dutyC\nshutter C\npower G3F_B on\ndelay 60s\ndelay 120s\nloop N\ndeposit Co timeCo Home\ndeposit C timeC Home\nendloop\nholder Home\npower G3F_C off\npower G3F_B off\nshutter Home\nmfc Ar1 0\nmfc Ar2 0\nvalve M1 close\nvalve M2 close\nvalve V6 close\nvalve V2 close\nvalve V3 close\npwait Pbase 30\u003C/Script\u003E\n\u003C/Recipe\u003E"
+    }
+  },
+  "outcome": {
+    "result": "completed",
+    "dataFile": "2026-10-14_11-56-09_StudyB_CoC_Co42s_C108s_N20_2mT.tsv",
+    "runRecord": "2026-10-14_11-56-09_StudyB_CoC_Co42s_C108s_N20_2mT.run.json",
+    "window": {
+      "startedUtc": "2026-10-14T03:56:09.4157557Z",
+      "endedUtc": "2026-10-14T04:56:35.8379511Z"
+    },
+    "means": {
+      "S_pm": 0.004374,
+      "S_pl": 0.01003,
+      "S_tmp": 32.26,
+      "S_KCM91": 36.94,
+      "S_G500#1": 0.001975,
+      "TV_G500#1": 18.85,
+      "MFC_N21": 0,
+      "MFC_Ar1": 19.63,
+      "MFC_Ar2": 19.65,
+      "MFC_N22": 0,
+      "PSU_DC4001A_V": -0.1195,
+      "PSU_DC4001A_I": 50,
+      "PSU_G3F_B_V": 367,
+      "PSU_G3F_B_I": 283.7,
+      "PSU_G3F_C_V": 329.4,
+      "PSU_G3F_C_I": 48.99,
+      "PSU_RF601_V": 0,
+      "PSU_RF601_I": 0,
+      "BIAS_N6705C_ch1_V": 0,
+      "BIAS_N6705C_ch1_I": 0,
+      "BIAS_N6705C_ch2_V": 0,
+      "BIAS_N6705C_ch2_I": 0,
+      "BIAS_N6705C_ch3_V": 0,
+      "BIAS_N6705C_ch3_I": 0,
+      "BIAS_N6705C_ch4_V": 0,
+      "BIAS_N6705C_ch4_I": 0,
+      "STG_VS": 0,
+      "STG_HS": 15,
+      "STG_rotation": 0
+    },
+    "basePressure": {
+      "channel": "S_pm",
+      "min": 3.824E-07,
+      "unit": "Torr"
+    }
+  }
+}

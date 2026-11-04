@@ -1,0 +1,37 @@
+<svg viewBox="0 0 600 220" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="38" width="125" height="76" rx="6" fill="#dbe5fb" stroke="#1a5276" stroke-width="2"/>
+  <text x="72" y="66" text-anchor="middle" font-size="14" font-weight="700" fill="#1a5276">1. Sample</text>
+  <text x="72" y="90" text-anchor="middle" font-size="14" fill="#222">Specimen 261015A</text>
+
+  <line x1="135" y1="76" x2="163" y2="76" stroke="#1a5276" stroke-width="2.2"/>
+  <polygon points="163,76 155,71 155,81" fill="#1a5276"/>
+
+  <rect x="165" y="38" width="125" height="76" rx="6" fill="#dbe5fb" stroke="#1a5276" stroke-width="2"/>
+  <text x="227" y="66" text-anchor="middle" font-size="14" font-weight="700" fill="#1a5276">2. Operation</text>
+  <text x="227" y="90" text-anchor="middle" font-size="14" fill="#222">Action: Indentation</text>
+
+  <line x1="290" y1="76" x2="318" y2="76" stroke="#1a5276" stroke-width="2.2"/>
+  <polygon points="318,76 310,71 310,81" fill="#1a5276"/>
+
+  <rect x="320" y="38" width="125" height="76" rx="6" fill="#dbe5fb" stroke="#1a5276" stroke-width="2"/>
+  <text x="382" y="66" text-anchor="middle" font-size="14" font-weight="700" fill="#1a5276">3. Raw File</text>
+  <text x="382" y="90" text-anchor="middle" font-size="14" fill="#222">261015A.mit (MD5)</text>
+
+  <line x1="445" y1="76" x2="473" y2="76" stroke="#00695c" stroke-width="2.5"/>
+  <polygon points="473,76 465,71 465,81" fill="#00695c"/>
+
+  <rect x="475" y="38" width="115" height="76" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="2.2"/>
+  <text x="532" y="66" text-anchor="middle" font-size="14" font-weight="700" fill="#00695c">4. Number</text>
+  <text x="532" y="90" text-anchor="middle" font-size="14" fill="#222">5.92 GPa (Reader)</text>
+
+  <line x1="15" y1="145" x2="440" y2="145" stroke="#334155" stroke-width="1.8"/>
+  <line x1="15" y1="138" x2="15" y2="152" stroke="#334155" stroke-width="1.8"/>
+  <line x1="440" y1="138" x2="440" y2="152" stroke="#334155" stroke-width="1.8"/>
+  <text x="227" y="172" text-anchor="middle" font-size="14" fill="#334155">Kept by parent-child tree and file attachment</text>
+
+  <line x1="448" y1="145" x2="588" y2="145" stroke="#00695c" stroke-width="1.8"/>
+  <line x1="448" y1="138" x2="448" y2="152" stroke="#00695c" stroke-width="1.8"/>
+  <line x1="588" y1="138" x2="588" y2="152" stroke="#00695c" stroke-width="1.8"/>
+  <text x="518" y="172" text-anchor="middle" font-size="14" font-weight="600" fill="#00695c">Value source</text>
+  <text x="518" y="194" text-anchor="middle" font-size="14" fill="#00695c">(Reader / Derived)</text>
+</svg>

@@ -1,0 +1,14 @@
+{
+  "schema": 3,
+  "kind": "run-record",
+  "runId": "2026-10-14_11-56-09_StudyB_CoC_Co42s_C108s_N20_2mT",
+  "recipe": "StudyB_CoC_Co42s_C108s_N20_2mT",
+  "recipePath": "D:\\Deposition\\Recipes\\OP\\StudyB_CoC_Co42s_C108s_N20_2mT.rcpx",
+  "embedded": false,
+  "startedAt": "2026-10-14T11:56:09.4248556+08:00",
+  "endedAt": "2026-10-14T12:56:35.8249506+08:00",
+  "outcome": "complete",
+  "message": "(1h 00m 26s)",
+  "pauses": [],
+  "skippedSteps": []
+}

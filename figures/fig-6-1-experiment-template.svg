@@ -1,0 +1,23 @@
+<svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="14" width="256" height="212" rx="6" fill="#dbe5fb" stroke="#1a5276" stroke-width="1.8"/>
+  <text x="24" y="40" font-size="15" font-weight="700" fill="#1a5276">Blueprint (.elntemplate)</text>
+  <text x="24" y="70" font-size="14" font-weight="600" fill="#222">Root: Proc (Synthesis / Depo)</text>
+  <text x="40" y="98" font-size="14" font-weight="600" fill="#1a5276">Child: Specimen (Item)</text>
+  <text x="56" y="126" font-size="14" fill="#222">Child: Action (3D Profiling)</text>
+  <text x="56" y="154" font-size="14" fill="#222">Child: Action (Indentation)</text>
+  <text x="56" y="182" font-size="14" fill="#222">Child: Action (Tribotest)</text>
+  <text x="24" y="212" font-size="14" fill="#334155">Saved in Reference Data</text>
+
+  <line x1="266" y1="120" x2="316" y2="120" stroke="#00695c" stroke-width="2.5"/>
+  <polygon points="316,120 308,115 308,125" fill="#00695c"/>
+  <text x="291" y="106" text-anchor="middle" font-size="14" font-weight="600" fill="#00695c">Create</text>
+
+  <rect x="320" y="14" width="270" height="212" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.8"/>
+  <text x="334" y="40" font-size="15" font-weight="700" fill="#00695c">New Experiment in Project</text>
+  <text x="334" y="70" font-size="14" font-weight="600" fill="#222">Proc: Deposition 261015A</text>
+  <text x="350" y="98" font-size="14" font-weight="600" fill="#1a5276">Specimen: 261015A</text>
+  <text x="366" y="126" font-size="14" fill="#222">Thickness 261015A</text>
+  <text x="366" y="154" font-size="14" fill="#222">Indentation 261015A</text>
+  <text x="366" y="182" font-size="14" fill="#222">Friction test 261015A</text>
+  <text x="334" y="212" font-size="14" font-weight="600" fill="#00695c">All nodes + audit rows saved at once</text>
+</svg>

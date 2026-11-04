@@ -1,0 +1,25 @@
+<svg viewBox="0 0 600 240" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="14" width="182" height="210" rx="6" fill="#dbe5fb" stroke="#1a5276" stroke-width="1.8"/>
+  <text x="101" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#1a5276">1. check_storage</text>
+  <text x="22" y="74" font-size="14" fill="#222">Verifies every file</text>
+  <text x="22" y="96" font-size="14" fill="#222">exists in storage and</text>
+  <text x="22" y="118" font-size="14" fill="#222">matches stored MD5</text>
+  <text x="22" y="160" font-size="14" font-weight="600" fill="#00695c">ok · missing</text>
+  <text x="22" y="184" font-size="14" font-weight="600" fill="#c62828">content_mismatch</text>
+
+  <rect x="209" y="14" width="182" height="210" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.8"/>
+  <text x="300" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#00695c">2. check_value_drift</text>
+  <text x="221" y="74" font-size="14" fill="#222">Re-runs readers on</text>
+  <text x="221" y="96" font-size="14" fill="#222">files and recalculates</text>
+  <text x="221" y="118" font-size="14" fill="#222">Derived formulas</text>
+  <text x="221" y="160" font-size="14" font-weight="600" fill="#00695c">checked · unchanged</text>
+  <text x="221" y="184" font-size="14" font-weight="600" fill="#c62828">drifted []</text>
+
+  <rect x="408" y="14" width="182" height="210" rx="6" fill="#ede7f6" stroke="#5e35b1" stroke-width="1.8"/>
+  <text x="499" y="42" text-anchor="middle" font-size="15" font-weight="700" fill="#5e35b1">3. Value Issues</text>
+  <text x="420" y="74" font-size="14" fill="#222">report_value_issues</text>
+  <text x="420" y="96" font-size="14" fill="#222">checks plausible range</text>
+  <text x="420" y="118" font-size="14" fill="#222">and 1000x tolerance</text>
+  <text x="420" y="160" font-size="14" font-weight="600" fill="#5e35b1">below/above_range</text>
+  <text x="420" y="184" font-size="14" font-weight="600" fill="#c62828">tolerance_mismatch</text>
+</svg>
