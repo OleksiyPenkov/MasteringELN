@@ -93,6 +93,11 @@ describe('renderInline', () => {
     expect(renderInline('<b>x_1</b>')).toBe('&lt;b&gt;x<sub>1</sub>&lt;/b&gt;');
   });
 
+
+  it('renders inline code spans and keeps underscores inside code untouched', () => {
+    expect(renderInline('Call `extract_file_key_values` on `1.fibps`'))
+      .toBe('Call <code>extract_file_key_values</code> on <code>1.fibps</code>');
+  });
   it('leaves prose with no script notation untouched', () => {
     expect(renderInline('a pump removes gas at speed S'))
       .toBe('a pump removes gas at speed S');
