@@ -49,7 +49,7 @@ Every row in the **Projects** and **Items** panels carries a color-coded icon th
 <DataTable
   headers={['Icon name', 'Hierarchy level', 'Scientific role in the notebook']}
   rows={[
-    ['**Project**', 'Project container', 'Top-level container for a research topic, grant, or material system (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#how-groups-projects-and-folders-fit-together`}>Chapter 5</a>).'],
+    ['**Project**', 'Project container', 'Top-level container for a research topic, grant, or material system (Chapter 5).'],
     ['**Folder**', 'Folder container', 'Subfolder organizing procedures and specimens inside a project.'],
     ['**Synthesis**', '`Proc` or `Action`', 'Material synthesis or thin-film deposition run (such as `Deposition 261015A` or `Deposition 261014B`).'],
     ['**Treatment**', '`Proc` or `Action`', 'Pre-treatment or post-processing step (such as plasma cleaning `Cleaning 261014B` or annealing).'],
@@ -59,8 +59,8 @@ Every row in the **Projects** and **Items** panels carries a color-coded icon th
     ['**Measurement**', '`Action`', 'Quantitative physical measurement (such as `XRR-1 261014B`).'],
     ['**Testing**', '`Action`', 'Mechanical, tribological, or functional test (such as `Indentation 261015A` or `Friction test 261015A`).'],
     ['**Computing**', '`Action`', 'Data fitting, simulation, or numerical modeling step (such as `XRR fit 261014B`).'],
-    ['**Wiki**', '`Item`', 'Markdown knowledge-base page inside one of the five project Wiki sections (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11</a>).'],
-    ['**Protocol**', 'Attached entry', 'Structured protocol form attached to an item (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8</a>).'],
+    ['**Wiki**', '`Item`', 'Markdown knowledge-base page inside one of the five project Wiki sections (Chapter 11).'],
+    ['**Protocol**', 'Attached entry', 'Structured protocol form attached to an item (Chapter 8).'],
     ['**Note / Other**', 'Attached entry or `Item`', 'Rich-text note entry attached to an item, or an uncategorized general item.'],
   ]}
 />
@@ -77,9 +77,9 @@ Selecting a row with children in the **Projects** panel, the **Items** panel, or
     ['**Collapse all below**', 'Right edge of selected parent row', 'Collapses every nested level under the selected row.'],
     ['**Expand all below**', 'Right edge of selected parent row', 'Expands every nested level under the selected row.'],
     ['**Focus**', 'Right edge of selected parent row', 'Tooltip: **Focus: collapse everything else**. Collapses all other branches and scrolls the selected row into view.'],
-    ['**SIGNED** badge', 'Beside item title in Items panel', 'Dark-red rounded badge indicating that the item carries a cryptographic electronic signature and is permanently locked (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14</a>).'],
-    ['**HYP** badge', 'Beside project or item title', 'Indicates hypotheses in a project (solid when a review decision is pending in Team mode) or an item attached as a hypothesis `Run` (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#attaching-runs-and-citing-evidence`}>Chapter 10</a>).'],
-    ['**Tag** badge(s)', 'Beside item title in Items panel', 'Colored label(s) assigned via right-click > **Tags...** (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#classifying-items-with-tags-and-favorites`}>Chapter 11</a>).'],
+    ['**SIGNED** badge', 'Beside item title in Items panel', 'Dark-red rounded badge indicating that the item carries a cryptographic electronic signature and is permanently locked (Chapter 14).'],
+    ['**HYP** badge', 'Beside project or item title', 'Indicates hypotheses in a project (solid when a review decision is pending in Team mode) or an item attached as a hypothesis `Run` (Chapter 10).'],
+    ['**Tag** badge(s)', 'Beside item title in Items panel', 'Colored label(s) assigned via right-click > **Tags...** (Chapter 11).'],
   ]}
 />
 
@@ -93,14 +93,14 @@ Selecting a row with children in the **Projects** panel, the **Items** panel, or
   headers={['Menu command / icon', 'Menu location', 'Purpose']}
   rows={[
     ['**Dashboard**', '**Navigate > Dashboard** (Community) or **Edit > Dashboard** (Team)', 'Opens the overview of recent items, project counts, and pending protocol/hypothesis reviews.'],
-    ['**Search...**', '**Navigate > Search...** (Community) or **Edit > Search...** (Team; `Ctrl+F`)', 'Opens the full-text and semantic (**Search by meaning**) search dialog (<a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#three-ways-to-find-a-record-in-aps-eln`}>Chapter 12</a>).'],
-    ['**Analysis...**', '**Tools > Analysis...**', 'Plots procedure-level `Condition` values against child action `Result` values (<a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13</a>).'],
-    ['**Unit Converter...**', '**Tools > Unit Converter...**', 'Converts values between compatible physical units (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9</a>).'],
-    ['**Protocol Review...**', '**Tools > Protocol Review...** (`Ctrl+Shift+R`)', 'Opens the queue of protocols in `In Review` state awaiting approval or rejection (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8</a>).'],
-    ['**Data Completeness...**', '**Tools > Data Completeness...**', 'Scans a project or folder against active completeness rules (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#completeness-rules-and-data-quality-checks`}>Chapter 14</a>).'],
-    ['**Audit Log...**', '**Tools > Audit Log...**', 'Displays timestamped `Create`, `Update`, and `Delete` events across the notebook (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#inspecting-the-audit-log`}>Chapter 14</a>).'],
-    ['**Recycle Bin...**', '**Tools > Recycle Bin...**', 'Restores or permanently deletes binned item subtrees (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5</a>).'],
-    ['**Value Types / File Types / Equipment**', '**Reference Data** menu', 'Manages the scientific dictionaries, plausible ranges, and reader mappings (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>).'],
+    ['**Search...**', '**Navigate > Search...** (Community) or **Edit > Search...** (Team; `Ctrl+F`)', 'Opens the full-text and semantic (**Search by meaning**) search dialog (Chapter 12).'],
+    ['**Analysis...**', '**Tools > Analysis...**', 'Plots procedure-level `Condition` values against child action `Result` values (Chapter 13).'],
+    ['**Unit Converter...**', '**Tools > Unit Converter...**', 'Converts values between compatible physical units (Chapter 9).'],
+    ['**Protocol Review...**', '**Tools > Protocol Review...** (`Ctrl+Shift+R`)', 'Opens the queue of protocols in `In Review` state awaiting approval or rejection (Chapter 8).'],
+    ['**Data Completeness...**', '**Tools > Data Completeness...**', 'Scans a project or folder against active completeness rules (Chapter 14).'],
+    ['**Audit Log...**', '**Tools > Audit Log...**', 'Displays timestamped `Create`, `Update`, and `Delete` events across the notebook (Chapter 14).'],
+    ['**Recycle Bin...**', '**Tools > Recycle Bin...**', 'Restores or permanently deletes binned item subtrees (Chapter 5).'],
+    ['**Value Types / File Types / Equipment**', '**Reference Data** menu', 'Manages the scientific dictionaries, plausible ranges, and reader mappings (Chapter 9).'],
   ]}
 />
 

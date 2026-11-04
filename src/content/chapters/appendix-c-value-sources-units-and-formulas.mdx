@@ -38,18 +38,18 @@ Every numeric value stored on a **Procedure** (`Proc`) or **Action** (`Action`) 
   keepHeaderCase
   headers={['Quantity / Reader key', 'Reader ID', 'Emitted unit', 'Conversion factor', 'Stored unit']}
   rows={[
-    ['Sputtering pressure (`Parameters.P`, `Deposition Conditions.P`)', '`aps.deposition`', '`mTorr`', '$0.133322$', '$\\text{Pa}$'],
-    ['Base pressure (`BasePressure`)', '`aps.deposition`', '`Torr`', '$133.322$', '$\\text{Pa}$'],
-    ['Target current (`Layer Co.currentCo`, `Layer C.currentC`)', '`aps.deposition`', '`mA`', '$0.001$', '$\\text{A}$'],
-    ['Pulse frequency (`Layer Co.freqCo`, `Layer C.freqC`)', '`aps.deposition`', '`kHz`', '$1000$', '$\\text{Hz}$'],
-    ['Step height (`Step Height`)', '`aps.fibps`', '`um` or `m`', 'Automatic to target unit', '$\\text{m}$ (or $\\text{nm}$)'],
-    ['Wear track cross-sectional area (`Wear Area`)', '`aps.fibps`', '`um2` or `mm2`', '$10^{-6}$ (from $\\mu\\text{m}^2$)', '$\\text{mm}^2$'],
-    ['Indentation hardness (`Hardness`, $H_{\\text{IT}}$)', '`aps.mit`', '`GPa`', '$1$', '$\\text{GPa}$'],
-    ['Indentation modulus (`Modulus`, $E_{\\text{IT}}$)', '`aps.mit`', '`GPa`', '$1$', '$\\text{GPa}$'],
-    ['Normal load (`Fn`)', '`aps.zrw`', '`gf`, `kgf`, `mN`, or `N`', '$9.80665$ (from $\\text{kgf}$)', '$\\text{N}$'],
-    ['Coefficient of friction (`COF`)', '`aps.zrw`', 'Dimensionless', '$1$', 'Dimensionless'],
-    ['Multilayer period (`Period`) and layer thickness (`<Material> Thickness`)', '`aps.xrcx`', '`A` ($\\Ang$)', '$10^{-10}$', '$\\text{m}$'],
-    ['Goodness of fit (`Chi2`, $\\chi^2$)', '`aps.xrcx`', 'Dimensionless', '$1$', 'Dimensionless'],
+    ['Sputtering pressure (`Parameters.P`, `Deposition Conditions.P`)', '`aps.deposition`', '`mTorr`', '0.133322', 'Pa'],
+    ['Base pressure (`BasePressure`)', '`aps.deposition`', '`Torr`', '133.322', 'Pa'],
+    ['Target current (`Layer Co.currentCo`, `Layer C.currentC`)', '`aps.deposition`', '`mA`', '0.001', 'A'],
+    ['Pulse frequency (`Layer Co.freqCo`, `Layer C.freqC`)', '`aps.deposition`', '`kHz`', '1000', 'Hz'],
+    ['Step height (`Step Height`)', '`aps.fibps`', '`um` or `m`', 'Automatic to target unit', 'm (or nm)'],
+    ['Wear track cross-sectional area (`Wear Area`)', '`aps.fibps`', '`um2` or `mm2`', '10^-6 (from μm^2)', 'mm^2'],
+    ['Indentation hardness (`Hardness`, H_IT)', '`aps.mit`', '`GPa`', '1', 'GPa'],
+    ['Indentation modulus (`Modulus`, E_IT)', '`aps.mit`', '`GPa`', '1', 'GPa'],
+    ['Normal load (`Fn`)', '`aps.zrw`', '`gf`, `kgf`, `mN`, or `N`', '9.80665 (from kgf)', 'N'],
+    ['Coefficient of friction (`COF`)', '`aps.zrw`', 'Dimensionless', '1', 'Dimensionless'],
+    ['Multilayer period (`Period`) and layer thickness (`<Material> Thickness`)', '`aps.xrcx`', '`A` (Å)', '10^-10', 'm'],
+    ['Goodness of fit (`Chi2`, χ^2)', '`aps.xrcx`', 'Dimensionless', '1', 'Dimensionless'],
   ]}
 />
 
@@ -63,7 +63,7 @@ Choosing **Add > Derived Value...** in the Desktop GUI or calling `add_derived_v
   keepHeaderCase
   headers={['Formula ID & Version', 'Equation', 'Input roles and required units', 'Output Value Type and unit']}
   rows={[
-    ['`wear_rate_reciprocating` (version 1)', '$K = \\dfrac{A}{2 \\cdot F_n \\cdot N}$', '`area`: `Wear area` in $\\text{mm}^2$ (accepts one value ID or an array of value IDs, using their arithmetic mean; $A \\ge 0$); `normal_force`: `Normal force` in $\\text{N}$ ($F_n > 0$); `cycles`: `Cycles` without unit ($N > 0$). All inputs must sit on the target item or its descendants in the same project.', '`Wear rate` (`TEST_RESULT`) in $\\text{mm}^3/(\\text{N}\\cdot\\text{mm})$'],
+    ['`wear_rate_reciprocating` (version 1)', 'K = A / (2 · F_n · N)', '`area`: `Wear area` in mm^2 (accepts one value ID or an array of value IDs, using their arithmetic mean; A ≥ 0); `normal_force`: `Normal force` in N (F_n > 0); `cycles`: `Cycles` without unit (N > 0). All inputs must sit on the target item or its descendants in the same project.', '`Wear rate` (`TEST_RESULT`) in mm^3/(N·mm)'],
   ]}
 />
 
@@ -77,8 +77,8 @@ Choosing **Add > Derived Value...** in the Desktop GUI or calling `add_derived_v
   headers={['Tool / Check', 'Code', 'Condition that triggers the code']}
   rows={[
     ['`add_value` / `report_value_issues`', '`below_range`, `above_range`', 'The stored value is below `range_min` or above `range_max` of its Value Type.'],
-    ['`add_value` / `report_value_issues`', '`tolerance_exceeds_value`', 'A non-zero tolerance is strictly larger than $|\\text{value}|$.'],
-    ['`add_value` / `report_value_issues`', '`tolerance_scale_mismatch`', 'A non-zero tolerance is smaller than $|\\text{value}| / \\text{tolerance\\_factor}$ (default $1000$).'],
+    ['`add_value` / `report_value_issues`', '`tolerance_exceeds_value`', 'A non-zero tolerance is strictly larger than |value|.'],
+    ['`add_value` / `report_value_issues`', '`tolerance_scale_mismatch`', 'A non-zero tolerance is smaller than |value| / `tolerance_factor` (default 1000).'],
     ['`check_storage` / `download_file`', '`ok`, `missing`, `content_mismatch`, `no_hash`, `error`', 'Attachment bytes match stored MD5 (`ok`), file is absent from storage (`missing`), bytes on disk differ from stored MD5 (`content_mismatch`), legacy file record has no hash (`no_hash`), or I/O error (`error`).'],
     ['`check_value_drift` (`Reader`)', '`value_changed`, `reader_version_changed`, `reader_changed`, `reader_units_changed`', 'Re-running the current reader on the stored file produces a different number, uses a newer reader version or different reader plugin, or emits a different unit.'],
     ['`check_value_drift` (`Reader`)', '`key_missing`, `file_missing`, `read_failed`', 'The source key is no longer emitted, the source file is missing, or the reader could not parse the file.'],

@@ -102,7 +102,7 @@ In <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#w
 <DataTable
   headers={['MCP tool', 'Key arguments', 'Safety and provenance behavior']}
   rows={[
-    ['`add_value` / `add_values`', '`item_id`, `value`, `value_type_id`, `source_kind`, `source_file_id`, `reader_id`, `reader_version`, `key_name`, `reader_units`, `conversion_factor`, `analysis_snapshot`', 'All-or-nothing batch up to 200 values; enforces plausible range, $1000\\times$ tolerance check, and same-branch source file ownership.'],
+    ['`add_value` / `add_values`', '`item_id`, `value`, `value_type_id`, `source_kind`, `source_file_id`, `reader_id`, `reader_version`, `key_name`, `reader_units`, `conversion_factor`, `analysis_snapshot`', 'All-or-nothing batch up to 200 values; enforces plausible range, 1000× tolerance check, and same-branch source file ownership.'],
     ['`add_derived_value`', '`item_id`, `formula_id`, `inputs` (`role -> value_id` or `value_id[]`)', 'Server computes formula result (e.g. `wear_rate_reciprocating` v1) and records all input `value_id`s.'],
     ['`update_value` / `remove_values`', '`value_id` / `value_ids[]`, `reason`', 'Updates in place or deletes up to 200 values; logs old values in audit trail and lists `dependent_derived_value_ids`.'],
     ['`delete_file`', '`file_id`, `dry_run` (default `true`), `confirm_hash`', 'Previews `values_to_delete` on dry run; deletes file and its `Reader` values in one transaction when confirmed.'],

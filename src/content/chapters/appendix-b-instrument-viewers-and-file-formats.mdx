@@ -30,7 +30,7 @@ APS ELN ships with 26 built-in **Content Viewer** plugins (<a href={`${import.me
     ['**OLE**', '`.xlsx`, `.docx`, `.pptx`', 'Embeds Microsoft Office documents via OLE when the matching Office application is installed; text is indexed by **Search by meaning**.'],
     ['**OriginLab (OPJU)**', '`.opju`', 'Displays embedded graph preview thumbnails from OriginLab project files.'],
     ['**Note**', 'Internal rich-text entry', 'Displays formatted rich-text notes created with **Item > Add Note**.'],
-    ['**Protocol**', '`.protocol` (internal entry)', 'Renders structured protocol forms created with **Item > Add Protocol** (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8</a>).'],
+    ['**Protocol**', '`.protocol` (internal entry)', 'Renders structured protocol forms created with **Item > Add Protocol** (Chapter 8).'],
     ['**File**', 'Fallback (any extension)', 'Uses the Windows shell preview handler when no specialist plugin matches the file extension.'],
   ]}
 />
@@ -62,12 +62,12 @@ APS ELN ships with 26 built-in **Content Viewer** plugins (<a href={`${import.me
   headers={['Viewer plugin', 'Extensions', 'Reader ID', 'Displayed views and extracted keys']}
   rows={[
     ['**XRDML**', '`.xrdml`', '`aps.xrdml`', 'Interactive chart of X-ray diffraction and reflectivity scans; reads scan metadata (`Wavelength`, `Tube Voltage`, `Tube Current`).'],
-    ['**X-Ray Calc**', '`.xrcx`', '`aps.xrcx` (v2)', 'Log-scale reflectivity chart (measured and calculated curves) plus layer **Structure** table ($H$, $\\sigma$, $\\rho$). Extracts main-stack mean `Period`, `<Material> Thickness`, `<Material> Roughness`, substrate roughness, `Chi2` (when `[FITRESULT]` is present), and calculation conditions.'],
+    ['**X-Ray Calc**', '`.xrcx`', '`aps.xrcx` (v2)', 'Log-scale reflectivity chart (measured and calculated curves) plus layer **Structure** table (*H*, σ, ρ). Extracts main-stack mean `Period`, `<Material> Thickness`, `<Material> Roughness`, substrate roughness, `Chi2` (when `[FITRESULT]` is present), and calculation conditions.'],
     ['**XRFX**', '`.xrfx`', '`aps.xrfx`', 'Multi-panel chart view of X-ray fluorescence mirror optimization results (peak positions, reflectivity, FWHM, SNR).'],
-    ['**FIBPS**', '`.fibps`', '`aps.fibps` (v3)', 'Filmetrics Profilm3D height map with **Profile**, **Distance**, **Roughness** ($R_a$, $R_q$, $R_z$), **Flatten**, **Step Height**, and **Wear Track** tools. Extracts optical conditions plus `Step Height` ($\\pm$ `Step Height STD`) or `Wear Area` ($\\pm$ `Wear Area STD`).'],
+    ['**FIBPS**', '`.fibps`', '`aps.fibps` (v3)', 'Filmetrics Profilm3D height map with **Profile**, **Distance**, **Roughness** (R_a, R_q, R_z), **Flatten**, **Step Height**, and **Wear Track** tools. Extracts optical conditions plus `Step Height` (± `Step Height STD`) or `Wear Area` (± `Wear Area STD`).'],
     ['**VK4**', '`.vk4`', '`aps.vk4`', 'Keyence laser confocal microscope viewer showing height, intensity, and color channels with line-profile and roughness tools.'],
-    ['**MIT**', '`.mit`', '`aps.mit` (v2/v3)', 'Anton Paar UNHT nanoindentation load-displacement curves with frame-compliance subtraction and **Records:** indent checklist. Extracts mean `Hardness` ($H_{\\text{IT}}$), `Modulus` ($E_{\\text{IT}}$), `Reduced Modulus` ($E_r$), `Max Force`, `Indent Count`, and `Indents Excluded` with `STD` tolerances.'],
-    ['**ZRW**', '`.zrw`, `.zrv`', '`aps.zrw` (v2)', 'DaVinci / Tribo Tester reciprocating and rotating friction viewer (`Data.dat` and logger ZIP formats). Extracts conditions `Fn` (converted to $\\text{N}$), `Cycles`, `Stroke`, `Speed`, and `Sampling Rate`/`Interval`, plus result `COF` (with `COF STD` as tolerance).'],
+    ['**MIT**', '`.mit`', '`aps.mit` (v2/v3)', 'Anton Paar UNHT nanoindentation load-displacement curves with frame-compliance subtraction and **Records:** indent checklist. Extracts mean `Hardness` (H_IT), `Modulus` (E_IT), `Reduced Modulus` (E_r), `Max Force`, `Indent Count`, and `Indents Excluded` with `STD` tolerances.'],
+    ['**ZRW**', '`.zrw`, `.zrv`', '`aps.zrw` (v2)', 'DaVinci / Tribo Tester reciprocating and rotating friction viewer (`Data.dat` and logger ZIP formats). Extracts conditions `Fn` (converted to N), `Cycles`, `Stroke`, `Speed`, and `Sampling Rate`/`Interval`, plus result `COF` (with `COF STD` as tolerance).'],
     ['**Tribo**', '`.raw`', '`aps.tribo`', 'Plain-text tribometer viewer plotting Cycles against COF with test parameters in the status bar.'],
     ['**DM3**', '`.dm3`', '`aps.dm3`', 'Gatan DigitalMicrograph TEM image viewer with calibrated pixel dimensions and scale bar metadata.'],
     ['**LAMMPS**', '`.lmpin`, `.dump`, `.data`, `.lammps`', '`aps.lammps`', 'Molecular dynamics input script and trajectory/structure viewer with XZ cross-section controls.'],
