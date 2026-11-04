@@ -380,7 +380,7 @@ Section outline:
 In This Chapter:
 - Filtering the Projects and Items panels in real time without losing context
 - Finding exact words and phrases across a notebook with Navigate > Search
-- Setting up and running offline Semantic Search (Search by meaning) across PDFs and notes
+- Setting up and running Semantic Search (Search by meaning) across PDFs and notes
 - Using Rerank results, Project/Type/Created filters, and Go to Item
 
 Section outline:
@@ -395,7 +395,8 @@ Section outline:
    - How **Navigate > Search...** searches item titles, descriptions, properties, entry titles, attachment titles, value descriptions, and tag names: matching the full phrase first, then falling back to items containing all entered words (2+ characters).
    - Sources: C:Help:Search.
 4. **Searching by meaning (Semantic Search) and reranking.**
-   - Downloading the local models (~666 MB total: 549 MB required + 117 MB optional PDFium and reranker) once via **Tools > Semantic Search Setup...** -> **Download and Install**, and how the `.search.sqlite` index stays 100% offline on your PC.
+   - In **APS ELN Community**, downloading the local models (~666 MB total: 549 MB required + 117 MB optional PDFium and reranker) once via **Tools > Semantic Search Setup...** -> **Download and Install**, and how the `.search.sqlite` index stays 100% offline on your PC.
+   - In a Team Lab: How the Commercial ("For Teams") edition runs **Search by meaning** on the shared laboratory search server (`ELN.WebAPI`) configured by an administrator under **Tools > Settings... > Connection > Search server address**, with no model download on student workstations.
    - Which attachment files are read inside (`PDF` with PDFium, `.docx`, `.pptx`, `.xlsx`, `.html`, `.json`, `.xml`, `.csv`, `.rtf`, `.md`, `.txt`, up to 64 MB / 200,000 characters / 2,000 PDF pages).
    - Ticking **Search by meaning**, using **Rerank results** (which re-sorts the top 20 candidates in ~0.5 s using passage text and item path context), and narrowing by **Project**, **Type**, and UTC **Created** dates.
    - Fig 12-2 (`fig-12-2-search-dialog.png`): Screenshot of **Navigate > Search...** with **Search by meaning** and **Rerank results** active.
