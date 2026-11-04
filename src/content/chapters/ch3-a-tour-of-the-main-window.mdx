@@ -25,8 +25,8 @@ Once you open a local notebook or sign into your laboratory server (<a href={`${
 The main window is divided into four areas (<a href="#fig-3-1">Figure 3-1</a>):
 
 1. **The Projects panel (left):** shows your active projects, project groups, and specimen folders as a tree. Clicking a project or folder loads its scientific records into the center panel.
-2. **The Items panel (center):** shows the scientific hierarchy inside the selected project or folder: **Procedures** (`Proc`), **Specimens** (`Item`), and **Actions** (`Action`), along with the files, rich-text notes, and protocol forms attached to each record.
-3. **The Content Viewer (right):** displays the live preview of the file, protocol, value list, or hypothesis selected in the center panel, using the 26 built-in viewer plugins (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>).
+2. **The Items panel (center):** shows the scientific hierarchy inside the selected project or folder: **Procedures** (`Proc`), **Specimens** (`Item`), and **Actions** (`Action`). It also lists the files, rich-text notes, and protocol forms attached to each record.
+3. **The Content Viewer (right):** previews the file, protocol, value list, or hypothesis selected in the center panel. It uses the 26 built-in viewer plugins (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>).
 4. **The Status bar (bottom):** displays the active connection mode (**Local** or **Remote**), the open `.sqlite` database path or server address, the selected attachment, and the build version number.
 
 <Figure id="fig-3-1" number="3-1" src={`${import.meta.env.BASE_URL}/figures/fig-3-1-main-window.svg`} alt="Diagram of the APS ELN Desktop main window showing the menu bar at top, the Projects panel on the left, the Items panel in the center with Procedure, Specimen, and Action rows, the Content Viewer on the right with Extract Values, and the status bar at the bottom" caption="The three-panel workspace of APS ELN Desktop. Select a project or folder on the left (1), click a procedure, specimen, action, or attached file in the center (2), and inspect or extract data in the Content Viewer on the right (3)." />
@@ -50,7 +50,7 @@ In the center **Items** panel, every scientific record has one of three hierarch
   ]}
 />
 
-When an action holds repeated values of the same value type, record type, and description (such as the three step-height scans on `Thickness 261015A`), the item tree summarizes them automatically on one line (<a href="#fig-3-2">Figure 3-2</a>). It shows the mean, the sample standard deviation, and the count: for example, `d = 335.4 ± 16.5 nm (n=3)` (or `d = 343.0 ± 23.5 nm (n=3)` when using the manual rectangle selections of Chapter 18). Opening the action dialog with **Item > Edit** still lists each individual value row and its source file.
+An action often holds repeated values with the same value type, record type, and description, such as the three step-height scans on `Thickness 261015A`. The item tree summarizes them automatically on one line (<a href="#fig-3-2">Figure 3-2</a>). It shows the mean, the sample standard deviation, and the count: for example, `d = 335.4 ± 16.5 nm (n=3)` (or `d = 343.0 ± 23.5 nm (n=3)` when using the manual rectangle selections of Chapter 18). Opening the action dialog with **Item > Edit** still lists each individual value row and its source file.
 
 <Figure id="fig-3-2" number="3-2" src={`${import.meta.env.BASE_URL}/figures/fig-3-2-main-window-live.png`} alt="Screenshot of APS ELN Community displaying the Study A (261015A) notebook across the Projects panel, the expanded Items tree with automatic mean and standard deviation summaries, the MIT nanoindentation viewer, and the preview thumbnail strip" caption="The Study A (261015A) notebook open in APS ELN Community. The center Items tree shows the full Procedure -> Specimen -> Action hierarchy with inline value summaries, while the right panel previews the selected nanoindentation file and its companion thumbnails." />
 When you select a **Procedure**, **Specimen**, or **Action** row that has child rows, three small buttons appear at the right end of that row:
@@ -87,7 +87,7 @@ Double-click any entry on the Dashboard to jump straight to that project and ite
 
 You can adjust how the main window looks and where it loads templates and plugins by opening **Tools > Preferences...**:
 
-- **General settings:** switch the VCL visual theme (light or dark), configure the startup Dashboard, set default chart appearance, control preview scope, and toggle whether numeric item IDs are shown beside titles in the tree.
+- **General settings:** switch the VCL visual theme (light or dark), configure the startup Dashboard, set default chart appearance, and control preview scope. You can also toggle whether numeric item IDs appear beside titles in the tree.
 - **Tree settings:** adjust font scale, row spacing, hierarchy tint, and level colors so long item trees are comfortable to read on your monitor.
 - **Path settings:** choose the folders for protocol/experiment templates, viewer plugins (`Plugins`), and your laboratory report logo. Any change to the plugin directory takes effect the next time you start the program.
 

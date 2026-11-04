@@ -13,7 +13,7 @@ An AI assistant connected through `ELNCommunityMCP.exe` or `ELNMCPServer.exe` (<
 
 ## 1. Can: Build item trees and attach raw files
 
-Give an agent a folder of raw files inside `--upload-root` and a checklist (such as `record_agent.md` in Study A and Study B). It can call `create_project`, `create_folder`, `create_item`, and `upload_file` to construct an entire `Procedure -> Specimen -> Action` hierarchy and attach every `.depo.json`, `.tsv`, `.fibps`, `.mit`, `.zrw`, and `.xrdml` file with verified MD5 hashes in seconds (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17: Part 1</a>).
+Give an agent a folder of raw files inside `--upload-root` and a checklist (such as `record_agent.md` in Study A and Study B). It calls `create_project`, `create_folder`, `create_item`, and `upload_file` to construct the full `Procedure -> Specimen -> Action` hierarchy. It then attaches every `.depo.json`, `.tsv`, `.fibps`, `.mit`, `.zrw`, and `.xrdml` file with verified MD5 hashes in seconds (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17: Part 1</a>).
 
 ## 2. Can: Extract Reader values with snapshots
 
@@ -25,7 +25,7 @@ An agent never needs to calculate a wear rate in its own prompt and type the res
 
 ## 4. Can: Audit storage, ranges, and drift
 
-With three read-only calls (`check_storage`, `check_value_drift`, and `report_value_issues`), an agent checks every attachment's MD5 checksum on disk, re-runs every data file reader and `Derived` formula across hundreds of values, and flags any value or tolerance outside its plausible range (<a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16: Running the three project-wide health checks</a>). It can also search across PDFs, Office files, and notes with `search_semantic` and summarize long `.tsv` logs with `get_file_columns`.
+Three read-only calls (`check_storage`, `check_value_drift`, and `report_value_issues`) let an agent audit an entire project (<a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16: Running the three project-wide health checks</a>). It checks every attachment's MD5 checksum on disk, re-runs every data file reader and `Derived` formula, and flags any value or tolerance outside its plausible range. It can also search across PDFs, Office files, and notes with `search_semantic` and summarize long `.tsv` logs with `get_file_columns`.
 
 ## 5. Can: Stage curves to external fitting tools
 
@@ -49,7 +49,7 @@ Both `upload_file` and `download_file` check the resolved file path against the 
 
 ## 10. Cannot: Judge physical sample quality
 
-An agent can verify that a `.fibps` file has a valid MD5 hash, that `aps.fibps` v3 returns a step height of $3.58 \times 10^{-7}\,\text{m}$, and that $\chi^2 = 0.943$ passes the XRR acceptance rules. It cannot see that you dropped the steel coupon on the floor before loading it into the chamber, that the masked step edge peeled during lift-off, or that the tribometer counterbody ball was rusty. Preparing the sample, inspecting the physical surface, and owning the scientific conclusion are always your job.
+An agent can verify that a `.fibps` file has a valid MD5 hash, that `aps.fibps` v3 returns a step height of $3.58 \times 10^{-7}\,\text{m}$, and that $\chi^2 = 0.943$ passes the XRR acceptance rules. However, it cannot see physical mistakes in the laboratory. It does not know if you dropped the steel coupon on the floor, if the masked step edge peeled during lift-off, or if the tribometer counterbody ball was rusty. Preparing the sample, inspecting the physical surface, and owning the scientific conclusion are always your job.
 
 ## Sources
 

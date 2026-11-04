@@ -76,11 +76,11 @@ APS ELN ships with 26 built-in **Content Viewer** plugins (<a href={`${import.me
 
 ## Extracted keys and shared viewer selections
 
-Three instrument readers (`aps.fibps`, `aps.mit`, and `aps.zrw`) depend on an evaluation selection that is saved in the notebook and recorded in each extracted value's `analysis_snapshot` (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#table-7-1`}>Chapter 7: Table 7-1</a> and <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>):
+Three instrument readers (`aps.fibps`, `aps.mit`, and `aps.zrw`) depend on an evaluation selection saved in the notebook. That selection is recorded in each extracted value's `analysis_snapshot` (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#table-7-1`}>Chapter 7: Table 7-1</a> and <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>):
 
-- **FIBPS (`aps.fibps` v3):** When the **Step Height** tool is active or shared step rectangles exist on the file, extraction emits `Step Height` and `Step Height STD` with snapshot mode `regions` (storing `rect_a`, `rect_b`, `pix_w`, and `pix_h`) or `automatic`. Otherwise, if a wear groove is detected, it emits `Wear Area` and `Wear Area STD`.
+- **FIBPS (`aps.fibps` v3):** When the **Step Height** tool is active or shared step rectangles exist on the file, extraction emits `Step Height` and `Step Height STD`. Its snapshot mode is `regions` (storing `rect_a`, `rect_b`, `pix_w`, and `pix_h`) or `automatic`. Otherwise, if a wear groove is detected, it emits `Wear Area` and `Wear Area STD`.
 - **MIT (`aps.mit` v2/v3):** Averages `Hardness`, `Modulus`, and `Reduced Modulus` over the indents ticked in **Records:** and records the selected indent list in the value's source snapshot.
-- **ZRW (`aps.zrw` v2):** Computes `COF` and `COF STD` over the cycle interval saved by clicking **Apply** (or the `Automatic` plateau if no manual interval was applied), storing the interval bounds and file hash in `analysis_snapshot`.
+- **ZRW (`aps.zrw` v2):** Computes `COF` and `COF STD` over the cycle interval saved by clicking **Apply** (or the `Automatic` plateau if no manual interval was applied). It stores the interval bounds and file hash in `analysis_snapshot`.
 
 ## Sources
 

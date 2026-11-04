@@ -18,7 +18,7 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-In the seven-month laboratory study (`arXiv:2610.27859`), 2,043 of the 7,710 audit-log writes (26%) came through the **Model Context Protocol (MCP)** server rather than mouse clicks in the Desktop window. An AI assistant such as Claude Code or Codex can search across projects, inspect time-series logs, and audit every stored value against its raw file in seconds. It can also fit an X-ray reflectivity curve (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 17</a>) and build structured experiment trees (<a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>), all under the server's built-in safety boundaries (<a href="#fig-15-1">Figure 15-1</a>).
+In the seven-month laboratory study (`arXiv:2610.27859`), 2,043 of the 7,710 audit-log writes (26%) came through the **Model Context Protocol (MCP)** server rather than mouse clicks on screen. An AI assistant such as Claude Code or Codex can search across projects, inspect time-series logs, and audit every stored value against its raw file in seconds. It can also fit an X-ray reflectivity curve (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 17</a>) and build structured experiment trees (<a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>), all under the server's built-in safety boundaries (<a href="#fig-15-1">Figure 15-1</a>).
 
 ## What the ELN MCP server does
 
@@ -52,7 +52,7 @@ When an AI client starts the MCP host, they communicate over standard input and 
 
 In **APS ELN Community**, the installer places `ELNCommunityMCP.exe` in `%LocalAppData%\Programs\ELN Community` right next to `ELNCommunity.exe`. Follow these steps to prepare a local MCP session safely:
 
-1. **Create your notebook in the Desktop program first, then close the Desktop.** Because a local Community notebook uses a single-user SQLite file, close `ELNCommunity.exe` before starting an MCP session that writes to that same `.sqlite` file.
+1. **Create your notebook in the Desktop program first, then close the Desktop.** A local Community notebook uses a single-user SQLite file. Close `ELNCommunity.exe` before starting an MCP session that writes to that same `.sqlite` file.
 2. **Create a dedicated upload/staging folder (`--upload-root`).** Create an ordinary local folder (such as `C:\ELN\Inbox`) with no directory junctions or symbolic links. Place only the raw measurement files you want the agent to upload (or the files exported by `download_file`) inside this folder.
 3. **Configure your MCP client with absolute paths:**
 
@@ -70,7 +70,7 @@ In a team laboratory running the Commercial edition, the installer places `ELNMC
 
 <InTeamLab title="registering ELNMCPServer.exe with Claude Code and clicking eln:// links">
 
-Because `ELNMCPServer.exe` reads your server connection settings, credentials, WebDAV URL, and upload root directly from the Windows Registry configured by the Desktop client, you can register it globally in Claude Code with one command:
+`ELNMCPServer.exe` reads your server connection settings, credentials, WebDAV URL, and upload root directly from the Windows Registry configured by the Desktop client. You can therefore register it globally in Claude Code with one command:
 
 ```text
 claude mcp add -s user eln -- "C:\Program Files\E-LabNotebook3\ELNMCPServer.exe"
@@ -88,15 +88,15 @@ Every MCP tool that returns an item (`list_items`, `get_item`, `create_item`, `u
 
 An AI agent can make fast, persistent changes to a notebook, so the ELN MCP server enforces five hard boundaries inside its own code (<a href="#fig-15-1">Figure 15-1</a>):
 
-1. **Project and account scope:** Every tool call reloads the active user principal and checks project permissions. Attempting to read or write an item or file in a project you cannot access returns the exact same `out of scope` error as a non-existent ID, so an agent cannot probe private projects.
-2. **Upload-root file confinement (`--upload-root` / `MCPUploadRoot`):** Both `upload_file` (reading a local file into ELN) and `download_file` (copying an attached file out of ELN) are strictly confined to `--upload-root`. Any path outside that folder, any `..` traversal, any Windows device prefix (`\\?\`, `\\.\`), any alternate data stream, or any directory junction/symlink along the path is refused before touching the disk. Never set `--upload-root` to `C:\` or your entire user profile.
+1. **Project and account scope:** Every tool call reloads the active user principal and checks project permissions. Attempting to read or write an item or file in a project you cannot access returns the same `out of scope` error as a non-existent ID. An agent cannot probe private projects.
+2. **Upload-root file confinement (`--upload-root` / `MCPUploadRoot`):** Both `upload_file` (reading a local file into ELN) and `download_file` (copying an attached file out of ELN) are strictly confined to `--upload-root`. The server refuses any path outside that folder, any `..` traversal, any Windows device prefix (`\\?\`, `\\.\`), any alternate data stream, or any directory junction/symlink along the path. Never set `--upload-root` to `C:\` or your entire user profile.
 3. **Signed-item and cited-item locks:** The MCP server refuses to edit, add values to, replace files on, or delete any item carrying an electronic signature (`SIGNED`, <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14</a>). It also refuses to delete files or values cited by a hypothesis in `InReview` or `Accepted` (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#submitting-a-conclusion-and-checking-the-content-seal`}>Chapter 10</a>).
 4. **Read-only session mode:** A read-only MCP session hides all write tools from `tools/list` and refuses any call that modifies data (`Tool "name" is not available in a read-only session.`). All read and audit tools (`list_projects`, `get_item`, `get_values`, `search`, `check_value_drift`, `check_storage`) remain available.
 5. **No MCP tools for human review gates:** Calling `approve_hypothesis` or `accept_conclusion` returns `tool-not-found`. Approving protocols (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8</a>), approving or accepting hypotheses (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-passing-the-first-gate`}>Chapter 10</a>), and signing items (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14</a>) can only be performed by a human in the GUI.
 
 <GoingDeeper title="line-based JSON-RPC stdio initialization">
 
-When an MCP client launches `ELNCommunityMCP.exe` or `ELNMCPServer.exe`, it sends an `initialize` request line, followed by `notifications/initialized`, and then calls `tools/list` to read the exact JSON Schema of every registered tool before making any `tools/call` request:
+When an MCP client launches `ELNCommunityMCP.exe` or `ELNMCPServer.exe`, it sends an `initialize` request line, followed by `notifications/initialized`. It then calls `tools/list` to read the JSON Schema of every registered tool before making any `tools/call` request:
 
 ```json
 {"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}

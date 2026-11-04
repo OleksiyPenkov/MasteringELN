@@ -43,7 +43,7 @@ To open the hypothesis view for a project, select the project in the **Projects*
 4. Click **OK**. The new hypothesis starts in `Needs approval` (`Proposed`). While it waits for approval, its author can click **Edit...** on the **Proposal** tab to refine the wording, and can attach background **Reference** items.
 5. In the **Your decision** panel, the reviewer reads the proposal and clicks **Approve** (so laboratory runs can begin) or **Reject** (which requires a comment explaining why).
 
-<InELN>Like the **Projects** and **Items** panels (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Reading the item tree and its row buttons</a>), selecting a parent hypothesis row with follow-ups reveals the three row buttons on its right edge: **Collapse all below**, **Expand all below**, and **Focus**.</InELN>
+<InELN>Selecting a parent hypothesis row with follow-ups reveals the same three row buttons used in the **Projects** and **Items** panels (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Reading the item tree and its row buttons</a>). Use them to **Collapse all below**, **Expand all below**, or **Focus**.</InELN>
 
 <InTeamLab title="who approves proposals and conclusions in a team lab">
 
@@ -53,7 +53,7 @@ In **APS ELN Community**, you review and approve your own hypotheses locally ins
 
 ## Attaching Runs and citing Evidence
 
-Once a hypothesis passes Gate 1 (**Approve**), its derived status line tells you where the experimental work stands: `Not started` (no runs attached yet), `In the lab · no evidence yet` (runs attached, no evidence cited), or `In the lab · evidence in` (<a href="#fig-10-2">Figure 10-2</a> and <a href="#table-10-1">Table 10-1</a>).
+Once a hypothesis passes Gate 1 (**Approve**), its derived status line tells you where the experimental work stands (<a href="#fig-10-2">Figure 10-2</a> and <a href="#table-10-1">Table 10-1</a>). It shows `Not started` when no runs are attached, `In the lab · no evidence yet` when runs are attached without evidence, or `In the lab · evidence in` when evidence is cited.
 
 <Figure id="fig-10-2" number="10-2" src={`${import.meta.env.BASE_URL}/figures/fig-10-2-hypotheses-view.png`} alt="Screenshot of the Project > Hypotheses view showing the hypothesis tree on the left with status In the lab · evidence in and headline Wear rate summary, and the Proposal, Runs, Evidence, and Conclusion tabs on the right" caption="The Project > Hypotheses view in APS ELN Desktop. The left pane lists each hypothesis with its derived lab state and headline key-value summary; the right pane organizes the Proposal, attached Runs, cited Evidence, and Conclusion." />
 To connect your experimental items to the hypothesis:
@@ -68,10 +68,10 @@ After your measurements and value extractions are complete, cite the specific re
 
 1. In **Project > Hypotheses**, select the approved hypothesis, switch to the **Evidence** tab, and click **Add evidence...**.
 2. In the left list of the dialog, select an attached `Run` or `Reference` (or any indented child action beneath a run, such as `Indentation 261015A` or `Friction test 261015A`). You do not need to attach every child action as a separate `Run` to cite its files or values.
-3. In the right list, pick what you are citing: the **item as a whole**, one of its **attached files** (such as `BN-DLC.zrw` or `XRR-fit_Co-C(261014B).xrcx`), or one of its **stored values** (such as $K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$).
+3. In the right list, pick what you are citing. You can cite the **item as a whole**, one of its **attached files** (such as `BN-DLC.zrw` or `XRR-fit_Co-C(261014B).xrcx`), or one of its **stored values** ($K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$).
 4. Type a short note explaining why this evidence matters and click **OK**.
 
-<Remember>At the exact moment you cite a file or a value, APS ELN records the file's MD5 checksum or the value's stored number on the citation. If someone later replaces the file or edits the value, the **Evidence** tab flags that row as `changed` (or `missing` if it was deleted) so a reviewer is never misled by silently altered evidence.</Remember>
+<Remember>At the exact moment you cite a file or a value, APS ELN records the file's MD5 checksum or the value's stored number on the citation. If someone later replaces the file or edits the value, the **Evidence** tab flags that row as `changed` (or `missing` if it was deleted). A reviewer is never misled by silently altered evidence.</Remember>
 
 ## Submitting a conclusion and checking the content seal
 
@@ -102,7 +102,7 @@ When your runs and cited evidence are in place, you are ready to write the concl
 
 <GoingDeeper title="what the Accepted content seal covers">
 
-When a reviewer clicks **Accept** at Gate 2, APS ELN computes a cryptographic checksum over the hypothesis's statement, change description, conclusion text, outcome, attached runs, and cited evidence, displaying **Sealed** on the record. If any underlying record is tampered with or if a cited file or value drifts after acceptance, the view warns that the accepted record or its evidence changed after sealing. In addition, any item cited by a hypothesis in `Needs acceptance` or `Accepted` is protected from deletion, even if someone tries to empty the Recycle Bin (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5: Deleting containers and using the Recycle Bin</a>).
+When a reviewer clicks **Accept** at Gate 2, APS ELN computes a cryptographic checksum over the hypothesis record. This checksum covers the statement, change description, conclusion text, outcome, attached runs, and cited evidence, and displays **Sealed** on the record. If any underlying record is tampered with or if a cited file or value drifts after acceptance, the view warns that the accepted record or its evidence changed after sealing. In addition, any item cited by a hypothesis in `Needs acceptance` or `Accepted` is protected from deletion, even when emptying the Recycle Bin (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5</a>).
 
 </GoingDeeper>
 

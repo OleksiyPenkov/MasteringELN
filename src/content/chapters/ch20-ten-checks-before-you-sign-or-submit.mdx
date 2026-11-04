@@ -17,11 +17,11 @@ Expand your **Procedure** row in the **Items** panel with **Expand all below** (
 
 ## 2. Every file opens in its built-in viewer
 
-Click through the attached files in the **Items** panel and check the **Content Viewer** on the right (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>). Confirm that `.depo.json` opens in the **Deposition** viewer (rather than plain JSON), `.fibps` shows its height map, `.mit` plots the load-displacement curves, `.zrw` plots the friction curve, and `.xrcx` shows both the reflectivity curves and the **Structure** table. If you edited any attachment in an external program or the **Markdown Editor**, verify that you saved your working draft (**Tools > Save Attachment Working Draft**).
+Click through the attached files in the **Items** panel and check the **Content Viewer** on the right (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7: Inside the five core instrument viewers</a>). Confirm that `.depo.json` opens in the **Deposition** viewer (rather than plain JSON), `.fibps` shows its height map, and `.mit` plots the load-displacement curves. Also check that `.zrw` plots the friction curve and `.xrcx` shows both the reflectivity curves and the **Structure** table. If you edited any attachment in an external program or the **Markdown Editor**, verify that you saved your working draft (**Tools > Save Attachment Working Draft**).
 
 ## 3. Shared regions and intervals are applied
 
-In the **FIBPS** viewer, check that the step-height rectangles **A** and **B** sit on flat, clean areas of the coated and uncoated levels (or that the automatic **Wear Track** groove boundaries bracket the wear scar cleanly). In the **MIT** viewer, check that unphysical indents are unticked in **Records:**. In the **ZRW** viewer, check that the plateau cycle interval is set and that you clicked **Apply** so the shared selection is saved with the file (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#table-7-1`}>Chapter 7: Table 7-1</a>).
+In the **FIBPS** viewer, check that the step-height rectangles **A** and **B** sit on flat, clean areas of the coated and uncoated levels. For wear scans, check that the automatic **Wear Track** groove boundaries bracket the wear scar cleanly. In the **MIT** viewer, check that unphysical indents are unticked in **Records:**. In the **ZRW** viewer, check that the plateau cycle interval is set and that you clicked **Apply** so the shared selection is saved with the file (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#table-7-1`}>Chapter 7: Table 7-1</a>).
 
 ## 4. Headline values carry Reader or Derived sources
 
@@ -29,11 +29,11 @@ Open each **Procedure** and **Action** with **Item > Edit** and inspect its **Va
 
 ## 5. Repeated measurements show mean and SD
 
-When an action holds multiple measurements of the same quantity (such as the three step-height scans `1.fibps`–`3.fibps` or the three wear-track scans `wear 1.fibps`–`wear 3.fibps` in Study A), check the summary on the item tree row. Because all three values share the same Value Type, Record Type (`Result`), and Description, the tree row displays their mean, sample standard deviation, and count: for example, `d = 343.0 ± 23.5 nm (n=3)` (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3</a>). If `(n=6)` appears when you attached only 3 files, check for duplicate manual entries.
+An action often holds multiple measurements of the same quantity, such as the three step-height scans `1.fibps`–`3.fibps` or the three wear-track scans `wear 1.fibps`–`wear 3.fibps` in Study A. Check the summary on the item tree row. Because all three values share the same Value Type, Record Type (`Result`), and Description, the tree row displays their mean, sample standard deviation, and count: for example, `d = 343.0 ± 23.5 nm (n=3)` (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3</a>). If `(n=6)` appears when you attached only 3 files, check for duplicate manual entries.
 
 ## 6. Sample codes match across items and files
 
-Check that the sample code in the **Specimen** title (such as `261015A` or `261014B`) matches the code in the parent **Procedure** title, every child **Action** title, and the attached filenames (<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#table-4-1`}>Chapter 4: Table 4-1</a>). Consistent sample codes allow **Navigate > Search...** (`Ctrl+F`) and `eln://specimen/<CODE>` links to locate every record of that specimen without ambiguity.
+Check that the sample code in the **Specimen** title (such as `261015A` or `261014B`) matches the code in the parent **Procedure** title. It should also match every child **Action** title and the attached filenames (<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#table-4-1`}>Chapter 4: Table 4-1</a>). Consistent sample codes allow **Navigate > Search...** (`Ctrl+F`) and `eln://specimen/<CODE>` links to locate every record of that specimen without ambiguity.
 
 ## 7. Required protocol forms are completed
 

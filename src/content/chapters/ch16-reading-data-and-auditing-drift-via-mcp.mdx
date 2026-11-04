@@ -53,13 +53,13 @@ Sputtering logs (`.tsv`, `.log`) and tribometer curves often contain tens of tho
    - `mode: "downsample"` (the default): bins the series into `max_rows` (default `500`) min/max buckets so the agent sees every spike and drop in at most 1,000 points.
    - `mode: "raw"`: returns unbinned rows, optionally sliced to `row_range: [start, end]`.
 
-<Tip>Always ask your agent to call `list_file_columns` and `get_file_columns` with `mode: "stats"` or `"downsample"` first, and only request `mode: "raw"` over a narrow `row_range` when inspecting a specific event such as an arc or pressure spike.</Tip>
+<Tip>Always ask your agent to call `list_file_columns` and `get_file_columns` with `mode: "stats"` or `"downsample"` first. Request `mode: "raw"` over a narrow `row_range` only when inspecting a specific event such as an arc or pressure spike.</Tip>
 
 ## Running the three project-wide health checks
 
 The most powerful read-only workflow in Part 4 is running all three integrity checks across a project or item subtree in one pass (<a href="#fig-16-1">Figure 16-1</a> and <a href="#table-16-1">Table 16-1</a>):
 
-1. **`check_storage`:** give `project_id`, `item_id` (which checks the item and all of its descendants), or `file_ids`. The server checks that every attachment's physical file exists in storage and computes its MD5 hash against the hash recorded at upload time, returning counts of `ok`, `missing`, `content_mismatch`, `no_hash`, and `error`.
+1. **`check_storage`:** give `project_id`, `item_id` (which checks the item and all of its descendants), or `file_ids`. The server checks that every attachment's physical file exists in storage and compares its MD5 hash against the hash recorded at upload time. It returns counts of `ok`, `missing`, `content_mismatch`, `no_hash`, and `error`.
 2. **`check_value_drift`:** give `project_id` or `item_id`. The server re-runs the current reader plugin on the source file of every `Reader` value (replaying any saved `.fibps` pixel regions or `.zrw` cycle interval from `analysis_snapshot`). It also recalculates every `Derived` value recursively from its inputs (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Table 9-1</a>). In Study A (`261015A`), it returns `{"checked": 24, "unchanged": 24, "drifted": []}`; in Study B (`261014B`), it returns `{"checked": 22, "unchanged": 22, "drifted": []}`.
 3. **`report_value_issues`:** give `project_id` or `item_id`. Scans all stored values against their value type's plausible range and tolerance factor ($1000\times$), flagging `below_range`, `above_range`, `tolerance_exceeds_value`, and `tolerance_scale_mismatch`.
 

@@ -17,17 +17,17 @@ This book shows you how to record, trace, and analyze laboratory work in APS ELN
 
 Every procedure in the book is something you do in the program: a menu command, a dialog field, a viewer button, or a tool call through the Model Context Protocol (MCP) server. You learn by building two real laboratory records from start to finish:
 
-- **Study A (`261015A`)** is a boron nitride and diamond-like carbon (BN/DLC) coating grown by magnetron sputtering and tested for step height, nanoindentation hardness and modulus, reciprocating friction, and wear rate.
+- **Study A (`261015A`)** is a boron nitride and diamond-like carbon (BN/DLC) coating grown by magnetron sputtering. You test it for step height, nanoindentation hardness and modulus, reciprocating friction, and wear rate.
 - **Study B (`261014B`)** is a 20-period cobalt/carbon ($\text{Co/C}$) multilayer X-ray mirror measured by X-ray reflectivity (XRR) and fitted in X-Ray Calc 3.
 
-Both studies come from a seven-month audit of daily notebook use in the author's laboratory across 24 projects, 1,283 items, 2,676 files, and 674 stored values (`arXiv:2610.27859`). That audit showed that while users reliably keep the link from a sample to its raw file, they frequently lose the link from the raw file to the stored number. This book teaches the workflow that keeps every link intact.
+Both studies come from a seven-month audit of daily notebook use in the author's laboratory (`arXiv:2610.27859`). That study examined 24 projects, 1,283 items, 2,676 files, and 674 stored values. It showed that users reliably keep the link from a sample to its raw file, but often lose the link from the raw file to the stored number. This book teaches the workflow that keeps every link intact.
 
-APS ELN runs in two editions that share the same scientific model and the same 26 instrument viewers. **APS ELN Community** is the free, single-user local SQLite edition, and **APS ELN ("For Teams")** is the multi-user laboratory edition connected to a shared server. This book teaches the shared workflow once and marks team-server steps with a dedicated icon. Server installation and IT administration are left to administrator runbooks.
+APS ELN runs in two editions that share the same scientific model and the same 26 instrument viewers. **APS ELN Community** is the free, single-user local SQLite edition. **APS ELN ("For Teams")** is the multi-user laboratory edition connected to a shared server. This book teaches the shared workflow once and marks team-server steps with a dedicated icon. Server installation and IT administration are left to administrator runbooks.
 
 The book has five Parts:
 
-- **Part 1, Getting Started**, explains why links between files and numbers matter, shows how to open a local or team notebook, tours the main window, and walks you through recording Study A (`261015A`) in twenty minutes.
-- **Part 2, Recording Daily Lab Work**, covers projects and folders, the **Procedure -> Specimen -> Action** hierarchy, experiment templates, the 26 instrument viewers, working drafts, protocols, and value extraction (`Reader`, `Derived`, and `Manual`).
+- **Part 1, Getting Started**, explains why links between files and numbers matter and shows how to open a local or team notebook. It also tours the main window and walks you through recording Study A (`261015A`) in twenty minutes.
+- **Part 2, Recording Daily Lab Work**, covers projects, folders, the **Procedure -> Specimen -> Action** hierarchy, and experiment templates. It also shows you how to use the 26 instrument viewers, working drafts, protocols, and value extraction (`Reader`, `Derived`, and `Manual`).
 - **Part 3, Thinking, Searching, and Reviewing**, covers the hypothesis tree, the project wiki, tags and links, full-text and semantic search, correlation charts, completeness rules, and electronic signatures.
 - **Part 4, Working with an AI Agent (MCP)**, shows how to connect Claude Code or Codex to your notebook and audit storage and value drift. It also covers the Study B (`261014B`) XRR fitting workflow and the human review gates that remain in the Desktop GUI.
 - **Part 5, The Part of Tens**, gives three short checklists for avoiding broken links, preparing a record for supervisor approval, and working safely with an AI agent.
@@ -65,7 +65,7 @@ Six margin icons appear throughout the book. Each icon has one job.
 
 <InELN>The exact menu path, toolbar button, dialog, and field for an action in the Desktop window.</InELN>
 
-<InTeamLab>How a step works when you use the Commercial ("For Teams") edition connected to a shared laboratory server, including login, project permissions, mobile QR protocols, and supervisor review gates.</InTeamLab>
+<InTeamLab>How a step works when you use the Commercial ("For Teams") edition connected to a shared laboratory server. It covers login, project permissions, mobile QR protocols, and supervisor review gates.</InTeamLab>
 
 ## Beyond the Book
 
@@ -73,7 +73,7 @@ APS ELN includes a built-in manual that covers every menu command and reference 
 
 <InELN>**Help > Contents...** opens the built-in Help manual. **Help > Keyboard Shortcuts...** (shortcut `F1` in Community) opens the shortcut reference table.</InELN>
 
-The raw instrument files for both running examples (**Study A**, `261015A`, and **Study B**, `261014B`) ship with this book as downloadable `.zip` archives so you can complete both practice records in your own account:
+The raw instrument files for both running examples (**Study A**, `261015A`, and **Study B**, `261014B`) ship with this book as downloadable `.zip` archives. You can use them to complete both practice records in your own account:
 
 :::web-only
 - **Study A (`261015A`, 11 raw files):** <a href="/MasteringELN/data/Study-A-261015A-raw.zip" download="Study-A-261015A-raw.zip">Download `Study-A-261015A-raw.zip`</a> (manifest: [Study A checksums (`/data/study-a/checksums.md5`)](/MasteringELN/data/study-a/checksums.md5)).
@@ -82,7 +82,7 @@ The raw instrument files for both running examples (**Study A**, `261015A`, and 
 :::
 
 :::print-only
-In the web edition of this book, the raw exercise packages `Study-A-261015A-raw.zip` (11 raw files) and `Study-B-261014B-raw.zip` (7 raw files, without the pre-fitted `.xrcx`) and the `ELN-Mandatory-Assignment.pdf` handout are available for direct download under `http://10.109.92.41/MasteringELN/data/` and `http://10.109.92.41/MasteringELN/assignment/`, and from the Zenodo deposit (`doi:10.5281/zenodo.23466959`).
+In the web edition of this book, you can download `Study-A-261015A-raw.zip` (11 raw files), `Study-B-261014B-raw.zip` (7 raw files, without the pre-fitted `.xrcx`), and the `ELN-Mandatory-Assignment.pdf` handout. They are hosted at `http://10.109.92.41/MasteringELN/data/`, at `http://10.109.92.41/MasteringELN/assignment/`, and in the Zenodo deposit (`doi:10.5281/zenodo.23466959`).
 :::
 The public source repository for **APS ELN Community** is at [github.com/APS-Techno/ELN-Community](https://github.com/APS-Techno/ELN-Community). If APS ELN supports your published research, please cite the experience report listed in the Sources section.
 

@@ -11,7 +11,7 @@ import InELN from '../components/textbook/InELN.astro';
 import InTeamLab from '../components/textbook/InTeamLab.astro';
 import DataTable from '../components/textbook/DataTable.astro';
 
-Every student in the laboratory must complete two practice records in **APS ELN** by **November 16, 2026**: **Study A (`261015A`)** in the Desktop GUI and **Study B (`261014B`)** using your AI agent with `ELNMCPServer.exe` and `XRC_MCP.exe`. Both practice projects will be audited automatically on the server after the deadline.
+Every student in the laboratory must complete two practice records in **APS ELN** by **November 16, 2026**. You will build **Study A (`261015A`)** in the Desktop GUI and **Study B (`261014B`)** using your AI agent with `ELNMCPServer.exe` and `XRC_MCP.exe`. Both practice projects will be audited automatically on the server after the deadline.
 
 <p class="home-actions" style="margin: 1rem 0 1.5rem;">
   <a class="home-pdf-btn" href="/MasteringELN/ELN-Mandatory-Assignment.pdf" download="ELN-Mandatory-Assignment.pdf">
@@ -26,8 +26,8 @@ Every student in the laboratory must complete two practice records in **APS ELN*
 
 Download both raw instrument bundles from the CSMIC server and unpack them into two separate folders on your computer:
 
-1. **Study A (`261015A`, BN/DLC tribological coating, 11 raw files):** <a href="http://10.109.92.41/MasteringELN/data/Study-A-261015A-raw.zip" download="Study-A-261015A-raw.zip">`http://10.109.92.41/MasteringELN/data/Study-A-261015A-raw.zip`</a> (includes `.depo.json`, `.run.json`, `.tsv`, three step-height `.fibps` scans, `.mit` nanoindentation, `.zrw` friction test, three wear-track `.fibps` scans, and `checksums.md5`).
-2. **Study B (`261014B`, Co/C multilayer X-ray mirror, 7 raw files):** <a href="http://10.109.92.41/MasteringELN/data/Study-B-261014B-raw.zip" download="Study-B-261014B-raw.zip">`http://10.109.92.41/MasteringELN/data/Study-B-261014B-raw.zip`</a> (includes the 3 deposition files, 3 plasma-cleaning files, the raw reflectivity scan `XRR-1_Co-C(261014B).xrdml`, and `checksums.md5`). The `.xrcx` fit file is intentionally omitted because you will produce it by fitting the `.xrdml` curve in Task 2.
+1. **Study A (`261015A`, BN/DLC tribological coating, 11 raw files):** <a href="http://10.109.92.41/MasteringELN/data/Study-A-261015A-raw.zip" download="Study-A-261015A-raw.zip">`http://10.109.92.41/MasteringELN/data/Study-A-261015A-raw.zip`</a>. This archive includes `.depo.json`, `.run.json`, `.tsv`, three step-height `.fibps` scans, `.mit` nanoindentation, `.zrw` friction test, three wear-track `.fibps` scans, and `checksums.md5`.
+2. **Study B (`261014B`, Co/C multilayer X-ray mirror, 7 raw files):** <a href="http://10.109.92.41/MasteringELN/data/Study-B-261014B-raw.zip" download="Study-B-261014B-raw.zip">`http://10.109.92.41/MasteringELN/data/Study-B-261014B-raw.zip`</a>. This archive includes the 3 deposition files, 3 plasma-cleaning files, the raw reflectivity scan `XRR-1_Co-C(261014B).xrdml`, and `checksums.md5`. The `.xrcx` fit file is omitted so you can produce it by fitting the `.xrdml` curve in Task 2.
 
 ## Step 2: Create Your Practice Group and Practice Projects
 
@@ -47,16 +47,16 @@ Read <a href="/MasteringELN/ch1-what-an-eln-is-and-why-links-matter#the-four-lin
 
 1. **Build the 6-item tree first:** `Deposition 261015A` (`Procedure`) -> `261015A` (`Specimen`) -> child actions `Thickness 261015A`, `Indentation 261015A`, and `Friction test 261015A` (with child action `Wear track 261015A` under `Friction test 261015A`).
 2. **Attach the 11 raw files** from `Study-A-261015A-raw.zip` to their matching items (<a href="/MasteringELN/ch4-your-first-complete-sample-record#table-4-1">Table 4-1</a>).
-3. **Extract all 23 `Reader` values** using **Extract Values** and **Extract values from 3 files...** (`12` on `Deposition 261015A`, `3` on `Thickness 261015A`, `2` on `Indentation 261015A`, `3` on `Friction test 261015A`, and `3` on `Wear track 261015A`).
-4. **Compute the 1 `Derived` value** on `Friction test 261015A` with **Add > Derived Value...** (`wear_rate_reciprocating`, $K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$), then right-click `Deposition 261015A` and run **Check Value Sources...** to verify zero drift across all 24 values.
+3. **Extract all 23 `Reader` values** using **Extract Values** and **Extract values from 3 files...**. Store `12` on `Deposition 261015A`, `3` on `Thickness 261015A`, `2` on `Indentation 261015A`, `3` on `Friction test 261015A`, and `3` on `Wear track 261015A`.
+4. **Compute the 1 `Derived` value** on `Friction test 261015A` with **Add > Derived Value...** (`wear_rate_reciprocating`, $K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$). Then right-click `Deposition 261015A` and run **Check Value Sources...** to verify zero drift across all 24 values.
 
 ### Task 2: Study B (`261014B`) with Your AI Agent and `XRC_MCP` (`Study B Practice`)
 
 Read <a href="/MasteringELN/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does">Chapter 15</a> through <a href="/MasteringELN/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route">Chapter 17: Study B: XRR Fitting with Provenance</a>. Copy the 7 raw files from `Study-B-261014B-raw.zip` into your configured `--upload-root` directory and use your AI agent (`ELNMCPServer.exe` + `XRC_MCP.exe`) inside your `Study B Practice` project:
 
-1. **Build the tree and attach the 7 raw files (<a href="/MasteringELN/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b">Chapter 17: Part 1</a>):** Have the agent create folder `261014B` inside `Study B Practice`, create `Deposition 261014B` (`Proc`), `Cleaning 261014B` (`Action`), `261014B` (`Specimen`), and `XRR-1 261014B` (`Action`), upload the 7 raw files, and store the 18 `Reader` values (`14` on `Deposition 261014B` and `4` on `Cleaning 261014B`) via `extract_file_key_values` and `add_values`.
-2. **Fit `XRR-1_Co-C(261014B).xrdml` via `XRC_MCP` (<a href="/MasteringELN/ch17-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b">Chapter 17: Part 2</a>):** Have the agent fit the reflectivity curve (`SodaLimeGlass` / $[\text{C}/\text{Co}] \times 20$ / surface $\text{C}$ layer, polynomial order 1) in `XRC_MCP.exe` and save the accepted `.xrcx` project using `curves.job_id` so `[FITRESULT]` and $\chi^2$ are written into the archive.
-3. **Upload the `.xrcx` fit and store the 4 fit values:** Have the agent create child action `XRR fit 261014B` under `XRR-1 261014B`, upload the saved `.xrcx` file, and extract and store the 4 `Reader` values (`Period`, `Co Thickness`, `C Thickness`, and `Chi2`) via `aps.xrcx`.
+1. **Build the tree and attach the 7 raw files (<a href="/MasteringELN/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b">Chapter 17: Part 1</a>):** Have the agent create folder `261014B` inside `Study B Practice` and create `Deposition 261014B` (`Proc`), `Cleaning 261014B` (`Action`), `261014B` (`Specimen`), and `XRR-1 261014B` (`Action`). Next, have it upload the 7 raw files and store the 18 `Reader` values (`14` on `Deposition 261014B` and `4` on `Cleaning 261014B`) via `extract_file_key_values` and `add_values`.
+2. **Fit `XRR-1_Co-C(261014B).xrdml` via `XRC_MCP` (<a href="/MasteringELN/ch17-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b">Chapter 17: Part 2</a>):** Have the agent fit the reflectivity curve (`SodaLimeGlass` / $[\text{C}/\text{Co}] \times 20$ / surface $\text{C}$ layer, polynomial order 1) in `XRC_MCP.exe`. Save the accepted `.xrcx` project using `curves.job_id` so `[FITRESULT]` and $\chi^2$ are written into the archive.
+3. **Upload the `.xrcx` fit and store the 4 fit values:** Have the agent create child action `XRR fit 261014B` under `XRR-1 261014B` and upload the saved `.xrcx` file. Finally, have it extract and store the 4 `Reader` values (`Period`, `Co Thickness`, `C Thickness`, and `Chi2`) via `aps.xrcx`.
 
 <Warning title="never type Manual values to pass the check">Every stored number in both projects is checked for `Reader` or `Derived` provenance. Typing a number by hand (`Manual` source) or saving an `.xrcx` without `curves.job_id` (`[LASTFIT]` with no `Chi2`) fails the automated audit.</Warning>
 

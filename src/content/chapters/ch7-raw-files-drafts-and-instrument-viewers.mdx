@@ -18,7 +18,7 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Attaching raw files is the heart of an electronic laboratory notebook (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>). When you attach a measurement file in APS ELN, the program computes the file's MD5 checksum, routes the file to one of 26 built-in **Content Viewer** plugins, and generates a preview thumbnail. In specialist viewers, you can also select evaluation regions or cycle intervals that are saved alongside the file for reproducible value extraction (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>).
+Attaching raw files is the heart of an electronic laboratory notebook (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>). When you attach a measurement file in APS ELN, the program computes its MD5 checksum and generates a preview thumbnail. It then routes the file to one of 26 built-in **Content Viewer** plugins. In specialist viewers, you can also select evaluation regions or cycle intervals that are saved alongside the file for reproducible value extraction (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>).
 
 ## How file attachment and extension routing work
 
@@ -27,19 +27,19 @@ To attach one or more files to a **Procedure**, **Specimen**, or **Action**, sel
 - **Attaching one file:** Select the file in the built-in file browser, check **Attachment file type** and **Display name**, and click **Attach**. There is no second confirmation dialog.
 - **Attaching multiple files:** Select several files in the browser and click **Review files** to open **Files to attach**. There you can inspect each row's **Source filename**, **Display name**, and **Type**, and either keep **Keep display names** selected or choose **Use prefix:** to number a series of scans automatically.
 
-<Remember>APS ELN routes files by their longest matching extension. A deposition snapshot ending in `.depo.json` opens in the specialist **Deposition** viewer rather than the plain **JSON** viewer, and a `.process.log` file opens in the **Process Log** viewer rather than the sputtering `.log` viewer. When suggested display names are created, ELN strips the full compound suffix (`.depo.json` or `.process.log`) instead of stripping only `.json` or `.log`.</Remember>
+<Remember>APS ELN routes files by their longest matching extension. A `.depo.json` snapshot opens in the specialist **Deposition** viewer rather than the plain **JSON** viewer. Similarly, a `.process.log` file opens in the **Process Log** viewer rather than the sputtering `.log` viewer. When suggested display names are created, ELN strips the full compound suffix (`.depo.json` or `.process.log`) instead of stripping only `.json` or `.log`.</Remember>
 
 When you select a `.depo.json` file in the file browser, APS ELN can automatically expand your selection to include its paired `.tsv` time-series log file. It then opens the **Files to attach** review dialog so both files are attached to the procedure together.
 
 ## Inside the five core instrument viewers
 
-APS ELN ships with 26 viewer plugins (`NOTATION.md`, Section 5). General-purpose viewers handle `.pdf`, `.html`, `.md` (Markdown), images (`.png`, `.jpg`, `.bmp`, `.tif`), columnar text (`.dat`, `.csv`, `.txt`, `.ascii`), `.json`, Office documents (`.xlsx`, `.docx`, `.pptx` via OLE), OriginLab projects (`.opju`), Gatan TEM images (`.dm3`), and LAMMPS simulations (`.lmpin`, `.dump`, `.data`).
+APS ELN ships with 26 viewer plugins (`NOTATION.md`, Section 5). General-purpose viewers handle `.pdf`, `.html`, `.md` (Markdown), images (`.png`, `.jpg`, `.bmp`, `.tif`), columnar text (`.dat`, `.csv`, `.txt`, `.ascii`), and `.json`. Other viewers handle Office documents (`.xlsx`, `.docx`, `.pptx` via OLE), OriginLab projects (`.opju`), Gatan TEM images (`.dm3`), and LAMMPS simulations (`.lmpin`, `.dump`, `.data`).
 
 Five specialist viewers power the Study A (`261015A`) and Study B (`261014B`) workflows (<a href="#table-7-1">Table 7-1</a>):
 
 1. **Deposition (`.depo.json`, `.tsv`), Recipe (`.rcpx`), and DSC (`.dsc`):**
    - Attaching both the `.depo.json` snapshot and its paired `.tsv` log to the same **Procedure** unlocks the **Overview**, **Recipe**, **Pressure**, **Temperature**, **Gas Flow**, **Bias**, **V / I**, and **Stage** tabs. If the `.tsv` file is missing from the item, the viewer warns *Not attached to this item - charts unavailable*.
-   - **Extract Values** reads the `.depo.json` file (`aps.deposition`) to give recipe conditions (such as pressure, power, current, gas flow, layer times, and period count $N$) and run results (`Duration` and `BasePressure`; <a href="#fig-7-2">Figure 7-2</a>).
+   - **Extract Values** reads the `.depo.json` file (`aps.deposition`) to give recipe conditions such as pressure, power, current, gas flow, layer times, and period count $N$. It also extracts the run results `Duration` and `BasePressure` (<a href="#fig-7-2">Figure 7-2</a>).
 2. **FIBPS 3D optical profilometer (`.fibps`, reader `aps.fibps`):**
    - Displays the surface height map in micrometers ($\mu\text{m}$, or $\text{nm}$ below $1\,\mu\text{m}$) with six interactive tools: **Profile**, **Distance**, **Roughness** ($R_a$, $R_q$, $R_z$ inside a dragged rectangle), **Flatten**, **Step Height**, and **Wear Track**. In **Profile**, click for a horizontal line profile or `Shift`+click for a vertical profile.
    - In **Step Height**, two rectangles (**A** and **B**) mark the coated and uncoated levels. Dragging them updates the step $h \pm s$ and saves those rectangles as the *shared regions* of the file in the notebook.
@@ -50,10 +50,10 @@ Five specialist viewers power the Study A (`261015A`) and Study B (`261014B`) wo
    - Use **All**, **None**, or individual checkboxes to tick the valid indents, and click **Average** or **Instrument fit** to overlay the mean curve or the unloading power-law fit (<a href="#fig-7-4">Figure 7-4</a>). The ticked indents are saved as the file's shared selection and recorded in the provenance snapshot of the extracted `Hardness` ($H_{\text{IT}}$), `Modulus` ($E_{\text{IT}}$), and `Reduced Modulus` ($E_r$) values.
 4. **ZRW tribometer (`.zrw`, `.zrv`, reader `aps.zrw`):**
    - Reads both classic `Data.dat` archives and logger packages (`force.raw`, `resistance.tsv`, `test.json`) and plots friction coefficient (`COF`) against cycles.
-   - In the **Interval** bar, choose **Automatic** (first stable plateau covering at least 20% of cycles) or **Manual** (**From** / **To** cycles), then click **Apply** to save the shared interval (<a href="#fig-7-5">Figure 7-5</a>). **Extract Values** uses the applied interval to compute `COF` and its tolerance (`COF STD`).
+   - In the **Interval** bar, choose **Automatic** (first stable plateau covering at least 20% of cycles) or **Manual** (**From** / **To** cycles). Click **Apply** to save the shared interval (<a href="#fig-7-5">Figure 7-5</a>). **Extract Values** uses the applied interval to compute `COF` and its tolerance (`COF STD`).
 5. **X-Ray Calc (`.xrcx`, reader `aps.xrcx`) and XRDML (`.xrdml`):**
    - The **XRDML** viewer plots raw X-ray diffraction and reflectivity scans.
-   - The **X-Ray Calc** viewer opens `.xrcx` project archives, plotting the measured and calculated reflectivity curves on a log axis alongside the **Structure** table ($H$, $\sigma$, and $\rho$ of each layer; <a href="#fig-7-6">Figure 7-6</a>). **Extract Values** reads the main periodic stack's mean `Period`, layer thicknesses, and `Chi2`.
+   - The **X-Ray Calc** viewer opens `.xrcx` project archives and plots the measured and calculated reflectivity curves on a log axis. Beside the plot, it shows the **Structure** table ($H$, $\sigma$, and $\rho$ of each layer; <a href="#fig-7-6">Figure 7-6</a>). **Extract Values** reads the main periodic stack's mean `Period`, layer thicknesses, and `Chi2`.
 
 <Figure id="fig-7-2" number="7-2" src={`${import.meta.env.BASE_URL}/figures/fig-7-2-viewer-deposition.png`} alt="Screenshot of the Deposition viewer showing the Overview tab for Deposition_BN-DLC_(261015A) alongside the Recipe, Pressure, Temperature, Gas Flow, Bias, V / I, and Stage tabs" caption="The Deposition viewer displaying the Overview tab for Study A (261015A), with time-series tabs unlocked by the paired .tsv log attached to the same procedure." />
 
@@ -80,7 +80,7 @@ Five specialist viewers power the Study A (`261015A`) and Study B (`261014B`) wo
 
 ## Working drafts, external edits, and conflict resolution
 
-When you double-click an attachment (or click **Open** in the viewer toolbar) to open it in an external Windows program such as OriginLab, Excel, or X-Ray Calc 3, APS ELN protects your stored file. It never hands the external program the file inside your notebook storage folder; instead, it writes a separate **local working copy** (<a href="#fig-7-1">Figure 7-1</a>).
+Double-clicking an attachment (or clicking **Open** in the viewer toolbar) opens it in an external Windows program such as OriginLab, Excel, or X-Ray Calc 3. APS ELN protects your stored file during external editing. It never hands the external program the file inside your notebook storage folder; instead, it writes a separate **local working copy** (<a href="#fig-7-1">Figure 7-1</a>).
 
 <Figure id="fig-7-1" number="7-1" src={`${import.meta.env.BASE_URL}/figures/fig-7-1-viewer-draft-lifecycle.svg`} alt="Three-stage diagram showing Instrument File on disk copied into Notebook Storage with MD5 hash and shared regions, and opened externally as a separate Working Draft that is saved back with Save Attachment Working Draft or discarded with Reload" caption="How APS ELN protects stored attachment bytes. Attaching a file copies it into notebook storage (2). Opening it externally creates a separate working draft (3) that only updates notebook storage when you choose Tools > Save Attachment Working Draft." />
 

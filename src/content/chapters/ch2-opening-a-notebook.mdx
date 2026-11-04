@@ -18,7 +18,7 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Before you can create a project or record a sample (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1: The four links in every laboratory result</a>), you need an open notebook. How you open one depends on whether you are working on your own computer in **APS ELN Community** or signing into your group's shared server in **APS ELN ("For Teams")**. Once the notebook is open, the scientific workspace is the same (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3: The three-panel workspace</a>).
+Before you can create a project or record a sample (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1: The four links in every laboratory result</a>), you need an open notebook. You can open a local notebook on your PC in **APS ELN Community** or sign into a shared server in **APS ELN ("For Teams")**. Once the notebook is open, the scientific workspace is the same (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3: The three-panel workspace</a>).
 
 ## Two ways ELN stores your laboratory work
 
@@ -49,13 +49,13 @@ If you accidentally choose an existing file in **File > New Notebook...**, Commu
 When you open an existing notebook with **File > Open Notebook...**, Community checks whether the database already remembers its attachment directory:
 
 - On the same drive, the notebook stores the attachment folder as a relative path (for example, `..\Files` when `agent.sqlite` sits in a `DB` folder beside `Files`). If the folder is present, the notebook opens immediately.
-- If the notebook has no saved attachment path, or if the folder was moved separately, Community asks you to select that notebook's attachment folder and then asks whether to remember it for next time.
+- If the notebook has no saved attachment path, or if the folder moved separately, Community asks you to select that notebook's attachment folder. It then asks whether to remember the path for next time.
 
 <Warning title="your signing password is not a file-encryption password">The signing password you set when creating a local notebook is checked only when you apply an electronic signature to lock a record (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>). Opening a local `.sqlite` notebook does not ask for a password, and the database is not encrypted. Protect your computer account and backup drives with Windows access controls.</Warning>
 
 <GoingDeeper title="opening older format 2, 3, or 4 notebooks and command-line flags">
 
-Current Community builds use **local notebook format 5**, which includes schema tables for `Derived` values, default reader mappings, and the tribology value types (`Wear area`, `Normal force`, `Cycles`, and `Wear rate`). When you open an older format 2, 3, or 4 notebook, Community asks before changing anything. Clicking **Yes** first writes a timestamped backup copy beside your database (named with `.format2-backup-`, `.format3-backup-`, or `.format4-backup-`), upgrades the database to format 5, and preserves all existing values and sources. Older versions of Community cannot open a format 5 database, so keep that backup file if you ever need an older build.
+Current Community builds use **local notebook format 5**, which includes schema tables for `Derived` values, default reader mappings, and the tribology value types (`Wear area`, `Normal force`, `Cycles`, and `Wear rate`). When you open an older format 2, 3, or 4 notebook, Community asks before changing anything. Clicking **Yes** writes a timestamped backup copy beside your database (named with `.format2-backup-`, `.format3-backup-`, or `.format4-backup-`). It then upgrades the database to format 5 and preserves all existing values and sources. Older versions of Community cannot open a format 5 database, so keep that backup file if you ever need an older build.
 
 You can also launch Community from a script or shortcut with explicit paths:
 
@@ -68,7 +68,7 @@ When you launch Community without command-line flags, it automatically reopens t
 
 ## Logging into a shared team server
 
-If you work in a research group that runs the Commercial team edition (`ELabNotebook3.exe`), your notebooks are stored on the laboratory server so your teammates and supervisor can see projects, review protocols, and approve hypotheses.
+In a research group that runs the Commercial team edition (`ELabNotebook3.exe`), your notebooks sit on the laboratory server. Your teammates and supervisor can then view shared projects, review protocols, and approve hypotheses.
 
 <InTeamLab title="first-run connection and server login">
 
@@ -103,9 +103,9 @@ Follow these five steps whenever you back up or move a local notebook:
 
 1. **Save open editors.** Save any open Markdown note or external working draft (`Tools > Save Attachment Working Draft`), and resolve any conflict prompts.
 2. **Close the notebook and stop MCP processes.** Close `ELNCommunity.exe` and verify that no `ELNCommunityMCP.exe` agent process is using the database. Never copy a SQLite database while a program is writing to it.
-3. **Copy the database and attachment folder together.** Copy both the `.sqlite` file and the entire `<name> files` folder (keeping its subfolder structure and filenames unchanged) into one backup folder or archive.
+3. **Copy the database and attachment folder together.** Copy both the `.sqlite` file and the entire `<name> files` folder into one backup folder or archive. Keep the subfolder structure and filenames unchanged.
 4. **Copy retained working drafts if needed.** If you declined to save a working draft at close and kept its temporary recovery path, copy that draft folder separately.
-5. **Test your backup in a new folder.** When restoring, extract both the `.sqlite` file and the attachment folder into a new directory instead of overwriting an existing notebook in place. Then open it with **File > Open Notebook...** and check a few files in the viewer.
+5. **Test your backup in a new folder.** When restoring, extract both the `.sqlite` file and the attachment folder into a new directory. Do not overwrite an existing notebook in place. Then open it with **File > Open Notebook...** and check a few files in the viewer.
 
 <Remember>To move a closed Community notebook to another folder or drive, move the parent folder that holds both the `.sqlite` database and its attachment folder. Because the notebook saves a relative path on the same drive, it will find its attachments at the new location automatically.</Remember>
 

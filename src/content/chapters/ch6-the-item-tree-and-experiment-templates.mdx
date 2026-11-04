@@ -23,9 +23,9 @@ In <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#s
 
 Every scientific record in the center **Items** panel is a **Procedure** (`Proc`), a **Specimen** (`Item`), or an **Action** (`Action`). Choosing the right level and nesting parent keeps your provenance chain unambiguous (<a href="#table-6-1">Table 6-1</a>):
 
-- **Put a synthesis or deposition run at the root as a `Procedure`.** In both Study A (`Deposition 261015A`) and Study B (`Deposition 261014B`), the sputtering run is a top-level **Procedure** because it creates the sample and holds the run-wide deposition conditions and logs.
+- **Put a synthesis or deposition run at the root as a `Procedure`.** In both Study A (`Deposition 261015A`) and Study B (`Deposition 261014B`), the sputtering run is a top-level **Procedure**. It creates the sample and holds the run-wide deposition conditions and logs.
 - **Put a preparation step that happens *before* or *during* the run as a child `Action` of the `Procedure`.** In Study B, plasma substrate cleaning (`Cleaning 261014B`) is a child **Action** under `Deposition 261014B`.
-- **Put each physical sample produced by the run as a `Specimen` under the `Procedure`.** If one deposition run coats both a silicon wafer and a steel coupon, you can list the substrates in the specimen description (as in `261015A`). When the substrates serve different experimental purposes, you can also create separate **Specimen** rows under the same **Procedure**.
+- **Put each physical sample produced by the run as a `Specimen` under the `Procedure`.** If one deposition run coats both a silicon wafer and a steel coupon, list the substrates in the specimen description (as in `261015A`). When the substrates serve different experimental purposes, create separate **Specimen** rows under the same **Procedure**.
 - **Put every measurement or test on that sample as a child `Action` under the `Specimen`.** In Study A, `Thickness 261015A`, `Indentation 261015A`, and `Friction test 261015A` sit directly under specimen `261015A`.
 - **Nest a follow-up measurement or analysis under the `Action` it depends on.** In Study A, `Wear track 261015A` measures the groove created by `Friction test 261015A`, so it sits under `Friction test 261015A`. In Study B, `XRR fit 261014B` fits the curve measured in `XRR-1 261014B`, so it sits directly under `XRR-1 261014B` (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#fig-1-2`}>Figure 1-2</a>).
 
@@ -50,7 +50,7 @@ Every scientific record in the center **Items** panel is a **Procedure** (`Proc`
 
 When you create or edit a **Procedure** or **Action** (**Item > New Procedure**, **Item > New Action**, or **Item > Edit**), the dialog asks for **Title**, **Description**, **Item type**, **Action type**, and **Equipment**.
 
-If you install a new instrument or start a new type of test and find that the drop-down list lacks your **Action type** or **Equipment**, you do not need to cancel the dialog. You can add it without opening **Reference Data**:
+When you install a new instrument or start a new test, the drop-down list may lack your **Action type** or **Equipment**. You can add it inside the item dialog without opening **Reference Data**:
 
 1. Select an **Item type** first. This enables the **+** button right beside **Action type** (tooltip: **Add a new action type**). Click **+**, enter a non-blank **Title**, select a **Kind**, and click **OK**.
 2. Select an **Action type** that takes equipment. This enables the **+** button right beside **Equipment** (tooltip: **Add new equipment**). Click **+**, enter **Model**, **Manufacturer**, and **Location** (all three are required), and click **OK**.
@@ -59,7 +59,7 @@ If you install a new instrument or start a new type of test and find that the dr
 
 To copy an existing item structure, select the item and choose **Item > Duplicate**. In the duplicate dialog, pick the destination folder and tick the option to link the copy to the original item if the new run is a repeat or continuation.
 
-To move an item to a different parent or folder after creation, right-click the item and choose **Move to...**, select the new parent item or destination folder from the list, and click **Move**.
+To move an item to a different parent or folder after creation, right-click the item and choose **Move to...**. Select the new parent item or destination folder from the list and click **Move**.
 
 <Warning title="do not drag items onto each other to reorder siblings">In the center **Items** panel, dragging one item row onto another row can reparent the dragged item as a child of the target row. To change the manual display order of top-level root procedures, select the root procedure and press `Ctrl+Up` or `Ctrl+Down` (or use **Move Up** and **Move Down**). Child actions, files, and values are not reordered by `Ctrl+Up` or `Ctrl+Down`.</Warning>
 
@@ -71,9 +71,9 @@ You can select several rows at once in the **Items** panel to run batch operatio
 - Hold `Shift` and click (or press `Shift+Up` and `Shift+Down`) to select a contiguous range of rows.
 - Right-click any row *inside* your selection to open the batch context menu while keeping all rows selected. (Right-clicking a row *outside* the selection switches the selection to that single row.)
 
-When multiple records are selected, APS ELN disables single-item commands (**New**, **Edit**, **Duplicate**, **Add File**, **Add Note**, **Add Protocol**, **Add Value**, **Links...**) and enables the five batch commands that work safely across a selection:
+When multiple records are selected, APS ELN disables single-item commands (**New**, **Edit**, **Duplicate**, **Add File**, **Add Note**, **Add Protocol**, **Add Value**, **Links...**). Instead, it enables five batch commands:
 
-1. **Extract values** (**Extract values from N files...**): groups the selected files by reader plugin, asks you to map the keys once per reader, and extracts values across all matching files (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>).
+1. **Extract values** (**Extract values from N files...**): groups the selected files by reader plugin and asks you to map the keys once per reader. It then extracts values across all matching files (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>).
 2. **Move to...**: moves all selected items or files to a chosen destination.
 3. **Tags...**: assigns or removes tags across all selected items.
 4. **Export**: exports all selected files into a destination folder on disk, automatically appending ` (2)`, ` (3)` if two files share the same display name so no file is ever overwritten.
@@ -108,7 +108,7 @@ To start a new sample from your template:
 
 Do not confuse **Experiment Templates** with **Protocol Templates** (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#how-protocol-templates-and-autofill-work`}>Chapter 8: How protocol templates and AutoFill work</a>):
 
-- An **Experiment Template** (`.elntemplate`, managed in **Reference Data > Experiment Templates...**) creates a multi-item tree of **Procedures**, **Specimens**, and **Actions** in the center **Items** panel. When you click **Create** in **Item > New from Template...**, APS ELN writes the entire item hierarchy and its audit-log rows in a single atomic transaction: if anything fails, no half-built tree is left behind.
+- An **Experiment Template** (`.elntemplate`, managed in **Reference Data > Experiment Templates...**) creates a multi-item tree of **Procedures**, **Specimens**, and **Actions** in the center **Items** panel. When you click **Create** in **Item > New from Template...**, APS ELN writes the entire hierarchy and its audit-log rows in one atomic transaction. If anything fails, no half-built tree is left behind.
 - A **Protocol Template** (`.json`, managed in **Reference Data > Protocol Templates...**) defines a structured form with sections, rows, and input fields that you attach to *one* item via **Item > Add Protocol**.
 
 </GoingDeeper>

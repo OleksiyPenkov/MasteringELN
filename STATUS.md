@@ -2,6 +2,14 @@
 
 _Updated after every work session: what changed, what is unresolved, and what the author must decide next._
 
+## 2026-11-04 (Full-Book Clarity Pass): Split long sentences and tightened step-by-step instructions across 24 files
+
+**Done**
+- Audited all 27 chapters/appendices and `src/pages/assignment.mdx` against `STYLE.md §4` (30-word sentence limit, one main clause per sentence, zero em-dashes, zero stock evaluation words, and plain English for ESL graduate students).
+- Edited 24 MDX files (`introduction.mdx`, `src/pages/assignment.mdx`, `ch1`–`ch12`, `ch14`–`ch21`, and `appendix-a`, `b`, `c`, `e`) to split compound 33–55-word sentences at natural clause boundaries while preserving every command path, reader ID, unit conversion factor, and provenance claim.
+- Verified all gates (`npm test`: 73 passed; `npm run test:py`: 43 passed; `npm run build` + `npm run check:links`: 30 pages, 1,256 internal links, 0 literal `$$`, 0 e-notation; `npm run check:markers`: 0 markers).
+- Rebuilt `pdf-build/Mastering-ELN.pdf` (`public/Mastering-ELN.pdf`, 207 pages, 27 sections, 166 Contents links, 699 internal links; all 23 `verify_pdf.py` checks passed) and deployed the updated site and PDFs to `Z:\MasteringELN\`.
+
 ## 2026-11-02 (Student Practice Workflow & Mandatory Assignment): Raw `.zip` packages, 1-page Mandatory Assignment (due Nov 16), and MCP grading rubric deployed
 
 **Done**
