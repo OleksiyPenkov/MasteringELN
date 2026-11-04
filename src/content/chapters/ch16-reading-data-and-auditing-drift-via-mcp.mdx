@@ -28,6 +28,14 @@ When you ask an AI assistant a question about your notebook, it uses seven struc
 - **`get_values` and `query_values`:** `get_values` returns all values on one item grouped into experimental conditions (`EXP_CONDITION`) and test results (`TEST_RESULT`). It also includes `ancestor_ids` (from the root procedure down to the direct parent) and each value's `source` object (`Reader`, `Derived`, `Manual`, or `Unknown`). `query_values` searches values across a project by `value_type` (title or symbol), `rec_type`, and item creation date (`date_from`, `date_to`).
 - **`correlate_values`:** pairs condition values and result values across items in a project (the MCP counterpart of **Tools > Analysis...** in <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13: Plotting conditions against results</a>).
 
+For example, when you ask about the friction and wear results on sample `261015A`, you just name the sample:
+
+> **You:** What friction coefficient and wear rate did we get for sample 261015A, and how was the wear rate calculated?
+>
+> **Assistant:** On `Friction test 261015A` (`eln://item/5`, under `Deposition 261015A` $\to$ specimen `261015A`), the test ran at a normal force of $9.81\,\text{N}$ for $1000$ cycles (`BN-DLC.zrw`):
+> - **Friction coefficient ($\mu$):** $0.528 \pm 0.019$ (extracted by `aps.zrw` v2 from `BN-DLC.zrw` over the automatic plateau, cycles 88–999).
+> - **Wear rate ($K$):** $3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$ (`Derived` via `wear_rate_reciprocating` v1). It was calculated from the mean of the three profilometer wear-track areas on `Wear track 261015A` ($0.00620\,\text{mm}^2$ from `wear 1.fibps`, $0.00553\,\text{mm}^2$ from `wear 2.fibps`, and $0.00621\,\text{mm}^2$ from `wear 3.fibps`; mean $0.00598\,\text{mm}^2$) divided by $2 \times 9.81\,\text{N} \times 1000\text{ cycles}$.
+
 ## Searching by text and meaning (`search` and `search_semantic`)
 
 The MCP server exposes both search engines from <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#three-ways-to-find-a-record-in-aps-eln`}>Chapter 12: Three ways to find a record in APS ELN</a>:
@@ -39,7 +47,14 @@ Unlike the Desktop Search dialog (which offers only project, item type, and crea
 
 - **`folder_id`, `item_types`, `levels`, and `action_type_id`:** restrict the search to a specific folder subtree, item types (such as `["Measurement", "Testing"]`), levels (`["Proc", "Item", "Action"]`), or action type.
 - **`date_field`, `date_from`, and `date_to`:** filter by `created` (default) or `modified` ISO 8601 dates.
-- **`values`:** an array of numeric range filters, where each entry specifies `value_type` (symbol or title), `rec_type` (`EXP_CONDITION` or `TEST_RESULT`), `min`, `max`, and `requested_unit`. For example, you can find all coatings related to *low friction in humid air* whose `Hardness` is between `5` and `10` `GPa`. The server converts `min` and `max` into the stored unit of the value type and echoes the converted limits in `filters_applied`.
+- **`values`:** an array of numeric range filters, where each entry specifies `value_type` (symbol or title), `rec_type` (`EXP_CONDITION` or `TEST_RESULT`), `min`, `max`, and `unit` (the unit of your filter limits). The server converts `min` and `max` into the stored unit of the value type and echoes the converted limits in `filters_applied` alongside `requested_unit`.
+
+Because the assistant translates your plain-English question into those filter fields, you can combine topic and number limits naturally:
+
+> **You:** Which of our Co/C multilayer mirrors have a fitted period around 50 Å (say between 45 and 55 Å)?
+>
+> **Assistant:** One sample matches (`Period` test result between $45$ and $55\,\Ang$, converted to $4.5 \times 10^{-9}$–$5.5 \times 10^{-9}\,\text{m}$):
+> - **Specimen `261014B` (`XRR fit 261014B`, `eln://item/5`):** fitted in `XRR-fit_Co-C(261014B).xrcx` (`aps.xrcx` v2) with **Period** $= 49.40\,\Ang$ ($4.940 \times 10^{-9}\,\text{m}$), **Co Thickness** $= 20.83\,\Ang$, **C Thickness** $= 28.57\,\Ang$, and $\chi^2 = 0.943$.
 
 <Remember>If `search_semantic` is called on a large notebook while the indexer is still reading newly attached PDFs, the response includes `"index": {"complete": false, "pending_passages": ..., "files_pending": ...}`. Call `search_semantic` again after a moment to let the background index catch up.</Remember>
 
@@ -53,6 +68,15 @@ Sputtering logs (`.tsv`, `.log`) and tribometer curves often contain tens of tho
    - `mode: "downsample"` (the default): bins the series into `max_rows` (default `500`) min/max buckets so the agent sees every spike and drop in at most 1,000 points.
    - `mode: "raw"`: returns unbinned rows, optionally sliced to `row_range: [start, end]`.
 
+When you ask whether a deposition run was stable, the assistant finds the `.tsv` log on that sample and checks the column statistics without reading all 17,171 rows into chat:
+
+> **You:** Was the argon flow and magnetron current stable during the deposition of 261014B?
+>
+> **Assistant:** Yes. In the sputtering log `2026-10-14_11-56-09_StudyB_CoC_Co42s_C108s_N20_2mT.tsv` on `Deposition 261014B` ($17,171$ rows from `11:56:09` to `12:56:35`, $3626.4\,\text{s}$ total):
+> - **Argon flow (`MFC_Ar1`):** held steady at its $20\,\text{sccm}$ setpoint throughout sputtering (mean $19.63 \pm 2.07\,\text{sccm}$ across $16,983$ active rows, max $20.06\,\text{sccm}$; $0\,\text{sccm}$ only during initial pump-down and final venting).
+> - **Co DC current (`PSU_DC4001A_I`):** locked at $50.00 \pm 0.00\,\text{mA}$ across all $17,171$ rows.
+> - **Pulsed-DC channel (`PSU_G3F_C_I`):** $48.99 \pm 7.02\,\text{mA}$ across $16,827$ active rows (peak $50.10\,\text{mA}$ at `11:57:07`). Note that the `.tsv` column header labels the current unit as `A`, whereas the logged numbers ($50$) are in $\text{mA}$ (matching `currentCo` $= 0.05\,\text{A}$ in `Deposition_2026-10-14_11-56-09.depo.json`).
+
 <Tip>Always ask your agent to call `list_file_columns` and `get_file_columns` with `mode: "stats"` or `"downsample"` first. Request `mode: "raw"` over a narrow `row_range` only when inspecting a specific event such as an arc or pressure spike.</Tip>
 
 ## Running the three project-wide health checks
@@ -62,6 +86,13 @@ To check an entire project or item subtree in one pass, have your assistant run 
 1. **`check_storage`:** give `project_id`, `item_id` (which checks the item and all of its descendants), or `file_ids`. The server checks that every attachment's physical file exists in storage and compares its MD5 hash against the hash recorded at upload time. It returns counts of `ok`, `missing`, `content_mismatch`, `no_hash`, and `error`.
 2. **`check_value_drift`:** give `project_id` or `item_id`. The server re-runs the current reader plugin on the source file of every `Reader` value (replaying any saved `.fibps` pixel regions or `.zrw` cycle interval from `analysis_snapshot`). It also recalculates every `Derived` value recursively from its inputs (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Table 9-1</a>). In Study A (`261015A`), it returns `{"checked": 24, "unchanged": 24, "drifted": []}`; in Study B (`261014B`), it returns `{"checked": 22, "unchanged": 22, "drifted": []}`.
 3. **`report_value_issues`:** give `project_id` or `item_id`. Scans all stored values against their value type's plausible range and tolerance factor ($1000\times$), flagging `below_range`, `above_range`, `tolerance_exceeds_value`, and `tolerance_scale_mismatch`.
+
+> **You:** Before I sign sample 261015A, check that all files and values are intact and nothing has drifted.
+>
+> **Assistant:** Sample `261015A` (`Deposition 261015A`, `eln://item/1`, and all five child items) is ready to sign:
+> 1. **Files (`check_storage`):** all **11 attachments are `ok`** ($0$ missing, $0$ MD5 mismatches across `.depo.json`, `.run.json`, `.tsv`, `BN-DLC(261015A).mit`, `BN-DLC.zrw`, and the six `.fibps` scans).
+> 2. **Value drift (`check_value_drift`):** all **24 values are `unchanged`** ($0$ drifted). Re-running `aps.deposition` v1 (12 values), `aps.fibps` v3 (6 values, including the saved pixel rectangles on `1.fibps` and `2.fibps`), `aps.mit` v2 (2 values), `aps.zrw` v2 (3 values), and the `Derived` formula `wear_rate_reciprocating` v1 reproduced every stored number.
+> 3. **Ranges and tolerances (`report_value_issues`):** **0 issues** found (`tolerance_factor = 1000`).
 
 <Figure id="fig-16-1" number="16-1" src={`${import.meta.env.BASE_URL}/figures/fig-16-1-mcp-audit-pipeline.svg`} alt="Three side-by-side audit cards: 1. check_storage (verifying file bytes and MD5 hashes), 2. check_value_drift (re-running readers and Derived formulas), and 3. report_value_issues (checking plausible ranges and 1000x tolerance factor)" caption="The three read-only MCP audit tools. Running check_storage (1), check_value_drift (2), and report_value_issues (3) verifies every file hash, reader extraction, derived formula, and unit range in a project." />
 

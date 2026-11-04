@@ -50,7 +50,7 @@ When an AI client starts the MCP host, they communicate over standard input and 
 
 ## Preparing a local session in APS ELN Community
 
-In **APS ELN Community**, the installer places `ELNCommunityMCP.exe` in `%LocalAppData%\Programs\ELN Community` right next to `ELNCommunity.exe`. Follow these steps to prepare a local MCP session safely:
+In **APS ELN Community**, the installer uses a per-user folder (`%LocalAppData%\Programs\ELN Community`, which expands to `C:\Users\<you>\AppData\Local\Programs\ELN Community`) rather than `C:\Program Files`, so you can install and update it on a student or university PC without Windows Administrator privileges. It places `ELNCommunityMCP.exe` in that folder right next to `ELNCommunity.exe`. Follow these steps to prepare a local MCP session safely:
 
 1. **Create your notebook in the Desktop program first, then close the Desktop.** A local Community notebook uses a single-user SQLite file. Close `ELNCommunity.exe` before starting an MCP session that writes to that same `.sqlite` file.
 2. **Create a dedicated upload/staging folder (`--upload-root`).** Create an ordinary local folder (such as `C:\ELN\Inbox`) with no directory junctions or symbolic links. Place only the raw measurement files you want the agent to upload (or the files exported by `download_file`) inside this folder.
