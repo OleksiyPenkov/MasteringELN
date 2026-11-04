@@ -18,11 +18,11 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Before you close an experimental campaign, verify three things. Every action in the tree must have its raw file, every value must match its reader output, and no record should change after review. APS ELN provides three layers of verification that work together before you close a sample record (<a href="#fig-14-1">Figure 14-1</a>).
+Before you mark an experiment finished or hand it to your supervisor, check three things: every action has its raw file, every value matches its reader output, and the finished record is locked against edits. APS ELN checks each of these in turn (<a href="#fig-14-1">Figure 14-1</a>).
 
 ## Three layers of record integrity
 
-Each integrity tool checks a different part of your scientific record (<a href="#fig-14-1">Figure 14-1</a>):
+Three tools handle completeness, provenance, and locking (<a href="#fig-14-1">Figure 14-1</a>):
 
 1. **Completeness Rules (`Tools > Data Completeness...`):** checks whether every **Procedure** and **Action** in a project has the required raw **File Types** and extracted **Value Types** for its **Action Type** and **Equipment**.
 2. **Provenance and Audit (`Check Value Sources...` and `Tools > Audit Log...`):** verifies that every `Reader` and `Derived` value still matches its stored file and formula (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Checking value sources and understanding drift codes</a>). It also records the chronological log of every `Create`, `Update`, and `Delete` event in the notebook.

@@ -21,7 +21,7 @@ When you put a number into a thesis table or a journal figure, someone will even
 
 ## The four links in every laboratory result
 
-Every experimental number rests on a chain of four records (<a href="#fig-1-1">Figure 1-1</a>):
+Every experimental number depends on four linked records (<a href="#fig-1-1">Figure 1-1</a>):
 
 1. **The Sample (`Specimen`):** the physical piece or model you made, identified by its sample code (such as `261015A`).
 2. **The Operation (`Procedure` or `Action`):** what you did to that sample, such as a sputter deposition, a 3D profilometer scan, a nanoindentation series, or a friction test.
@@ -57,8 +57,8 @@ Starting in APS ELN 2.1 (notebook format 5 in Community), every stored value car
 
 ## Two running examples: Study A and Study B
 
-- **Study A (`261015A`, a BN/DLC tribological coating):** A sputter deposition (`Deposition 261015A`) produces specimen `261015A`. Three measurement actions sit directly below it: `Thickness 261015A` (`1.fibps`–`3.fibps`), `Indentation 261015A` (`BN-DLC(261015A).mit`), and `Friction test 261015A` (`BN-DLC.zrw`). A child action under the friction test, `Wear track 261015A`, holds three optical profiler scans across the wear scar (`wear 1.fibps`–`wear 3.fibps`). Together they hold 11 raw files, 23 `Reader` values, and 1 `Derived` wear-rate value.
-- **Study B (`261014B`, a Co/C multilayer X-ray mirror):** A sputter deposition (`Deposition 261014B`) includes a plasma cleaning action (`Cleaning 261014B`). It produces specimen `261014B`, which has 20 periods of cobalt and carbon on soda-lime glass. Under the specimen sit the X-ray reflectivity scan `XRR-1 261014B` (`XRR-1_Co-C(261014B).xrdml`) and its child analysis action `XRR fit 261014B` (`XRR-fit_Co-C(261014B).xrcx`). Together they hold 8 files and 22 `Reader` values.
+- **Study A (`261015A`, a BN/DLC tribological coating):** A sputter deposition (`Deposition 261015A`) produces specimen `261015A`. You measure it in three actions directly under the specimen: `Thickness 261015A` (`1.fibps`–`3.fibps`), `Indentation 261015A` (`BN-DLC(261015A).mit`), and `Friction test 261015A` (`BN-DLC.zrw`). A child action under the friction test, `Wear track 261015A`, holds three optical profiler scans across the wear scar (`wear 1.fibps`–`wear 3.fibps`). The finished record has 11 raw files, 23 `Reader` values, and 1 `Derived` wear-rate value.
+- **Study B (`261014B`, a Co/C multilayer X-ray mirror):** A sputter deposition (`Deposition 261014B`) includes a plasma cleaning action (`Cleaning 261014B`) and produces specimen `261014B` (20 periods of cobalt and carbon on soda-lime glass). Under the specimen sit the X-ray reflectivity scan `XRR-1 261014B` (`XRR-1_Co-C(261014B).xrdml`) and its child analysis action `XRR fit 261014B` (`XRR-fit_Co-C(261014B).xrcx`). The finished record has 8 files and 22 `Reader` values.
 
 <Figure id="fig-1-2" number="1-2" src={`${import.meta.env.BASE_URL}/figures/fig-1-2-study-a-tree.svg`} alt="Side-by-side trees for Study A (261015A BN/DLC coating) and Study B (261014B Co/C mirror) showing Procedure, Specimen, Action, files, and value counts" caption="The item trees of the two running examples used across this book. Study A (left) records a BN/DLC coating and its mechanical and tribological tests. Study B (right) records a 20-period Co/C X-ray mirror from deposition through XRR fitting." />
 
@@ -78,7 +78,7 @@ Four habits prevent these broken links in daily work:
 
 ## The whole student workflow on one page
 
-<a href="#table-1-1">Table 1-1</a> maps the ten stages of daily work in APS ELN to the menu commands you use and the chapters that explain each stage in detail.
+<a href="#table-1-1">Table 1-1</a> lists the ten stages of recording an experiment in APS ELN, the menu commands you use, and the chapters that cover each step.
 
 <p id="table-1-1" class="table-caption"><strong>Table 1-1:</strong> The complete student workflow in APS ELN.</p>
 

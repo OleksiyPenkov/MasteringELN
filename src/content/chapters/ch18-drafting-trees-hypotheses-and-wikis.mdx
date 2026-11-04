@@ -17,7 +17,7 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-In <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17</a>, every extracted value in Study B (`261014B`) came directly from a file's default reader output. Often an agent also needs to extract a step height from specific pixel rectangles on a `.fibps` map or compute a `Derived` wear rate from three wear-track scans. It may also need to update a value after a reader upgrade, draft a five-section Project Wiki page, or prepare a hypothesis with cited evidence. The MCP write tools handle all of those tasks while keeping human approvals and signatures in the Desktop GUI (<a href="#fig-18-1">Figure 18-1</a>).
+In <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17</a>, every extracted value in Study B (`261014B`) came straight from a file's default reader output. Sometimes an agent also needs to extract a step height from specific pixel rectangles on a `.fibps` map, or compute a `Derived` wear rate from three wear-track scans. You can also ask it to update a value after a reader upgrade, write a Project Wiki page, or prepare a hypothesis with cited evidence while leaving approvals and signatures to you in the Desktop GUI (<a href="#fig-18-1">Figure 18-1</a>).
 
 ## Passing viewer selections and Derived inputs
 
@@ -75,7 +75,7 @@ All four tools refuse to touch signed items, deleted items, or records attached 
 
 ## Drafting and updating Wiki pages
 
-An AI assistant is ideal for turning raw project data and literature notes into well-structured Project Wiki pages (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11: The five-section Project Wiki</a>):
+You can also use an AI assistant to turn raw project data and literature notes into Project Wiki pages (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11: The five-section Project Wiki</a>):
 
 - **`wiki_create_page`:** takes `project_id`, `section` (`Goals`, `Ideas`, `Literature`, `Analysis`, or `References`), `title`, `body_md`, and optional `attachments` (paths inside `--upload-root`). It idempotently creates the `Wiki/` and `Wiki/<section>/` folders if they do not exist yet, creates the `Wiki` item, and writes the `.md` body and any attachments.
 - **`wiki_get_page`:** downloads the page's `.md` body and returns it inline as UTF-8 `body_md` along with item metadata and non-Markdown attachment records.

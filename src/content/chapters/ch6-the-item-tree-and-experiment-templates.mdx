@@ -17,11 +17,11 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-In <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-1-build-the-whole-item-tree-first`}>Chapter 4: Step 1: Build the whole item tree first</a>, you built the six-item tree for Study A (`261015A`) by hand. Once you start running a series of ten or twenty samples with the same characterization sequence, building every node one click at a time is too slow and invites mistakes. Instead, you can structure complex multi-step trees, operate on many rows at once, and stamp out a complete experiment hierarchy in seconds from an **Experiment Template** (`.elntemplate`).
+In <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#step-1-build-the-whole-item-tree-first`}>Chapter 4: Step 1: Build the whole item tree first</a>, you built the six-item tree for Study A (`261015A`) by hand. Doing that click by click works for one sample, and gets old fast when you run a series of twenty coatings with the same tests. In this chapter, you'll see how to nest multi-step experiments cleanly, run batch actions across many rows at once, and create a complete sample tree in seconds from an **Experiment Template** (`.elntemplate`).
 
 ## Designing a clean item hierarchy
 
-Every scientific record in the center **Items** panel is a **Procedure** (`Proc`), a **Specimen** (`Item`), or an **Action** (`Action`). Choosing the right level and nesting parent keeps your provenance chain unambiguous (<a href="#table-6-1">Table 6-1</a>):
+Every scientific record in the center **Items** panel is a **Procedure** (`Proc`), a **Specimen** (`Item`), or an **Action** (`Action`). Picking the right level and parent keeps your sample tree easy to read (<a href="#table-6-1">Table 6-1</a>):
 
 - **Put a synthesis or deposition run at the root as a `Procedure`.** In both Study A (`Deposition 261015A`) and Study B (`Deposition 261014B`), the sputtering run is a top-level **Procedure**. It creates the sample and holds the run-wide deposition conditions and logs.
 - **Put a preparation step that happens *before* or *during* the run as a child `Action` of the `Procedure`.** In Study B, plasma substrate cleaning (`Cleaning 261014B`) is a child **Action** under `Deposition 261014B`.

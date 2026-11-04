@@ -17,7 +17,7 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-The safest and fastest way to start using an AI assistant with APS ELN (<a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 15: What the ELN MCP server does</a>) is through its read-only inspection and audit tools. In a single prompt, an agent can list all specimens in a folder, filter semantic search hits by numeric value ranges, and summarize a 10,000-row sputtering log. It can also verify that every file and value across an entire project has zero storage or reader drift (<a href="#fig-16-1">Figure 16-1</a>).
+The safest way to start using an AI assistant with APS ELN (<a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 15: What the ELN MCP server does</a>) is through its read-only tools. In one prompt, your assistant can list all specimens in a folder, filter semantic search hits by numeric value ranges, summarize a 10,000-row sputtering log, and check every file hash and value across a project (<a href="#fig-16-1">Figure 16-1</a>).
 
 ## Navigating and querying values
 
@@ -48,7 +48,7 @@ Unlike the Desktop Search dialog (which offers only project, item type, and crea
 Sputtering logs (`.tsv`, `.log`) and tribometer curves often contain tens of thousands of time-series rows. Dumping an entire 8 MB `.tsv` file into an AI prompt would overflow the model's context window. Instead, APS ELN provides a two-step columnar tool pair:
 
 1. **Discover the columns (`list_file_columns`):** Pass `file_id`. The server uses the file's viewer plugin to return `total_rows`, `time_span`, and the list of columns (`index`, `name`, `units`, and `dtype`).
-2. **Fetch summary statistics or downsampled series (`get_file_columns`):** Pass `file_id`, the `columns` you want (by index or unambiguous name), and one of three modes:
+2. **Fetch summary statistics or downsampled series (`get_file_columns`):** Pass `file_id`, the `columns` you want (by index or column name), and one of three modes:
    - `mode: "stats"`: returns the count, minimum, maximum, mean, and standard deviation of each requested column.
    - `mode: "downsample"` (the default): bins the series into `max_rows` (default `500`) min/max buckets so the agent sees every spike and drop in at most 1,000 points.
    - `mode: "raw"`: returns unbinned rows, optionally sliced to `row_range: [start, end]`.
@@ -57,7 +57,7 @@ Sputtering logs (`.tsv`, `.log`) and tribometer curves often contain tens of tho
 
 ## Running the three project-wide health checks
 
-The most powerful read-only workflow in Part 4 is running all three integrity checks across a project or item subtree in one pass (<a href="#fig-16-1">Figure 16-1</a> and <a href="#table-16-1">Table 16-1</a>):
+To check an entire project or item subtree in one pass, have your assistant run these three read-only tools (<a href="#fig-16-1">Figure 16-1</a> and <a href="#table-16-1">Table 16-1</a>):
 
 1. **`check_storage`:** give `project_id`, `item_id` (which checks the item and all of its descendants), or `file_ids`. The server checks that every attachment's physical file exists in storage and compares its MD5 hash against the hash recorded at upload time. It returns counts of `ok`, `missing`, `content_mismatch`, `no_hash`, and `error`.
 2. **`check_value_drift`:** give `project_id` or `item_id`. The server re-runs the current reader plugin on the source file of every `Reader` value (replaying any saved `.fibps` pixel regions or `.zrw` cycle interval from `analysis_snapshot`). It also recalculates every `Derived` value recursively from its inputs (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Table 9-1</a>). In Study A (`261015A`), it returns `{"checked": 24, "unchanged": 24, "drifted": []}`; in Study B (`261014B`), it returns `{"checked": 22, "unchanged": 22, "drifted": []}`.

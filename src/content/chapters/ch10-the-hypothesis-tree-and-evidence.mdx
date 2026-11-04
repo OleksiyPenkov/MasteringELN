@@ -18,11 +18,11 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Recording procedures, specimens, actions, files, and values (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6</a> and <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9</a>) tells you *what* you made and *what numbers* you measured. Six months later, however, an item tree with thirty depositions does not explain *why* you changed the bias voltage in run 12 or *which* idea that series of samples tested. The **Hypothesis Tree** connects your scientific reasoning to the exact runs, files, and values that tested it.
+Recording procedures, specimens, actions, files, and values (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6</a> and <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9</a>) tells you *what* you made and *what numbers* you measured. Six months later, an item tree with thirty depositions still does not explain *why* you changed the bias voltage in run 12 or *which* idea that sample series tested. The **Hypothesis Tree** ties your scientific question to the exact runs, files, and values that tested it.
 
 ## Why connect experiments to a hypothesis tree?
 
-In APS ELN, a **hypothesis** is a first-class record inside a project that links four things (<a href="#fig-10-1">Figure 10-1</a>):
+A **hypothesis** in APS ELN sits inside a project and links four things (<a href="#fig-10-1">Figure 10-1</a>):
 
 1. **The Proposal:** what you expect to happen and why (`Statement`), plus what changed compared to the parent hypothesis (`Change`) when you are refining an earlier idea.
 2. **The Runs and References:** the experimental **Procedures**, **Specimens**, or **Actions** you ran to test the hypothesis (`Run`), or earlier records from any readable project that provide background context (`Reference`).
@@ -71,7 +71,7 @@ After your measurements and value extractions are complete, cite the specific re
 3. In the right list, pick what you are citing. You can cite the **item as a whole**, one of its **attached files** (such as `BN-DLC.zrw` or `XRR-fit_Co-C(261014B).xrcx`), or one of its **stored values** ($K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$).
 4. Type a short note explaining why this evidence matters and click **OK**.
 
-<Remember>At the exact moment you cite a file or a value, APS ELN records the file's MD5 checksum or the value's stored number on the citation. If someone later replaces the file or edits the value, the **Evidence** tab flags that row as `changed` (or `missing` if it was deleted). A reviewer is never misled by silently altered evidence.</Remember>
+<Remember>When you cite a file or a value, APS ELN records the file's MD5 checksum or the value's stored number on the citation. If someone later replaces the file or edits the value, the **Evidence** tab flags that row as `changed` (or `missing` if it was deleted). You can see right away if cited evidence changed after the fact.</Remember>
 
 ## Submitting a conclusion and checking the content seal
 
@@ -98,7 +98,7 @@ When your runs and cited evidence are in place, you are ready to write the concl
   ]}
 />
 
-<Warning title="AI agents cannot click Approve or Accept">An AI assistant connected through the MCP server (Part 4) can propose a hypothesis (`propose_hypothesis`), attach runs (`attach_run`), cite evidence (`cite_evidence`), and submit a conclusion (`submit_conclusion`). However, MCP intentionally exposes no tool to approve a proposal or accept a conclusion. Those two gates are human scientific judgments that must always be made by a person in the Desktop GUI (or the Team Lab web app).</Warning>
+<Warning title="AI agents cannot click Approve or Accept">An AI assistant connected through the MCP server (Part 4) can propose a hypothesis (`propose_hypothesis`), attach runs (`attach_run`), cite evidence (`cite_evidence`), and submit a conclusion (`submit_conclusion`). The MCP server has no tool to approve a proposal or accept a conclusion. Those two gates are scientific decisions that a person must make in the Desktop GUI (or the Team Lab web app).</Warning>
 
 <GoingDeeper title="what the Accepted content seal covers">
 

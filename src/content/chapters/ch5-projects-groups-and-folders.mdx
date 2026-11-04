@@ -24,9 +24,9 @@ When you open your notebook (<a href={`${import.meta.env.BASE_URL}/ch2-opening-a
 
 The **Projects** panel on the left uses three levels of containers (<a href="#fig-5-1">Figure 5-1</a> and <a href="#table-5-1">Table 5-1</a>):
 
-1. **Groups:** optional top-level headings (such as `Coatings & Optics`) that organize your projects visually in the tree. Groups never hold scientific records directly.
-2. **Projects:** the primary scientific containers (such as `Tribology` or `Co/C`). Every procedure, specimen, action, hypothesis, and wiki page belongs to one project.
-3. **Folders:** subfolders inside a project (such as `BN-DLC Series` inside `Tribology`) that group related procedures and specimens. Folders can be nested inside other folders to any depth.
+1. **Groups:** optional top-level headings (such as `Coatings & Optics`) that group your projects visually in the tree. Groups never hold scientific records directly.
+2. **Projects:** your main research topics (such as `Tribology` or `Co/C`). Every procedure, specimen, action, hypothesis, and wiki page belongs to one project.
+3. **Folders:** subfolders inside a project (such as `BN-DLC Series` inside `Tribology`) that organize related procedures and specimens. You can nest folders to any depth.
 
 <Figure id="fig-5-1" number="5-1" src={`${import.meta.env.BASE_URL}/figures/fig-5-1-project-containers.svg`} alt="Diagram showing Group, Project, and Folder containers in the Projects panel on the left, feeding Procedure and Specimen items in the Items panel on the right, with deleted item trees moving to Tools > Recycle Bin" caption="How containers and scientific items separate in APS ELN. Groups, Projects, and Folders in the left panel organize your work. Procedures, Specimens, and Actions in the center panel hold your scientific data and move to the Recycle Bin when deleted." />
 
@@ -65,7 +65,7 @@ In the Commercial ("For Teams") client, right-click any project or folder and op
 
 ## Archiving finished projects
 
-When a grant ends or a material series is complete, you want it out of your daily project list without losing any of its data or breaking links from later projects. Archiving solves this cleanly:
+When a grant ends or a sample series is finished, archive the project so it stays out of your daily workspace without breaking links from later work:
 
 1. Select the finished project in the **Projects** panel and choose **Archive** from its context menu (or double-click the project, tick the **Archived** check box, and click **Save**).
 2. To view archived projects at any time, click **Show Archived** in the Projects panel toolbar (`Ctrl+Shift+A` in the team client).
@@ -91,7 +91,7 @@ Right-click a project you own in the **Projects** panel and choose **Share...** 
 
 ## Deleting containers and using the Recycle Bin
 
-APS ELN distinguishes strictly between deleting an empty container (a Group, Project, or Folder) and deleting a scientific item tree (a Procedure, Specimen, or Action):
+Deleting an empty container (a Group, Project, or Folder) works differently from deleting a scientific item (a Procedure, Specimen, or Action):
 
 - **Deleting a Group** (**Delete Group**) never removes any projects; its projects return to the top level of the Projects panel.
 - **Deleting a Project or Folder** is permanent and is refused unless the container is completely empty. Even deleted items sitting in the **Recycle Bin** still belong to their original project and folder, so you must restore or permanently remove them before the container itself can be deleted.
@@ -107,7 +107,7 @@ When you delete a **Procedure**, **Specimen**, or **Action** in the center **Ite
 
 <GoingDeeper title="why Empty Bin sometimes keeps a deleted item">
 
-APS ELN protects scientific integrity across the whole notebook. A binned item may be cited as evidence or attached as a run on a hypothesis that is currently `InReview` or `Accepted` (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#submitting-a-conclusion-and-checking-the-content-seal`}>Chapter 10: Submitting a conclusion and checking the content seal</a>). It may also carry an electronic signature (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>). In either case, **Empty Bin** refuses to destroy that item tree while still removing unrelated binned items, and displays a message listing which records were retained and why.
+A binned item may still be cited as evidence or attached as a run on a hypothesis that is `InReview` or `Accepted` (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#submitting-a-conclusion-and-checking-the-content-seal`}>Chapter 10: Submitting a conclusion and checking the content seal</a>). It may also carry an electronic signature (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>). In either case, **Empty Bin** keeps that item tree, purges the other binned items, and tells you which records were kept and why.
 </GoingDeeper>
 
 ## Sources

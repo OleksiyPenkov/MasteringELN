@@ -17,13 +17,13 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-The fastest way to learn APS ELN is to record one real sample from start to finish. You will build the complete record for **Study A (`261015A`)**, a boron nitride and diamond-like carbon (BN/DLC) coating grown by magnetron sputtering and characterized across three instruments. Every raw file you need is in the book's demonstration bundle (`/MasteringELN/data/study-a/`). When you finish, your notebook will hold 6 items, 11 raw files with verified MD5 hashes, 23 `Reader` values, and 1 `Derived` wear-rate value (<a href="#fig-4-1">Figure 4-1</a>).
+The fastest way to learn APS ELN is to record one real sample from start to finish. In this chapter, you'll build **Study A (`261015A`)**, a boron nitride and diamond-like carbon (BN/DLC) coating grown by magnetron sputtering and tested on three instruments. All 11 raw files are in the book's demonstration bundle (`/MasteringELN/data/study-a/`). When you finish, your notebook will contain 6 items, 11 raw files with verified MD5 hashes, 23 `Reader` values, and 1 `Derived` wear-rate value (<a href="#fig-4-1">Figure 4-1</a>).
 
 ## Meet Study A: sample 261015A
 
-In Study A, a student deposits a BN/DLC coating (`261015A`) onto silicon and masked steel substrates in a magnetron sputtering system, then measures four things:
+You deposit a BN/DLC coating (`261015A`) onto silicon and masked steel substrates in a magnetron sputtering system, and then run four characterization steps:
 
-1. **Deposition (`Deposition 261015A`):** the sputtering system writes a structured summary (`Deposition_BN-DLC_(261015A)_2026-10-15_17-21-48.depo.json`), a run metadata file (`2026-10-15_17-21-48_BN-DLC(DLCTOP).run.json`), and a time-series log (`2026-10-15_17-21-48_BN-DLC(DLCTOP).tsv`).
+1. **Deposition (`Deposition 261015A`):** the sputtering system writes a summary file (`Deposition_BN-DLC_(261015A)_2026-10-15_17-21-48.depo.json`), a run metadata file (`2026-10-15_17-21-48_BN-DLC(DLCTOP).run.json`), and a time-series log (`2026-10-15_17-21-48_BN-DLC(DLCTOP).tsv`).
 2. **Coating thickness (`Thickness 261015A`):** a Filmetrics Profilm3D optical profiler scans across the masked step edge on the steel piece at three positions (`1.fibps`, `2.fibps`, `3.fibps`).
 3. **Hardness and modulus (`Indentation 261015A`):** an Anton Paar UNHT nanoindenter runs a 9-indent series on the coating (`BN-DLC(261015A).mit`).
 4. **Friction and wear (`Friction test 261015A` and `Wear track 261015A`):** a DaVinci 1000 tribometer runs a 1,000-cycle reciprocating test at $1\,\text{kgf}$ ($F_n = 9.81\,\text{N}$) (`BN-DLC.zrw`). Next, the optical profiler measures the cross-sectional area of the wear track at three positions (`wear 1.fibps`, `wear 2.fibps`, `wear 3.fibps`).

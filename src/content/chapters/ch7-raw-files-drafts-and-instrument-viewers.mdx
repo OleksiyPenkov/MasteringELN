@@ -18,7 +18,7 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Attaching raw files is the heart of an electronic laboratory notebook (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>). When you attach a measurement file in APS ELN, the program computes its MD5 checksum and generates a preview thumbnail. It then routes the file to one of 26 built-in **Content Viewer** plugins. In specialist viewers, you can also select evaluation regions or cycle intervals that are saved alongside the file for reproducible value extraction (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>).
+Every measurement starts with a raw file (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>). When you attach a file in APS ELN, the program records its MD5 checksum, builds a preview thumbnail, and opens it in one of 26 built-in **Content Viewer** plugins. In the specialist viewers, you can also mark step-height regions, tick valid indents, or set a friction cycle window. APS ELN saves those selections with the file so your extracted values stay reproducible (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9</a>).
 
 ## How file attachment and extension routing work
 
@@ -35,7 +35,7 @@ When you select a `.depo.json` file in the file browser, APS ELN can automatical
 
 APS ELN ships with 26 viewer plugins (`NOTATION.md`, Section 5). General-purpose viewers handle `.pdf`, `.html`, `.md` (Markdown), images (`.png`, `.jpg`, `.bmp`, `.tif`), columnar text (`.dat`, `.csv`, `.txt`, `.ascii`), and `.json`. Other viewers handle Office documents (`.xlsx`, `.docx`, `.pptx` via OLE), OriginLab projects (`.opju`), Gatan TEM images (`.dm3`), and LAMMPS simulations (`.lmpin`, `.dump`, `.data`).
 
-Five specialist viewers power the Study A (`261015A`) and Study B (`261014B`) workflows (<a href="#table-7-1">Table 7-1</a>):
+Five specialist viewers handle the files in Study A (`261015A`) and Study B (`261014B`) (<a href="#table-7-1">Table 7-1</a>):
 
 1. **Deposition (`.depo.json`, `.tsv`), Recipe (`.rcpx`), and DSC (`.dsc`):**
    - Attaching both the `.depo.json` snapshot and its paired `.tsv` log to the same **Procedure** unlocks the **Overview**, **Recipe**, **Pressure**, **Temperature**, **Gas Flow**, **Bias**, **V / I**, and **Stage** tabs. If the `.tsv` file is missing from the item, the viewer warns *Not attached to this item - charts unavailable*.
@@ -80,7 +80,7 @@ Five specialist viewers power the Study A (`261015A`) and Study B (`261014B`) wo
 
 ## Working drafts, external edits, and conflict resolution
 
-Double-clicking an attachment (or clicking **Open** in the viewer toolbar) opens it in an external Windows program such as OriginLab, Excel, or X-Ray Calc 3. APS ELN protects your stored file during external editing. It never hands the external program the file inside your notebook storage folder; instead, it writes a separate **local working copy** (<a href="#fig-7-1">Figure 7-1</a>).
+When you double-click an attachment (or click **Open** in the viewer toolbar), it opens in an external Windows program such as OriginLab, Excel, or X-Ray Calc 3. APS ELN never lets the external program edit the file inside your notebook storage folder directly. Instead, it writes a separate **local working copy** (<a href="#fig-7-1">Figure 7-1</a>).
 
 <Figure id="fig-7-1" number="7-1" src={`${import.meta.env.BASE_URL}/figures/fig-7-1-viewer-draft-lifecycle.svg`} alt="Three-stage diagram showing Instrument File on disk copied into Notebook Storage with MD5 hash and shared regions, and opened externally as a separate Working Draft that is saved back with Save Attachment Working Draft or discarded with Reload" caption="How APS ELN protects stored attachment bytes. Attaching a file copies it into notebook storage (2). Opening it externally creates a separate working draft (3) that only updates notebook storage when you choose Tools > Save Attachment Working Draft." />
 
@@ -100,7 +100,7 @@ For `.md` attachments and project Wiki pages (<a href={`${import.meta.env.BASE_U
 
 ## Replacing, moving, exporting, and viewing files outside a notebook
 
-When you right-click an attached file in the **Items** panel, you can manage its lifecycle without breaking links:
+Right-click any attached file in the **Items** panel to replace, rename, move, or export it without breaking its links:
 
 - **Reupload...:** replaces the stored bytes of the attachment with a new file from disk (keeping the same `file_id` and preserving compound file types such as `.depo.json`).
 - **Edit:** renames the attachment's display title or updates its description.
