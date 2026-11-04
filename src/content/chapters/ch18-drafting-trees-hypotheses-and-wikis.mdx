@@ -23,39 +23,21 @@ In <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenanc
 
 When the Record Agent built **Study A (`261015A`)** through `ELNCommunityMCP.exe` (`tribo_study/reports/record_report.md`), it had to handle two things beyond plain key extraction: viewer evaluation selections and multi-input `Derived` formulas.
 
-First, on `Thickness 261015A` (`Item 3`), scan `3.fibps` had a clean automatic step, while `1.fibps` and `2.fibps` needed the standard left and right pixel rectangles (`rect_a` and `rect_b` on the $556 \times 484$ pixel map). In MCP, `extract_file_key_values` accepts an optional `selection` JSON object for that call:
-
-```json
-{
-  "file_id": 6,
-  "selection": {
-    "rect_a": [69, 80, 208, 403],
-    "rect_b": [347, 80, 486, 403],
-    "pix_w": 556,
-    "pix_h": 484
-  }
-}
-```
-
-When `selection` is passed, `aps.fibps` (version 3) computes `Step Height` and `Step Height STD` from those exact rectangles and returns an `analysis_snapshot` object with `"mode": "regions"` and the rectangle coordinates. Similarly, on `BN-DLC.zrw` (`file_id = 5`), `aps.zrw` returns an `analysis_snapshot` recording the plateau cycle interval and file hash, and on `BN-DLC(261015A).mit` (`file_id = 4`), `aps.mit` returns an `analysis_snapshot` recording the 9 evaluated indents.
+First, on `Thickness 261015A` (`eln://item/3`), scan `3.fibps` had a clean automatic step, while `1.fibps` and `2.fibps` needed the standard left and right pixel rectangles (`rect_a` $= [69, 80, 208, 403]$ and `rect_b` $= [347, 80, 486, 403]$ on the $556 \times 484$ pixel map). In MCP, `extract_file_key_values` accepts an optional `selection` parameter (`rect_a`, `rect_b`, `pix_w`, and `pix_h`) for that call. When `selection` is passed, `aps.fibps` (version 3) computes `Step Height` and `Step Height STD` from those exact rectangles and returns an `analysis_snapshot` object with `"mode": "regions"` and the rectangle coordinates. Similarly, on `BN-DLC.zrw` (`file_id = 5`), `aps.zrw` returns an `analysis_snapshot` recording the plateau cycle interval and file hash, and on `BN-DLC(261015A).mit` (`file_id = 4`), `aps.mit` returns an `analysis_snapshot` recording the 9 evaluated indents.
 
 The agent passes that `analysis_snapshot` object **unchanged** into `add_values`. Because the snapshot is stored on the value, running `check_value_drift` later replays those exact rectangles, indents, or cycles without opening the GUI.
 
-Second, the agent stores the three `Wear Area` values (`value_id` `21`, `22`, and `23` on `Wear track 261015A`) and `Fn` (`value_id` `15`) and `Cycles` (`value_id` `16`) on `Friction test 261015A` (`Item 5`). It then computes the reciprocating wear rate by calling `add_derived_value`:
+Second, after storing the three `Wear Area` values (`value_id = 21, 22, 23` on `Wear track 261015A`) and `Fn` (`value_id = 15`) and `Cycles` (`value_id = 16`) on `Friction test 261015A` (`eln://item/5`), the agent calls `add_derived_value` with `formula_id: "wear_rate_reciprocating"` and `inputs: {"area": [21, 22, 23], "normal_force": 15, "cycles": 16}`. The server averages the three `Wear Area` inputs, calculates $K = A / (2 \cdot F_n \cdot N) = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$, and stores `value_id = 24` with source kind `Derived` and all five input value IDs:
 
-```json
-{
-  "item_id": 5,
-  "formula_id": "wear_rate_reciprocating",
-  "inputs": {
-    "area": [21, 22, 23],
-    "normal_force": 15,
-    "cycles": 16
-  }
-}
-```
-
-The server averages the three `Wear Area` inputs, calculates $K = A / (2 \cdot F_n \cdot N) = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$, and stores `value_id = 24` with source kind `Derived` and all five input value IDs (`21, 22, 23, 15, 16`).
+> **You:** Extract the step heights from `1.fibps`, `2.fibps`, and `3.fibps` on `Thickness 261015A` (using the standard Desktop left/right pixel regions whenever automatic step detection returns no step), then extract the three wear areas on `Wear track 261015A` and calculate the derived reciprocating wear rate on `Friction test 261015A`.
+>
+> **Assistant:** Stored all three step heights, the three wear areas, and the derived wear rate for sample `261015A`:
+> - **Step heights on `Thickness 261015A` (`eln://item/3`, `aps.fibps` v3):**
+>   - `1.fibps` (`file_id = 6`, `mode: "regions"`, rectangles $[69, 80, 208, 403]$ and $[347, 80, 486, 403]$ on $556 \times 484\,\text{px}$): $3.58 \times 10^{-7} \pm 1.90 \times 10^{-7}\,\text{m}$ ($358.3 \pm 189.7\,\text{nm}$, `value_id = 18`).
+>   - `2.fibps` (`file_id = 7`, `mode: "regions"`, same standard rectangles): $3.16 \times 10^{-7} \pm 1.09 \times 10^{-7}\,\text{m}$ ($316.0 \pm 109.3\,\text{nm}$, `value_id = 19`).
+>   - `3.fibps` (`file_id = 8`, automatic step): $3.55 \times 10^{-7} \pm 6.71 \times 10^{-8}\,\text{m}$ ($354.8 \pm 67.1\,\text{nm}$, `value_id = 20`).
+> - **Wear areas on `Wear track 261015A` (`eln://item/6`, `aps.fibps` v3):** $0.00620 \pm 0.00013\,\text{mm}^2$ (`wear 1.fibps`, `value_id = 21`), $0.00553 \pm 0.00057\,\text{mm}^2$ (`wear 2.fibps`, `value_id = 22`), and $0.00621 \pm 0.00014\,\text{mm}^2$ (`wear 3.fibps`, `value_id = 23`).
+> - **Derived wear rate on `Friction test 261015A` (`eln://item/5`):** `add_derived_value` (`wear_rate_reciprocating` v1, inputs `area: [21, 22, 23]`, `normal_force: 15`, `cycles: 16`) stored **Wear rate** $= 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$ (`value_id = 24`).
 
 <Remember>Never pass a `value` field to `add_derived_value`. The server calculates the number from the stored input values and refuses any call that tries to supply the result number from the client.</Remember>
 
@@ -73,6 +55,12 @@ APS ELN provides four dedicated MCP tools for maintaining existing values and fi
 
 All four tools refuse to touch signed items, deleted items, or records attached to or cited by a hypothesis in `InReview` or `Accepted`.
 
+> **You:** We re-extracted `Hardness` and `Modulus` on `Indentation 261015A` after upgrading `aps.mit` to version 2. Update the two stored values in place so their `reader_version` and 9-indent `analysis_snapshot` are current without creating duplicate rows.
+>
+> **Assistant:** Updated both values in place on `Indentation 261015A` (`eln://item/4`) via `update_value` (previous state preserved in the `Value` audit log; `dependent_derived_value_ids: []`):
+> - **Hardness (`value_id = 13`):** $5.92 \pm 0.47\,\text{GPa}$ (`Reader` `aps.mit` v2, `file_id = 4`, `mode: "automatic"` over 9 indents).
+> - **Modulus (`value_id = 14`):** $127.17 \pm 11.06\,\text{GPa}$ (`Reader` `aps.mit` v2, `file_id = 4`, `mode: "automatic"` over 9 indents).
+
 ## Drafting and updating Wiki pages
 
 You can also use an AI assistant to turn raw project data and literature notes into Project Wiki pages (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11: The five-section Project Wiki</a>):
@@ -83,6 +71,13 @@ You can also use an AI assistant to turn raw project data and literature notes i
 
 Both `wiki_create_page` and `wiki_update_page` are **all-or-nothing**. They validate every file type and upload-root path before writing; if any step fails, they roll back the new records and restore the previous `.md` body text automatically.
 
+> **You:** Create a Wiki page in the `Analysis` section of the Study A project summarizing the mechanical and tribological properties of sample 261015A with clickable links to each measurement item.
+>
+> **Assistant:** Created Wiki page **`BN/DLC 261015A Tribology Summary`** (`eln://item/7` under `Wiki / Analysis` in `Tribo study: BN/DLC coating (demonstration)`) with live record links:
+> - **Coating & deposition (`[[item:1]]`, `[[specimen:261015A]]`):** 46-period $\text{BN/DLC}$ multilayer on $\text{Si}_3\text{N}_4$ ($P = 0.267\,\text{Pa}$, bias $8\,\text{V}$, top $\text{DLC}$ layer $340\,\text{s}$), step height $316$–$358\,\text{nm}$ (`[[item:3]]`).
+> - **Mechanical properties (`[[item:4]]`):** $H_{\text{IT}} = 5.92 \pm 0.47\,\text{GPa}$ and $E_{\text{IT}} = 127.17 \pm 11.06\,\text{GPa}$ (`BN-DLC(261015A).mit`, 9 indents).
+> - **Friction & wear (`[[item:5]]`, `[[item:6]]`):** $\mu = 0.528 \pm 0.019$ at $F_n = 9.81\,\text{N}$ over $1000$ cycles (`BN-DLC.zrw`), mean wear area $0.00598\,\text{mm}^2$, and reciprocating wear rate $K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$.
+
 ## Preparing hypotheses and the human-in-the-loop boundary
 
 In <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 10</a>, you saw how a hypothesis links a proposal, experimental runs, cited evidence, and a conclusion across two human review gates. Through MCP, an agent can prepare every part of that record for you (<a href="#fig-18-1">Figure 18-1</a> and <a href="#table-18-1">Table 18-1</a>):
@@ -92,6 +87,13 @@ In <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#w
 3. **Attach runs and cite evidence (`attach_run` and `cite_evidence`):** once the hypothesis is `Approved`, the agent attaches the `Run` or `Reference` items and cites the key items, files (`file_id`), or values (`value_id`). The server records each file's MD5 hash and each value's stored number at citation time, and bumps the hypothesis's integer `version`.
 4. **Submit the conclusion (`submit_conclusion`):** the agent calls `get_hypothesis` to read the current `version`, then calls `submit_conclusion` with the Markdown `conclusion` (including `[[item:N]]` links), `outcome` (`Supported`, `Refuted`, or `Inconclusive`), and `version`. The hypothesis moves to `InReview` (`Needs acceptance`).
 5. **Wait for Gate 2 in the GUI:** you (or your supervisor) inspect the cited curves and values in the Desktop GUI and click **Accept** to seal the conclusion.
+
+> **You:** I approved the hypothesis on sample 261015A in Desktop. Attach `Deposition 261015A` as its experimental run, cite the indentation hardness, steady-state COF, and derived wear rate as evidence, and submit the conclusion as `Supported` for my final review.
+>
+> **Assistant:** Attached the run, recorded the three snapshot-hashed citations, and submitted the conclusion on hypothesis **`DLC top-layer wear protection on 46-period BN/DLC`** (`hypothesis_id = 1`, now in `InReview` / `Needs acceptance`, `version = 5`):
+> - **Attached Run:** `Deposition 261015A` (`eln://item/1`, role `Run`).
+> - **Cited Evidence:** `Hardness` $= 5.92 \pm 0.47\,\text{GPa}$ (`value_id = 13` on `[[item:4]]`), `COF` $= 0.528 \pm 0.019$ (`value_id = 17` on `[[item:5]]`), and `Wear rate` $= 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$ (`value_id = 24` on `[[item:5]]`).
+> - **Submitted Conclusion (`Supported`):** Ready for Gate 2 (**Accept**) in **Project > Hypotheses** in the Desktop window.
 
 <Figure id="fig-18-1" number="18-1" src={`${import.meta.env.BASE_URL}/figures/fig-18-1-human-agent-division.svg`} alt="Two columns comparing what the AI Agent does via MCP (build trees, upload raw files, run readers, compute Derived values, draft Wiki pages, propose hypotheses, cite evidence, audit drift) versus what the Human Scientist does in the Desktop GUI (inspect previews, approve protocols, Gate 1 Approve proposal, Gate 2 Accept and Seal conclusion, apply Electronic Signature)" caption="The division of labor between an AI agent and a human scientist in APS ELN. The agent handles mechanical tree creation, reader extraction, derived calculations, Wiki drafting, evidence citation, and drift audits. The human scientist owns every visual inspection, review gate, and signature." />
 
