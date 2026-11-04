@@ -11,7 +11,6 @@ inThisChapter:
 ---
 import Tip from '../../components/textbook/Tip.astro';
 import Remember from '../../components/textbook/Remember.astro';
-import Warning from '../../components/textbook/Warning.astro';
 import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
 import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
@@ -27,6 +26,8 @@ You deposit a BN/DLC coating (`261015A`) onto silicon and masked steel substrate
 2. **Coating thickness (`Thickness 261015A`):** a Filmetrics Profilm3D optical profiler scans across the masked step edge on the steel piece at three positions (`1.fibps`, `2.fibps`, `3.fibps`).
 3. **Hardness and modulus (`Indentation 261015A`):** an Anton Paar UNHT nanoindenter runs a 9-indent series on the coating (`BN-DLC(261015A).mit`).
 4. **Friction and wear (`Friction test 261015A` and `Wear track 261015A`):** a DaVinci 1000 tribometer runs a 1,000-cycle reciprocating test at $1\,\text{kgf}$ ($F_n = 9.81\,\text{N}$) (`BN-DLC.zrw`). Next, the optical profiler measures the cross-sectional area of the wear track at three positions (`wear 1.fibps`, `wear 2.fibps`, `wear 3.fibps`).
+
+<Figure id="fig-4-1" number="4-1" src={`${import.meta.env.BASE_URL}/figures/fig-4-1-study-a-complete.svg`} alt="Four-level hierarchy of Study A (261015A) showing how the six items (Procedure Deposition 261015A, Specimen 261015A, three child Actions, and Wear track 261015A nested under Friction test 261015A) link to 11 raw files and 24 provenance-backed values" caption="The Study A (261015A) item tree, raw files, and provenance values. Notice the four-level nesting at the bottom: Wear track 261015A is a child of Friction test 261015A, and its three Wear Area values feed the Derived wear rate K." />
 
 <p id="table-4-1" class="table-caption"><strong>Table 4-1:</strong> The six items and eleven raw files of Study A (<code>261015A</code>).</p>
 
@@ -54,8 +55,6 @@ Always build the entire item tree before you start attaching files (<a href={`${
    - `Indentation 261015A` (**Action type:** `Indentation`)
    - `Friction test 261015A` (**Action type:** `Tribotest`)
 5. Select `Friction test 261015A` (not the specimen!) and choose **Item > New Action** to create its child action `Wear track 261015A` (**Action type:** `3D Profiling`).
-
-<Warning title="saving a new specimen before adding specimen properties">In current builds, the new-specimen dialog does not retain custom entries on the properties grid before its first **Save**. Create and **Save** the specimen first, then select it and choose **Item > Edit** if you want to enter custom specimen properties.</Warning>
 
 <InELN>If your laboratory equipment is not yet listed in the **Equipment** drop-down, select an **Item type** and **Action type** first. Then click the **+** button beside **Equipment** (tooltip: **Add new equipment**) and fill in **Model**, **Manufacturer**, and **Location**; all three fields are required to enable **OK**.</InELN>
 
@@ -101,8 +100,6 @@ $$
 5. Check the previewed result ($K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$) and click **Save**.
 6. Right-click the root procedure `Deposition 261015A` and choose **Check Value Sources...**. APS ELN re-reads all 11 source files through their current viewer plugins and re-evaluates the `Derived` wear rate from its stored inputs. It then reports all 24 values unchanged (<a href="#fig-4-1">Figure 4-1</a>).
 
-<Figure id="fig-4-1" number="4-1" src={`${import.meta.env.BASE_URL}/figures/fig-4-1-study-a-complete.svg`} alt="Summary diagram of Study A (261015A) showing the 11 attached raw files with verified MD5 hashes on the left flowing into 23 Reader values and 1 Derived wear-rate value on the right" caption="The completed Study A (261015A) record. Eleven raw files across four instruments feed 23 Reader values and 1 Derived reciprocating wear rate, all verified in one pass by Check Value Sources." />
-
 <GoingDeeper title="what Check Value Sources verifies on a Derived value">
 
 When you run **Check Value Sources...** on an item tree (or call `check_value_drift` through MCP), APS ELN checks both levels of provenance:
@@ -116,6 +113,6 @@ When you run **Check Value Sources...** on an item tree (or call `check_value_dr
 
 - **Study A demonstration record and verification report:** `zenodo/demonstration/tribo_study/reports/record_report.md` and `content_check.md` in the ELN data deposit ([doi:10.5281/zenodo.23466959](https://doi.org/10.5281/zenodo.23466959)). Gives the exact 6 items, 11 files (`file_id` 1–11 with MD5 hashes), 23 `Reader` values (`aps.deposition` v1, `aps.fibps` v3, `aps.mit` v2, `aps.zrw` v2), and 1 `Derived` value (`value_id` 24, `wear_rate_reciprocating` v1, $K = 3.04929 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$).
 - **Student checklist for Study A:** `review/demo_A_student_checklist.md` (creating the full tree first, naming files without results, and extracting values from all attached files).
-- **APS ELN Community Help:** `Items.html` (**Item > New Procedure**, **Item > New Specimen**, **Item > New Action**, the **+** button for **Add new equipment**, and the new-specimen property save warning); `FilesAndNotes.html` (**Item > Add File**, single-file attach vs. **Review files** -> **Files to attach**, and `.depo.json` compound extension routing); `Values.html` (**Extract Values**, **Extract values from N files...**, **Remember choices for this reader**, `<Key> STD` tolerance pairing, **Add > Derived Value...** with `wear_rate_reciprocating`, multi-select `Wear area` inputs, and **Check Value Sources...**).
+- **APS ELN Community Help:** `Items.html` (**Item > New Procedure**, **Item > New Specimen**, **Item > New Action**, and the **+** button for **Add new equipment**); `FilesAndNotes.html` (**Item > Add File**, single-file attach vs. **Review files** -> **Files to attach**, and `.depo.json` compound extension routing); `Values.html` (**Extract Values**, **Extract values from N files...**, **Remember choices for this reader**, `<Key> STD` tolerance pairing, **Add > Derived Value...** with `wear_rate_reciprocating`, multi-select `Wear area` inputs, and **Check Value Sources...**).
 
 Cross-references: <a href={`${import.meta.env.BASE_URL}/introduction#beyond-the-book`}>Introduction: Beyond the Book</a>; <a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#four-rules-that-keep-your-data-trail-unbroken`}>Chapter 1: Four rules that keep your data trail unbroken</a>; <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2: Creating a local notebook in Community</a>; <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Reading the item tree</a>.

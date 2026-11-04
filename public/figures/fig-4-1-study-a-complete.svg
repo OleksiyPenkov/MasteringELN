@@ -1,22 +1,131 @@
-<svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
-  <rect x="10" y="12" width="265" height="236" rx="6" fill="#f7f9fb" stroke="#1a5276" stroke-width="1.6"/>
-  <text x="24" y="38" font-size="15" font-weight="700" fill="#1a5276">Attached Raw Files (11)</text>
-  <text x="24" y="68" font-size="14" fill="#222">Deposition: .depo.json, .tsv</text>
-  <text x="24" y="96" font-size="14" fill="#222">Thickness: 1.fibps, 2.fibps, 3.fibps</text>
-  <text x="24" y="124" font-size="14" fill="#222">Indentation: BN-DLC(261015A).mit</text>
-  <text x="24" y="152" font-size="14" fill="#222">Friction: BN-DLC.zrw</text>
-  <text x="24" y="180" font-size="14" fill="#222">Wear track: wear 1..3.fibps</text>
-  <text x="24" y="220" font-size="14" font-weight="600" fill="#00695c">check_storage: 11 / 11 MD5 OK</text>
+<svg viewBox="0 0 600 382" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <!-- Background & Header Banner -->
+  <rect x="6" y="6" width="588" height="370" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.6"/>
+  <rect x="6" y="6" width="588" height="32" rx="8" fill="#1a5276"/>
+  <rect x="6" y="24" width="588" height="14" fill="#1a5276"/>
+  <text x="18" y="27" font-size="14" font-weight="700" fill="#ffffff">1. Item Tree (6 Items)</text>
+  <text x="234" y="27" font-size="14" font-weight="700" fill="#d4e6f1">2. Raw Files (11)</text>
+  <text x="394" y="27" font-size="14" font-weight="700" fill="#a7f3d0">3. Provenance Values (24)</text>
 
-  <line x1="275" y1="130" x2="315" y2="130" stroke="#00695c" stroke-width="2.5"/>
-  <polygon points="315,130 307,125 307,135" fill="#00695c"/>
+  <!-- Vertical column dividers -->
+  <line x1="222" y1="38" x2="222" y2="338" stroke="#e2e8f0" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <line x1="382" y1="38" x2="382" y2="338" stroke="#e2e8f0" stroke-width="1.2" stroke-dasharray="4,3"/>
 
-  <rect x="318" y="12" width="272" height="236" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.6"/>
-  <text x="332" y="38" font-size="15" font-weight="700" fill="#00695c">Extracted &amp; Derived Values (24)</text>
-  <text x="332" y="68" font-size="14" fill="#222">Deposition: 12 Reader values</text>
-  <text x="332" y="96" font-size="14" fill="#222">Step height: 3 Reader (aps.fibps 3)</text>
-  <text x="332" y="124" font-size="14" fill="#222">H = 5.92 GPa, E = 127.2 GPa</text>
-  <text x="332" y="152" font-size="14" fill="#222">Fn = 9.81 N, N = 1000, COF = 0.528</text>
-  <text x="332" y="180" font-size="14" fill="#222">Wear area: 3 Reader (aps.fibps 3)</text>
-  <text x="332" y="216" font-size="14" font-weight="700" fill="#1a5276">Derived K = A / (2 · Fn · N)</text>
+  <!-- Tree connector lines -->
+  <!-- Proc (Row 1) down to Specimen (Row 2) -->
+  <path d="M 20 84 L 20 112 L 28 112" fill="none" stroke="#1a5276" stroke-width="1.8"/>
+  <!-- Specimen (Row 2) down to Actions 3, 4, 5 (Rows 3, 4, 5) -->
+  <path d="M 34 128 L 34 252 L 42 252" fill="none" stroke="#1a5276" stroke-width="1.8"/>
+  <line x1="34" y1="157" x2="42" y2="157" stroke="#1a5276" stroke-width="1.8"/>
+  <line x1="34" y1="204" x2="42" y2="204" stroke="#1a5276" stroke-width="1.8"/>
+  <!-- Friction test (Row 5) down to Wear track (Row 6) -->
+  <path d="M 48 274 L 48 306 L 56 306" fill="none" stroke="#c62828" stroke-width="2"/>
+
+  <!-- ================= ROW 1: Procedure Deposition 261015A ================= -->
+  <rect x="12" y="46" width="202" height="38" rx="5" fill="#dbe5fb" stroke="#1a5276" stroke-width="1.6"/>
+  <text x="20" y="62" font-size="14" font-weight="700" fill="#1a5276">Proc: Deposition</text>
+  <text x="20" y="78" font-size="14" font-weight="600" fill="#1e293b">261015A</text>
+
+  <line x1="214" y1="65" x2="226" y2="65" stroke="#1a5276" stroke-width="1.6"/>
+  <polygon points="228,65 222,61.5 222,68.5" fill="#1a5276"/>
+
+  <rect x="230" y="46" width="144" height="38" rx="5" fill="#f8fafc" stroke="#64748b" stroke-width="1.3"/>
+  <text x="238" y="62" font-size="14" font-weight="600" fill="#1e293b">.depo.json, .tsv</text>
+  <text x="238" y="78" font-size="14" fill="#475569">+ .run.json (3)</text>
+
+  <line x1="374" y1="65" x2="386" y2="65" stroke="#00695c" stroke-width="1.6"/>
+  <polygon points="388,65 382,61.5 382,68.5" fill="#00695c"/>
+
+  <rect x="390" y="46" width="196" height="38" rx="5" fill="#e0f2f1" stroke="#00695c" stroke-width="1.4"/>
+  <text x="398" y="62" font-size="14" font-weight="700" fill="#00695c">12 Reader values</text>
+  <text x="398" y="78" font-size="14" fill="#1e293b">10 Cond + 2 Res</text>
+
+  <!-- ================= ROW 2: Specimen 261015A ================= -->
+  <rect x="28" y="94" width="186" height="34" rx="5" fill="#e8f1f8" stroke="#2980b9" stroke-width="1.6"/>
+  <text x="36" y="116" font-size="14" font-weight="700" fill="#1a5276">Specimen: 261015A</text>
+  <text x="232" y="116" font-size="14" font-style="italic" fill="#475569">BN/DLC coated sample record</text>
+
+  <!-- ================= ROW 3: Action Thickness 261015A ================= -->
+  <rect x="42" y="138" width="172" height="38" rx="5" fill="#f7f9fb" stroke="#334155" stroke-width="1.4"/>
+  <text x="50" y="154" font-size="14" font-weight="700" fill="#334155">Action: Thickness</text>
+  <text x="50" y="170" font-size="14" fill="#1e293b">261015A</text>
+
+  <line x1="214" y1="157" x2="226" y2="157" stroke="#334155" stroke-width="1.6"/>
+  <polygon points="228,157 222,153.5 222,160.5" fill="#334155"/>
+
+  <rect x="230" y="138" width="144" height="38" rx="5" fill="#f8fafc" stroke="#64748b" stroke-width="1.3"/>
+  <text x="238" y="154" font-size="14" font-weight="600" fill="#1e293b">1..3.fibps (3)</text>
+  <text x="238" y="170" font-size="14" fill="#475569">3D step scans</text>
+
+  <line x1="374" y1="157" x2="386" y2="157" stroke="#00695c" stroke-width="1.6"/>
+  <polygon points="388,157 382,153.5 382,160.5" fill="#00695c"/>
+
+  <rect x="390" y="138" width="196" height="38" rx="5" fill="#e0f2f1" stroke="#00695c" stroke-width="1.4"/>
+  <text x="398" y="154" font-size="14" font-weight="700" fill="#00695c">3 Reader: Step Height</text>
+  <text x="398" y="170" font-size="14" fill="#1e293b">358, 316, 355 nm</text>
+
+  <!-- ================= ROW 4: Action Indentation 261015A ================= -->
+  <rect x="42" y="185" width="172" height="38" rx="5" fill="#f7f9fb" stroke="#334155" stroke-width="1.4"/>
+  <text x="50" y="201" font-size="14" font-weight="700" fill="#334155">Action: Indentation</text>
+  <text x="50" y="217" font-size="14" fill="#1e293b">261015A</text>
+
+  <line x1="214" y1="204" x2="226" y2="204" stroke="#334155" stroke-width="1.6"/>
+  <polygon points="228,204 222,200.5 222,207.5" fill="#334155"/>
+
+  <rect x="230" y="185" width="144" height="38" rx="5" fill="#f8fafc" stroke="#64748b" stroke-width="1.3"/>
+  <text x="238" y="201" font-size="14" font-weight="600" fill="#1e293b">261015A.mit (1)</text>
+  <text x="238" y="217" font-size="14" fill="#475569">9 nanoindents</text>
+
+  <line x1="374" y1="204" x2="386" y2="204" stroke="#00695c" stroke-width="1.6"/>
+  <polygon points="388,204 382,200.5 382,207.5" fill="#00695c"/>
+
+  <rect x="390" y="185" width="196" height="38" rx="5" fill="#e0f2f1" stroke="#00695c" stroke-width="1.4"/>
+  <text x="398" y="201" font-size="14" font-weight="700" fill="#00695c">2 Reader: H &amp; E</text>
+  <text x="398" y="217" font-size="14" fill="#1e293b">5.92 &amp; 127.2 GPa</text>
+
+  <!-- ================= ROW 5: Action Friction test 261015A ================= -->
+  <rect x="42" y="232" width="172" height="44" rx="5" fill="#f7f9fb" stroke="#334155" stroke-width="1.4"/>
+  <text x="50" y="250" font-size="14" font-weight="700" fill="#334155">Action: Friction test</text>
+  <text x="50" y="268" font-size="14" fill="#1e293b">261015A</text>
+
+  <line x1="214" y1="254" x2="226" y2="254" stroke="#334155" stroke-width="1.6"/>
+  <polygon points="228,254 222,250.5 222,257.5" fill="#334155"/>
+
+  <rect x="230" y="232" width="144" height="44" rx="5" fill="#f8fafc" stroke="#64748b" stroke-width="1.3"/>
+  <text x="238" y="250" font-size="14" font-weight="600" fill="#1e293b">BN-DLC.zrw (1)</text>
+  <text x="238" y="268" font-size="14" fill="#475569">Tribometer run</text>
+
+  <line x1="374" y1="254" x2="386" y2="254" stroke="#00695c" stroke-width="1.6"/>
+  <polygon points="388,254 382,250.5 382,257.5" fill="#00695c"/>
+
+  <rect x="390" y="232" width="196" height="44" rx="5" fill="#e0f2f1" stroke="#00695c" stroke-width="1.5"/>
+  <text x="398" y="250" font-size="14" font-weight="700" fill="#00695c">3 Reader: Fn, N, COF</text>
+  <text x="398" y="268" font-size="14" font-weight="700" fill="#1a5276">+ 1 Derived K</text>
+  <text x="64" y="320" font-size="14" fill="#7f1d1d">child of Friction test</text>
+  <!-- ================= ROW 6: Child Action Wear track 261015A ================= -->
+  <rect x="56" y="286" width="158" height="42" rx="5" fill="#fff8f6" stroke="#c62828" stroke-width="1.6"/>
+  <text x="64" y="304" font-size="14" font-weight="700" fill="#c62828">Action: Wear track</text>
+  <text x="64" y="320" font-size="13.5" fill="#7f1d1d">child of Friction test</text>
+
+  <line x1="214" y1="307" x2="226" y2="307" stroke="#c62828" stroke-width="1.6"/>
+  <polygon points="228,307 222,303.5 222,310.5" fill="#c62828"/>
+
+  <rect x="230" y="286" width="144" height="42" rx="5" fill="#f8fafc" stroke="#64748b" stroke-width="1.3"/>
+  <text x="238" y="304" font-size="14" font-weight="600" fill="#1e293b">wear 1..3.fibps</text>
+  <text x="238" y="320" font-size="14" fill="#475569">Groove scans (3)</text>
+
+  <line x1="374" y1="307" x2="386" y2="307" stroke="#00695c" stroke-width="1.6"/>
+  <polygon points="388,307 382,303.5 382,310.5" fill="#00695c"/>
+
+  <rect x="390" y="286" width="196" height="42" rx="5" fill="#e0f2f1" stroke="#00695c" stroke-width="1.4"/>
+  <text x="398" y="304" font-size="14" font-weight="700" fill="#00695c">3 Reader: Wear Area A</text>
+  <text x="398" y="320" font-size="14" fill="#1e293b">Mean A feeds K ↑</text>
+
+  <!-- Upward provenance arrow from Wear Area A to Derived K -->
+  <line x1="572" y1="286" x2="572" y2="278" stroke="#1a5276" stroke-width="2"/>
+  <polygon points="572,276 568,282 576,282" fill="#1a5276"/>
+
+  <!-- Footer verification bar -->
+  <rect x="12" y="340" width="574" height="28" rx="4" fill="#f0fdf4" stroke="#00695c" stroke-width="1.2"/>
+  <text x="299" y="359" text-anchor="middle" font-size="14" font-weight="700" fill="#00695c">Check Value Sources: 11 / 11 MD5 OK · 23 Reader + 1 Derived verified</text>
 </svg>

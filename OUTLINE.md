@@ -139,6 +139,7 @@ In This Chapter:
 Section outline:
 1. **Meet Study A: sample `261015A` (a BN/DLC tribological coating).**
    - What was made and measured: a boron nitride / diamond-like carbon coating deposited on silicon and masked steel substrates (`Deposition 261015A`), measured for film thickness across the masked step (`Thickness 261015A`, three `.fibps` scans), hardness and modulus (`Indentation 261015A`, `.mit` file with 9 indents), reciprocating friction (`Friction test 261015A`, `.zrw` file at $1\,\text{kgf} = 9.81\,\text{N}$, $1000$ cycles), and wear track area (`Wear track 261015A`, three `.fibps` scans).
+   - Fig 4-1 (`fig-4-1-study-a-complete.svg`): The Study A (`261015A`) four-level item tree, 11 raw files, and 24 provenance-backed values.
    - Table 4-1: The 6 items and 11 raw files of Study A (`261015A`) from the downloadable bundle (`public/data/study-a/`).
    - Sources: Demo:A (`tribo_study/reports/record_report.md`), `review/demo_A_student_checklist.md`.
 2. **Step 1: Build the whole item tree first.**
@@ -150,7 +151,6 @@ Section outline:
      4. `Indentation 261015A` (`Action` under `261015A`, Action type `Indentation`)
      5. `Friction test 261015A` (`Action` under `261015A`, Action type `Tribotest`)
      6. `Wear track 261015A` (`Action` under `Friction test 261015A`, Action type `3D Profiling`)
-   - Warning: When creating a new Specimen, click **Save** first and then use **Item > Edit** if you need to add custom specimen properties (`C:Help:Items`).
    - Sources: C:Help:Items, Demo:A.
 3. **Step 2: Attach the 11 raw files to their actions.**
    - Selecting each item and choosing **Item > Add File** (or clicking **Add File**).
@@ -170,7 +170,6 @@ Section outline:
 5. **Step 4: Compute the reciprocating wear rate as a `Derived` value and verify the record.**
    - Right-clicking `Friction test 261015A` and choosing **Add > Derived Value...**, selecting `wear_rate_reciprocating` ($K = A / (2 \cdot F_n \cdot N)$), multi-selecting the three `Wear Area` values from `Wear track 261015A` plus `Fn` and `Cycles`, to store $K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$ with full input provenance.
    - Right-clicking `Deposition 261015A` and choosing **Check Value Sources...** to confirm all 24 values match their source files and formula inputs.
-   - Fig 4-1 (`fig-4-1-study-a-complete.svg`): The completed Study A (`261015A`) tree and its 24 provenance-backed values.
    - Sources: C:Help:Values, Demo:A.
 
 ---
