@@ -2,6 +2,12 @@
 
 _Updated after every work session: what changed, what is unresolved, and what the author must decide next._
 
+## 2026-11-05 (DSH / OMP Setup Update): Replaced Claude Code / Codex MCP setup with DeepSeek Harness (DSH) and OMP
+
+**Done**
+- Updated `src/content/chapters/ch15-connecting-an-ai-agent-to-your-notebook.mdx`, `src/content/chapters/introduction.mdx`, `public/figures/fig-15-1-mcp-architecture.svg`, and `OUTLINE.md` to replace Claude Code / Codex registration instructions with **DeepSeek Harness (DSH)** (`$DSH_HOME/profiles/web/cordis.patch.yml`) and **OMP** (`~/.omp/agent/mcp.json`) configuration for `ELNMCPServer.exe`.
+- Rebuilt and verified all web and PDF gates, and deployed the updated web edition and `Mastering-ELN.pdf` to `Z:\MasteringELN\` and GitHub Pages (`https://oleksiypenkov.github.io/MasteringELN/`).
+
 ## 2026-11-04 (First Public Release `v1.0.0` & GitHub Pages): Published Edition 1.0.0 on GitHub Releases and GitHub Pages
 
 **Done**

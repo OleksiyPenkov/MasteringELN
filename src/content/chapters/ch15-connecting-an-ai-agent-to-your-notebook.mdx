@@ -6,7 +6,7 @@ order: 150
 inThisChapter:
   - 'Understanding how the ELN Model Context Protocol (MCP) server works'
   - 'Launching ELNCommunityMCP.exe with --notebook, --upload-root, and --plugins'
-  - Registering ELNMCPServer.exe with Claude Code in a team laboratory
+  - Registering ELNMCPServer.exe with DSH or OMP in a team laboratory
   - Knowing the security, upload-root, and human-review boundaries enforced by the server
 ---
 import Tip from '../../components/textbook/Tip.astro';
@@ -18,7 +18,7 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Instead of clicking through menus for every repetitive check, you can connect an AI assistant such as Claude Code or Codex to APS ELN through the **Model Context Protocol (MCP)** server. The assistant can search across projects, inspect time-series logs, and audit every stored value against its raw file in seconds. It can also fit an X-ray reflectivity curve (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 17</a>) and build structured experiment trees (<a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>), all under the server's built-in safety boundaries (<a href="#fig-15-1">Figure 15-1</a>).
+Instead of clicking through menus for every repetitive check, you can connect an AI assistant such as DeepSeek Harness (DSH) or OMP to APS ELN through the **Model Context Protocol (MCP)** server. The assistant can search across projects, inspect time-series logs, and audit every stored value against its raw file in seconds. It can also fit an X-ray reflectivity curve (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 17</a>) and build structured experiment trees (<a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>), all under the server's built-in safety boundaries (<a href="#fig-15-1">Figure 15-1</a>).
 
 ## What the ELN MCP server does
 
@@ -27,7 +27,7 @@ Both editions of APS ELN include a command-line MCP host executable installed ri
 - **`ELNCommunityMCP.exe` (APS ELN Community):** opens a local format 5 `.sqlite` notebook and its attachment folder on your computer.
 - **`ELNMCPServer.exe` (APS ELN "For Teams"):** connects to your shared laboratory MySQL and WebDAV server using your workstation's configuration.
 
-<Figure id="fig-15-1" number="15-1" src={`${import.meta.env.BASE_URL}/figures/fig-15-1-mcp-architecture.svg`} alt="Architecture diagram showing AI Client (Claude Code / Codex) talking over line-based JSON-RPC stdio to the ELN MCP Host (ELNCommunityMCP.exe or ELNMCPServer.exe with 26 viewer plugins), which accesses the Notebook DB, Attachment Store, and --upload-root sandbox under strict guardrails" caption="How an AI assistant connects to APS ELN. The client launches the MCP host over standard input/output (stdio). The host loads the same 26 viewer plugins (.bpl) and enforces project scope, signed-item locks, upload-root confinement, and human review gates." />
+<Figure id="fig-15-1" number="15-1" src={`${import.meta.env.BASE_URL}/figures/fig-15-1-mcp-architecture.svg`} alt="Architecture diagram showing AI Client (DSH / OMP) talking over line-based JSON-RPC stdio to the ELN MCP Host (ELNCommunityMCP.exe or ELNMCPServer.exe with 26 viewer plugins), which accesses the Notebook DB, Attachment Store, and --upload-root sandbox under strict guardrails" caption="How an AI assistant connects to APS ELN. The client launches the MCP host over standard input/output (stdio). The host loads the same 26 viewer plugins (.bpl) and enforces project scope, signed-item locks, upload-root confinement, and human review gates." />
 
 When an AI client starts the MCP host, they communicate over standard input and standard output (`stdio`) using one UTF-8 JSON-RPC 2.0 message per line. The MCP host loads the same scientific domain model and the same 26 `.bpl` viewer plugins as the Desktop GUI. Calling `extract_file_key_values` from an agent therefore runs the exact same reader code (`aps.deposition`, `aps.fibps`, `aps.mit`, `aps.zrw`, `aps.xrcx`) as clicking **Extract Values** on screen (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>).
 
@@ -64,19 +64,41 @@ If your `.sqlite` notebook already remembers its attachment folder (<a href={`${
 
 <Warning title="never pass --config to ELNCommunityMCP.exe">`--config` is a Desktop-only flag (`ELNCommunity.exe`). `ELNCommunityMCP.exe` takes `--notebook`, `--upload-root`, `--plugins`, and optional `--storage`, and it only opens an existing format 5 notebook; it never creates or migrates a database.</Warning>
 
-## Registering with Claude Code in a team laboratory
+## Registering with DSH or OMP in a team laboratory
 
 In a team laboratory running the Commercial edition, the installer places `ELNMCPServer.exe` in `C:\Program Files\E-LabNotebook3\`.
 
-<InTeamLab title="registering ELNMCPServer.exe with Claude Code and clicking eln:// links">
+<InTeamLab title="registering ELNMCPServer.exe with DSH or OMP and clicking eln:// links">
 
-`ELNMCPServer.exe` reads your server connection settings, credentials, WebDAV URL, and upload root directly from the Windows Registry configured by the Desktop client. You can therefore register it globally in Claude Code with one command:
+`ELNMCPServer.exe` reads your server connection settings, credentials, WebDAV URL, and upload root directly from the Windows Registry configured by the Desktop client. You can register it in either **OMP** or **DeepSeek Harness (DSH)**.
 
-```text
-claude mcp add -s user eln -- "C:\Program Files\E-LabNotebook3\ELNMCPServer.exe"
+**In OMP (`~/.omp/agent/mcp.json`):** add the `eln` entry under `"mcpServers"`:
+
+```json
+{
+  "mcpServers": {
+    "eln": {
+      "type": "stdio",
+      "command": "C:\\Program Files\\E-LabNotebook3\\ELNMCPServer.exe",
+      "enabled": true
+    }
+  }
+}
 ```
 
-Run `claude mcp list` to verify that `eln: C:\Program Files\E-LabNotebook3\ELNMCPServer.exe (user)` appears. (If you upgraded from an older 32-bit build in `C:\Program Files (x86)\E-LabNotebook3\`, run `claude mcp remove -s user eln` first and re-register the 64-bit path.)
+**In DeepSeek Harness (`$DSH_HOME/profiles/web/cordis.patch.yml`):** add the `eln` server to the `mcp-manager` configuration:
+
+```yaml
+- id: mcp-manager
+  config:
+    servers:
+      eln:
+        transport: stdio
+        command: 'C:\Program Files\E-LabNotebook3\ELNMCPServer.exe'
+        enabled: true
+```
+
+(If you upgraded from an older 32-bit build in `C:\Program Files (x86)\E-LabNotebook3\`, update the `command` path to `C:\Program Files\E-LabNotebook3\ELNMCPServer.exe`.)
 
 Every MCP tool that returns an item (`list_items`, `get_item`, `create_item`, `update_item`) includes a clickable `url` field such as `eln://item/42`. Because the Desktop client registers the `eln://` protocol handler in Windows on startup, clicking `eln://item/42` in a Markdown-rendering chat window focuses the Desktop application and jumps straight to item 42.
 
@@ -111,7 +133,7 @@ Diagnostic messages from viewer packages go to `stderr` so `stdout` carries pure
 ## Sources
 
 - **APS ELN Community Help:** `MCP.html` (preparing a local session, closing the Desktop first, `--notebook`, `--upload-root`, `--plugins`, and `--storage` flags, default install path `%LocalAppData%\Programs\ELN Community`, line-based JSON-RPC 2.0 stdio transport, the 70 registered tools, read-only session mode, and write/review boundaries).
-- **APS ELN Commercial ("For Teams") Help:** `AIIntegration.html` (`ELNMCPServer.exe`, the nine tool categories, Windows Registry configuration sharing, `claude mcp add -s user eln`, 64-bit path migration, and clickable `eln://item/N` URLs); `Projects.html` (**Copy MCP Link**).
+- **APS ELN Commercial ("For Teams") Help:** `AIIntegration.html` (`ELNMCPServer.exe`, the nine tool categories, Windows Registry configuration sharing, 64-bit path migration, and clickable `eln://item/N` URLs); `Projects.html` (**Copy MCP Link**).
 - **Download tool specification:** `APS-ELN-Community/docs/note-download-file-mcp-tool.md` (`CheckUploadPathAllowed` confinement rules shared by `upload_file` and `download_file`).
 - **ELN provenance study (`arXiv:2610.27859`):** Section 2.4 (MCP architecture and agent operations).
 

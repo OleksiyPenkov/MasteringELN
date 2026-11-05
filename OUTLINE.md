@@ -24,7 +24,7 @@ Sections (fixed by `STYLE.md §3`):
 5. **Where to Go from Here:** Four linked reading routes:
    - Brand new to ELN: Chapters 1 -> 2 -> 3 -> 4;
    - Recording a sample today: Chapter 4, then Part 2 (Chapters 5–9);
-   - Connecting an AI agent (Claude Code or Codex): Part 4 (Chapters 15–18);
+   - Connecting an AI agent (DSH or OMP): Part 4 (Chapters 15–18);
    - Preparing a record for supervisor review or signing: Chapters 14 and 20.
 
 ---
@@ -459,7 +459,7 @@ Section outline:
 In This Chapter:
 - Understanding how the ELN Model Context Protocol (MCP) server works
 - Launching `ELNCommunityMCP.exe` with `--notebook`, `--upload-root`, and `--plugins`
-- Registering `ELNMCPServer.exe` with Claude Code in a team laboratory
+- Registering `ELNMCPServer.exe` with DSH or OMP in a team laboratory
 - Knowing the security, upload-root, and human-review boundaries enforced by the server
 
 Section outline:
@@ -470,8 +470,8 @@ Section outline:
 2. **Preparing a local session in APS ELN Community.**
    - Closing the Desktop client first so only one writer accesses the local SQLite database, creating a dedicated `--upload-root` directory (without junctions or symbolic links), and configuring `--notebook`, `--upload-root`, `--plugins`, and optional `--storage`.
    - Sources: C:Help:MCP.
-3. **Registering with Claude Code in a team laboratory.**
-   - In a Team Lab: Running `claude mcp add -s user eln -- "C:\Program Files\E-LabNotebook3\ELNMCPServer.exe"` and `claude mcp list`, how the server reads connection settings from the Windows Registry, and how clickable `eln://item/N` links in chat output open the record in the Desktop GUI.
+3. **Registering with DSH or OMP in a team laboratory.**
+   - In a Team Lab: Configuring `C:\Program Files\E-LabNotebook3\ELNMCPServer.exe` in OMP (`~/.omp/agent/mcp.json`) or DeepSeek Harness (`$DSH_HOME/profiles/web/cordis.patch.yml`), how the server reads connection settings from the Windows Registry, and how clickable `eln://item/N` links in chat output open the record in the Desktop GUI.
    - Sources: P:Help:AIIntegration.
 4. **Security, upload-root, and review boundaries.**
    - How `--upload-root` confines both `upload_file` and `download_file`, how read-only sessions hide write tools, and why signed items and human review gates (`Approve` / `Accept`) can never be bypassed through MCP.
