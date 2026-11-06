@@ -7,7 +7,7 @@ _Canonical file. Written 2026-11-02. **No new symbol, term, reader ID, or file e
 | Term in the book | Program executable / edition | Meaning | Source |
 |---|---|---|---|
 | **APS ELN** (or **ELN**) | Shared scientific desktop and model | The electronic laboratory notebook when a statement applies to both Community and Commercial editions | `APS-ELN-Community/README.md` |
-| **APS ELN Community** (or **Community**) | `ELNCommunity.exe`, `ELNCommunityMCP.exe` | The public Apache-2.0 single-user local edition storing data in a format 5 `.sqlite` file and a local attachment folder | `Help/GettingStarted.html`, `Help/Notebooks.html` |
+| **APS ELN Community** (or **Community**) | `ELNCommunity.exe`, `ELNCommunityMCP.exe` | The public Apache-2.0 single-user local edition storing data in a format 6 `.sqlite` file and a local attachment folder | `Help/GettingStarted.html`, `Help/Notebooks.html` |
 | **APS ELN ("For Teams")** (or **Commercial**) | `ELabNotebook3.exe`, `ELNMCPServer.exe` | The multi-user laboratory edition connecting to a shared MySQL database and WebDAV/server attachment store with user roles and supervisor review gates | `APS-ELN-Commercial/README.md`, Commercial `Help/GettingStarted.html` |
 | **ELN File Viewer** | `ELNFileViewer.exe` | Standalone personal file viewer in the Commercial build that opens all 26 viewer plugins without opening a notebook | `APS-ELN-Commercial/README.md` |
 
@@ -22,6 +22,7 @@ _Canonical file. Written 2026-11-02. **No new symbol, term, reader ID, or file e
 | **Procedure** | `Proc` | A top-level experimental run, synthesis, or deposition (for example `Deposition 261015A`) | Project or Folder (`parent_id = 0`) | `Help/Items.html` |
 | **Specimen** | `Item` (UI label: **Specimen**) | A physical sample or computational model produced or studied in a procedure (for example `261015A`) | Procedure (`Proc`) | `Help/Items.html` |
 | **Action** | `Action` | A preparation, treatment, measurement, test, or analysis step (for example `Thickness 261015A`, `XRR-1 261014B`, `XRR fit 261014B`) | Procedure, Specimen, or parent Action | `Help/Items.html` |
+| **Series** (Experiment Series) | `TSeries` (`series_id`) | A structured multi-point experimental plan and comparison table/plot inside a project (**Project > Series...**), with 1 or 2 varied **Factors**, **Fixed conditions**, **Responses**, and plan points (`slot_id`) linked to top-level procedures | Project (`Help/Series.html`) |
 
 ## 3. Attached content and value provenance
 
@@ -32,6 +33,7 @@ _Canonical file. Written 2026-11-02. **No new symbol, term, reader ID, or file e
 | **Reader value** | Source kind `Reader` | A value extracted from an attached file by a viewer plugin reader. Stores `file_id`, file MD5, `reader_id`, `reader_version`, emitted key name, emitted unit, conversion factor, and optional analysis snapshot | `Help/Values.html`, `arXiv:2610.27859` Section 5 |
 | **Derived value** | Source kind `Derived` | A value calculated by the notebook from stored input values using a versioned formula (for example `wear_rate_reciprocating` version 1). Stores `formula_id`, `formula_version`, and input `value_id` list | `Help/Values.html` |
 | **Manual value** | Source kind `Manual` | A number typed by a user, or a `Reader`/`Derived` value whose number or tolerance was later edited by hand | `Help/Values.html` |
+| **Planned value** | Source kind `Planned` (`planned: true`) | A condition value written onto a procedure by **Make deposition...** in an Experiment Series before the run is confirmed. Shown in grey italic (`planned`), excluded from series plots and exports, and refused as a `Derived` formula input until confirmed via **Confirm planned values** (or edited) in the Desktop GUI | `Help/Series.html`, `Help/MCP.html` |
 | **Unknown source** | Source kind `Unknown` | A legacy value recorded before value-level source tracking was introduced | `Help/Values.html` |
 | **Tolerance** | `Tolerance` field | A non-negative number in the stored unit of the value (for example the standard deviation paired from `<Key> STD` by a reader) | `Help/Values.html` |
 
@@ -80,4 +82,4 @@ _Canonical file. Written 2026-11-02. **No new symbol, term, reader ID, or file e
 | **OLE** (Microsoft Office) | `.xlsx`, `.docx`, `.pptx` | none | `Help/FilesAndNotes.html` |
 | **Note** | Rich-text note entry | none | `Help/FilesAndNotes.html` |
 | **Protocol** | `.protocol` form record | none | `Help/FilesAndNotes.html` |
-| **File** | General fallback browser | none | `Help/FilesAndNotes.html` |
+| **File** | General fallback browser (including legacy `.opj` Origin 7–9 projects and `.rpt` Keyence report exports when encountered in archive migrations) | none | `Help/FilesAndNotes.html` |

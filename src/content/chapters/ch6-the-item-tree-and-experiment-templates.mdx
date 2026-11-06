@@ -71,13 +71,14 @@ You can select several rows at once in the **Items** panel to run batch operatio
 - Hold `Shift` and click (or press `Shift+Up` and `Shift+Down`) to select a contiguous range of rows.
 - Right-click any row *inside* your selection to open the batch context menu while keeping all rows selected. (Right-clicking a row *outside* the selection switches the selection to that single row.)
 
-When multiple records are selected, APS ELN disables single-item commands (**New**, **Edit**, **Duplicate**, **Add File**, **Add Note**, **Add Protocol**, **Add Value**, **Links...**). Instead, it enables five batch commands:
+When multiple records are selected, APS ELN disables single-item commands (**New**, **Edit**, **Duplicate**, **Add File**, **Add Note**, **Add Protocol**, **Add Value**, **Links...**). Instead, it enables six batch commands:
 
 1. **Extract values** (**Extract values from N files...**): groups the selected files by reader plugin and asks you to map the keys once per reader. It then extracts values across all matching files (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>).
-2. **Move to...**: moves all selected items or files to a chosen destination.
-3. **Tags...**: assigns or removes tags across all selected items.
-4. **Export**: exports all selected files into a destination folder on disk, automatically appending ` (2)`, ` (3)` if two files share the same display name so no file is ever overwritten.
-5. **Delete**: moves selected items to the Recycle Bin, or permanently deletes selected files and their extracted `Reader` values (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5: Deleting containers and using the Recycle Bin</a>).
+2. **Link to plan point...**: matches selected top-level procedures to the free points of an active **Experiment Series** by their stored factor values (<a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#planning-and-running-an-experiment-series`}>Chapter 13: Planning and running an Experiment Series</a>).
+3. **Move to...**: moves all selected items or files to a chosen destination.
+4. **Tags...**: assigns or removes tags across all selected items.
+5. **Export**: exports all selected files into a destination folder on disk, automatically appending ` (2)`, ` (3)` if two files share the same display name so no file is ever overwritten.
+6. **Delete**: moves selected items to the Recycle Bin, or permanently deletes selected files and their extracted `Reader` values (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5: Deleting containers and using the Recycle Bin</a>).
 
 Every batch command shows a single confirmation dialog before it starts. If any selected row cannot be processed (for example, because an item is signed or sits in a read-only project), the confirmation names that row and the reason. It then skips that row safely and shows a summary report at the end.
 

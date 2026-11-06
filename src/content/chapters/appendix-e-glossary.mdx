@@ -48,7 +48,7 @@ Each entry defines a term as this book uses it and links to the chapter section 
 
 **Folder.** A container inside a project in the left **Projects** panel that organizes procedures and specimens. Distinct from scientific items in the center **Items** panel. See <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#how-groups-projects-and-folders-fit-together`}>Chapter 5: How Groups, Projects, and Folders fit together</a>.
 
-**Format 5.** The current local SQLite schema version used by **APS ELN Community**, supporting `Derived` value provenance, default reader mappings, and tribology value types. See <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2: Creating a local notebook in Community</a>.
+**Format 6.** The current local SQLite schema version used by **APS ELN Community**, supporting `Derived` value provenance, experiment series (**Project > Series...**), default reader mappings, and tribology value types. See <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2: Creating a local notebook in Community</a>.
 
 ## G
 
@@ -66,6 +66,8 @@ Each entry defines a term as this book uses it and links to the chapter section 
 
 ## P
 
+**Planned value (`Planned`).** A condition value written onto a procedure by **Make deposition...** in an **Experiment Series** before the run is confirmed. Displayed in grey italic (`planned`), excluded from series plots and CSV exports, and refused as a `Derived` formula input until confirmed with **Confirm planned values** in the Desktop GUI. See <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#planning-and-running-an-experiment-series`}>Chapter 13: Planning and running an Experiment Series</a>.
+
 **Procedure (`Proc`).** A top-level experimental record in a project or folder representing a synthesis, deposition run, or experimental campaign (such as `Deposition 261015A`). See <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Table 3-1</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6: Designing a clean item hierarchy</a>.
 
 **Protocol.** A structured form (or free-text entry) attached to an item via **Item > Add Protocol** and reviewed through `Draft`, `In Review`, `Approved`, and `Rejected` states. See <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8: Adding and completing a protocol on an item</a>.
@@ -79,6 +81,8 @@ Each entry defines a term as this book uses it and links to the chapter section 
 ## S
 
 **Search by meaning (`search_semantic`).** The hybrid semantic search engine (`ELN.Search`), running offline on your PC in Community (`.search.sqlite`) or on the shared laboratory search server in the Team edition (`notebook.search.sqlite`). It indexes record text and attached documents (`.pdf`, `.docx`, `.pptx`, `.xlsx`, `.md`, `.html`, `.json`, `.xml`, `.csv`, `.rtf`, `.txt`) and optionally re-ranks the top 20 item groups with a cross-encoder model. See <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#searching-by-meaning-semantic-search-and-reranking`}>Chapter 12: Searching by meaning (Semantic Search) and reranking</a>.
+
+**Series (`Experiment Series`).** A project-level experimental plan and comparison view (**Project > Series...**) that defines one or two varied **Factors**, **Fixed conditions**, **Responses**, and plan points, and displays all linked depositions in a unified **Table** and **Plot** with OriginLab export. See <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#planning-and-running-an-experiment-series`}>Chapter 13: Planning and running an Experiment Series</a>.
 
 **Specimen (`Item`).** A physical sample, substrate piece, or model produced or studied inside a **Procedure** (such as `261015A` or `261014B`), holding child measurement and test **Actions**. See <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Table 3-1</a>.
 

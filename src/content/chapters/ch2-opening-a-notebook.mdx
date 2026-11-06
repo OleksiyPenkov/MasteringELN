@@ -24,10 +24,10 @@ Before you can create a project or record a sample (<a href={`${import.meta.env.
 
 APS ELN keeps two things in sync (<a href="#fig-2-1">Figure 2-1</a>):
 
-1. **The database:** projects, folders, procedures, specimens, actions, values, protocols, hypotheses, tags, links, signatures, and the audit log.
+1. **The database:** projects, folders, procedures, specimens, actions, values, protocols, hypotheses, experiment series, tags, links, signatures, and the audit log.
 2. **The attachment store:** the raw measurement files, note images, and analysis projects you attach.
 
-<Figure id="fig-2-1" number="2-1" src={`${import.meta.env.BASE_URL}/figures/fig-2-1-notebook-modes.svg`} alt="Comparison of APS ELN Community local storage (notebook.sqlite plus a companion notebook files folder) and Team Lab server mode (shared MySQL server plus shared WebDAV file store)" caption="The two storage modes in APS ELN. In APS ELN Community (left), your computer holds a format 5 SQLite database (.sqlite) and a companion attachment folder. In a Team Lab (right), the client connects over the network to a shared MySQL database and a shared WebDAV file store." />
+<Figure id="fig-2-1" number="2-1" src={`${import.meta.env.BASE_URL}/figures/fig-2-1-notebook-modes.svg`} alt="Comparison of APS ELN Community local storage (notebook.sqlite plus a companion notebook files folder) and Team Lab server mode (shared MySQL server plus shared WebDAV file store)" caption="The two storage modes in APS ELN. In APS ELN Community (left), your computer holds a format 6 SQLite database (.sqlite) and a companion attachment folder. In a Team Lab (right), the client connects over the network to a shared MySQL database and a shared WebDAV file store." />
 
 In **APS ELN Community**, both parts sit in normal folders on your Windows PC: one SQLite database file (such as `notebook.sqlite`) and one separate attachment directory (such as `notebook files`). There is no server login.
 
@@ -53,9 +53,9 @@ When you open an existing notebook with **File > Open Notebook...**, Community c
 
 <Warning title="your signing password is not a file-encryption password">The signing password you set when creating a local notebook is checked only when you apply an electronic signature to lock a record (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>). Opening a local `.sqlite` notebook does not ask for a password, and the database is not encrypted. Protect your computer account and backup drives with Windows access controls.</Warning>
 
-<GoingDeeper title="opening older format 2, 3, or 4 notebooks and command-line flags">
+<GoingDeeper title="opening older format 2, 3, 4, or 5 notebooks and command-line flags">
 
-Current Community builds use **local notebook format 5**, which includes schema tables for `Derived` values, default reader mappings, and the tribology value types (`Wear area`, `Normal force`, `Cycles`, and `Wear rate`). When you open an older format 2, 3, or 4 notebook, Community asks before changing anything. Clicking **Yes** writes a timestamped backup copy beside your database (named with `.format2-backup-`, `.format3-backup-`, or `.format4-backup-`). It then upgrades the database to format 5 and preserves all existing values and sources. Older versions of Community cannot open a format 5 database, so keep that backup file if you ever need an older build.
+Current Community builds use **local notebook format 6**, which includes schema tables for `Derived` values, experiment series (**Project > Series...**), default reader mappings, and the tribology value types (`Wear area`, `Normal force`, `Cycles`, and `Wear rate`). When you open an older format 2, 3, 4, or 5 notebook, Community asks before changing anything. Clicking **Yes** writes a timestamped backup copy beside your database (named with `.format2-backup-`, `.format3-backup-`, `.format4-backup-`, or `.format5-backup-`). It then upgrades the database to format 6 and preserves all existing values and sources. Older versions of Community cannot open a format 6 database, so keep that backup file if you ever need an older build.
 
 You can also launch Community from a script or shortcut with explicit paths:
 

@@ -1,0 +1,134 @@
+---
+title: Importing Legacy Folders with an AI Agent
+part: '4'
+number: '19'
+order: 190
+inThisChapter:
+  - Turning an instrument-first or date-first folder archive into a specimen tree
+  - Having an agent scan folders, deduplicate files by MD5, and draft a migration plan
+  - Separating Reader values extracted from raw files and Manual conditions from Word or Excel logs
+  - Walking through a real migration from D:\ResearchProjects\TiNiZr\ into APS ELN
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InTeamLab from '../../components/textbook/InTeamLab.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+In <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17</a> and <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>, your AI agent recorded new samples (`261014B` and `261015A`) right after the measurements finished. Every laboratory also has years of older work sitting on shared drives or external disks, such as `D:\ResearchProjects\`. Those folders were created before the laboratory used APS ELN. An AI agent connected through MCP (<a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 15</a>) can migrate a legacy folder into a structured, provenance-verified ELN project in minutes. To keep the import clean, follow a four-phase workflow that puts a human review gate before any database write (<a href="#fig-19-1">Figure 19-1</a>).
+
+## Why legacy folders break direct import
+
+APS ELN organizes every record around the physical sample: a **Procedure** produces a **Specimen**, each measurement is a child **Action**, the native raw file sits on that action, and **Values** point back to the file (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1: The four links in every laboratory result</a>). Legacy drives like `D:\ResearchProjects\` grew in the opposite direction:
+
+1. **Instrument-first folders:** A project folder such as `D:\ResearchProjects\TiNiZr\` splits measurements of the same specimen across separate subfolders. It puts nanoindentation in `UNHT\`, 3D laser profilometry in `Wear\`, tribometry in `COF\`, scanning electron microscopy in `SEM\`, and transmission electron microscopy in `TEM #1\` through `TEM#3\`. Broader archive trees like `D:\ResearchProjects\_Experiments\` put ten years of unrelated samples under `UNHT\`, `LAXRD\`, `3DProfiler\`, `Sputtering\`, and `Tribotest\`.
+2. **Date-first folders:** Inside `_Experiments\UNHT\2016-07-18\` or `TriboTester Development\2026-04-30\`, folders are named after the calendar date of the instrument session rather than the specimen code.
+3. **Conditions hidden inside collaborator documents:** Deposition and annealing conditions sit in Word documents (`Specimens_List_2_(10-15).docx`, `C60+Nitrogen\specimens.docx`) or Excel workbooks (`Deposition log (Co-C) 2015-12-18.xlsx`). Collaborators often wrote these notes in Russian or Ukrainian using free-form tables and paragraphs.
+4. **Duplicates, print exports, and cross-sample compilations:** Byte-identical copies appear under slightly different names (`TiNiZr_9B#1.mit` and `TiNiZr_09B#1.mit`, both $11.3\,\text{MB}$) or inside backup subfolders (`Set 1\UNHT\`). In `Wear\`, native Keyence confocal height maps (`12-5N-5k.vk4`) sit next to exported print reports (`12-5N-5k.rpt`) and counterbody ball scans (`Ball-12-5N-5k.vk4`). At the folder root, OriginLab projects (`ALL_COF.opj`, `H&WR_vs_Temp.opju`) and slide decks (`compilation.pptx`) combine 20 specimens in a single file.
+
+<Figure
+  id="fig-19-1"
+  number="19-1"
+  src={`${import.meta.env.BASE_URL}/figures/fig-19-1-legacy-import-workflow.svg`}
+  alt="Four-phase workflow diagram for migrating D:\ResearchProjects\TiNiZr into APS ELN: 1. Legacy Archive Read-Only Scan, 2. Migration Plan Human Gate, 3. Stage and Build Provenance Tree, and 4. Series, Wiki and MCP Audit"
+  caption="The four-phase workflow for migrating a legacy folder (`D:\ResearchProjects\TiNiZr\`) into APS ELN with an AI agent. Phases 1 and 2 are read-only on disk and stop at a mandatory human review gate before Phase 3 stages files into `--upload-root` and writes to the notebook."
+/>
+
+If you tell an agent to "import everything in `D:\ResearchProjects\TiNiZr\`", it will create duplicate specimens for `9B` and `09B`. It will also attach 20-sample `.opju` plots to a single specimen and guess which load belongs to `12-3.vk4`. Instead, use the mapping rules in <a href="#table-19-1">Table 19-1</a> across four distinct phases.
+
+<p id="table-19-1" class="table-caption"><strong>Table 19-1:</strong> Common legacy folder artifacts in <code>D:\ResearchProjects</code> and how an agent maps them to APS ELN.</p>
+
+<DataTable
+  headers={['Legacy artifact in D:\\ResearchProjects\\', 'Example on disk', 'Where it belongs in APS ELN', 'Value provenance rule']}
+  rows={[
+    ['**Collaborator Word or Excel specimen list**', '`TiNiZr\\Specimens_List_2_(10-15).docx`, `C60+Nitrogen\\specimens.docx`, `Sputtering\\Exeriment logs\\*.xlsx`', 'Attach to the parent **Procedure** (`Deposition <Batch>`) so every specimen in the batch shares the source document.', 'Store parsed conditions (annealing temperature, substrate, ion energy) as `Manual` values whose **Description** cites the attached `.docx` or `.xlsx` `file_id`.'],
+    ['**Native raw measurement file with a reader**', '`UNHT\\TiNiZr_10#1.mit`, `Wear\\12-5N-5k.vk4`, `COF\\6-1.raw`, `LAXRD\\CoC(160708).xrcx`', 'Attach to the specimen\'s child **Action** (`Indentation`, `3D Profiling`, `Tribotest`, `XRR fit`).', 'Run `extract_file_key_values` (`aps.mit`, `aps.vk4`, `aps.tribo`, `aps.xrcx`) and store results via `add_values` with `Reader` provenance.'],
+    ['**Byte-identical duplicate file or backup folder**', '`TiNiZr_9B#1.mit` vs. `TiNiZr_09B#1.mit` (same MD5); `TiNiZr\\Set 1\\UNHT\\` mirror', 'Stage and upload **one** canonical copy; list the skipped duplicate paths in the migration report.', 'Never upload or extract from both copies, or the item tree will average each measurement twice (`n=2`).'],
+    ['**Exported instrument print report beside raw file**', '`Wear\\12-5N-5k.rpt` (29.4 MB) sitting beside `12-5N-5k.vk4` (36.3 MB)', 'Skip `.rpt` when the native `.vk4` height map is present (or attach only if you need the legacy printout).', 'Only `.vk4` opens in the **VK4** viewer (`aps.vk4`); `.rpt` uses the fallback file browser and has no reader.'],
+    ['**Cross-sample summary plot or slide deck**', '`H&WR_vs_Temp.opju`, `ALL_COF.opj`, `compilation.pptx`, `Thermal_Conductivity_#2.pdf`', 'Attach to a **Project Wiki** page under `Analysis` (`wiki_create_page`) that links to `[[specimen:CODE]]`.', 'Never attach a multi-specimen compilation under one arbitrary specimen.'],
+  ]}
+/>
+
+## Phases 1 and 2: Reconnaissance and the migration plan
+
+The first two phases are **100% read-only**. The agent inspects the legacy folder on disk without modifying a single file in `D:\ResearchProjects\` and without calling any MCP write tool.
+
+1. **Phase 1: Read-only inventory and MD5 deduplication.** Point your agent (DSH or OMP) at the legacy project folder, such as `D:\ResearchProjects\TiNiZr\`. Ask it to list all subfolders, compute MD5 hashes for every file, and read any `.docx`, `.xlsx`, `.md`, or `.txt` specimen lists. In `TiNiZr\`, the MD5 pass catches that `UNHT\TiNiZr_9B#1.mit` and `UNHT\TiNiZr_09B#1.mit` are byte-for-byte identical. It also shows that `Set 1\UNHT\` and `Set 1\Wear\` are earlier folder copies of files already sitting in `UNHT\` and `Wear\`.
+2. **Phase 2: The human-approved Migration Plan.** Ask the agent to match the specimen numbers in the `.docx` lists against the filenames in `UNHT\`, `Wear\`, `COF\`, `SEM\`, and `TEM #1\`–`TEM#3\`. Have it output a structured **Migration Plan table** before touching APS ELN.
+
+The Migration Plan table must separate **confident matches** from **questions for you**. For example, in `D:\ResearchProjects\TiNiZr\Wear\`, sample `#12` has `12-1.vk4`, `12-3.vk4`, `12-3N-5k.vk4`, `12-5N-1k.vk4`, `12-5N-5k.vk4`, `Ball-12-3N-5k.vk4`, and `Ball-12-5N-5k.vk4`. An agent can read the load ($3\,\text{N}$ vs. $5\,\text{N}$) and cycle count ($1000$ vs. $5000$ cycles) from `12-3N-5k.vk4` and `12-5N-5k.vk4`. However, it must ask you whether `Ball-12-5N-5k.vk4` (the counterbody ball scar) belongs on the same wear action as `12-5N-5k.vk4`. It must also ask which test conditions correspond to `12-1.vk4` and `12-3.vk4`:
+
+> **You:** Scan `D:\ResearchProjects\TiNiZr\` in read-only mode. Read `Specimens_List_2_(10-15).docx`, match samples `#10` through `#15` to their raw files in `UNHT\`, `Wear\`, and `COF\`, check for duplicate files by MD5, and show me a Migration Plan table before calling any ELN write tools.
+>
+> **Assistant:** Scanned `D:\ResearchProjects\TiNiZr\` (read-only) and read `Specimens_List_2_(10-15).docx`.
+> - **Batch context (`Specimens_List_2_(10-15).docx`):** Single-layer magnetron-sputtered $\text{TiNiZr}$ coatings, nominal thickness $2.5\,\mu\text{m}$, deposited under identical conditions. Samples `#13` (unannealed) and `#14` ($600\,^\circ\text{C}$) sit on $\text{Al}_2\text{O}_3$ substrates ($\varnothing 15 \times 1\,\text{mm}$). Samples `#10` ($500\,^\circ\text{C}$), `#11` ($550\,^\circ\text{C}$), `#12` ($750\,^\circ\text{C}$, over-annealed Laves phase + $\text{Zr}$ solid solution), and `#15` ($200\,^\circ\text{C}$, amorphous check) sit on $\text{Cr18Ni10Ti}$ (`Х18Н10Т`) stainless steel ($2.25\,\text{mm}$ thick).
+> - **Duplicates and exports to skip:** `Set 1\UNHT\` and `Set 1\Wear\` duplicate the root `UNHT\` and `Wear\` folders by MD5. In `Wear\`, `12-3N-5k.rpt`, `12-5N-5k.rpt`, and `15-1.rpt` are exported print reports that sit beside native `.vk4` maps (`12-3N-5k.vk4`, `12-5N-5k.vk4`).
+> - **Questions before I stage or upload anything:**
+>   1. For sample `#12`, should `Ball-12-3N-5k.vk4` and `Ball-12-5N-5k.vk4` be attached to the same `Wear track` actions as `12-3N-5k.vk4` and `12-5N-5k.vk4`?
+>   2. Sample `#15` has `15-2.vk4` in `Wear\` and `15-1.rpt` (with no `15-1.vk4`). Should I attach `15-2.vk4` alone or also keep `15-1.rpt` for completeness?
+
+<Warning title="Never let an agent write to ELN before you approve the migration plan">Calling `create_item` and `upload_file` on a legacy folder before reviewing the mapping table creates orphan specimens, duplicate `Reader` values, and misfiled scans. Always require a read-only Migration Plan table first and answer the agent's questions before Phase 3 begins.</Warning>
+
+## Phase 3: Staging files and separating Reader from Manual provenance
+
+Once you approve the Migration Plan (<a href="#table-19-2">Table 19-2</a>), the agent executes Phase 3.
+
+<p id="table-19-2" class="table-caption"><strong>Table 19-2:</strong> Approved migration plan for <code>D:\ResearchProjects\TiNiZr</code> Batch 2 (samples <code>#10</code>–<code>#15</code> from <code>Specimens_List_2_(10-15).docx</code>).</p>
+
+<DataTable
+  headers={['ELN Specimen', 'Substrate & Annealing (from .docx)', 'Matched raw files to attach', 'Values to store in APS ELN']}
+  rows={[
+    ['`TiNiZr-10`', 'Cr18Ni10Ti steel (2.25 mm); annealed at 500 °C', '`UNHT\\TiNiZr_10#1.mit`; `TEM #2\\10\\`, `TEM#3\\10\\`', '`Annealing`: *T* = 500 °C (`Manual`, cites `.docx`). `Indentation`: *H*<sub>IT</sub>, *E*<sub>IT</sub> (`Reader`, `aps.mit`).'],
+    ['`TiNiZr-11`', 'Cr18Ni10Ti steel (2.25 mm); annealed at 550 °C', '`UNHT\\TiNiZr_11#1.mit`', '`Annealing`: *T* = 550 °C (`Manual`, cites `.docx`). `Indentation`: *H*<sub>IT</sub>, *E*<sub>IT</sub> (`Reader`, `aps.mit`).'],
+    ['`TiNiZr-12`', 'Cr18Ni10Ti steel (2.25 mm); annealed at 750 °C (Laves phase)', '`UNHT\\TiNiZr_12#1.mit`; `Wear\\12-3N-5k.vk4`, `Ball-12-3N-5k.vk4`, `12-5N-1k.vk4`, `12-5N-5k.vk4`, `Ball-12-5N-5k.vk4`, `12-1.vk4`, `12-3.vk4`', '`Annealing`: *T* = 750 °C (`Manual`, cites `.docx`). `Indentation`: *H*<sub>IT</sub>, *E*<sub>IT</sub> (`Reader`, `aps.mit`).'],
+    ['`TiNiZr-13`', 'Al<sub>2</sub>O<sub>3</sub> (Ø15 × 1 mm); as-deposited (unannealed)', '`Wear\\13-SS ball.vk4`, `13-SS ball-3k-1N.vk4`', 'Substrate recorded in Specimen properties; `.vk4` maps attached to `Wear track` actions (`aps.vk4`).'],
+    ['`TiNiZr-14`', 'Al<sub>2</sub>O<sub>3</sub> (Ø15 × 1 mm); annealed at 600 °C', '`Wear\\14-SS ball.vk4`, `14-SS ball-3k-1N.vk4`, `14-SiN ball.vk4`, `14-SiN ball-3k-1N.vk4`; `TEM #1\\14\\`', '`Annealing`: *T* = 600 °C (`Manual`, cites `.docx`). `.vk4` maps attached to `SS ball` and `SiN ball` wear actions.'],
+    ['`TiNiZr-15`', 'Cr18Ni10Ti steel (2.25 mm); annealed at 200 °C (amorphous)', '`UNHT\\TiNiZr_15#1.mit`; `Wear\\15-2.vk4`, `15-1.rpt`', '`Annealing`: *T* = 200 °C (`Manual`, cites `.docx`). `Indentation`: *H*<sub>IT</sub>, *E*<sub>IT</sub> (`Reader`, `aps.mit`).'],
+  ]}
+/>
+
+Phase 3 follows three strict rules so the original archive stays untouched and every stored value carries honest provenance:
+
+1. **Stage approved files into `--upload-root` without modifying `D:\ResearchProjects\`.** As covered in <a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#security-upload-root-and-review-boundaries`}>Chapter 15: Security, upload-root, and review boundaries</a>, `upload_file` only reads paths inside your configured `--upload-root` directory. Never point `--upload-root` at the entire `D:\` drive or rename files inside `D:\ResearchProjects\`. Instead, have the agent copy only the approved, deduplicated files into a clean staging subfolder inside `--upload-root` (for example `C:\ELN-Upload\TiNiZr-Batch2\`).
+2. **Attach the collaborator `.docx` or `.xlsx` log to the parent Procedure and record its conditions as `Manual`.** The agent creates project `TiNiZr`, folder `Batch 2 (Samples 10-15)`, and procedure `Deposition TiNiZr Batch 2` (`Proc`). It uploads `Specimens_List_2_(10-15).docx` to `Deposition TiNiZr Batch 2` (`file_id = 1`). Next, it records the nominal coating thickness ($2.5 \times 10^{-6}\,\text{m}$) on `Deposition TiNiZr Batch 2` and the annealing temperature ($500\,^\circ\text{C}$, $550\,^\circ\text{C}$, $750\,^\circ\text{C}$, $600\,^\circ\text{C}$, or $200\,^\circ\text{C}$) on each specimen's `Annealing` action. It calls `add_value` with `source_kind: "Manual"` and a **Description** that names the attached Word document: `"From attached Specimens_List_2_(10-15).docx (file_id = 1)"`.
+3. **Extract raw instrument measurements through the Value Route (`Reader` provenance).** For `TiNiZr_10#1.mit`, `TiNiZr_11#1.mit`, `TiNiZr_12#1.mit`, and `TiNiZr_15#1.mit`, the agent uploads each `.mit` file to its `Indentation` action. It then runs `extract_file_key_values` (`aps.mit`) and passes the returned `Reader` provenance fields verbatim to `add_values` (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Why agent-written records need the Value Route</a>).
+
+<Remember>Never let an agent disguise a number read from a `.docx`, `.xlsx`, or `.pdf` prose table as a `Reader` value. `Reader` provenance is reserved for numbers extracted by a registered viewer plugin via `extract_file_key_values`. Historical conditions transcribed from legacy documents must be stored as `Manual` values whose **Description** cites the attached document.</Remember>
+
+<Tip>Many collaborator documents in `D:\ResearchProjects\` are written in Russian or Ukrainian (`Specimens_List_2_(10-15).docx`, `C60+Nitrogen\Описание_образцов50819.docx`, `Old Data (Jeju)\таблица.docx`). Always attach the original `.docx` file unchanged, and ask the agent to include an English summary in the **Procedure** or **Specimen** description so both languages are searchable.</Tip>
+
+## Phase 4: Linking an Experiment Series, filing compilations, and auditing
+
+Once the individual specimen trees are built (`Deposition TiNiZr-10` through `Deposition TiNiZr-15`), you can connect the whole batch into an **Experiment Series** (<a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#planning-and-running-an-experiment-series`}>Chapter 13: Planning and running an Experiment Series</a>) so APS ELN compares and plots the annealing sweep natively:
+
+1. Ask your agent to call `create_series` (<a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#drafting-experiment-series-and-preparing-hypotheses`}>Chapter 18</a>) on the `TiNiZr` project with factor `Temperature` (`label: "Annealing"`, levels `200`, `500`, `550`, `600`, `750`), fixed condition `Thickness` ($2.5 \times 10^{-6}\,\text{m}$), and responses `Hardness` and `Modulus`.
+2. In the Desktop GUI, open **Project > Series...**, review the `Draft` series, and click **Start** to make it `Active`.
+3. In the center **Items** panel, select the imported top-level procedures, right-click, and choose **Link to plan point...**. APS ELN matches each procedure to its temperature point and populates the series **Table** and **Plot** tabs automatically.
+
+Next, handle the cross-sample analysis files sitting at the root of `D:\ResearchProjects\TiNiZr\`: `H&WR_vs_Temp.opju`, `WR.opju`, `Nanoindentation.opj`, `ALL_COF.opj`, `Wear_Rate.mcdx`, `compilation.pptx`, and `Thermal_Conductivity_#2.pdf`. Each of these files compares many specimens across annealing temperatures.
+
+Do not attach a multi-specimen `.opju` or `.pptx` file under one arbitrary specimen. Instead, ask your agent to call `wiki_create_page` (<a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#drafting-and-updating-wiki-pages`}>Chapter 18: Drafting and updating Wiki pages</a>) to create a page under the `Analysis` section of the **Project Wiki** (for example, `title: "Legacy TiNiZr Compilations and Summary Plots"`):
+
+- In `body_md`, the agent writes a table linking every imported specimen (`[[specimen:TiNiZr-10]]` through `[[specimen:TiNiZr-15]]`; <a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#navigating-between-wiki-pages-and-experimental-records`}>Chapter 11</a>) and explains what each legacy compilation file contains.
+- In `attachments`, the agent passes the staged paths of `H&WR_vs_Temp.opju`, `WR.opju`, `compilation.pptx`, and `Thermal_Conductivity_#2.pdf`. In APS ELN, `.opju` files display their embedded OriginLab graph previews directly in the **OPJU** viewer, while `.docx`, `.pptx`, and `.pdf` attachments are indexed for **Search by meaning** (`search_semantic` in <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#searching-by-meaning-semantic-search-and-reranking`}>Chapter 12</a> and <a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#searching-by-text-and-meaning-search-and-search_semantic`}>Chapter 16</a>).
+
+<GoingDeeper title="Legacy .opj files versus modern .opju files">OriginLab switched from the older binary `.opj` format (`ALL_COF.opj`, `Nanoindentation.opj`) to the Unicode `.opju` format (`H&WR_vs_Temp.opju`, `WR.opju`) in Origin 2018. APS ELN's built-in **OPJU** viewer plugin renders embedded graph thumbnails from `.opju` files directly in the **Content Viewer**. Older `.opj` files are still stored with full MD5 integrity and can be opened in Origin via working drafts (<a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#working-drafts-external-edits-and-conflict-resolution`}>Chapter 7</a>), or re-saved as `.opju` if you want inline graph previews.</GoingDeeper>
+
+Finally, have the agent run the three project-wide MCP audit calls from <a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16: Running the three project-wide health checks</a> on the newly imported `TiNiZr` project:
+
+1. **`check_storage` (`project_id`):** confirms that every staged `.docx`, `.mit`, `.vk4`, `.opju`, and `.pptx` file sits in ELN attachment storage with an MD5 hash matching upload time (`missing: 0`, `content_mismatch: 0`).
+2. **`check_value_drift` (`project_id`):** re-runs `aps.mit` on every imported `.mit` file and confirms `drifted_count: 0` across all extracted `Reader` values (while reporting the documented `.docx` annealing temperatures under `skipped_manual_or_unknown`).
+3. **`report_value_issues` (`project_id`):** checks that every converted unit (such as $2.5 \times 10^{-6}\,\text{m}$ for the $2.5\,\mu\text{m}$ coating thickness) and every tolerance sits inside its value type's plausible range (`issue_count: 0`).
+
+
+<InTeamLab>When migrating a shared legacy archive into a team laboratory server via `ELNMCPServer.exe`, create the project first and use **Share...** in the Desktop client (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#sharing-projects-in-a-team-laboratory`}>Chapter 5: Sharing projects in a team laboratory</a>). That way, the collaborators who made the original samples can inspect the imported tree and verify the viewer selections.</InTeamLab>
+
+## Sources
+
+- **APS ELN Community Help:** `MCP.html` (`--upload-root` path confinement, `create_project`, `create_folder`, `create_item`, `upload_file`, `extract_file_key_values`, `add_values`, `add_value`, `create_series`, `wiki_create_page`, `check_storage`, `check_value_drift`, and `report_value_issues`); `Series.html` (**Project > Series...** and **Link to plan point...**); `FilesAndNotes.html` (the 26 viewer plugins, including **MIT** `.mit`, **VK4** `.vk4`, **Tribo** `.raw`, **OPJU** `.opju`, **OLE** `.docx`/`.xlsx`/`.pptx`, and **PDF** `.pdf`); `Values.html` (`Reader` vs. `Manual` value provenance); `Search.html` (multilingual ONNX indexing of `.docx`, `.pptx`, `.xlsx`, and `.pdf` attachments).
+- **APS ELN Commercial ("For Teams") Help:** `AIIntegration.html` (source validation rules and why `Reader` source fields must come from `extract_file_key_values`); `Wiki.html` (`wiki_create_page` and `[[specimen:CODE]]` links).
+- **Legacy research archive example:** `D:\ResearchProjects\TiNiZr\` (`Specimens_List_2_(10-15).docx`, `Specimens_List_3_(16-22).docx`, `Specimens_List_4_(26-28).docx`, `UNHT\*.mit`, `Wear\*.vk4` and `*.rpt`, `COF\*.raw`, `Set 1\`, `H&WR_vs_Temp.opju`, and `compilation.pptx`).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1: The four links in every laboratory result</a>; <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#how-file-attachment-and-extension-routing-work`}>Chapter 7: How file attachment and extension routing work</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9: The four value sources and Derived formulas</a>; <a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11: The five-section Project Wiki</a>; <a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#security-upload-root-and-review-boundaries`}>Chapter 15: Security, upload-root, and review boundaries</a>; <a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16: Running the three project-wide health checks</a>; <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Why agent-written records need the Value Route</a>; <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#drafting-and-updating-wiki-pages`}>Chapter 18: Drafting and updating Wiki pages</a>; <a href={`${import.meta.env.BASE_URL}/ch22-ten-things-an-agent-can-and-cannot-do#1-can-build-item-trees-and-attach-raw-files`}>Chapter 22: Ten Things an Agent Can and Cannot Do</a>.

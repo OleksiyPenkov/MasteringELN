@@ -4,7 +4,7 @@ part: '4'
 number: '16'
 order: 160
 inThisChapter:
-  - Browsing projects, items, and values with structured MCP read tools
+  - 'Browsing projects, items, values, and experiment series (list_series, get_series_table) with MCP read tools'
   - 'Running hybrid Semantic Search (search_semantic) with numeric value filters'
   - Inspecting long time-series logs with list_file_columns and get_file_columns
   - 'Auditing an entire project with check_storage, check_value_drift, and report_value_issues'
@@ -21,12 +21,13 @@ The safest way to start using an AI assistant with APS ELN (<a href={`${import.m
 
 ## Navigating and querying values
 
-When you ask an AI assistant a question about your notebook, it uses seven structured read tools to navigate the hierarchy and inspect values (<a href="#table-16-1">Table 16-1</a>):
+When you ask an AI assistant a question about your notebook, it uses nine structured read tools to navigate the hierarchy, inspect values, and read experiment series (<a href="#table-16-1">Table 16-1</a>):
 
 - **`list_projects` and `list_folders`:** return your readable projects (with item counts, owner, and dates) and the folder tree (`folder_id` and parent references) inside a project.
 - **`list_items` and `get_item`:** `list_items` filters a project by `folder_id`, `item_type` (`Synthesis`, `Specimen`, `Measurement`, `Testing`), or `level` (`Proc`, `Item`, `Action`). `get_item` returns one item's full details: its children, attached files (with `file_id`, `extension`, and MD5 `hash`), recorded values, note/protocol entries, and tags.
-- **`get_values` and `query_values`:** `get_values` returns all values on one item grouped into experimental conditions (`EXP_CONDITION`) and test results (`TEST_RESULT`). It also includes `ancestor_ids` (from the root procedure down to the direct parent) and each value's `source` object (`Reader`, `Derived`, `Manual`, or `Unknown`). `query_values` searches values across a project by `value_type` (title or symbol), `rec_type`, and item creation date (`date_from`, `date_to`).
+- **`get_values` and `query_values`:** `get_values` returns all values on one item grouped into experimental conditions (`EXP_CONDITION`) and test results (`TEST_RESULT`). It also includes `ancestor_ids` (from the root procedure down to the direct parent) and each value's `source` object (`Reader`, `Derived`, `Manual`, `Planned`, or `Unknown`). `query_values` searches values across a project by `value_type` (title or symbol), `rec_type`, and item creation date (`date_from`, `date_to`).
 - **`correlate_values`:** pairs condition values and result values across items in a project (the MCP counterpart of **Tools > Analysis...** in <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13: Plotting conditions against results</a>).
+- **`list_series` and `get_series_table`:** `list_series` returns the experiment series of a project (`id`, `title`, `purpose`, `status`, and `member_count`). `get_series_table` returns the full series `plan` (`factors`, `fixed`, `responses`, and `target_folder_id`), every column with its `role` (`Shown`, `Hidden`, `Varied`, or `Response`), and one row per point (`slot_id`, `state`, `origin`, `cell_marks` with `planned_value` and `deviation`, and cell `hits` with `planned: true` when unconfirmed).
 
 For example, when you ask about the friction and wear results on sample `261015A`, you just name the sample:
 
@@ -102,6 +103,7 @@ To check an entire project or item subtree in one pass, have your assistant run 
   headers={['MCP tool', 'Key arguments', 'What it returns']}
   rows={[
     ['`get_item` / `get_values`', '`item_id`', 'Item metadata, children, files, and values with `ancestor_ids` and full `source` provenance.'],
+    ['`list_series` / `get_series_table`', '`project_id` / `series_id`, `include_failed`', 'Experiment series list and full series table (`plan`, column `role`s, row `state`s, `cell_marks`, and value hits).'],
     ['`search_semantic`', '`query`, `project_id`, `folder_id`, `item_types`, `values`', 'Hybrid semantic + keyword matches across records and document text, with pre-filters and top-20 `reranked` order.'],
     ['`list_file_columns` / `get_file_columns`', '`file_id`, `columns`, `mode` (`stats`, `downsample`, `raw`)', 'Column metadata and summary stats or min/max-binned series from tabular logs (`.tsv`, `.log`, `.dat`).'],
     ['`check_storage`', '`project_id`, `item_id`, or `file_ids`', 'MD5 and presence check for stored attachments (`ok`, `missing`, `content_mismatch`, `no_hash`, `error`).'],
@@ -114,7 +116,7 @@ To check an entire project or item subtree in one pass, have your assistant run 
 
 ## Sources
 
-- **APS ELN Community Help:** `MCP.html` (`search_semantic` indexing and filters `folder_id`, `item_types`, `levels`, `action_type_id`, `date_field`, `date_from`, `date_to`, and `values` with `requested_unit` and `filters_applied`, `list_file_columns` and `get_file_columns` modes `stats`, `downsample`, and `raw`, `get_values` and `query_values` with `ancestor_ids`, and `check_value_drift`, `check_storage`, and `report_value_issues`).
+- **APS ELN Community Help:** `MCP.html` (`search_semantic` indexing and filters `folder_id`, `item_types`, `levels`, `action_type_id`, `date_field`, `date_from`, `date_to`, and `values` with `requested_unit` and `filters_applied`, `list_file_columns` and `get_file_columns` modes `stats`, `downsample`, and `raw`, `get_values` and `query_values` with `ancestor_ids`, `list_series` and `get_series_table`, and `check_value_drift`, `check_storage`, and `report_value_issues`).
 - **APS ELN Commercial ("For Teams") Help:** `AIIntegration.html` (navigation, value, file, metadata, and check tools).
 - **Zenodo demonstration deposit (`doi:10.5281/zenodo.23466959`):** `tribo_study/reports/record_report.md` and `xrr_study/reports/record_report.md` (verbatim outputs of `check_value_drift`, `check_storage`, and `report_value_issues`, and why Part 3 of Study B scopes `check_value_drift` and `check_storage` to `item_id = 12`).
 

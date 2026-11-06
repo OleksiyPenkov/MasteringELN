@@ -4,7 +4,7 @@ part: back
 number: C
 order: 920
 inThisChapter:
-  - Value source kinds (Reader, Derived, Manual, Unknown) and their fields
+  - Value source kinds (Reader, Derived, Manual, Planned, Unknown) and their fields
   - Standard Value Types, symbols, stored units, and reader conversion factors
   - Server-calculated Derived formulas and Check Value Sources status codes
 ---
@@ -14,7 +14,7 @@ This appendix summarizes the value-level provenance fields, unit conversions, se
 
 ## Value source kinds and provenance fields
 
-Every numeric value stored on a **Procedure** (`Proc`) or **Action** (`Action`) carries a record type (`EXP_CONDITION` for inputs or `TEST_RESULT` for outputs) and one of four `source_kind` values (<a href="#table-c-1">Table C-1</a>).
+Every numeric value stored on a **Procedure** (`Proc`) or **Action** (`Action`) carries a record type (`EXP_CONDITION` for inputs or `TEST_RESULT` for outputs) and one of five `source_kind` values (<a href="#table-c-1">Table C-1</a>).
 
 <p id="table-c-1" class="table-caption"><strong>Table C-1:</strong> Value source kinds and their stored provenance fields.</p>
 
@@ -24,6 +24,7 @@ Every numeric value stored on a **Procedure** (`Proc`) or **Action** (`Action`) 
     ['`Reader`', '**Extract Values** in the GUI, or `extract_file_key_values` + `add_value` / `add_values` in MCP', 'Requires `source_file_id` (must belong to the item, an ancestor, or a descendant in the same project), `reader_id`, `key_name`, `reader_units`, and finite non-zero `conversion_factor`; optional `reader_version` and `analysis_snapshot` (JSON with matching `file_id` and `file_hash`).'],
     ['`Derived`', 'Right-click item > **Add > Derived Value...**, or `add_derived_value` in MCP', 'Created by the server from `formula_id`, `formula_version`, and `inputs` (role -> stored `value_id` or `value_id[]`). Client-supplied result numbers are refused.'],
     ['`Manual`', '**Item > Add Value** in the GUI, `add_value` in MCP without `reader_id`, or hand-editing a `Reader`/`Derived` value', 'Optional `source_file_id` and `source_note` (up to 1,000 characters, such as a script or job identifier). Reader and conversion fields are refused on `Manual` values.'],
+    ['`Planned`', '**Make deposition...** in **Project > Series...** (Chapter 13)', 'Written from a series plan point or fixed condition (`planned: true`). Shown in grey italic; omitted from series plots/exports and refused as a `Derived` input until confirmed via **Confirm planned values** in the Desktop GUI.'],
     ['`Unknown`', 'Legacy records created before format 5 source tracking', 'No source fields; cannot be re-evaluated from files by `check_value_drift`.'],
   ]}
 />

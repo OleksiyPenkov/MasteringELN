@@ -1,13 +1,13 @@
 ---
-title: Charts, Correlations, and PDF Reports
+title: Experiment Series, Charts, and PDF Reports
 part: '3'
 number: '13'
 order: 130
 inThisChapter:
-  - Plotting experimental Conditions against test Results across a project
-  - Understanding how Analysis pairs procedure conditions with child action results
-  - Generating formatted A4 or Letter PDF experiment reports
-  - Exporting and importing JSON scientific packages safely
+  - Planning and tracking a multi-point Experiment Series (Project > Series...)
+  - Making or linking depositions, confirming planned values, and exporting to OriginLab
+  - Plotting experimental Conditions against test Results with Tools > Analysis...
+  - Generating formatted A4 or Letter PDF experiment reports and JSON scientific packages
 ---
 import Tip from '../../components/textbook/Tip.astro';
 import Remember from '../../components/textbook/Remember.astro';
@@ -17,8 +17,45 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Because APS ELN separates **Conditions** (`EXP_CONDITION`) from **Results** (`TEST_RESULT`) when you extract values (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9: Conditions, Results, units, and plausible-range checks</a>), you don't need to copy numbers from ten depositions into a spreadsheet by hand. You can plot any deposition condition against any test result right in the program, export the paired table as CSV, or print a formatted PDF report of your experiment tree (<a href="#fig-13-1">Figure 13-1</a>).
+Because APS ELN separates **Conditions** (`EXP_CONDITION`) from **Results** (`TEST_RESULT`) when you extract values (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9: Conditions, Results, units, and plausible-range checks</a>), you don't need to copy numbers from ten depositions into a spreadsheet by hand. You can plan and track a structured **Experiment Series** (**Project > Series...**), plot any deposition condition against any test result in **Tools > Analysis...**, or print a formatted PDF report of your experiment tree (<a href="#fig-13-1">Figure 13-1</a>).
 
+## Planning and running an Experiment Series
+
+An **Experiment Series** is a structured plan for a set of depositions or runs that you want to compare, such as sputtering at $100\,\text{W}$, $200\,\text{W}$, and $300\,\text{W}$. It gives you one table and one plot across all points in the sweep.
+
+To create a new series in the Desktop GUI:
+
+1. Select a project in the left **Projects** panel and choose **Project > Series...** (or click **Series** on the Projects toolbar).
+2. Click **New series...**.
+3. Enter the **Title** and **Purpose - what this series tests**, and pick the **Target folder** where its depositions will be created.
+4. Under **Factors**, click **Add...** to choose one or two parameters that you vary. Select the **Category** and **Value type**, enter an optional **Label** (such as `Mo layer` to distinguish which layer a `Time` or `Power` factor applies to), and set optional range limits.
+5. With one factor, enter the semicolon-separated **Levels** (for example, `100; 200; 300`). With two factors, enter the levels for each factor and click **Fill grid** to generate every combination as a plan point.
+6. Under **Fixed conditions**, click **Add...** for each parameter held constant across the series (entering its value and optional tolerance). Under **Responses**, click **Add...** for each result value type you will measure on every point.
+7. Click **OK**.
+
+A series created in the Desktop GUI starts as **Active** right away. (A series drafted by an AI agent via `create_series` in <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#drafting-experiment-series-and-preparing-hypotheses`}>Chapter 18</a> starts as **Draft** until you click **Start** in the GUI.) While a series has points, you can edit factor labels, fixed conditions, and responses with **Edit plan...**, or click **Add point...** to append a new level (marked `added` in the **Point** column).
+
+Each plan point appears as a row on the **Table** tab (<a href="#table-13-1">Table 13-1</a>):
+
+- **Making a new deposition from a planned row:** Double-click a `planned` row (or right-click it and choose **Make deposition...**). APS ELN opens the new procedure dialog pre-filled with the series title, the point's factor levels, item type `Synthesis`, and the action type and equipment of the previous deposition in the series. When you click **OK**, ELN creates the procedure in the target folder and writes each factor level and fixed condition onto it with source kind `Planned` (shown in grey italic as `planned`).
+- **Linking existing depositions:** Right-click a `planned` row and choose **Link existing deposition...** to pick a top-level procedure you already recorded. You can also select one or more top-level procedures in the center **Items** panel, right-click, and choose **Link to plan point...**. ELN matches each procedure to the first free point whose factor values match within tolerance (or tick **Add new points for depositions that match no point** to add new points inside the factor range).
+- **Confirming planned values:** While a condition carries the grey italic `planned` mark, it is a target from the plan rather than a confirmed measurement. The **Plot** tab and CSV export ignore `planned` values, and **Add > Derived Value...** refuses them as formula inputs. Once your deposition runs as planned, right-click its row in the series table (or use the **Item** menu) and choose **Confirm planned values**. If the actual setpoint differed, edit the value on the procedure; if a stored factor or fixed condition differs from the plan beyond tolerance, the cell shows a warning icon (`Differs from the plan`).
+- **Handling failed runs:** If a deposition attempt fails (for example, a target arcs or a substrate breaks), right-click the row and choose **Mark failed...** with a reason. The point returns to `planned` so you can run **Make deposition...** for the next attempt, while **Show failed** keeps the failed attempt visible in the table.
+
+<p id="table-13-1" class="table-caption"><strong>Table 13-1:</strong> Row states, column roles, and actions in <strong>Project &gt; Series...</strong>.</p>
+
+<DataTable
+  headers={['Series element', 'Options in Project > Series...', 'How it behaves in the Table, Plot, and Origin export']}
+  rows={[
+    ['**Series status**', '`Draft`, `Active`, `Closed`, `Abandoned`', '`Draft` (from MCP `create_series`) accepts plan edits; click **Start** to make it `Active`. **Close** marks a finished series done (author only).'],
+    ['**Row state**', '`planned`, `deposited`, `measured`, `failed`', '`planned` has no procedure yet; `deposited` has a procedure waiting for response measurements; `measured` has all responses recorded.'],
+    ['**Column role**', '`Varied`, `Response`, `Shown`, `Hidden`', 'Right-click any column header to change its role. `Hidden` columns stay grey in the table and are omitted from the plot and CSV export.'],
+    ['**Method columns**', 'One column per measurement action type', 'Values on child actions (such as `XRR` vs. `3D Profiling`) appear in separate method-named columns; ELN never averages across different methods.'],
+    ['**Plot & Export**', '**Plot** tab, **Copy table**, **Save CSV...**', 'Plots confirmed `Varied` conditions (`X`) against `Response` results (`Y`) with error bars, optional **Group by**, and **Linear trend**. **Copy table** / **Save CSV...** writes Row 1 names, Row 2 units, and separate `±` tolerance columns for OriginLab.'],
+  ]}
+/>
+
+<Warning title="confirm planned values before plotting or exporting a series">A grey italic `planned` value is never plotted on the **Plot** tab and is exported as an empty cell by **Copy table** and **Save CSV...**. Always right-click the row and choose **Confirm planned values** (or extract the real condition from your `.depo.json` file) once the deposition finishes.</Warning>
 ## Plotting conditions against results
 
 To plot how an experimental input affects a measured property across a project or folder:
@@ -63,7 +100,7 @@ APS ELN can also export and import structured JSON **scientific packages** (`Fil
 1. To export, select a project and folder, choose **File > Export...**, and tick the **Items to export**. Set the **Export path**, choose whether to include file metadata (**Include files**) and protocol status history (**Include status history**), and click **Export**.
 2. To import a package into another notebook, select the destination project and folder, choose **File > Import scientific package...**, browse to the JSON file, inspect the **Package preview**, and click **Import**.
 
-<p id="table-13-1" class="table-caption"><strong>Table 13-1:</strong> Comparing PDF reports, JSON scientific packages, and full notebook backups.</p>
+<p id="table-13-2" class="table-caption"><strong>Table 13-2:</strong> Comparing PDF reports, JSON scientific packages, and full notebook backups.</p>
 
 <DataTable
   headers={['Output method', 'Menu command', 'What it contains', 'Can it restore a full notebook?']}
@@ -78,6 +115,6 @@ APS ELN can also export and import structured JSON **scientific packages** (`Fil
 
 ## Sources
 
-- **APS ELN Community Help:** `AnalysisAndReports.html` (**Tools > Analysis...**, choosing **X Axis** condition and **Y Axis** result, how each procedure point pairs the first procedure-level condition with the arithmetic mean of results on direct child actions, specimen actions, and one level below specimen actions, linear regression, **Copy Data (CSV)** and **Copy Chart**, **File > Export Report...** from a `Procedure` root vs. `Specimen`/`Action`, report sections and HTML viewer requirement, and **File > Export...** / **File > Import scientific package...** scope and backup warnings).
+- **APS ELN Community Help:** `Series.html` (**Project > Series...**, **New series...**, 1 or 2 **Factors** with labels and **Fill grid**, **Fixed conditions**, **Responses**, `Draft` vs. `Active` status, **Make deposition...**, **Link existing deposition...**, **Link to plan point...**, **Confirm planned values**, **Mark failed...**, column roles, **Plot** tab with **Group by** and **Linear trend**, and **Copy table** / **Save CSV...** for OriginLab); `AnalysisAndReports.html` (**Tools > Analysis...**, **File > Export Report...**, and **File > Export...** / **File > Import scientific package...**).
 
 Cross-references: <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#how-to-back-up-a-local-notebook-safely`}>Chapter 2: How to back up a local notebook safely</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6: Designing a clean item hierarchy</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8: The protocol review workflow</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9: Conditions, Results, units, and plausible-range checks</a>; <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#three-ways-to-find-a-record-in-aps-eln`}>Chapter 12: Full-Text, Panel, and Semantic Search</a>.

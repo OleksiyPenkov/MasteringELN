@@ -2,6 +2,14 @@
 
 _Updated after every work session: what changed, what is unresolved, and what the author must decide next._
 
+## 2026-11-06 (Chapter 19: Legacy Folder Migration & Experiment Series): Added Chapter 19, Experiment Series (`Project > Series...`), and Format 6 updates
+
+**Done**
+- Added **Chapter 19: Importing Legacy Folders with an AI Agent** (`src/content/chapters/ch19-importing-legacy-folders-with-an-ai-agent.mdx` and `public/figures/fig-19-1-legacy-import-workflow.svg`) covering the 4-phase legacy archive migration workflow (`D:\ResearchProjects\TiNiZr\`, MD5 deduplication, human-approved Migration Plan table, staging into `--upload-root`, separating `Reader` vs. `Manual` provenance for `.docx` collaborator logs, linking imported batches into an **Experiment Series**, and filing `.opju`/`.pptx` compilations on a Project Wiki `Analysis` page).
+- Renumbered **Part 5: The Part of Tens** from Chapters 19–21 to **Chapters 20–22** (`ch20-ten-mistakes-that-break-your-data-trail.mdx`, `ch21-ten-checks-before-you-sign-or-submit.mdx`, `ch22-ten-things-an-agent-can-and-cannot-do.mdx`) and updated all incoming links (`ch1`, `introduction`, `assignment.mdx`, `OUTLINE.md`).
+- Added **Experiment Series** (**Project > Series...**, `Planned` value source kind, **Link to plan point...**, **Confirm planned values**, OriginLab export, MCP `list_series`, `get_series_table`, `create_series`, `update_series_plan`, and Community local format 6) across `OUTLINE.md`, `NOTATION.md`, `ch2`, `ch6`, `ch9`, `ch13`, `ch16`, `ch18`, `ch19`, `ch22`, `appendix-a`, `appendix-c`, and `appendix-e`.
+- Verified all gates (`npm test`: 74 passed; `npm run test:py`: 43 passed; `npm run check:links`: 31 pages, 1,350 internal links, 0 literal `$$`, 0 e-notation; `npm run check:markers`: 0 markers; `pdf-build/Mastering-ELN.pdf` & `public/Mastering-ELN.pdf`: 226 pages, 28 sections, 31 figures, all 23 `verify_pdf.py` checks passed) and deployed to `Z:\MasteringELN\`.
+
 ## 2026-11-05 (DSH / OMP Setup Update): Replaced Claude Code / Codex MCP setup with DeepSeek Harness (DSH) and OMP
 
 **Done**
@@ -48,8 +56,8 @@ _Updated after every work session: what changed, what is unresolved, and what th
 | 1 Getting Started | 1–4 | drafted and verified 2026-11-02 |
 | 2 Recording Daily Lab Work | 5–9 | drafted and verified 2026-11-02 |
 | 3 Thinking, Searching, and Reviewing | 10–14 | drafted and verified 2026-11-02 |
-| 4 Working with an AI Agent (MCP) | 15–18 | drafted and verified 2026-11-02 |
-| 5 The Part of Tens | 19–21 | drafted and verified 2026-11-02 |
+| 4 Working with an AI Agent (MCP) | 15–19 | drafted and verified 2026-11-06 |
+| 5 The Part of Tens | 20–22 | drafted and verified 2026-11-06 |
 | Appendices | A–E | drafted and verified 2026-11-02 |
 
 ## Earlier milestones on 2026-11-02

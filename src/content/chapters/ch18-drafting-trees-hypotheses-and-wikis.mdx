@@ -6,8 +6,8 @@ order: 180
 inThisChapter:
   - 'Passing viewer selections (selection) and analysis_snapshot in Study A (261015A)'
   - 'Computing Derived values (add_derived_value) and editing values safely via MCP'
-  - 'Drafting and updating Project Wiki pages (wiki_create_page, wiki_update_page)'
-  - Proposing hypotheses and citing evidence via MCP while keeping approvals in the GUI
+  - 'Drafting Project Wiki pages (wiki_create_page) and experiment series (create_series, update_series_plan)'
+  - Proposing hypotheses and citing evidence via MCP while keeping approvals and series execution in the GUI
 ---
 import Tip from '../../components/textbook/Tip.astro';
 import Remember from '../../components/textbook/Remember.astro';
@@ -78,10 +78,16 @@ Both `wiki_create_page` and `wiki_update_page` are **all-or-nothing**. They vali
 > - **Mechanical properties (`[[item:4]]`):** $H_{\text{IT}} = 5.92 \pm 0.47\,\text{GPa}$ and $E_{\text{IT}} = 127.17 \pm 11.06\,\text{GPa}$ (`BN-DLC(261015A).mit`, 9 indents).
 > - **Friction & wear (`[[item:5]]`, `[[item:6]]`):** $\mu = 0.528 \pm 0.019$ at $F_n = 9.81\,\text{N}$ over $1000$ cycles (`BN-DLC.zrw`), mean wear area $0.00598\,\text{mm}^2$, and reciprocating wear rate $K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$.
 
-## Preparing hypotheses and the human-in-the-loop boundary
+## Drafting experiment series and preparing hypotheses
 
-In <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 10</a>, you saw how a hypothesis links a proposal, experimental runs, cited evidence, and a conclusion across two human review gates. Through MCP, an agent can prepare every part of that record for you (<a href="#fig-18-1">Figure 18-1</a> and <a href="#table-18-1">Table 18-1</a>):
+Two high-level planning features in APS ELN follow the same human-in-the-loop pattern: **Experiment Series** (<a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#planning-and-running-an-experiment-series`}>Chapter 13: Planning and running an Experiment Series</a>) and **Hypotheses** (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 10</a>). Your AI assistant can draft the plan or prepare the evidence through MCP, while starting the series, linking depositions, confirming planned values, and approving hypotheses stay with you in the Desktop GUI (<a href="#fig-18-1">Figure 18-1</a> and <a href="#table-18-1">Table 18-1</a>).
 
+For an **Experiment Series**, MCP provides two write tools:
+
+- **`create_series`:** takes `project_id`, `title`, and optional `purpose`, `factors` (1 or 2 objects with `value_type_id`, optional `label`, `range_min`, and `range_max`), `fixed` (`value_type_id`, optional `label`, `value`, and `tol`), `responses` (`value_type_id` and optional `label`), `points` (an array of level arrays, one number per factor), and `target_folder_id`. It creates the series in **`Draft`** status so you can inspect the plan in **Project > Series...** and click **Start** when ready.
+- **`update_series_plan`:** takes `series_id` and updates `purpose`, `factors`, `fixed`, `responses`, `target_folder_id`, or `add_points` (with an optional `reason`). While a series is `Draft`, any plan field can be updated; once you click **Start** in the Desktop GUI (`Active`), MCP can only update `purpose` and append new points via `add_points`. Starting a series, making or linking depositions, and confirming `planned` values are always done by a person in the Desktop GUI.
+
+For a **Hypothesis**, an agent can prepare every step between the two human review gates:
 1. **Propose (`propose_hypothesis` and `update_hypothesis`):** the agent creates a root or child hypothesis (`statement` and `change`) in `Proposed` (`Needs approval`) state.
 2. **Wait for Gate 1 in the GUI:** you (or your supervisor) read the proposal in the Desktop **Hypotheses** view and click **Approve**.
 3. **Attach runs and cite evidence (`attach_run` and `cite_evidence`):** once the hypothesis is `Approved`, the agent attaches the `Run` or `Reference` items and cites the key items, files (`file_id`), or values (`value_id`). The server records each file's MD5 hash and each value's stored number at citation time, and bumps the hypothesis's integer `version`.
@@ -107,13 +113,14 @@ In <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#w
     ['`update_value` / `remove_values`', '`value_id` / `value_ids[]`, `reason`', 'Updates in place or deletes up to 200 values; logs old values in audit trail and lists `dependent_derived_value_ids`.'],
     ['`delete_file`', '`file_id`, `dry_run` (default `true`), `confirm_hash`', 'Previews `values_to_delete` on dry run; deletes file and its `Reader` values in one transaction when confirmed.'],
     ['`wiki_create_page` / `wiki_update_page`', '`project_id`, `section`, `title`, `body_md`, `attachments`', 'Enforces the five Wiki sections (`Goals`, `Ideas`, `Literature`, `Analysis`, `References`) with atomic rollback on error.'],
+    ['`create_series` / `update_series_plan`', '`project_id`, `title`, `factors`, `fixed`, `responses`, `points` / `series_id`, `add_points`', 'Creates a `Draft` experiment series or adds points; starting the series, linking depositions, and confirming `planned` values stay in GUI.'],
     ['`propose_hypothesis` / `attach_run` / `cite_evidence` / `submit_conclusion`', '`project_id`, `hypothesis_id`, `item_id`, `file_id`, `value_id`, `outcome`, `version`', 'Prepares proposals, runs, snapshot-hashed citations, and conclusions; optimistic `version` check prevents lost updates; human gates stay in GUI.'],
   ]}
 />
 
 ## Sources
 
-- **APS ELN Community Help:** `MCP.html` (`extract_file_key_values` with temporary `selection` JSON and `analysis_snapshot` for `.fibps` and `.zrw`, `add_value` and `add_values` validation, `add_derived_value` with `wear_rate_reciprocating` and multi-area array inputs, `update_value`, `remove_value`, `remove_values`, `delete_file` with `dry_run` and `confirm_hash`, `find_hypotheses_for_item`, `wiki_create_page` and `wiki_update_page` atomic rollback, and write/review boundaries).
+- **APS ELN Community Help:** `MCP.html` (`extract_file_key_values` with temporary `selection` JSON and `analysis_snapshot` for `.fibps` and `.zrw`, `add_value` and `add_values` validation, `add_derived_value` with `wear_rate_reciprocating` and multi-area array inputs, `update_value`, `remove_value`, `remove_values`, `delete_file` with `dry_run` and `confirm_hash`, `find_hypotheses_for_item`, `create_series` and `update_series_plan`, `wiki_create_page` and `wiki_update_page` atomic rollback, and write/review boundaries); `Series.html` (`Draft` vs. `Active` series workflow).
 - **APS ELN Commercial ("For Teams") Help:** `AIIntegration.html` (source field validation rules, why MCP `add_value` always inserts a new row rather than updating an earlier `Reader` value, and hypothesis tool rules); `Wiki.html` (`wiki_create_page`, `wiki_get_page`, `wiki_update_page`).
 - **Study A demonstration report (`doi:10.5281/zenodo.23466959`):** `tribo_study/reports/record_report.md` (how `1.fibps` and `2.fibps` use `selection` rectangles `[69,80,208,403]` and `[347,80,486,403]` on `556 x 484` pixels and how `value_id = 24` is computed from `area: [21, 22, 23]`, `normal_force: 15`, `cycles: 16`).
 

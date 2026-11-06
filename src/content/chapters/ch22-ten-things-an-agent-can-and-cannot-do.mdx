@@ -1,8 +1,8 @@
 ---
 title: Ten Things an Agent Can and Cannot Do
 part: '5'
-number: '21'
-order: 210
+number: '22'
+order: 220
 inThisChapter:
   - Five jobs an AI agent can run for you through the MCP server
   - Five safety and review boundaries an agent can never cross
@@ -13,7 +13,7 @@ An AI assistant connected through `ELNCommunityMCP.exe` or `ELNMCPServer.exe` (<
 
 ## 1. Can: Build item trees and attach raw files
 
-Give an agent a folder of raw files inside `--upload-root` and a checklist (such as `record_agent.md` in Study A and Study B). It calls `create_project`, `create_folder`, `create_item`, and `upload_file` to construct the full `Procedure -> Specimen -> Action` hierarchy. It then attaches every `.depo.json`, `.tsv`, `.fibps`, `.mit`, `.zrw`, and `.xrdml` file with verified MD5 hashes in seconds (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17: Part 1</a>).
+Give an agent a folder of raw files inside `--upload-root` and a checklist (such as `record_agent.md` in Study A and Study B, or an approved Migration Plan table for a legacy archive in <a href={`${import.meta.env.BASE_URL}/ch19-importing-legacy-folders-with-an-ai-agent#phases-1-and-2-reconnaissance-and-the-migration-plan`}>Chapter 19</a>). It calls `create_project`, `create_folder`, `create_item`, and `upload_file` to construct the full `Procedure -> Specimen -> Action` hierarchy. It then attaches every `.depo.json`, `.tsv`, `.fibps`, `.mit`, `.vk4`, `.zrw`, `.raw`, and `.xrdml` file with verified MD5 hashes in seconds (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17: Part 1</a>).
 
 ## 2. Can: Extract Reader values with snapshots
 
@@ -33,7 +33,7 @@ Using `download_file`, an agent exports a raw measurement file (such as `XRR-1_C
 
 ## 6. Cannot: Approve or accept a hypothesis
 
-An agent can propose a hypothesis (`propose_hypothesis`), attach runs (`attach_run`), cite evidence (`cite_evidence`), and submit a conclusion (`submit_conclusion`). It can never approve a proposal (Gate 1), reject a proposal, accept a conclusion (Gate 2), or approve a protocol. Those tools do not exist in the MCP server; every scientific approval gate requires a human decision in the GUI (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-passing-the-first-gate`}>Chapter 10</a> and <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#preparing-hypotheses-and-the-human-in-the-loop-boundary`}>Chapter 18</a>).
+An agent can draft an experiment series (`create_series`), propose a hypothesis (`propose_hypothesis`), attach runs (`attach_run`), cite evidence (`cite_evidence`), and submit a conclusion (`submit_conclusion`). It can never start a `Draft` series, confirm `planned` values, approve a hypothesis proposal (Gate 1), reject a proposal, accept a conclusion (Gate 2), or approve a protocol. Those tools do not exist in the MCP server; every scientific approval gate requires a human decision in the GUI (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-passing-the-first-gate`}>Chapter 10</a> and <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#drafting-experiment-series-and-preparing-hypotheses`}>Chapter 18</a>).
 
 ## 7. Cannot: Sign an item or edit signed data
 
@@ -58,4 +58,4 @@ An agent can verify that a `.fibps` file has a valid MD5 hash, that `aps.fibps` 
 - **MCP `download_file` specification:** `APS-ELN-Community/docs/note-download-file-mcp-tool.md` (`CheckUploadPathAllowed` path confinement and junction/symlink refusal).
 - **Study A and Study B demonstration deposit (`doi:10.5281/zenodo.23466959`):** `tribo_study/` and `xrr_study/` (demonstrating items 1–5 and stopping before human acceptance).
 
-Cross-references: <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#sharing-projects-in-a-team-laboratory`}>Chapter 5</a>; <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-passing-the-first-gate`}>Chapter 10</a>; <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14</a>; <a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#security-upload-root-and-review-boundaries`}>Chapter 15</a>; <a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16</a>; <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17</a>; <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#preparing-hypotheses-and-the-human-in-the-loop-boundary`}>Chapter 18</a>.
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#sharing-projects-in-a-team-laboratory`}>Chapter 5</a>; <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-passing-the-first-gate`}>Chapter 10</a>; <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14</a>; <a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#security-upload-root-and-review-boundaries`}>Chapter 15</a>; <a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16</a>; <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17</a>; <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#drafting-experiment-series-and-preparing-hypotheses`}>Chapter 18</a>; <a href={`${import.meta.env.BASE_URL}/ch19-importing-legacy-folders-with-an-ai-agent#phases-1-and-2-reconnaissance-and-the-migration-plan`}>Chapter 19</a>.

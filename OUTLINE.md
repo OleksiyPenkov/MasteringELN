@@ -24,8 +24,8 @@ Sections (fixed by `STYLE.md §3`):
 5. **Where to Go from Here:** Four linked reading routes:
    - Brand new to ELN: Chapters 1 -> 2 -> 3 -> 4;
    - Recording a sample today: Chapter 4, then Part 2 (Chapters 5–9);
-   - Connecting an AI agent (DSH or OMP): Part 4 (Chapters 15–18);
-   - Preparing a record for supervisor review or signing: Chapters 14 and 20.
+   - Connecting an AI agent (DSH or OMP) and importing legacy folders: Part 4 (Chapters 15–19);
+   - Preparing a record for supervisor review or signing: Chapters 14 and 21.
 
 ---
 
@@ -74,7 +74,7 @@ In This Chapter:
 
 Section outline:
 1. **Two ways ELN stores your laboratory work.**
-   - Local single-user mode (**APS ELN Community**): a format 5 `.sqlite` database file paired with a local `<name> files` attachment directory.
+   - Local single-user mode (**APS ELN Community**): a format 6 `.sqlite` database file paired with a local `<name> files` attachment directory.
    - Shared laboratory server mode (**APS ELN "For Teams"**): a remote MySQL server paired with a shared WebDAV or server attachment store.
    - Fig 2-1 (`fig-2-1-notebook-modes.svg`): Local Community notebook architecture versus Team Server architecture.
    - Sources: C:Help:GettingStarted, C:Help:Notebooks, P:Help:GettingStarted.
@@ -83,7 +83,7 @@ Section outline:
    - Switching notebooks with **File > Open Notebook...** and **File > Recent Notebooks** (up to 8 recent notebooks).
    - In ELN: **File > New Notebook...**, **File > Open Notebook...**, **File > Recent Notebooks**.
    - Warning: Your signing password is used when applying electronic signatures (`Chapter 14`); it does not encrypt the `.sqlite` file or ask for a password when opening the notebook.
-   - Going Deeper: Format 5 schema upgrades (`.format4-backup-` automatic backup) and relative attachment directory paths (`..\Files`).
+   - Going Deeper: Format 6 schema upgrades (`.format5-backup-` automatic backup adding experiment series and `Derived` value storage) and relative attachment directory paths (`..\Files`).
    - Sources: C:Help:GettingStarted, C:Help:Notebooks.
 3. **Logging into a shared server in a team laboratory.**
    - In a Team Lab: First-run connection wizard (`.elnconfig` managed configuration file or remote server), entering username and case-sensitive password on the Login screen, the **Caps Lock warning**, the **eye icon**, and **Remember credentials** (Windows Credential Manager).
@@ -222,7 +222,7 @@ Section outline:
    - Quick-adding an **Action type** or **Equipment** (`Model`, `Manufacturer`, `Location`) with the **+** buttons inside the item dialog.
    - Sources: C:Help:Items.
 3. **Working on multiple records at once.**
-   - Selecting multiple rows with `Ctrl`+click, `Shift`+click, or `Shift+Up`/`Down`, and running batch **Extract values**, **Move to...**, **Tags...**, **Export**, or **Delete** with one confirmation and one summary report.
+   - Selecting multiple rows with `Ctrl`+click, `Shift`+click, or `Shift+Up`/`Down`, and running batch **Extract values**, **Move to...**, **Tags...**, **Link to plan point...**, **Export**, or **Delete** with one confirmation and one summary report.
    - Sources: C:Help:Items.
 4. **Building and applying Experiment Templates.**
    - Creating a reusable blueprint in **Reference Data > Experiment Templates...** and applying it in one atomic step with **Item > New from Template...**.
@@ -305,8 +305,8 @@ Section outline:
    - How **Extract Values** and **Reference Data > Value Types... > Reader mappings...** map reader keys (including `<Material> Thickness` pattern rules) and convert units (`um` to `m`, `mTorr` to `Pa`).
    - How `<Key>` and `<Key> STD` pair automatically so the standard deviation becomes the value's tolerance.
    - Sources: C:Help:Values, Demo:A, Demo:B.
-3. **The four value sources and Derived formulas.**
-   - Comparing `Reader`, `Derived`, `Manual`, and `Unknown` sources (<a href="#fig-9-1">Figure 9-1</a>), and what happens if you hand-edit a `Reader` or `Derived` value.
+3. **The value sources (`Reader`, `Derived`, `Manual`, `Planned`, and `Unknown`) and Derived formulas.**
+   - Comparing `Reader`, `Derived`, `Manual`, `Planned` (from an experiment series before confirmation), and `Unknown` sources (<a href="#fig-9-1">Figure 9-1</a>), and what happens if you hand-edit a `Reader` or `Derived` value.
    - Creating a `Derived` value with **Add > Derived Value...** (`wear_rate_reciprocating` version 1), including multi-value averaging over several wear-track scans.
    - Fig 9-1 (`fig-9-1-value-provenance-sources.svg`): The four value source kinds and how **Check Value Sources...** verifies them.
    - Fig 9-2 (`fig-9-2-item-values-provenance.png`): Screenshot of the **Values** tab in **Item > Edit** showing the `Reader` provenance line and **Go to file** button.
@@ -403,25 +403,30 @@ Section outline:
    - Table 12-1: Comparison of Panel Filters, Text Search, Semantic Search, and **Tools > Analysis...**.
    - Sources: C:Help:Search, `APS-ELN-Community/README.md`.
 
-### Chapter 13: Charts, Correlations, and PDF Reports (`ch13-charts-correlations-and-pdf-reports.mdx`)
+### Chapter 13: Experiment Series, Charts, and PDF Reports (`ch13-charts-correlations-and-pdf-reports.mdx`)
 
 In This Chapter:
-- Plotting experimental Conditions against test Results across a project
-- Understanding how Analysis pairs procedure conditions with child action results
-- Generating formatted A4 or Letter PDF experiment reports
-- Exporting and importing JSON scientific packages safely
+- Planning and tracking a multi-point Experiment Series (`Project > Series...`)
+- Making or linking depositions, confirming `planned` values, and plotting or exporting series tables to OriginLab
+- Plotting experimental Conditions against test Results with `Tools > Analysis...`
+- Generating formatted A4 or Letter PDF experiment reports and JSON scientific packages
 
 Section outline:
-1. **Plotting conditions against results (`Tools > Analysis...`).**
+1. **Planning and running an Experiment Series (`Project > Series...`).**
+   - Opening **Project > Series...**, clicking **New series...**, setting **Title**, **Purpose - what this series tests**, **Target folder**, 1 or 2 **Factors** (with **Levels** or **Fill grid**), **Fixed conditions**, and **Responses**.
+   - Making or linking depositions (**Make deposition...**, **Link existing deposition...**, or **Link to plan point...** from the item tree), confirming grey italic **planned** values (**Confirm planned values**), and reading row states (`planned`, `deposited`, `measured`, `failed`).
+   - Using the **Table** tab (setting column roles **Shown**, **Hidden**, **Varied**, **Response**), the **Plot** tab (**X (condition)**, **Y (results)**, **Group by (condition)**, **Linear trend**), and **Copy table** / **Save CSV...** for OriginLab (with `±` tolerance columns).
+   - Sources: C:Help:Series, C:Help:Projects, C:Help:Items.
+2. **Plotting conditions against results (`Tools > Analysis...`).**
    - Selecting a project or folder, opening **Tools > Analysis...**, choosing a **Condition** value type on the **X Axis** and a **Result** value type on the **Y Axis**, selecting procedures, and clicking **Plot**.
    - How each plotted point is computed: $X$ is the first matching `Condition` on the **Procedure**, and $Y$ is the arithmetic mean of matching `Result` values on child actions, specimen actions, and one level below specimen actions.
    - Copying the plotted numbers with **Copy Data (CSV)** or the image with **Copy Chart**.
-   - Fig 13-1 (`fig-13-1-analysis-and-reports.svg`): How **Tools > Analysis...** pairs conditions with results and how **File > Export Report...** builds a PDF report.
+   - Fig 13-1 (`fig-13-1-analysis-and-reports.svg`): How **Project > Series...** / **Tools > Analysis...** compare conditions with results and how **File > Export Report...** builds a PDF report.
    - Sources: C:Help:AnalysisAndReports.
-2. **Exporting a formatted PDF report (`File > Export Report...`).**
+3. **Exporting a formatted PDF report (`File > Export Report...`).**
    - Selecting a **Procedure** root in the item tree (so all child specimens and actions are available), choosing **File > Export Report...**, ticking the items and sections (`Metadata`, `Protocols`, `Values`, `Files`, `Tags`, `Comments`, `Signatures`), previewing in the HTML viewer, and clicking **Export PDF**.
    - Sources: C:Help:AnalysisAndReports.
-3. **Exporting and importing scientific packages.**
+4. **Exporting and importing scientific packages.**
    - Using **File > Export...** and **File > Import scientific package...** to share item metadata and protocol templates as JSON, and understanding why neither a PDF report nor a JSON scientific package replaces a full backup of your `.sqlite` database and attachment folder.
    - Sources: C:Help:AnalysisAndReports.
 
@@ -481,15 +486,15 @@ Section outline:
 ### Chapter 16: Reading Data and Auditing Drift via MCP (`ch16-reading-data-and-auditing-drift-via-mcp.mdx`)
 
 In This Chapter:
-- Browsing projects, items, and values with structured MCP read tools
+- Browsing projects, items, values, and experiment series (`list_series`, `get_series_table`) with MCP read tools
 - Running hybrid Semantic Search (`search_semantic`) with numeric value filters
 - Inspecting long time-series logs with `list_file_columns` and `get_file_columns`
 - Auditing an entire project with `check_storage`, `check_value_drift`, and `report_value_issues`
 
 Section outline:
-1. **Navigating and querying values (`list_items`, `get_values`, `query_values`).**
-   - Using `list_projects`, `list_folders`, `list_items`, `get_item`, `get_values`, `query_values`, and `correlate_values`, and reading `ancestor_ids` and `source` objects.
-   - Sources: C:Help:MCP, P:Help:AIIntegration.
+1. **Navigating and querying values and series (`list_items`, `get_values`, `query_values`, `list_series`, `get_series_table`).**
+   - Using `list_projects`, `list_folders`, `list_items`, `get_item`, `get_values`, `query_values`, `correlate_values`, `list_series`, and `get_series_table`, and reading `ancestor_ids`, `source` objects, and series `cell_marks`.
+   - Sources: C:Help:MCP, C:Help:Series, P:Help:AIIntegration.
 2. **Searching by text and meaning (`search` and `search_semantic`).**
    - Calling `search` (and reading `file_id`, `full_name`, and `extension` on file hits) vs. calling `search_semantic` with explicit pre-ranking filters (`folder_id`, `item_types`, `levels`, `action_type_id`, `date_from`, `date_to`, and `values` min/max in `requested_unit`).
    - Sources: C:Help:MCP.
@@ -533,7 +538,7 @@ Section outline:
 In This Chapter:
 - Passing viewer selections (`selection`) and `analysis_snapshot` in Study A (`261015A`)
 - Computing `Derived` values (`add_derived_value`) and editing values safely via MCP
-- Drafting and updating Project Wiki pages (`wiki_create_page`, `wiki_update_page`)
+- Drafting and updating Project Wiki pages (`wiki_create_page`, `wiki_update_page`) and `Draft` experiment series (`create_series`, `update_series_plan`)
 - Proposing hypotheses and citing evidence via MCP while keeping approvals in the GUI
 
 Section outline:
@@ -548,15 +553,46 @@ Section outline:
 3. **Drafting and updating Wiki pages (`wiki_create_page`, `wiki_update_page`).**
    - Using `wiki_create_page`, `wiki_get_page`, and `wiki_update_page` to write literature reviews and cross-sample analysis pages under the five-section convention (`Goals`, `Ideas`, `Literature`, `Analysis`, `References`), with all-or-nothing rollback if an attachment check fails.
    - Sources: C:Help:MCP, P:Help:Wiki.
-4. **Preparing hypotheses with an agent and the human-in-the-loop boundary.**
+4. **Drafting Experiment Series and preparing Hypotheses with the human-in-the-loop boundary.**
+   - Using `create_series` and `update_series_plan` to draft a 1-factor or 2-factor series (`Draft` until you click **Start** in the Desktop GUI, while keeping **Make deposition...**, **Link to plan point...**, and **Confirm planned values** in the GUI).
    - Using `propose_hypothesis`, `attach_run`, `cite_evidence`, `submit_conclusion`, `abandon_hypothesis`, and `find_hypotheses_for_item`, and how the human scientist and the AI agent divide responsibilities (<a href="#fig-18-1">Figure 18-1</a> and <a href="#table-18-1">Table 18-1</a>).
    - Fig 18-1 (`fig-18-1-human-agent-division.svg`): Division of responsibilities between the AI agent via MCP and the human scientist in the Desktop GUI.
-   - Table 18-1: MCP write tools for values, files, Wiki pages, and hypotheses.
-   - Sources: C:Help:MCP, C:Help:Hypotheses, P:Help:Experiments.
+   - Table 18-1: MCP write tools for values, files, Wiki pages, experiment series, and hypotheses.
+   - Sources: C:Help:MCP, C:Help:Series, C:Help:Hypotheses, P:Help:Experiments.
 
+
+### Chapter 19: Importing Legacy Folders with an AI Agent (`ch19-importing-legacy-folders-with-an-ai-agent.mdx`)
+
+In This Chapter:
+- Turning an instrument-first or date-first folder archive into a specimen tree
+- Having an agent scan folders, deduplicate files by MD5, and draft a migration plan
+- Separating Reader values extracted from raw files and Manual conditions from Word or Excel logs
+- Walking through a real migration from `D:\ResearchProjects\TiNiZr\` into APS ELN
+
+Section outline:
+1. **Why legacy folders break direct import.**
+   - How pre-ELN laboratory drives (`D:\ResearchProjects\`) organize files by instrument (`UNHT\`, `Wear\`, `COF\`, `LAXRD\`) or date (`2016-07-18\`) instead of by specimen tree, hide synthesis and annealing conditions inside Word (`.docx`) or Excel (`.xlsx`) logs, and mix native raw files (`.mit`, `.vk4`, `.raw`, `.xrcx`) with byte-identical duplicates (`TiNiZr_9B#1.mit` vs. `TiNiZr_09B#1.mit`, `Set 1\` mirrors), Keyence `.rpt` print exports, and cross-sample compilations (`.opj`, `.opju`, `.pptx`).
+   - Fig 19-1 (`fig-19-1-legacy-import-workflow.svg`): The four-phase workflow for migrating an instrument-first legacy folder (`D:\ResearchProjects\TiNiZr\`) into a specimen-first APS ELN project, highlighting the human review gate on the Migration Plan.
+   - Table 19-1: Common legacy folder artifacts in `D:\ResearchProjects\` and how an agent maps them to APS ELN.
+   - Sources: C:Help:MCP, C:Help:FilesAndNotes, `D:\ResearchProjects\TiNiZr\`.
+2. **Phases 1 and 2: Reconnaissance and the migration plan.**
+   - Running a read-only agent scan over a legacy folder to inventory subfolders, compute MD5 hashes to drop byte-identical duplicates, and read collaborator `.docx` and `.xlsx` specimen lists.
+   - Having the agent write a structured Migration Plan table for human review (resolving ambiguous filenames like `12-3N-5k.vk4` vs. `Ball-12-5N-5k.vk4`) before calling any MCP write tool.
+   - Warning: Never let an agent write to ELN before you approve the migration plan.
+   - Sources: C:Help:MCP, P:Help:AIIntegration.
+3. **Phase 3: Staging files and separating `Reader` from `Manual` provenance.**
+   - Walking through Batch 2 of `D:\ResearchProjects\TiNiZr\` (samples `#10`–`#15` described in `Specimens_List_2_(10-15).docx`): staging deduplicated files into `--upload-root` without modifying `D:\ResearchProjects\`, creating `Deposition TiNiZr Batch 2` (`Proc`), attaching `Specimens_List_2_(10-15).docx`, creating specimens `TiNiZr-10`–`TiNiZr-15` and their `Annealing`, `Indentation`, and `Wear` actions.
+   - Recording annealing temperatures ($200\text{–}750\,^\circ\text{C}$) and nominal thickness ($2.5\,\mu\text{m}$) from the `.docx` table as `Manual` conditions citing `Specimens_List_2_(10-15).docx`, while extracting `Hardness` and `Modulus` from `TiNiZr_10#1.mit`–`TiNiZr_15#1.mit` (`aps.mit`) as `Reader` values.
+   - Table 19-2: Approved migration plan for `TiNiZr` Batch 2 (samples `#10`–`#15`).
+   - Sources: C:Help:MCP, C:Help:Values, `D:\ResearchProjects\TiNiZr\Specimens_List_2_(10-15).docx`.
+4. **Phase 4: Linking imported batches into an Experiment Series, filing Wiki compilations, and auditing.**
+   - Creating an Experiment Series (**Project > Series...** or `create_series` + **Start**) for the annealing temperature sweep ($200\text{–}750\,^\circ\text{C}$) and linking the imported procedures with **Link to plan point...** so you can plot hardness and wear against annealing temperature and export to OriginLab.
+   - Attaching cross-sample `.opju`, `.opj`, `.pptx`, and `.pdf` summary files (`H&WR_vs_Temp.opju`, `compilation.pptx`, `Thermal_Conductivity_#2.pdf`) to a Project Wiki `Analysis` page (`wiki_create_page`) with `[[specimen:CODE]]` links rather than under one arbitrary specimen.
+   - Running `check_storage`, `check_value_drift`, and `report_value_issues` to verify the imported project.
+   - Sources: C:Help:MCP, C:Help:Series, C:Help:Wiki, C:Help:Search.
 ## Part 5: The Part of Tens
 
-### Chapter 19: Ten Mistakes That Break Your Data Trail (`ch19-ten-mistakes-that-break-your-data-trail.mdx`)
+### Chapter 20: Ten Mistakes That Break Your Data Trail (`ch20-ten-mistakes-that-break-your-data-trail.mdx`)
 
 In This Chapter:
 - Ten real laboratory mistakes that silently break provenance
@@ -575,7 +611,7 @@ Section outline (ten numbered headings):
 9. **9. Renaming storage files in Windows Explorer**
 10. **10. Backing up the database without its files**
 
-### Chapter 20: Ten Checks Before You Sign or Submit (`ch20-ten-checks-before-you-sign-or-submit.mdx`)
+### Chapter 21: Ten Checks Before You Sign or Submit (`ch21-ten-checks-before-you-sign-or-submit.mdx`)
 
 In This Chapter:
 - Ten checks to run before signing an item or submitting to your supervisor
@@ -594,7 +630,7 @@ Section outline (ten numbered headings):
 9. **9. Check Value Sources reports zero drift**
 10. **10. Hypothesis runs and citations are current**
 
-### Chapter 21: Ten Things an Agent Can and Cannot Do (`ch21-ten-things-an-agent-can-and-cannot-do.mdx`)
+### Chapter 22: Ten Things an Agent Can and Cannot Do (`ch22-ten-things-an-agent-can-and-cannot-do.mdx`)
 
 In This Chapter:
 - Five high-leverage tasks an AI agent can run through the MCP server

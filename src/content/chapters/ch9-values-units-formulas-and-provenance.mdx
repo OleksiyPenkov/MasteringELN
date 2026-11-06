@@ -63,8 +63,9 @@ Every value in APS ELN records how its number entered the notebook (<a href="#fi
 
 1. **`Reader`:** extracted from an attached file. It records the `file_id`, the file's MD5 hash, the `reader_id` and `reader_version`, the original key name, the emitted unit, and the applied conversion factor. It also stores any viewer analysis snapshot (such as ticked indents in `.mit`, step rectangles in `.fibps`, or the applied cycle interval in `.zrw`).
 2. **`Derived`:** calculated by APS ELN from stored input values using a versioned formula (`formula_id`, `formula_version`, and input `value_id` list).
-3. **`Manual`:** typed by hand in **Add Value**, or created when a user edits the number or tolerance of an existing `Reader` or `Derived` value.
-4. **`Unknown`:** recorded in an older notebook before value-level source tracking was introduced.
+3. **`Manual`:** typed by hand in **Add Value**, or created when a user edits the number or tolerance of an existing `Reader`, `Derived`, or `Planned` value.
+4. **`Planned`:** written onto a procedure when you create a deposition from an **Experiment Series** (**Project > Series...**, <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#planning-and-running-an-experiment-series`}>Chapter 13</a>). It appears in grey italic (`planned`) and cannot be plotted or used as an input to a `Derived` formula until you confirm it via **Confirm planned values** (or edit the value) after the run finishes.
+5. **`Unknown`:** recorded in an older notebook before value-level source tracking was introduced.
 
 <Figure id="fig-9-1" number="9-1" src={`${import.meta.env.BASE_URL}/figures/fig-9-1-value-provenance-sources.svg`} alt="Three columns comparing Reader Source, Derived Source, and Manual/Unknown Source, all feeding into Check Value Sources at the bottom" caption="The value provenance model in APS ELN. Reader values link to an attached file, reader version, and viewer snapshot. Derived values link to a versioned formula and stored input value IDs. Check Value Sources verifies both automatically." />
 
