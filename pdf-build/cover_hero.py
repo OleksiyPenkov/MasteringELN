@@ -8,11 +8,11 @@ W, H = 1480, 1200
 
 def main() -> None:
     nodes = [
-        (80, 185, 450, 125, "PROCEDURE", "Deposition 261015A", "{tint}"),
-        (150, 360, 450, 125, "SPECIMEN", "261015A (BN/DLC)", "{tint}"),
-        (220, 535, 470, 125, "ACTION", "Friction test 261015A", "{tint}"),
-        (290, 710, 480, 125, "RAW FILE (MD5)", "BN-DLC.zrw", "{data}"),
-        (360, 885, 595, 125, "READER VALUE", "COF = 0.528 (aps.zrw v2)", "{data}"),
+        (80, 185, 450, 125, "PROCEDURE", "Deposition 261014B", "{tint}"),
+        (150, 360, 470, 125, "SPECIMEN", "261014B (Co/C, N=20)", "{tint}"),
+        (220, 535, 470, 125, "ACTION", "XRR fit 261014B", "{tint}"),
+        (290, 710, 480, 125, "FIT FILE (MD5)", "XRR-fit_Co-C.xrcx", "{data}"),
+        (360, 885, 595, 125, "READER VALUE", "D = 49.40 Å (aps.xrcx v2)", "{data}"),
     ]
     boxes = []
     connectors = []
@@ -36,8 +36,8 @@ def main() -> None:
     agent_box = (
         f'<rect x="{ax}" y="{ay}" width="{aw}" height="{ah}" rx="18" fill="#0f1722" stroke="{{agent}}" stroke-width="5"/>'
         f'<text x="{ax + 28}" y="{ay + 50}" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="1.5" fill="{{agent}}">AI AGENT (MCP)</text>'
-        f'<text x="{ax + 28}" y="{ay + 110}" font-family="Consolas, monospace" font-size="31" fill="#f2f4f5">check_value_drift</text>'
-        f'<text x="{ax + 28}" y="{ay + 158}" font-family="Consolas, monospace" font-size="31" fill="#f2f4f5">fit_xrr · add_values</text>'
+        f'<text x="{ax + 28}" y="{ay + 110}" font-family="Consolas, monospace" font-size="31" fill="#f2f4f5">fit_xrr · save_project</text>'
+        f'<text x="{ax + 28}" y="{ay + 158}" font-family="Consolas, monospace" font-size="31" fill="#f2f4f5">add_values · check_drift</text>'
         f'<text x="{ax + 28}" y="{ay + 204}" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="600" letter-spacing="1.2" fill="{{agent}}">audit · fit · trace</text>'
     )
     agent_links = (

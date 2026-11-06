@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { KATEX_MACROS } from '../src/lib/katex-macros.mjs';
 
 const FORMULAS = {
-  bragg: String.raw`K = \frac{A}{2 \cdot F_n \cdot N}`,
+  bragg: String.raw`2 D \sqrt{\sin^2\theta_m - 2\bar{\delta}} = m\lambda`,
   parratt: String.raw`\text{Proc} \rightarrow \text{Specimen} \rightarrow \text{Action} \rightarrow \text{File} \rightarrow \text{Value} \leftrightarrow \text{MCP}`,
 };
 
