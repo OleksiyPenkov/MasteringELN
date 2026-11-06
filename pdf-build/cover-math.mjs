@@ -5,7 +5,7 @@ import { KATEX_MACROS } from '../src/lib/katex-macros.mjs';
 
 const FORMULAS = {
   bragg: String.raw`K = \frac{A}{2 \cdot F_n \cdot N}`,
-  parratt: String.raw`\text{Proc} \rightarrow \text{Specimen} \rightarrow \text{Action} \rightarrow \text{File} \rightarrow \text{Value}`,
+  parratt: String.raw`\text{Proc} \rightarrow \text{Specimen} \rightarrow \text{Action} \rightarrow \text{File} \rightarrow \text{Value} \leftrightarrow \text{MCP}`,
 };
 
 const html = Object.entries(FORMULAS)

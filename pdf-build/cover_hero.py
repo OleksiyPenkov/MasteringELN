@@ -8,29 +8,50 @@ W, H = 1480, 1200
 
 def main() -> None:
     nodes = [
-        (120, 250, 480, 130, "PROCEDURE", "Deposition 261015A", "{tint}"),
-        (260, 445, 480, 130, "SPECIMEN", "261015A (BN/DLC)", "{tint}"),
-        (400, 640, 500, 130, "ACTION", "Friction test 261015A", "{tint}"),
-        (540, 835, 520, 130, "RAW FILE (MD5)", "BN-DLC.zrw", "{data}"),
-        (680, 1030, 660, 130, "READER VALUE", "COF = 0.528 (aps.zrw v2)", "{data}"),
+        (80, 185, 450, 125, "PROCEDURE", "Deposition 261015A", "{tint}"),
+        (150, 360, 450, 125, "SPECIMEN", "261015A (BN/DLC)", "{tint}"),
+        (220, 535, 470, 125, "ACTION", "Friction test 261015A", "{tint}"),
+        (290, 710, 480, 125, "RAW FILE (MD5)", "BN-DLC.zrw", "{data}"),
+        (360, 885, 595, 125, "READER VALUE", "COF = 0.528 (aps.zrw v2)", "{data}"),
     ]
     boxes = []
     connectors = []
     for i, (x, y, w, h, kind, label, col) in enumerate(nodes):
         boxes.append(
             f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="18" fill="#0f1722" stroke="{col}" stroke-width="5"/>'
-            f'<text x="{x + 28}" y="{y + 48}" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="1.5" fill="{col}">{kind}</text>'
-            f'<text x="{x + 28}" y="{y + 98}" font-family="Consolas, monospace" font-size="34" fill="#f2f4f5">{label}</text>'
+            f'<text x="{x + 28}" y="{y + 46}" font-family="Segoe UI, Arial, sans-serif" font-size="31" font-weight="700" letter-spacing="1.5" fill="{col}">{kind}</text>'
+            f'<text x="{x + 28}" y="{y + 95}" font-family="Consolas, monospace" font-size="33" fill="#f2f4f5">{label}</text>'
         )
         if i + 1 < len(nodes):
             nx, ny, _, _, _, _, ncol = nodes[i + 1]
-            cx = x + 70
+            cx = x + 35
             cy1 = y + h
-            cy2 = ny + 65
+            cy2 = ny + 62
             connectors.append(
                 f'<path d="M{cx} {cy1} V{cy2} H{nx}" fill="none" stroke="{ncol}" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>'
                 f'<circle cx="{nx}" cy="{cy2}" r="8" fill="{ncol}"/>'
             )
+
+    ax, ay, aw, ah = 850, 395, 540, 235
+    agent_box = (
+        f'<rect x="{ax}" y="{ay}" width="{aw}" height="{ah}" rx="18" fill="#0f1722" stroke="{{agent}}" stroke-width="5"/>'
+        f'<text x="{ax + 28}" y="{ay + 50}" font-family="Segoe UI, Arial, sans-serif" font-size="32" font-weight="700" letter-spacing="1.5" fill="{{agent}}">AI AGENT (MCP)</text>'
+        f'<text x="{ax + 28}" y="{ay + 110}" font-family="Consolas, monospace" font-size="31" fill="#f2f4f5">check_value_drift</text>'
+        f'<text x="{ax + 28}" y="{ay + 158}" font-family="Consolas, monospace" font-size="31" fill="#f2f4f5">fit_xrr · add_values</text>'
+        f'<text x="{ax + 28}" y="{ay + 204}" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="600" letter-spacing="1.2" fill="{{agent}}">audit · fit · trace</text>'
+    )
+    agent_links = (
+        '<g fill="none" stroke="{agent}" stroke-width="5" stroke-dasharray="16 12" stroke-linecap="round" stroke-linejoin="round">'
+        f'<path d="M{ax} 585 H690"/>'
+        f'<path d="M1040 {ay + ah} V773 H770"/>'
+        f'<path d="M1230 {ay + ah} V948 H955"/>'
+        '</g>'
+        '<g fill="{agent}">'
+        f'<circle cx="{ax}" cy="585" r="8"/><circle cx="690" cy="585" r="8"/>'
+        f'<circle cx="1040" cy="{ay + ah}" r="8"/><circle cx="770" cy="773" r="8"/>'
+        f'<circle cx="1230" cy="{ay + ah}" r="8"/><circle cx="955" cy="948" r="8"/>'
+        '</g>'
+    )
 
     grid_rows = "".join(f'<line x1="0" y1="{y}" x2="{W}" y2="{y}"/>' for y in range(120, H, 160))
     grid_cols = "".join(f'<line x1="{x}" y1="0" x2="{x}" y2="{H}"/>' for x in range(160, W, 200))
@@ -46,10 +67,10 @@ def main() -> None:
     </linearGradient>
   </defs>
   <g stroke="#fff" stroke-opacity=".06" stroke-width="2">{grid_rows}{grid_cols}</g>
-  <g>{"".join(connectors)}{"".join(boxes)}</g>
-  <text x="690" y="215" font-family="'Ink Free','Segoe Script','Bradley Hand',cursive" font-size="78" fill="#f2f4f5" opacity=".92" transform="rotate(-3 690 215)">
-    <tspan x="690" dy="0">keep every link</tspan>
-    <tspan x="690" dy="92">from sample to number!</tspan>
+  <g>{"".join(connectors)}{agent_links}{"".join(boxes)}{agent_box}</g>
+  <text x="640" y="175" font-family="'Ink Free','Segoe Script','Bradley Hand',cursive" font-size="76" fill="#f2f4f5" opacity=".92" transform="rotate(-3 640 175)">
+    <tspan x="640" dy="0">keep every link</tspan>
+    <tspan x="640" dy="88">from sample to number!</tspan>
   </text>
   <rect width="{W}" height="{H}" fill="url(#fade)"/>
 </svg>

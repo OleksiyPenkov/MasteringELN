@@ -28,7 +28,7 @@ The project started on 2026-11-02. Both the Astro 7 web stack and the Playwright
 
 ## Settled by the author (2026-11-02)
 
-- **Title:** `Mastering ELN` (subtitle: `Recording, Tracing, and Analyzing Laboratory Data with APS ELN`). Never use "For Dummies" in the title, headings, or cover (Wiley trademark).
+- **Title:** `Mastering ELN` (subtitle: `Recording, Tracing, and Analyzing Laboratory Data with APS ELN and AI Agents`). Never use "For Dummies" in the title, headings, or cover (Wiley trademark).
 - **Edition arrangement:** One unified student textbook teaching the shared scientific workflow once, with `<InTeamLab>` callouts where the Commercial ("For Teams") edition adds server login, user roles, mobile QR protocol entry, or supervisor review gates. IT and server administration are excluded.
 - **Running examples:** Study A (`tribo_study`, sample `261015A`, BN/DLC coating) and Study B (`xrr_study`, sample `261014B`, Co/C multilayer X-ray mirror) from `D:\MultilayerLab\Papers\ELN-Software-Paper\zenodo\demonstration\`.
 - **Source hierarchy (`Code > Help > Paper`):**

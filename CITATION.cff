@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "Mastering ELN: Recording, Tracing, and Analyzing Laboratory Data with APS ELN"
+title: "Mastering ELN: Recording, Tracing, and Analyzing Laboratory Data with APS ELN and AI Agents"
 message: "If you use this book, please cite it as below."
 type: book
 authors:
@@ -23,7 +23,7 @@ keywords:
   - X-ray reflectivity
 preferred-citation:
   type: book
-  title: "Mastering ELN: Recording, Tracing, and Analyzing Laboratory Data with APS ELN"
+  title: "Mastering ELN: Recording, Tracing, and Analyzing Laboratory Data with APS ELN and AI Agents"
   authors:
     - family-names: Penkov
       given-names: Oleksiy V.

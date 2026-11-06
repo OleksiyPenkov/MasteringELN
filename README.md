@@ -12,7 +12,7 @@ The book is built around [APS ELN Community](https://github.com/APS-Techno/ELN-C
 
 ## How to cite
 
-> Penkov, O. V. (2026). *Mastering ELN: Recording, Tracing, and Analyzing Laboratory Data with APS ELN* (Edition 1.0.0). https://doi.org/10.5281/zenodo.23466959
+> Penkov, O. V. (2026). *Mastering ELN: Recording, Tracing, and Analyzing Laboratory Data with APS ELN and AI Agents* (Edition 1.1.0). https://doi.org/10.5281/zenodo.23466959
 
 ## What is in this repository
 

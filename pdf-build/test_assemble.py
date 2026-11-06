@@ -117,7 +117,9 @@ def test_cover_inlines_the_hero_with_its_colors_filled():
     assert "Mastering<br>ELN" in html
     assert "Recording, Tracing, and Analyzing" in html
     assert "Laboratory Data with APS ELN" in html
-    assert "{accent}" not in html and "{tint}" not in html and "{data}" not in html
+    assert "and AI Agents" in html
+    assert "AI AGENT (MCP)" in html
+    assert "{accent}" not in html and "{tint}" not in html and "{data}" not in html and "{agent}" not in html
 
 def test_citation_meta_reads_the_top_level_keys_only():
     cff = ('version: 1.0.2\ndate-released: 2026-09-25\ndoi: 10.5281/zenodo.1\nurl: "https://x.org/b/"\n'
