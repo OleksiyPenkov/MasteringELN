@@ -118,7 +118,7 @@
   },
   {
     "slug": "ch13-charts-correlations-and-pdf-reports",
-    "title": "Charts, Correlations, and PDF Reports",
+    "title": "Experiment Series, Charts, and PDF Reports",
     "number": "13",
     "label": "Chapter 13",
     "order": 130,
@@ -171,17 +171,17 @@
     "partHeading": "Part 4: Working with an AI Agent (MCP)"
   },
   {
-    "slug": "ch19-ten-mistakes-that-break-your-data-trail",
-    "title": "Ten Mistakes That Break Your Data Trail",
+    "slug": "ch19-importing-legacy-folders-with-an-ai-agent",
+    "title": "Importing Legacy Folders with an AI Agent",
     "number": "19",
     "label": "Chapter 19",
     "order": 190,
-    "part": "5",
-    "partHeading": "Part 5: The Part of Tens"
+    "part": "4",
+    "partHeading": "Part 4: Working with an AI Agent (MCP)"
   },
   {
-    "slug": "ch20-ten-checks-before-you-sign-or-submit",
-    "title": "Ten Checks Before You Sign or Submit",
+    "slug": "ch20-ten-mistakes-that-break-your-data-trail",
+    "title": "Ten Mistakes That Break Your Data Trail",
     "number": "20",
     "label": "Chapter 20",
     "order": 200,
@@ -189,11 +189,20 @@
     "partHeading": "Part 5: The Part of Tens"
   },
   {
-    "slug": "ch21-ten-things-an-agent-can-and-cannot-do",
-    "title": "Ten Things an Agent Can and Cannot Do",
+    "slug": "ch21-ten-checks-before-you-sign-or-submit",
+    "title": "Ten Checks Before You Sign or Submit",
     "number": "21",
     "label": "Chapter 21",
     "order": 210,
+    "part": "5",
+    "partHeading": "Part 5: The Part of Tens"
+  },
+  {
+    "slug": "ch22-ten-things-an-agent-can-and-cannot-do",
+    "title": "Ten Things an Agent Can and Cannot Do",
+    "number": "22",
+    "label": "Chapter 22",
+    "order": 220,
     "part": "5",
     "partHeading": "Part 5: The Part of Tens"
   },
