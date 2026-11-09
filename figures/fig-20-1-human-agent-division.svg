@@ -1,0 +1,19 @@
+<svg viewBox="0 0 600 235" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <rect x="10" y="14" width="278" height="206" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.8"/>
+  <text x="24" y="40" font-size="15" font-weight="700" fill="#00695c">AI Agent via MCP Server</text>
+  <text x="24" y="70" font-size="14" fill="#222">Build trees &amp; upload raw files</text>
+  <text x="24" y="96" font-size="14" fill="#222">Run readers &amp; store Reader values</text>
+  <text x="24" y="122" font-size="14" fill="#222">Compute Derived formula values</text>
+  <text x="24" y="148" font-size="14" fill="#222">Draft Wiki pages &amp; Draft Series</text>
+  <text x="24" y="174" font-size="14" fill="#222">Propose hypotheses &amp; cite evidence</text>
+  <text x="24" y="202" font-size="14" font-weight="600" fill="#00695c">Audit storage &amp; drift across projects</text>
+
+  <rect x="312" y="14" width="278" height="206" rx="6" fill="#ede7f6" stroke="#5e35b1" stroke-width="1.8"/>
+  <text x="326" y="40" font-size="15" font-weight="700" fill="#5e35b1">Human Scientist in Desktop GUI</text>
+  <text x="326" y="70" font-size="14" fill="#222">Start Series &amp; Confirm planned values</text>
+  <text x="326" y="96" font-size="14" fill="#222">Inspect curve previews &amp; Approve protocols</text>
+  <text x="326" y="122" font-size="14" fill="#222">Gate 1: Approve hypothesis proposal</text>
+  <text x="326" y="148" font-size="14" fill="#222">Gate 2: Accept &amp; Seal conclusion</text>
+  <text x="326" y="174" font-size="14" fill="#222">Apply Electronic Signature (SIGNED)</text>
+  <text x="326" y="202" font-size="14" fill="#c62828" font-weight="600">Manage permissions &amp; reference rules</text>
+</svg>
