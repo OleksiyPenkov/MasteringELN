@@ -1,0 +1,158 @@
+---
+title: Principles of Experiment Planning and the Taguchi Method
+part: '3'
+number: '10'
+order: 100
+inThisChapter:
+  - Seeing why unplanned trial-and-error runs waste laboratory time and samples
+  - Connecting a testable scientific hypothesis to a structured experiment series
+  - Choosing between one-factor sweeps, full factorial grids, and Taguchi orthogonal arrays
+  - Using level means, Delta effect sizes, and factor ranks to find dominant parameters
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+In Parts 1 and 2 (<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4</a> through <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9</a>), you learned how to record a single specimen tree so every stored number traces back to its raw instrument file. Real research rarely stops at one sample. You vary magnetron power, substrate bias, gas pressure, or annealing temperature across a series of depositions to find which parameter controls film thickness, hardness, wear rate, or multilayer period. This chapter explains why you should plan those runs before going to the chamber and how APS ELN uses sweeps, full grids, and **Taguchi orthogonal arrays** (<a href="#fig-10-1">Figure 10-1</a>).
+
+## Why unplanned experiments fail in the laboratory
+
+When students start a new coating or treatment study without a written plan, they usually fall into four laboratory traps:
+
+1. **Changing two parameters at once:** Suppose you raise substrate bias from $50\,\text{V}$ to $100\,\text{V}$ and also lower argon pressure from $0.4\,\text{Pa}$ to $0.2\,\text{Pa}$ between two runs. You then cannot tell which change increased the film hardness.
+2. **Unrecorded baseline drift:** Fixed conditions such as target-to-substrate distance, base pressure, or substrate cleaning time are easy to omit from a notebook. Without them, day-to-day drift can look like a real physical effect.
+3. **Orphan runs:** When you sit down to write your thesis or paper, a project folder full of unlinked `Deposition` procedures does not show which question runs `12` through `17` tested or why run `14` was stopped.
+4. **Combinatorial explosion:** A magnetron sputtering process often has four to seven adjustable knobs (power, bias voltage, working pressure, reactive gas flow, substrate temperature, and layer times). Testing 4 factors at 3 levels each by brute force requires $3^4 = 81$ depositions and 81 sets of characterization scans.
+
+APS ELN prevents these traps with two linked planning windows under the **Project** menu:
+
+- **The Hypothesis Tree (`Project > Hypotheses`, <a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 11</a>):** records *what you expect to happen and why* (`Statement`) and what changed from the parent idea (`Change`). It then links the experimental `Runs`, the cited `Evidence`, and whether the expectation was `Supported`, `Refuted`, or `Inconclusive`.
+- **The Experiment Series (`Project > Series...`, <a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#planning-a-series-in-the-series-window`}>Chapter 12</a>):** generates the matrix of planned points and writes target setpoints onto each new procedure as `planned` values. It also tracks which runs are `deposited` or `measured` and plots the results across the series.
+
+<InELN>Both **Project > Hypotheses** and **Project > Series...** open in their own separate windows with their own Windows taskbar buttons. They stay open while you work in the main window, so you can keep your hypothesis or series table side by side with your item tree.</InELN>
+
+## Factors, levels, fixed conditions, and responses
+
+Every structured experiment series in APS ELN is built from four parts:
+
+- **Factors (`1` to `7` varied parameters):** the experimental inputs (`Condition` value types) you step across the series, such as `Power`, `Bias`, `Pressure`, or deposition `Time`. When two factors share the same value type (such as the deposition times of two layers), give each factor a **Label** such as `Mo layer` and `Si layer`. APS ELN displays the label in brackets after the value type (`Time (Mo layer), s`).
+- **Levels:** the specific numeric setpoints you test for each factor, such as `100; 200; 300` for `Power, W`.
+- **Fixed conditions:** the input parameters (`Condition` value types) held constant across every run in the series, such as `Pressure` $= 0.267\,\text{Pa}$ ($2\,\text{mTorr}$) or `Cycles` $= 20$, with an optional tolerance.
+- **Responses:** the measured outputs (`Result` value types) extracted on every point, such as step-height `Thickness` ($d$), `Hardness` ($H_{\text{IT}}$), `Wear rate` ($K$), or multilayer `Period` ($D$).
+
+<Remember>In APS ELN, a factor or fixed condition is a **Condition** (`EXP_CONDITION` on the **Procedure**). A response is a **Result** (`TEST_RESULT` on the procedure or its child **Actions**). Separating conditions from results during value extraction (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9</a>) is what allows the series table to assemble itself automatically.</Remember>
+
+## Sweeps, full grids, and Taguchi orthogonal arrays
+
+Before you cut substrates or pump down the chamber, choose the point-generation method that matches the number of factors you are testing (<a href="#fig-10-1">Figure 10-1</a> and <a href="#table-10-1">Table 10-1</a>).
+
+<Figure id="fig-10-1" number="10-1" src={`${import.meta.env.BASE_URL}/figures/fig-10-1-planning-designs.svg`} alt="Three-panel comparison of 1. One-Factor Sweep (3 runs along one Power axis), 2. Full Grid (3x3 = 9 runs across Power and Bias, capped at 3 factors and 27 points), and 3. Taguchi Orthogonal Array L9 (4 factors at 3 levels tested in 9 balanced runs instead of 81, feeding Level Means Delta ranking)" caption="Choosing an experiment design in APS ELN. Use a one-factor sweep (1) to calibrate a single knob, a Full Grid (2) to map 2 or 3 interacting factors completely (up to 27 points), and a Taguchi orthogonal array (3) to screen 2 to 7 factors in a balanced fraction of the runs." />
+
+### 1. One-factor sweep (1 factor)
+
+In a **one-factor sweep**, you vary a single factor across several levels (for example, sputtering power at $100\,\text{W}$, $200\,\text{W}$, and $300\,\text{W}$) while holding every other condition fixed. Use a one-factor sweep when you are calibrating a deposition rate, checking thickness linearity against time, or testing a single physical variable.
+
+### 2. Full factorial grid (`Full grid`, 1 to 3 factors, up to 27 points)
+
+Two or three parameters often interact, such as magnetron `Power` and substrate `Bias` during $\text{BN/DLC}$ deposition. Varying one factor at a time can then miss the best corner of the parameter window. Choosing **Full grid** generates every combination of your factor levels:
+
+- Two factors with 3 levels each produce $3 \times 3 = 9$ plan points.
+- Three factors with 3 levels each produce $3 \times 3 \times 3 = 27$ plan points.
+
+A full grid grows exponentially as $m^k$, where $k$ is the number of factors and $m$ is the number of levels. Four factors at 3 levels would require $3^4 = 81$ depositions. APS ELN therefore limits **Full grid** to at most **3 factors** and **27 points**. When you add a third factor in the plan dialog, APS ELN switches **Point generation** to **Taguchi orthogonal array** automatically.
+
+### 3. Taguchi orthogonal arrays (`Taguchi orthogonal array`, 2 to 7 factors)
+
+Developed by Genichi Taguchi for engineering process optimization, an **orthogonal array** denoted $L_N$ is a fractional factorial table with $N$ rows (depositions) and $k$ columns (factors). APS ELN includes six standard orthogonal arrays covering 2 to 7 factors (<a href="#table-10-1">Table 10-1</a>).
+
+<p id="table-10-1" class="table-caption"><strong>Table 10-1:</strong> The six Taguchi orthogonal arrays built into APS ELN (<code>Project &gt; Series...</code> and MCP <code>create_series</code>).</p>
+
+<DataTable
+  headers={['Taguchi array', 'Number of factors (k)', 'Levels per factor', 'Planned runs (N)', 'Full-grid runs for max k']}
+  rows={[
+    ['`L4`', '2 or 3 factors', '2 levels each', '4 runs', '8 runs (2<sup>3</sup>)'],
+    ['`L8`', '4 to 7 factors', '2 levels each', '8 runs', '128 runs (2<sup>7</sup>)'],
+    ['`L9`', '2 to 4 factors', '3 levels each', '9 runs', '81 runs (3<sup>4</sup>)'],
+    ['`L16`', '2 to 5 factors', '4 levels each', '16 runs', '1,024 runs (4<sup>5</sup>)'],
+    ['`L18`', '2 to 7 factors (mixed)', 'One 2-level factor (at any position) + 1 to 6 three-level factors', '18 runs', '1,458 runs (2 × 3<sup>6</sup>)'],
+    ['`L27`', '5 to 7 factors', '3 levels each', '27 runs', '2,187 runs (3<sup>7</sup>)'],
+  ]}
+/>
+
+What makes an array like `L9` **orthogonal** is its two-way balance across all columns (<a href="#table-10-2">Table 10-2</a>):
+
+1. **Equal level frequency:** In the 9 rows of `L9`, each of the three levels (`1`, `2`, `3`) of every factor appears **exactly 3 times**.
+2. **Equal pair frequency:** Take any two factors in <a href="#table-10-2">Table 10-2</a>, such as `Power` (Factor A) and `Bias` (Factor B). Every possible ordered pair of levels (`(Low, Low)`, `(Low, Med)`, `(Low, High)`, `(Med, Low)`, ..., `(High, High)`) appears **exactly once** among the 9 runs.
+
+<p id="table-10-2" class="table-caption"><strong>Table 10-2:</strong> Worked <code>L9</code> Taguchi orthogonal array for a 4-factor, 3-level reactive sputtering series (9 runs instead of 81).</p>
+
+<DataTable
+  headers={['Run (Point)', 'Factor A: Power (W)', 'Factor B: Bias (V)', 'Factor C: Pressure (Pa)', 'Factor D: N2 flow (sccm)']}
+  rows={[
+    ['**Point 1** (`1, 1, 1, 1`)', '100 W (Level 1)', '40 V (Level 1)', '0.2 Pa (Level 1)', '2 sccm (Level 1)'],
+    ['**Point 2** (`1, 2, 2, 2`)', '100 W (Level 1)', '80 V (Level 2)', '0.4 Pa (Level 2)', '5 sccm (Level 2)'],
+    ['**Point 3** (`1, 3, 3, 3`)', '100 W (Level 1)', '120 V (Level 3)', '0.6 Pa (Level 3)', '8 sccm (Level 3)'],
+    ['**Point 4** (`2, 1, 2, 3`)', '200 W (Level 2)', '40 V (Level 1)', '0.4 Pa (Level 2)', '8 sccm (Level 3)'],
+    ['**Point 5** (`2, 2, 3, 1`)', '200 W (Level 2)', '80 V (Level 2)', '0.6 Pa (Level 3)', '2 sccm (Level 1)'],
+    ['**Point 6** (`2, 3, 1, 2`)', '200 W (Level 2)', '120 V (Level 3)', '0.2 Pa (Level 1)', '5 sccm (Level 2)'],
+    ['**Point 7** (`3, 1, 3, 2`)', '300 W (Level 3)', '40 V (Level 1)', '0.6 Pa (Level 3)', '5 sccm (Level 2)'],
+    ['**Point 8** (`3, 2, 1, 3`)', '300 W (Level 3)', '80 V (Level 2)', '0.2 Pa (Level 1)', '8 sccm (Level 3)'],
+    ['**Point 9** (`3, 3, 2, 1`)', '300 W (Level 3)', '120 V (Level 3)', '0.4 Pa (Level 2)', '2 sccm (Level 1)'],
+  ]}
+/>
+
+Look at Points 1, 2, and 3 in <a href="#table-10-2">Table 10-2</a>, where `Power` is held at Level 1 ($100\,\text{W}$). Across those three runs, `Bias` visits Levels 1, 2, and 3; `Pressure` visits Levels 1, 2, and 3; and `N2 flow` visits Levels 1, 2, and 3. The same balance holds for the three runs at $200\,\text{W}$ (Points 4–6) and the three runs at $300\,\text{W}$ (Points 7–9). When you compare the average hardness at $100\,\text{W}$, $200\,\text{W}$, and $300\,\text{W}$, the main effects of the other three factors cancel out cleanly.
+
+<Tip>Suppose one factor has 2 levels (such as substrate heater `Off` vs. `On`), while up to 6 other factors have 3 levels each. APS ELN selects the mixed **`L18`** array automatically. You can put the 2-level factor at any position in your factor list.</Tip>
+
+## Reading main effects: level means, Delta, and factor rank
+
+Once you run the depositions in an orthogonal array and extract the response values, open the **Plot** tab of **Project > Series...** (<a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#plotting-sweeps-taguchi-level-means-and-exporting-to-originlab`}>Chapter 12</a>). Tick **Level means (Taguchi)** to evaluate each factor.
+
+For a chosen plan factor $X$ and response $Y$, APS ELN calculates three quantities:
+
+1. **The level mean ($\bar{Y}_{X=L}$):** For each planned level $L$ of factor $X$, ELN averages the confirmed response values $Y_1, \dots, Y_{n_L}$ recorded at that level:
+
+$$
+\bar{Y}_{X=L} = \frac{1}{n_L} \sum_{i=1}^{n_L} Y_i
+$$
+
+2. **The level spread (error bar $s_L$):** When $n_L \ge 2$ runs were measured at level $L$, the vertical error bar on the plot is the sample standard deviation across those runs:
+
+$$
+s_L = \sqrt{\frac{1}{n_L - 1} \sum_{i=1}^{n_L} \left(Y_i - \bar{Y}_{X=L}\right)^2}
+$$
+
+When only $n_L = 1$ run has been measured at level $L$, the error bar shows that single value's stored tolerance.
+
+3. **The effect size ($\Delta_X$) and factor rank:** Below the result list on the **Plot** tab, APS ELN displays **Delta** ($\Delta_X$). It equals the largest level mean minus the smallest level mean of factor $X$:
+
+$$
+\Delta_X = \max_{L}\left(\bar{Y}_{X=L}\right) - \min_{L}\left(\bar{Y}_{X=L}\right)
+$$
+
+Alongside $\Delta_X$, APS ELN shows the factor's **rank** among all $k$ factors in the plan, such as `Delta = 10 nm (rank 1 of 3)` or `Delta = 2.4 GPa (rank 1 of 4)`. **Rank 1** is the factor with the largest $\Delta$: the parameter that produces the largest change in the measured response across its tested levels. Factors with equal $\Delta$ share the same rank.
+
+<Warning title="deviated setpoints and unconfirmed planned values are excluded from level means">Orthogonal cancellation requires each run to sit at its planned factor level within tolerance. When a deposition's stored factor value differs from its planned level beyond tolerance, APS ELN excludes that run from the factor's level means. The plot note then displays `n point(s) differ from the plan and are left out of level means.` Unconfirmed grey italic `planned` values are also excluded until you confirm them.</Warning>
+
+<GoingDeeper title="when Taguchi screening is enough and when to run a follow-up Full Grid">
+
+Taguchi level-means analysis is a **main-effects screening method**. It assumes that the direct effect of each factor is larger than two-factor interactions (where the effect of Factor A reverses direction depending on Factor B). In addition, APS ELN's **Level means (Taguchi)** plot computes direct response means and $\Delta$ ranks rather than logarithmic signal-to-noise (S/N) ratios or an analysis of variance (ANOVA).
+
+This makes a two-stage workflow very effective in practice:
+
+1. **Stage 1 (Screening with Taguchi `L9` or `L18`):** Propose your initial screening hypothesis (<a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-starting-or-approving-work`}>Chapter 11</a>) and run a 9-point `L9` series across 4 candidate parameters (<a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#planning-a-series-in-the-series-window`}>Chapter 12</a>). Use **Level means (Taguchi)** to identify the Rank 1 and Rank 2 factors, and fix the low-impact Rank 3 and Rank 4 factors at their best levels.
+2. **Stage 2 (Mapping with a 2-factor Full Grid):** Propose a **New follow-up...** hypothesis and create a 2-factor **Full grid** series over just the Rank 1 and Rank 2 factors. You can also export the table to OriginLab via **Copy table** or **Save CSV...** to map their response surface in detail.
+
+</GoingDeeper>
+
+## Sources
+
+- **APS ELN Community Help:** `Series.html` (planning an Experiment Series, 1 to 7 **Factors** with labels and semicolon-separated **Levels**, **Point generation** options **Full grid**, **Taguchi orthogonal array** `L4` / `L8` / `L9` / `L16` / `L18` / `L27`, and **No initial points**, **Fixed conditions**, **Responses**, **Level means (Taguchi)** on the **Plot** tab, **Delta** and factor rank calculation, exclusion of deviated runs and unconfirmed `planned` values, and absence of S/N ratios or ANOVA); `Hypotheses.html` (**Project > Hypotheses** separate window and campaign structure).
+- **APS ELN Delphi source:** `ELN.Model/unit_SeriesTaguchi.pas` (`MAX_SERIES_FACTORS = 7`, `MAX_GRID_FACTORS = 3`, `MAX_GRID_POINTS = 27`, `L4`, `L8`, `L9`, `L16`, `L18`, and `L27` orthogonal array definitions, `SelectTaguchiArray`, `BuildTaguchiPoints`, `BuildGridPoints`, `SummarizeLevels`, and `ComputeFactorEffects`).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4: Your First Sample Record in Twenty Minutes</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#conditions-results-units-and-plausible-range-checks`}>Chapter 9: Conditions, Results, units, and plausible-range checks</a>; <a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 11: The Hypothesis Tree and Evidence</a>; <a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#planning-a-series-in-the-series-window`}>Chapter 12: Experiment Series and Taguchi Arrays in ELN</a>.

@@ -1,4 +1,4 @@
-export const PART_KEYS = ['front', '1', '2', '3', '4', '5', 'back'] as const;
+export const PART_KEYS = ['front', '1', '2', '3', '4', '5', '6', 'back'] as const;
 export type PartKey = (typeof PART_KEYS)[number];
 
 export interface Part {
@@ -11,9 +11,10 @@ export const PARTS: Part[] = [
   { key: 'front', name: 'Front Matter', numbered: false },
   { key: '1', name: 'Getting Started', numbered: true },
   { key: '2', name: 'Recording Daily Lab Work', numbered: true },
-  { key: '3', name: 'Thinking, Searching, and Reviewing', numbered: true },
-  { key: '4', name: 'Working with an AI Agent (MCP)', numbered: true },
-  { key: '5', name: 'The Part of Tens', numbered: true },
+  { key: '3', name: 'Experiment Planning with ELN', numbered: true },
+  { key: '4', name: 'Organizing, Searching, and Reviewing', numbered: true },
+  { key: '5', name: 'Working with an AI Agent (MCP)', numbered: true },
+  { key: '6', name: 'The Part of Tens', numbered: true },
   { key: 'back', name: 'Appendices', numbered: false },
 ];
 

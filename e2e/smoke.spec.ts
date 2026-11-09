@@ -1,14 +1,15 @@
 import { expect, test } from '@playwright/test';
 import { BASE } from '../src/lib/site.mjs';
 
-test('home lists Front Matter, Parts 1 through 5, and Appendices', async ({ page }) => {
+test('home lists Front Matter, Parts 1 through 6, and Appendices', async ({ page }) => {
   await page.goto(`${BASE}/`);
   await expect(page.getByRole('heading', { name: 'Front Matter' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Part 1: Getting Started' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Part 2: Recording Daily Lab Work' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Part 3: Thinking, Searching, and Reviewing' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Part 4: Working with an AI Agent (MCP)' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Part 5: The Part of Tens' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Part 3: Experiment Planning with ELN' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Part 4: Organizing, Searching, and Reviewing' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Part 5: Working with an AI Agent (MCP)' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Part 6: The Part of Tens' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Appendices' })).toBeVisible();
   await page.getByRole('link', { name: /Introduction/ }).click();
   await expect(page.getByRole('heading', { level: 1, name: 'Introduction' })).toBeVisible();

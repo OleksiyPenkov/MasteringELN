@@ -1,15 +1,15 @@
 ---
 title: Ten Checks Before You Sign or Submit
-part: '5'
-number: '21'
-order: 210
+part: '6'
+number: '23'
+order: 230
 inThisChapter:
   - Ten checks to run before signing an item or submitting to your supervisor
   - Verifying files, viewer intervals, provenance badges, and drift
   - Ensuring a colleague can trace every number back to its raw file
 ---
 
-Electronic signatures (`SIGNED`) and protocol or hypothesis approvals lock your record permanently (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>). Complete these ten checks before you click **Sign** or ask your supervisor to review your experiment.
+Electronic signatures (`SIGNED`) and protocol or hypothesis approvals lock your record permanently (<a href={`${import.meta.env.BASE_URL}/ch16-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 16: Signing an item and verifying signature integrity</a>). Complete these ten checks before you click **Sign** or ask your supervisor to review your experiment.
 
 ## 1. Every action has its raw files attached
 
@@ -41,7 +41,7 @@ If your procedure or action uses a structured **Protocol** (<a href={`${import.m
 
 ## 8. Data Completeness reports zero missing items
 
-Select your project or folder and run **Tools > Data Completeness...** (or right-click the project and choose **Data Quality Check...** in the team client; <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#completeness-rules-and-data-quality-checks`}>Chapter 14: Completeness rules and Data Quality Checks</a>). Confirm that no action fails a required file-type or value-type rule, and run `report_value_issues` via MCP (<a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16</a>) to confirm zero out-of-range values or tolerance-scale mismatches.
+Select your project or folder and run **Tools > Data Completeness...** (or right-click the project and choose **Data Quality Check...** in the team client; <a href={`${import.meta.env.BASE_URL}/ch16-completeness-audit-and-signatures#completeness-rules-and-data-quality-checks`}>Chapter 16: Completeness rules and Data Quality Checks</a>). Confirm that no action fails a required file-type or value-type rule, and run `report_value_issues` via MCP (<a href={`${import.meta.env.BASE_URL}/ch18-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 18</a>) to confirm zero out-of-range values or tolerance-scale mismatches.
 
 ## 9. Check Value Sources reports zero drift
 
@@ -49,11 +49,11 @@ Right-click the root **Procedure** of your experiment and choose **Check Value S
 
 ## 10. Hypothesis runs and citations are current
 
-If your experiment tests a hypothesis (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#attaching-runs-and-citing-evidence`}>Chapter 10: Attaching Runs and citing Evidence</a>), open **Project > Hypotheses**, select the hypothesis, and check its **Runs** and **Evidence** tabs. Confirm that the procedure or specimen is attached as a `Run` and that the final files and values are cited on the **Evidence** tab. Verify that no cited row shows a `changed` or `missing` warning before you click **Submit conclusion**.
+If your experiment tests a hypothesis (<a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#attaching-runs-promoting-references-and-citing-evidence`}>Chapter 11: Attaching Runs, promoting References, and citing Evidence</a>), open **Project > Hypotheses**, select the hypothesis, and check its **Runs** and **Evidence** tabs. Confirm that the procedure or specimen is attached as a `Run` and that the final files and values are cited on the **Evidence** tab (with any `Planned` series values confirmed first). Verify that no cited row shows a `changed` or `missing` warning before you click **Close with conclusion** (Community) or **Submit conclusion** (Team).
 
 ## Sources
 
 - **APS ELN Community Help:** `Items.html` (**Expand all below** and the **Values** tab **Go to file** button); `FilesAndNotes.html` (compound extensions and **Tools > Save Attachment Working Draft**); `Values.html` (repeated-value tree summaries, `Reader` and `Derived` sources, and **Check Value Sources...**); `Protocols.html` (`Draft` to `In Review`); `Hypotheses.html` (**Runs**, **Evidence**, and **Submit conclusion**); `Integrity.html` (**Tools > Data Completeness...** and **Signature > Sign Item...**).
 - **Study A and Study B verification reports (`doi:10.5281/zenodo.23466959`):** `tribo_study/reports/record_report.md`, `tribo_study/reports/content_check.md`, and `xrr_study/reports/record_report.md` (the exact checks run at the end of Study A and Study B: `check_value_drift`, `check_storage`, and `report_value_issues`).
 
-Cross-references: <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3</a>; <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4</a>; <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9</a>; <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#attaching-runs-and-citing-evidence`}>Chapter 10</a>; <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#completeness-rules-and-data-quality-checks`}>Chapter 14</a>; <a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16</a>.
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3</a>; <a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4</a>; <a href={`${import.meta.env.BASE_URL}/ch7-raw-files-drafts-and-instrument-viewers#inside-the-five-core-instrument-viewers`}>Chapter 7</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9</a>; <a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#attaching-runs-promoting-references-and-citing-evidence`}>Chapter 11</a>; <a href={`${import.meta.env.BASE_URL}/ch16-completeness-audit-and-signatures#completeness-rules-and-data-quality-checks`}>Chapter 16</a>; <a href={`${import.meta.env.BASE_URL}/ch18-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 18</a>.

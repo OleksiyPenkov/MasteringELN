@@ -1,0 +1,48 @@
+<svg viewBox="0 0 600 320" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr12" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#455a64"/>
+    </marker>
+  </defs>
+
+  <!-- Stage 1: Series Plan Dialog -->
+  <rect x="10" y="12" width="274" height="134" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.8"/>
+  <text x="22" y="36" font-size="15" font-weight="700" fill="#0d47a1">1. Series Plan (Project &gt; Series...)</text>
+  <text x="22" y="62" font-size="13.5" fill="#222">1 to 7 Factors + Label &amp; Levels</text>
+  <text x="22" y="86" font-size="13" fill="#37474f">Full grid (≤ 27) or Taguchi L4–L27</text>
+  <text x="22" y="108" font-size="13" fill="#37474f">Fixed conditions &amp; Responses</text>
+  <text x="22" y="130" font-size="13" font-weight="700" fill="#0d47a1">GUI: Active · MCP: Draft → Start</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="284" y1="79" x2="314" y2="79" stroke="#455a64" stroke-width="2" marker-end="url(#arr12)"/>
+
+  <!-- Stage 2: Make or Link Depositions -->
+  <rect x="316" y="12" width="274" height="134" rx="6" fill="#fff8e1" stroke="#ef6c00" stroke-width="1.8"/>
+  <text x="328" y="36" font-size="15" font-weight="700" fill="#e65100">2. Make or Link Depositions</text>
+  <text x="328" y="62" font-size="13.5" fill="#222">Make deposition... writes planned</text>
+  <text x="328" y="86" font-size="13" fill="#37474f">Link existing / Link to plan point</text>
+  <text x="328" y="108" font-size="13" fill="#37474f">Mark failed... returns slot to plan</text>
+  <text x="328" y="130" font-size="13" font-weight="700" fill="#bf360c">Confirm planned values after run</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <path d="M 453 146 L 453 160 L 147 160 L 147 172" fill="none" stroke="#455a64" stroke-width="2" marker-end="url(#arr12)"/>
+
+  <!-- Stage 3: Table & Level Means Plot -->
+  <rect x="10" y="174" width="274" height="134" rx="6" fill="#e0f2f1" stroke="#00695c" stroke-width="1.8"/>
+  <text x="22" y="198" font-size="15" font-weight="700" fill="#00695c">3. Table &amp; Taguchi Plot</text>
+  <text x="22" y="224" font-size="13.5" fill="#222">Roles: Varied, Response, Hidden</text>
+  <text x="22" y="248" font-size="13" fill="#004d40">Method-named result columns</text>
+  <text x="22" y="270" font-size="13" fill="#004d40">Plot: Group by, Linear trend</text>
+  <text x="22" y="292" font-size="13" font-weight="700" fill="#00695c">Level means: Δ &amp; rank 1 of k</text>
+
+  <!-- Arrow 3 -> 4 -->
+  <line x1="284" y1="241" x2="314" y2="241" stroke="#455a64" stroke-width="2" marker-end="url(#arr12)"/>
+
+  <!-- Stage 4: OriginLab Export -->
+  <rect x="316" y="174" width="274" height="134" rx="6" fill="#ede7f6" stroke="#5e35b1" stroke-width="1.8"/>
+  <text x="328" y="198" font-size="15" font-weight="700" fill="#4527a0">4. Export to OriginLab</text>
+  <text x="328" y="224" font-size="13.5" fill="#222">Copy table (TSV) or Save CSV...</text>
+  <text x="328" y="248" font-size="13" fill="#311b92">Row 1 names · Row 2 units</text>
+  <text x="328" y="270" font-size="13" fill="#311b92">Paired ± tolerance error columns</text>
+  <text x="328" y="292" font-size="13" font-weight="700" fill="#4527a0">Omits Hidden &amp; planned values</text>
+</svg>

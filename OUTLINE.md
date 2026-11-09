@@ -24,8 +24,9 @@ Sections (fixed by `STYLE.md §3`):
 5. **Where to Go from Here:** Four linked reading routes:
    - Brand new to ELN: Chapters 1 -> 2 -> 3 -> 4;
    - Recording a sample today: Chapter 4, then Part 2 (Chapters 5–9);
-   - Connecting an AI agent (DSH or OMP) and importing legacy folders: Part 4 (Chapters 15–19);
-   - Preparing a record for supervisor review or signing: Chapters 14 and 21.
+   - Planning a multi-sample study or Taguchi series: Part 3 (Chapters 10–12);
+   - Connecting an AI agent (DSH or OMP) and importing legacy folders: Part 5 (Chapters 17–21);
+   - Preparing a record for supervisor review or signing: Chapters 16 and 23.
 
 ---
 
@@ -82,7 +83,7 @@ Section outline:
    - Numbered steps for **File > New Notebook...**: choosing a new `.sqlite` filename, selecting the separate `<name> files` attachment directory, entering your first name, last name, and signing password, and importing the seven scientific catalogs.
    - Switching notebooks with **File > Open Notebook...** and **File > Recent Notebooks** (up to 8 recent notebooks).
    - In ELN: **File > New Notebook...**, **File > Open Notebook...**, **File > Recent Notebooks**.
-   - Warning: Your signing password is used when applying electronic signatures (`Chapter 14`); it does not encrypt the `.sqlite` file or ask for a password when opening the notebook.
+   - Warning: Your signing password is used when applying electronic signatures (`Chapter 16`); it does not encrypt the `.sqlite` file or ask for a password when opening the notebook.
    - Going Deeper: Format 6 schema upgrades (`.format5-backup-` automatic backup adding experiment series and `Derived` value storage) and relative attachment directory paths (`..\Files`).
    - Sources: C:Help:GettingStarted, C:Help:Notebooks.
 3. **Logging into a shared server in a team laboratory.**
@@ -316,38 +317,88 @@ Section outline:
    - Table 9-1: Meaning and action to take for each **Check Value Sources...** status code.
    - Sources: C:Help:Values, Demo:A, Demo:B.
 
-## Part 3: Thinking, Searching, and Reviewing
+## Part 3: Experiment Planning with ELN
 
-### Chapter 10: The Hypothesis Tree and Evidence (`ch10-the-hypothesis-tree-and-evidence.mdx`)
+### Chapter 10: Principles of Experiment Planning and the Taguchi Method (`ch10-principles-of-experiment-planning.mdx`)
 
 In This Chapter:
-- Proposing a root hypothesis or a follow-up refinement in a project
-- Attaching experimental Runs and context References to an approved hypothesis
-- Citing items, files, and values as evidence with snapshot checksums
-- Submitting a conclusion and passing the two human review gates
+- Seeing why unplanned trial-and-error runs waste laboratory time and samples
+- Connecting a testable scientific hypothesis to a structured experiment series
+- Choosing between one-factor sweeps, full factorial grids, and Taguchi orthogonal arrays
+- Using level means, Delta effect sizes, and factor ranks to find dominant parameters
+
+Section outline:
+1. **Why unplanned experiments fail in the laboratory.**
+   - The four traps of unplanned runs: changing two knobs at once, silent baseline drift, orphan runs, and combinatorial explosion ($3^4 = 81$ runs).
+   - How APS ELN pairs **Project > Hypotheses** (why you expect an effect) with **Project > Series...** (the factor matrix, fixed conditions, and responses), each in its own top-level window.
+   - Sources: C:Help:Hypotheses, C:Help:Series.
+2. **Factors, levels, fixed conditions, and responses.**
+   - Defining the 1 to 7 varied **Factors** (with labels such as `Mo layer`), **Levels**, **Fixed conditions**, and **Responses** (`TEST_RESULT`).
+   - Sources: C:Help:Series.
+3. **Sweeps, full grids, and Taguchi orthogonal arrays.**
+   - Comparing 1-factor sweeps, 2–3-factor **Full grid** plans ($\le 27$ points), and 2–7-factor **Taguchi orthogonal arrays** (`L4`, `L8`, `L9`, `L16`, `L18`, `L27`).
+   - Why an orthogonal array balances every factor level and every pair of factor levels across a fraction of the runs (for example, 9 runs in `L9` instead of 81 for 4 three-level factors).
+   - Fig 10-1 (`fig-10-1-planning-designs.svg`): Comparing a 1-factor sweep, a 2-factor Full Grid ($3 \times 3 = 9$), and a 4-factor Taguchi `L9` Orthogonal Array (9 balanced runs out of 81) feeding Level-Means $\Delta$ ranking.
+   - Table 10-1: The six Taguchi orthogonal arrays in APS ELN (`L4`, `L8`, `L9`, `L16`, `L18`, `L27`) and their full-grid equivalents.
+   - Table 10-2: Worked 4-factor, 3-level `L9` orthogonal array for reactive magnetron sputtering.
+   - Sources: C:Help:Series, C:Code (`unit_SeriesTaguchi.pas`).
+4. **Reading main effects: level means, Delta, and factor rank.**
+   - How **Level means (Taguchi)** computes the mean response $\bar{Y}_{X=L}$, sample standard deviation $s_L$, effect range $\Delta_X = \max(\bar{Y}_X) - \min(\bar{Y}_X)$, and **Rank** (`rank 1 of k`).
+   - Why deviated runs and unconfirmed `planned` values are excluded, and when to follow a Taguchi screening array with a focused 2-factor Full Grid.
+   - Sources: C:Help:Series, C:Code (`unit_SeriesTaguchi.pas`).
+
+### Chapter 11: The Hypothesis Tree and Evidence (`ch11-the-hypothesis-tree-and-evidence.mdx`)
+
+In This Chapter:
+- Opening the standalone Hypotheses window and proposing a root or follow-up hypothesis
+- Comparing the Community self-review workflow with Commercial two-gate supervisor review
+- Attaching experimental Runs and References, promoting a Reference with Make run, and citing Evidence
+- Closing or accepting a conclusion and verifying the cryptographic content seal
 
 Section outline:
 1. **Why connect experiments to a hypothesis tree?**
-   - How a hypothesis links *what you expected and why* (`Proposal`), the procedures and specimens you made to test it (`Runs`), the specific files and values you rely on (`Evidence`), and what you found (`Conclusion`).
-   - Fig 10-1 (`fig-10-1-hypothesis-lifecycle.svg`): The hypothesis lifecycle and its two human review gates.
+   - How a hypothesis links *what you expected and why* (`Proposal`), the procedures and specimens you made to test it (`Runs`), the specific files and values you rely on (`Evidence`), and what you found (`Conclusion`) inside its own top-level window.
+   - Fig 11-1 (`fig-11-1-hypothesis-lifecycle.svg`): The hypothesis lifecycle in Community (`Draft` -> `Open` -> `Closed`) and Commercial (`Proposed` -> `Approved` -> `In review` -> `Accepted`).
    - Sources: C:Help:Hypotheses, P:Help:Experiments.
-2. **Proposing a hypothesis and passing the first gate.**
-   - Opening **Project > Hypotheses**, clicking **New hypothesis...** (or **New follow-up...** to specify **Change - what differs from the parent hypothesis**), and selecting a headline quantity.
-   - Approving or rejecting a proposal in **Your decision** (and why MCP agents can propose hypotheses but never approve or reject them).
-   - In a Team Lab: How **Administration > Approval Policy...**, **Four-eyes**, project **Share...** checkboxes, and the Dashboard's **Waiting for You** queue govern team approvals.
+2. **Proposing a hypothesis and starting or approving work.**
+   - Opening **Project > Hypotheses** in its separate window, clicking **New hypothesis...** (or **New follow-up...**), selecting a headline quantity, and using **Start** / **Discard** in Community vs. **Approve** / **Reject** in Commercial (`<InTeamLab>`).
    - Sources: C:Help:Hypotheses, P:Help:Experiments.
-3. **Attaching Runs and citing Evidence.**
-   - Attaching items on the **Runs** tab (**Attach selected item...** or right-clicking an item -> **Hypothesis > Attach to hypothesis...**) as a `Run` (after approval) or `Reference`.
-   - Citing an item, an attached file, or a stored value on the **Evidence** tab (**Add evidence...**), and how ELN snapshots the file's MD5 checksum and value at citation time.
-   - Fig 10-2 (`fig-10-2-hypotheses-view.png`): Screenshot of **Project > Hypotheses** showing the hypothesis tree, derived status, headline key value, and **Proposal / Runs / Evidence / Conclusion** tabs.
+3. **Attaching Runs, promoting References (`Make run`), and citing Evidence.**
+   - Attaching items on the **Runs** tab (**Attach selected item...** or right-clicking an item -> **Hypothesis > Attach to hypothesis...**), converting a `Reference` into a `Run` with **Make run**, and citing items, files, or values on the **Evidence** tab (excluding unconfirmed `Planned` values).
+   - Fig 11-2 (`fig-11-2-hypotheses-view.png`): Screenshot of **Project > Hypotheses** showing the hypothesis tree, derived status, headline key value, and **Proposal / Runs / Evidence / Conclusion** tabs.
    - Sources: C:Help:Hypotheses, P:Help:Experiments.
-4. **Submitting a conclusion and checking the content seal.**
-   - Filling in **What we found** and **Outcome** (`Supported`, `Refuted`, or `Inconclusive`), clicking **Submit conclusion**, and choosing **Accept** or **Return for more work**.
-   - Understanding **Sealed**, `changed` evidence badges, `missing` warnings, and **Abandon...**.
-   - Table 10-1: Hypothesis states, derived lab states, and who can act at each step.
+4. **Concluding, closing or accepting, and checking the content seal.**
+   - Filling in **What we found** and **Outcome** (`Supported`, `Refuted`, or `Inconclusive`), clicking **Close with conclusion** (or **Close** after MCP submission) in Community vs. **Submit conclusion** and **Accept** / **Return for more work** in Commercial, and reading **Sealed**, `changed`, and `missing` badges.
+   - Table 11-1: Hypothesis states in MCP JSON, Community, and Commercial, and what happens at each step.
    - Sources: C:Help:Hypotheses, P:Help:Experiments.
 
-### Chapter 11: Project Wiki, Notes, Tags, and Links (`ch11-project-wiki-notes-tags-and-links.mdx`)
+### Chapter 12: Experiment Series and Taguchi Arrays in ELN (`ch12-experiment-series-and-taguchi-arrays.mdx`)
+
+In This Chapter:
+- Planning a 1-to-7-factor Experiment Series in the standalone Series window
+- Generating points with Full grid, Taguchi orthogonal arrays (L4 to L27), or manual points
+- Making or linking depositions, confirming planned values, and handling failed runs
+- Analyzing sweeps and Level means (Taguchi) on the Plot tab and exporting to OriginLab
+
+Section outline:
+1. **Planning a series in the Series window (`Project > Series...`).**
+   - Opening **Project > Series...** in its separate window, clicking **New series...**, setting **Title**, **Purpose - what this series tests**, **Target folder**, 1 to 7 **Factors** (with `Label`, `Range`, and semicolon-separated `Levels`), **Point generation** (`Full grid`, `Taguchi orthogonal array`, or `No initial points`), **Fixed conditions**, and **Responses**.
+   - Fig 12-1 (`fig-12-1-series-taguchi-workflow.svg`): End-to-end workflow of an Experiment Series from Full Grid / Taguchi `L9` point generation to `Confirm planned values`, `Level means (Taguchi)`, and OriginLab export.
+   - Sources: C:Help:Series, C:Code (`dlg_SeriesPlan.dfm`, `unit_SeriesTaguchi.pas`).
+2. **Making or linking depositions and confirming `planned` values.**
+   - Using **Make deposition...**, **Link existing deposition...**, and **Link to plan point...** from the item tree, confirming grey italic `planned` values with **Confirm planned values**, reading `Differs from the plan` warnings, and handling failed runs with **Mark failed...** and **Show failed**.
+   - Sources: C:Help:Series, C:Help:Items.
+3. **Reading the Series Table and setting column roles.**
+   - Inspecting **Point** (`added`), **State** (`planned`, `deposited`, `measured`, `failed`), condition columns, and method-specific result columns, and right-clicking column headers for **Shown**, **Hidden**, **Varied**, or **Response**.
+   - Table 12-1: Series statuses, row states, column roles, and plot/export behavior in **Project > Series...**.
+   - Sources: C:Help:Series.
+4. **Plotting sweeps, Taguchi level means, and exporting to OriginLab.**
+   - Using the **Plot** tab (**X (condition)**, **Y (results)**, **Group by (condition)**, **Linear trend**, and **Level means (Taguchi)** with `Delta = ... (rank r of k)`), and exporting via **Copy table** or **Save CSV...** with `±` tolerance columns.
+   - Sources: C:Help:Series.
+
+## Part 4: Organizing, Searching, and Reviewing
+
+### Chapter 13: Project Wiki, Notes, Tags, and Links (`ch13-project-wiki-notes-tags-and-links.mdx`)
 
 In This Chapter:
 - Creating a five-section Project Wiki and editing Markdown pages with inline figures
@@ -359,7 +410,7 @@ Section outline:
 1. **The five-section Project Wiki.**
    - Seeding a project wiki with **Project > New Wiki** (or **New Topic Wiki**) to create the five standard folders: `Goals`, `Ideas`, `Literature`, `Analysis`, and `References`.
    - Creating and editing Wiki pages in the **Markdown Editor** (`Ctrl+S`), dragging or pasting (`Ctrl+V`) images as page attachments, and why Wiki file attachments stay hidden in the item tree.
-   - Fig 11-1 (`fig-11-1-wiki-five-sections.svg`): The five-section Wiki structure alongside Tags, Comments, and typed item relationships.
+   - Fig 13-1 (`fig-13-1-wiki-five-sections.svg`): The five-section Wiki structure alongside Tags, Comments, and typed item relationships.
    - Sources: C:Help:Wiki, P:Help:Wiki.
 2. **Navigating between Wiki pages and experimental records.**
    - Writing `[[item:N]]` and `[[specimen:CODE]]` (or `eln://item/N` and `eln://specimen/CODE`) inside Markdown pages to jump directly to any procedure, specimen, or action.
@@ -372,10 +423,10 @@ Section outline:
 4. **Recording Comments and typed item relationships.**
    - Posting and editing timestamped discussion entries in **Comments...** (and how comments differ from rich-text **Notes** added via **Item > Add Note**).
    - Creating a typed directional relationship between two items (such as linking a coated specimen to its substrate batch or target): right-click the target item and choose **Copy as Link Target**, then right-click the source item and choose **Link to...**, pick the **Relationship:** phrase, and inspect or follow links in **Item > Links...**.
-   - Table 11-1: Choosing between Wiki pages, rich-text Notes, Comments, Tags, Markdown links, and typed Item Links.
+   - Table 13-1: Choosing between Wiki pages, rich-text Notes, Comments, Tags, Markdown links, and typed Item Links.
    - Sources: C:Help:TagsAndLinks, C:Help:FilesAndNotes.
 
-### Chapter 12: Full-Text, Panel, and Semantic Search (`ch12-full-text-panel-and-semantic-search.mdx`)
+### Chapter 14: Full-Text, Panel, and Semantic Search (`ch14-full-text-panel-and-semantic-search.mdx`)
 
 In This Chapter:
 - Filtering the Projects and Items panels in real time without losing context
@@ -386,7 +437,7 @@ In This Chapter:
 Section outline:
 1. **Three ways to find a record in APS ELN.**
    - Comparing real-time panel filters, notebook-wide text search (**Navigate > Search...**, `Ctrl+F`), and offline semantic search (**Search by meaning**).
-   - Fig 12-1 (`fig-12-1-search-architecture.svg`): Overview of panel filters, record text search, and hybrid semantic search.
+   - Fig 14-1 (`fig-14-1-search-architecture.svg`): Overview of panel filters, record text search, and hybrid semantic search.
    - Sources: C:Help:Search.
 2. **Filtering panels and jumping to a known ID.**
    - Using the search boxes at the top of the **Projects** and **Items** panels, clearing active filters, enabling **Show Archived**, and jumping directly to an item ID or `eln://` URL with **Navigate > Go to Item...** (`Ctrl+G`).
@@ -399,40 +450,33 @@ Section outline:
    - In a Team Lab: How the Commercial ("For Teams") edition runs **Search by meaning** on the shared laboratory search server (`ELN.WebAPI`) configured by an administrator under **Tools > Settings... > Connection > Search server address**, with no model download on student workstations.
    - Which attachment files are read inside (`PDF` with PDFium, `.docx`, `.pptx`, `.xlsx`, `.html`, `.json`, `.xml`, `.csv`, `.rtf`, `.md`, `.txt`, up to 64 MB / 200,000 characters / 2,000 PDF pages).
    - Ticking **Search by meaning**, using **Rerank results** (which re-sorts the top 20 candidates in ~0.5 s using passage text and item path context), and narrowing by **Project**, **Type**, and UTC **Created** dates.
-   - Fig 12-2 (`fig-12-2-search-dialog.png`): Screenshot of **Navigate > Search...** with **Search by meaning** and **Rerank results** active.
-   - Table 12-1: Comparison of Panel Filters, Text Search, Semantic Search, and **Tools > Analysis...**.
+   - Fig 14-2 (`fig-14-2-search-dialog.png`): Screenshot of **Navigate > Search...** with **Search by meaning** and **Rerank results** active.
+   - Table 14-1: Comparison of Panel Filters, Text Search, Semantic Search, and **Tools > Analysis...**.
    - Sources: C:Help:Search, `APS-ELN-Community/README.md`.
 
-### Chapter 13: Experiment Series, Charts, and PDF Reports (`ch13-charts-correlations-and-pdf-reports.mdx`)
+### Chapter 15: Cross-Project Charts, PDF Reports, and Packages (`ch15-charts-correlations-and-pdf-reports.mdx`)
 
 In This Chapter:
-- Planning and tracking a multi-point Experiment Series (`Project > Series...`)
-- Making or linking depositions, confirming `planned` values, and plotting or exporting series tables to OriginLab
-- Plotting experimental Conditions against test Results with `Tools > Analysis...`
-- Generating formatted A4 or Letter PDF experiment reports and JSON scientific packages
+- Plotting experimental Conditions against test Results across a project or folder with `Tools > Analysis...`
+- Understanding how procedure-level Conditions pair with the mean of child Results
+- Generating formatted A4 or Letter PDF experiment reports (`File > Export Report...`)
+- Exporting and importing JSON scientific packages (`File > Export...` and `Import scientific package...`)
 
 Section outline:
-1. **Planning and running an Experiment Series (`Project > Series...`).**
-   - Opening **Project > Series...**, clicking **New series...**, setting **Title**, **Purpose - what this series tests**, **Target folder**, 1 or 2 **Factors** (with **Levels** or **Fill grid**), **Fixed conditions**, and **Responses**.
-   - Making or linking depositions (**Make deposition...**, **Link existing deposition...**, or **Link to plan point...** from the item tree), confirming grey italic **planned** values (**Confirm planned values**), and reading row states (`planned`, `deposited`, `measured`, `failed`).
-   - Using the **Table** tab (setting column roles **Shown**, **Hidden**, **Varied**, **Response**), the **Plot** tab (**X (condition)**, **Y (results)**, **Group by (condition)**, **Linear trend**), and **Copy table** / **Save CSV...** for OriginLab (with `±` tolerance columns).
-   - Sources: C:Help:Series, C:Help:Projects, C:Help:Items.
-2. **Plotting conditions against results (`Tools > Analysis...`).**
-   - Selecting a project or folder, opening **Tools > Analysis...**, choosing a **Condition** value type on the **X Axis** and a **Result** value type on the **Y Axis**, selecting procedures, and clicking **Plot**.
+1. **Plotting conditions against results (`Tools > Analysis...`).**
+   - Selecting a project or folder, opening **Tools > Analysis...**, choosing a **Condition** value type on the **X Axis** and a **Result** value type on the **Y Axis**, selecting procedures, and clicking **Plot** (and when to use **Project > Series...** in `Chapter 12` instead).
    - How each plotted point is computed: $X$ is the first matching `Condition` on the **Procedure**, and $Y$ is the arithmetic mean of matching `Result` values on child actions, specimen actions, and one level below specimen actions.
    - Copying the plotted numbers with **Copy Data (CSV)** or the image with **Copy Chart**.
-   - Fig 13-1 (`fig-13-1-analysis-and-reports.svg`): How **Project > Series...** / **Tools > Analysis...** compare conditions with results and how **File > Export Report...** builds a PDF report.
+   - Fig 15-1 (`fig-15-1-analysis-and-reports.svg`): How **Tools > Analysis...** compares conditions with results and how **File > Export Report...** builds a PDF report.
    - Sources: C:Help:AnalysisAndReports.
-3. **Exporting a formatted PDF report (`File > Export Report...`).**
+2. **Exporting a formatted PDF report (`File > Export Report...`).**
    - Selecting a **Procedure** root in the item tree (so all child specimens and actions are available), choosing **File > Export Report...**, ticking the items and sections (`Metadata`, `Protocols`, `Values`, `Files`, `Tags`, `Comments`, `Signatures`), previewing in the HTML viewer, and clicking **Export PDF**.
    - Sources: C:Help:AnalysisAndReports.
-4. **Exporting and importing scientific packages.**
-   - Using **File > Export...** and **File > Import scientific package...** to share item metadata and protocol templates as JSON, and understanding why neither a PDF report nor a JSON scientific package replaces a full backup of your `.sqlite` database and attachment folder.
+3. **Exporting and importing scientific packages.**
+   - Using **File > Export...** and **File > Import scientific package...** to share item metadata and protocol templates as JSON, and understanding why neither a PDF report nor a JSON scientific package replaces a full backup of your `.sqlite` database and attachment folder (`Table 15-1`).
    - Sources: C:Help:AnalysisAndReports.
 
-### Chapter 14: Completeness, Audit, and Signatures (`ch14-completeness-audit-and-signatures.mdx`)
-
-In This Chapter:
+### Chapter 16: Completeness, Audit, and Signatures (`ch16-completeness-audit-and-signatures.mdx`)
 - Defining and running Completeness Rules for each Action Type and Equipment
 - Finding missing files and missing values with Data Completeness checks
 - Inspecting the notebook Audit Log by date, entity, operation, and user
@@ -440,8 +484,8 @@ In This Chapter:
 
 Section outline:
 1. **Three layers of record integrity.**
-   - How **Completeness Rules**, **Check Value Sources** / **Audit Log**, and **Electronic Signatures** work together before a sample record is closed (<a href="#fig-14-1">Figure 14-1</a>).
-   - Fig 14-1 (`fig-14-1-integrity-layers.svg`): The three layers of record verification in APS ELN.
+   - How **Completeness Rules**, **Check Value Sources** / **Audit Log**, and **Electronic Signatures** work together before a sample record is closed (<a href="#fig-16-1">Figure 16-1</a>).
+   - Fig 16-1 (`fig-16-1-integrity-layers.svg`): The three layers of record verification in APS ELN.
    - Sources: C:Help:Integrity, P:Help:Signatures.
 2. **Completeness rules and Data Quality Checks.**
    - Creating rules in **Tools > Completeness Rules...** that specify which **Required File Types** and **Required Value Types** must be present for a given **Action Type** and **Equipment** (with `Error` or `Warning` severity).
@@ -454,12 +498,12 @@ Section outline:
    - Right-clicking a finished item and choosing **Signature > Sign Item...**, picking a **Meaning** (`Authored`, `Reviewed`, `Approved`, or `Witnessed`), entering a comment and your password, and clicking **Sign**.
    - Warning: Signing permanently locks the item against any further edits, file replacements, value changes, or deletion; there is no undo.
    - Checking a signed record with **Signature > View Signature...** -> **Verify Now** (or **Signature > Verify Integrity**), and what the content hash covers.
-   - Table 14-1: Comparison of Protocol Approval, Hypothesis Acceptance Seal, and Item Electronic Signature.
+   - Table 16-1: Comparison of Protocol Approval, Hypothesis Acceptance Seal, and Item Electronic Signature.
    - Sources: C:Help:Integrity, P:Help:Signatures.
 
-## Part 4: Working with an AI Agent (MCP)
+## Part 5: Working with an AI Agent (MCP)
 
-### Chapter 15: Connecting an AI Agent to Your Notebook (`ch15-connecting-an-ai-agent-to-your-notebook.mdx`)
+### Chapter 17: Connecting an AI Agent to Your Notebook (`ch17-connecting-an-ai-agent-to-your-notebook.mdx`)
 
 In This Chapter:
 - Understanding how the ELN Model Context Protocol (MCP) server works
@@ -470,7 +514,7 @@ In This Chapter:
 Section outline:
 1. **What the ELN MCP server does.**
    - How `ELNCommunityMCP.exe` (Community) and `ELNMCPServer.exe` (Commercial) expose ~70 structured tools over line-based JSON-RPC stdio transport, using the same database and the same 26 viewer `.bpl` plugins as the Desktop GUI.
-   - Fig 15-1 (`fig-15-1-mcp-architecture.svg`): Architecture of the AI client, the ELN MCP host, the `--upload-root` sandbox, and the notebook storage.
+   - Fig 17-1 (`fig-17-1-mcp-architecture.svg`): Architecture of the AI client, the ELN MCP host, the `--upload-root` sandbox, and the notebook storage.
    - Sources: C:Help:MCP, P:Help:AIIntegration.
 2. **Preparing a local session in APS ELN Community.**
    - Closing the Desktop client first so only one writer accesses the local SQLite database, creating a dedicated `--upload-root` directory (without junctions or symbolic links), and configuring `--notebook`, `--upload-root`, `--plugins`, and optional `--storage`.
@@ -480,10 +524,10 @@ Section outline:
    - Sources: P:Help:AIIntegration.
 4. **Security, upload-root, and review boundaries.**
    - How `--upload-root` confines both `upload_file` and `download_file`, how read-only sessions hide write tools, and why signed items and human review gates (`Approve` / `Accept`) can never be bypassed through MCP.
-   - Table 15-1: The nine MCP tool categories in APS ELN.
+   - Table 17-1: The nine MCP tool categories in APS ELN.
    - Sources: C:Help:MCP, P:Help:AIIntegration, `docs/note-download-file-mcp-tool.md`.
 
-### Chapter 16: Reading Data and Auditing Drift via MCP (`ch16-reading-data-and-auditing-drift-via-mcp.mdx`)
+### Chapter 18: Reading Data and Auditing Drift via MCP (`ch18-reading-data-and-auditing-drift-via-mcp.mdx`)
 
 In This Chapter:
 - Browsing projects, items, values, and experiment series (`list_series`, `get_series_table`) with MCP read tools
@@ -503,11 +547,11 @@ Section outline:
    - Sources: C:Help:MCP, P:Help:AIIntegration.
 4. **Running the three project-wide health checks.**
    - Auditing an entire project or item subtree in seconds with `check_storage`, `check_value_drift`, and `report_value_issues`.
-   - Fig 16-1 (`fig-16-1-mcp-audit-pipeline.svg`): The three read-only MCP audit tools and their status codes.
-   - Table 16-1: Read-only MCP inspection and audit tools.
+   - Fig 18-1 (`fig-18-1-mcp-audit-pipeline.svg`): The three read-only MCP audit tools and their status codes.
+   - Table 18-1: Read-only MCP inspection and audit tools.
    - Sources: C:Help:MCP, Demo:A, Demo:B.
 
-### Chapter 17: Study B: XRR Fitting with Provenance (`ch17-study-b-xrr-fitting-with-provenance.mdx`)
+### Chapter 19: Study B: XRR Fitting with Provenance (`ch19-study-b-xrr-fitting-with-provenance.mdx`)
 
 In This Chapter:
 - Understanding why agent-written records must store Reader values instead of prose numbers
@@ -528,12 +572,12 @@ Section outline:
 3. **Part 2: The Fitting Agent fits the curve and records `XRR fit 261014B`.**
    - Exporting `XRR-1_Co-C(261014B).xrdml` via `download_file` to the allowed root, running the 13-step X-Ray Calc 3 fitting procedure (`XRC_MCP.exe` + `check_acceptance.py`), and saving the accepted job (`fit-20261016-153456-ea29`, polynomial order 1) with `curves.job_id` so `[FITRESULT]` and $\chi^2$ are written into `XRR-fit_Co-C(261014B).xrcx`.
    - Creating child action `XRR fit 261014B` under `XRR-1 261014B`, uploading the `.xrcx` file, running `extract_file_key_values` (`aps.xrcx` v2), and storing the 4 `Reader` values (`Period` $= 4.940 \times 10^{-9}\,\text{m}$, `Co Thickness` $= 2.083 \times 10^{-9}\,\text{m}$, `C Thickness` $= 2.857 \times 10^{-9}\,\text{m}$, and `Chi2` $= 0.943$).
-   - Fig 17-1 (`fig-17-1-study-b-agent-workflow.svg`): The two-agent Study B (`261014B`) workflow from raw deposition and `.xrdml` files to verified `Reader` values.
-   - Fig 17-2 (`fig-17-2-study-b-xrcx-window.png`): Screenshot of the completed Study B (`261014B`) notebook in APS ELN Community with `XRR-fit_Co-C(261014B).xrcx` open.
-   - Table 17-1: The items, files, and extracted `Reader` values of Study B (`261014B`).
+   - Fig 19-1 (`fig-19-1-study-b-agent-workflow.svg`): The two-agent Study B (`261014B`) workflow from raw deposition and `.xrdml` files to verified `Reader` values.
+   - Fig 19-2 (`fig-19-2-study-b-xrcx-window.png`): Screenshot of the completed Study B (`261014B`) notebook in APS ELN Community with `XRR-fit_Co-C(261014B).xrcx` open.
+   - Table 19-1: The items, files, and extracted `Reader` values of Study B (`261014B`).
    - Sources: Demo:B (`fitting_agent.md`, `record_report.md`), `docs/note-download-file-mcp-tool.md`.
 
-### Chapter 18: Drafting Trees, Hypotheses, and Wikis (`ch18-drafting-trees-hypotheses-and-wikis.mdx`)
+### Chapter 20: Drafting Trees, Hypotheses, and Wikis (`ch20-drafting-trees-hypotheses-and-wikis.mdx`)
 
 In This Chapter:
 - Passing viewer selections (`selection`) and `analysis_snapshot` in Study A (`261015A`)
@@ -554,14 +598,14 @@ Section outline:
    - Using `wiki_create_page`, `wiki_get_page`, and `wiki_update_page` to write literature reviews and cross-sample analysis pages under the five-section convention (`Goals`, `Ideas`, `Literature`, `Analysis`, `References`), with all-or-nothing rollback if an attachment check fails.
    - Sources: C:Help:MCP, P:Help:Wiki.
 4. **Drafting Experiment Series and preparing Hypotheses with the human-in-the-loop boundary.**
-   - Using `create_series` and `update_series_plan` to draft a 1-factor or 2-factor series (`Draft` until you click **Start** in the Desktop GUI, while keeping **Make deposition...**, **Link to plan point...**, and **Confirm planned values** in the GUI).
-   - Using `propose_hypothesis`, `attach_run`, `cite_evidence`, `submit_conclusion`, `abandon_hypothesis`, and `find_hypotheses_for_item`, and how the human scientist and the AI agent divide responsibilities (<a href="#fig-18-1">Figure 18-1</a> and <a href="#table-18-1">Table 18-1</a>).
-   - Fig 18-1 (`fig-18-1-human-agent-division.svg`): Division of responsibilities between the AI agent via MCP and the human scientist in the Desktop GUI.
-   - Table 18-1: MCP write tools for values, files, Wiki pages, experiment series, and hypotheses.
+   - Using `create_series` and `update_series_plan` to draft a 1-to-7-factor series with `levels` and `design: "grid" | "taguchi" | "manual"` (`Draft` until you click **Start** in the Desktop GUI, returning `point_count` and `taguchi_array`, while keeping **Make deposition...**, **Link to plan point...**, and **Confirm planned values** in the GUI).
+   - Using `propose_hypothesis`, `attach_run`, `cite_evidence`, `submit_conclusion`, `abandon_hypothesis`, and `find_hypotheses_for_item`, and how the human scientist and the AI agent divide responsibilities (<a href="#fig-20-1">Figure 20-1</a> and <a href="#table-20-1">Table 20-1</a>).
+   - Fig 20-1 (`fig-20-1-human-agent-division.svg`): Division of responsibilities between the AI agent via MCP and the human scientist in the Desktop GUI.
+   - Table 20-1: MCP write tools for values, files, Wiki pages, experiment series, and hypotheses.
    - Sources: C:Help:MCP, C:Help:Series, C:Help:Hypotheses, P:Help:Experiments.
 
 
-### Chapter 19: Importing Legacy Folders with an AI Agent (`ch19-importing-legacy-folders-with-an-ai-agent.mdx`)
+### Chapter 21: Importing Legacy Folders with an AI Agent (`ch21-importing-legacy-folders-with-an-ai-agent.mdx`)
 
 In This Chapter:
 - Turning an instrument-first or date-first folder archive into a specimen tree
@@ -572,8 +616,8 @@ In This Chapter:
 Section outline:
 1. **Why legacy folders break direct import.**
    - How pre-ELN laboratory drives (`D:\ResearchProjects\`) organize files by instrument (`UNHT\`, `Wear\`, `COF\`, `LAXRD\`) or date (`2016-07-18\`) instead of by specimen tree, hide synthesis and annealing conditions inside Word (`.docx`) or Excel (`.xlsx`) logs, and mix native raw files (`.mit`, `.vk4`, `.raw`, `.xrcx`) with byte-identical duplicates (`TiNiZr_9B#1.mit` vs. `TiNiZr_09B#1.mit`, `Set 1\` mirrors), Keyence `.rpt` print exports, and cross-sample compilations (`.opj`, `.opju`, `.pptx`).
-   - Fig 19-1 (`fig-19-1-legacy-import-workflow.svg`): The four-phase workflow for migrating an instrument-first legacy folder (`D:\ResearchProjects\TiNiZr\`) into a specimen-first APS ELN project, highlighting the human review gate on the Migration Plan.
-   - Table 19-1: Common legacy folder artifacts in `D:\ResearchProjects\` and how an agent maps them to APS ELN.
+   - Fig 21-1 (`fig-21-1-legacy-import-workflow.svg`): The four-phase workflow for migrating an instrument-first legacy folder (`D:\ResearchProjects\TiNiZr\`) into a specimen-first APS ELN project, highlighting the human review gate on the Migration Plan.
+   - Table 21-1: Common legacy folder artifacts in `D:\ResearchProjects\` and how an agent maps them to APS ELN.
    - Sources: C:Help:MCP, C:Help:FilesAndNotes, `D:\ResearchProjects\TiNiZr\`.
 2. **Phases 1 and 2: Reconnaissance and the migration plan.**
    - Running a read-only agent scan over a legacy folder to inventory subfolders, compute MD5 hashes to drop byte-identical duplicates, and read collaborator `.docx` and `.xlsx` specimen lists.
@@ -583,16 +627,16 @@ Section outline:
 3. **Phase 3: Staging files and separating `Reader` from `Manual` provenance.**
    - Walking through Batch 2 of `D:\ResearchProjects\TiNiZr\` (samples `#10`–`#15` described in `Specimens_List_2_(10-15).docx`): staging deduplicated files into `--upload-root` without modifying `D:\ResearchProjects\`, creating `Deposition TiNiZr Batch 2` (`Proc`), attaching `Specimens_List_2_(10-15).docx`, creating specimens `TiNiZr-10`–`TiNiZr-15` and their `Annealing`, `Indentation`, and `Wear` actions.
    - Recording annealing temperatures ($200\text{–}750\,^\circ\text{C}$) and nominal thickness ($2.5\,\mu\text{m}$) from the `.docx` table as `Manual` conditions citing `Specimens_List_2_(10-15).docx`, while extracting `Hardness` and `Modulus` from `TiNiZr_10#1.mit`–`TiNiZr_15#1.mit` (`aps.mit`) as `Reader` values.
-   - Table 19-2: Approved migration plan for `TiNiZr` Batch 2 (samples `#10`–`#15`).
+   - Table 21-2: Approved migration plan for `TiNiZr` Batch 2 (samples `#10`–`#15`).
    - Sources: C:Help:MCP, C:Help:Values, `D:\ResearchProjects\TiNiZr\Specimens_List_2_(10-15).docx`.
 4. **Phase 4: Linking imported batches into an Experiment Series, filing Wiki compilations, and auditing.**
    - Creating an Experiment Series (**Project > Series...** or `create_series` + **Start**) for the annealing temperature sweep ($200\text{–}750\,^\circ\text{C}$) and linking the imported procedures with **Link to plan point...** so you can plot hardness and wear against annealing temperature and export to OriginLab.
    - Attaching cross-sample `.opju`, `.opj`, `.pptx`, and `.pdf` summary files (`H&WR_vs_Temp.opju`, `compilation.pptx`, `Thermal_Conductivity_#2.pdf`) to a Project Wiki `Analysis` page (`wiki_create_page`) with `[[specimen:CODE]]` links rather than under one arbitrary specimen.
    - Running `check_storage`, `check_value_drift`, and `report_value_issues` to verify the imported project.
    - Sources: C:Help:MCP, C:Help:Series, C:Help:Wiki, C:Help:Search.
-## Part 5: The Part of Tens
+## Part 6: The Part of Tens
 
-### Chapter 20: Ten Mistakes That Break Your Data Trail (`ch20-ten-mistakes-that-break-your-data-trail.mdx`)
+### Chapter 22: Ten Mistakes That Break Your Data Trail (`ch22-ten-mistakes-that-break-your-data-trail.mdx`)
 
 In This Chapter:
 - Ten real laboratory mistakes that silently break provenance
@@ -611,7 +655,7 @@ Section outline (ten numbered headings):
 9. **9. Renaming storage files in Windows Explorer**
 10. **10. Backing up the database without its files**
 
-### Chapter 21: Ten Checks Before You Sign or Submit (`ch21-ten-checks-before-you-sign-or-submit.mdx`)
+### Chapter 23: Ten Checks Before You Sign or Submit (`ch23-ten-checks-before-you-sign-or-submit.mdx`)
 
 In This Chapter:
 - Ten checks to run before signing an item or submitting to your supervisor
@@ -630,7 +674,7 @@ Section outline (ten numbered headings):
 9. **9. Check Value Sources reports zero drift**
 10. **10. Hypothesis runs and citations are current**
 
-### Chapter 22: Ten Things an Agent Can and Cannot Do (`ch22-ten-things-an-agent-can-and-cannot-do.mdx`)
+### Chapter 24: Ten Things an Agent Can and Cannot Do (`ch24-ten-things-an-agent-can-and-cannot-do.mdx`)
 
 In This Chapter:
 - Five high-leverage tasks an AI agent can run through the MCP server

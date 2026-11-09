@@ -2,6 +2,16 @@
 
 _Updated after every work session: what changed, what is unresolved, and what the author must decide next._
 
+## 2026-11-09 (Part 3: Experiment Planning with ELN, Taguchi DOE, and Standalone Hypotheses/Series Windows): Added Part 3 (Chapters 10–12) and shifted Parts 4–6 (Chapters 13–24)
+
+**Done**
+- Extracted and expanded **Part 3: Experiment Planning with ELN** (`src/lib/parts.ts`, `OUTLINE.md`, `NOTATION.md`) with three chapters:
+  - **Chapter 10: Principles of Experiment Planning and the Taguchi Method** (`src/content/chapters/ch10-principles-of-experiment-planning.mdx`, `public/figures/fig-10-1-planning-designs.svg`, `Table 10-1`, `Table 10-2`) covering why unplanned trial-and-error runs fail, how hypotheses and experiment series work together, 1-factor sweeps vs. 2–3-factor Full Grids ($\le 27$ points) vs. 2–7-factor **Taguchi orthogonal arrays** (`L4`, `L8`, `L9`, `L16`, `L18`, `L27`), and how **Level means (Taguchi)**, $\Delta$, and factor rank isolate dominant parameters.
+  - **Chapter 11: The Hypothesis Tree and Evidence** (`src/content/chapters/ch11-the-hypothesis-tree-and-evidence.mdx`, `public/figures/fig-11-1-hypothesis-lifecycle.svg`, `Table 11-1`) updated for the standalone **Hypotheses** window (taskbar button, saved geometry, status-tinted read-only text), Community local self-review (`Draft` -> `Start` / `Discard` -> `Open` -> `Close with conclusion` -> `Closed`), Commercial two-gate supervisor review (`Proposed` -> `Approved` -> `In review` -> `Accepted`), **Make run**, and `Planned`-value citation rules.
+  - **Chapter 12: Experiment Series and Taguchi Arrays in ELN** (`src/content/chapters/ch12-experiment-series-and-taguchi-arrays.mdx`, `public/figures/fig-12-1-series-taguchi-workflow.svg`, `Table 12-1`) covering the standalone **Series** window, 1–7 factors with labels and inline levels, Full Grid and Taguchi point generation, making/linking depositions, confirming `planned` values, handling failed runs, reading the **Table** tab, plotting **Level means (Taguchi)** ($\Delta$ and rank), and exporting to OriginLab.
+- Renamed and updated **Part 4: Organizing, Searching, and Reviewing** (`Chapters 13–16`, with Chapter 15 retitled `Cross-Project Charts, PDF Reports, and Packages`), **Part 5: Working with an AI Agent (MCP)** (`Chapters 17–21`, with Chapter 20 updated for MCP `create_series` / `update_series_plan` `levels`, `design: "grid" | "taguchi" | "manual"`, `point_count`, and `taguchi_array`), and **Part 6: The Part of Tens** (`Chapters 22–24`), plus `src/pages/assignment.mdx`, `public/ELN-Cheat-Sheet.pdf`, and `public/ELN-Mandatory-Assignment.pdf`.
+- Verified all gates (`npm test`: 74 passed; `npm run test:py`: 43 passed; `npm run check:links`: 33 pages, 1,526 internal links, 0 literal `$$`, 0 e-notation; `npm run check:markers`: 0 markers; `pdf-build/Mastering-ELN.pdf` & `public/Mastering-ELN.pdf`: 244 pages, 30 sections, 33 figures, all 23 `verify_pdf.py` checks passed).
+
 ## 2026-11-06 (Chapter 19: Legacy Folder Migration & Experiment Series): Added Chapter 19, Experiment Series (`Project > Series...`), and Format 6 updates
 
 **Done**
@@ -55,9 +65,10 @@ _Updated after every work session: what changed, what is unresolved, and what th
 | Front Matter | Introduction | drafted and verified 2026-11-02 |
 | 1 Getting Started | 1–4 | drafted and verified 2026-11-02 |
 | 2 Recording Daily Lab Work | 5–9 | drafted and verified 2026-11-02 |
-| 3 Thinking, Searching, and Reviewing | 10–14 | drafted and verified 2026-11-02 |
-| 4 Working with an AI Agent (MCP) | 15–19 | drafted and verified 2026-11-06 |
-| 5 The Part of Tens | 20–22 | drafted and verified 2026-11-06 |
+| 3 Experiment Planning with ELN | 10–12 | drafted and verified 2026-11-09 |
+| 4 Organizing, Searching, and Reviewing | 13–16 | drafted and verified 2026-11-09 |
+| 5 Working with an AI Agent (MCP) | 17–21 | drafted and verified 2026-11-09 |
+| 6 The Part of Tens | 22–24 | drafted and verified 2026-11-09 |
 | Appendices | A–E | drafted and verified 2026-11-02 |
 
 ## Earlier milestones on 2026-11-02

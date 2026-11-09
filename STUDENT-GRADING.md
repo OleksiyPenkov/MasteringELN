@@ -9,7 +9,7 @@ _Deadline: **November 16, 2026**. Run this procedure via the `eln` MCP server (`
 Each student creates a personal group named `Practice` in the Desktop client and creates two projects inside it under their own username:
 
 1. `Study A Practice` — **Study A (`261015A`, BN/DLC tribological coating)** recorded in the Desktop GUI (Chapter 4).
-2. `Study B Practice` — **Study B (`261014B`, Co/C multilayer X-ray mirror)** recorded and fitted via the AI agent (`ELNMCPServer.exe` + `XRC_MCP.exe`, Chapter 17).
+2. `Study B Practice` — **Study B (`261014B`, Co/C multilayer X-ray mirror)** recorded and fitted via the AI agent (`ELNMCPServer.exe` + `XRC_MCP.exe`, Chapter 19).
 
 To locate all student practice projects, call `list_projects` (`{"include_archived": true}`) and match projects owned by each student whose `title` contains `Study A` / `261015A` or `Study B` / `261014B` / `Practice`.
 

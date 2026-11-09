@@ -18,9 +18,10 @@ describe('parts', () => {
   it('uses the Mastering ELN part names', () => {
     expect(partHeading('1')).toBe('Part 1: Getting Started');
     expect(partHeading('2')).toBe('Part 2: Recording Daily Lab Work');
-    expect(partHeading('3')).toBe('Part 3: Thinking, Searching, and Reviewing');
-    expect(partHeading('4')).toBe('Part 4: Working with an AI Agent (MCP)');
-    expect(partHeading('5')).toBe('Part 5: The Part of Tens');
+    expect(partHeading('3')).toBe('Part 3: Experiment Planning with ELN');
+    expect(partHeading('4')).toBe('Part 4: Organizing, Searching, and Reviewing');
+    expect(partHeading('5')).toBe('Part 5: Working with an AI Agent (MCP)');
+    expect(partHeading('6')).toBe('Part 6: The Part of Tens');
     expect(partHeading('back')).toBe('Appendices');
     expect(partNavLabel('front')).toBe('Front Matter');
   });

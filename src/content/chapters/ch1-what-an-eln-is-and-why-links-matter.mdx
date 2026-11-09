@@ -62,7 +62,7 @@ Starting in APS ELN 2.1 (notebook format 5 in Community), every stored value car
 
 <Figure id="fig-1-2" number="1-2" src={`${import.meta.env.BASE_URL}/figures/fig-1-2-study-a-tree.svg`} alt="Side-by-side trees for Study A (261015A BN/DLC coating) and Study B (261014B Co/C mirror) showing Procedure, Specimen, Action, files, and value counts" caption="The item trees of the two running examples used across this book. Study A (left) records a BN/DLC coating and its mechanical and tribological tests. Study B (right) records a 20-period Co/C X-ray mirror from deposition through XRR fitting." />
 
-<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4: Your First Sample Record in Twenty Minutes</a> builds Study A step by step in the Desktop window. <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Study B: XRR Fitting with Provenance</a> builds and fits Study B with the MCP server and X-Ray Calc 3.
+<a href={`${import.meta.env.BASE_URL}/ch4-your-first-complete-sample-record#meet-study-a-sample-261015a`}>Chapter 4: Your First Sample Record in Twenty Minutes</a> builds Study A step by step in the Desktop window. <a href={`${import.meta.env.BASE_URL}/ch19-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 19: Study B: XRR Fitting with Provenance</a> builds and fits Study B with the MCP server and X-Ray Calc 3.
 ## Four rules that keep your data trail unbroken
 
 Four habits prevent these broken links in daily work:
@@ -95,10 +95,10 @@ You can also download the <a href="/MasteringELN/ELN-Cheat-Sheet.pdf" download="
     ['**At the instrument:** 4. Attach raw files', '**Item > Add File** (`Ctrl+Shift+F` in Team) or `upload_file`', 'Attach native raw files (`.depo.json` + `.tsv`, `.fibps`, `.mit`, `.zrw`, `.xrdml`, `.xrcx`); never screenshots or numbers in filenames.', '4, 7'],
     ['**At the instrument:** 5. Fill protocol', '**Item > Add Protocol** (`Ctrl+Shift+P`) or mobile **Quick Protocol**', 'Attach after extracting values if the template uses `values.all`; submit `Draft` -> `In Review`.', '8'],
     ['**After measuring:** 6. Extract & derive values', '**Extract Values** / **Extract values from N files...** and **Add > Derived Value...**', 'Check viewer regions/indents and click **Apply** in `.zrw` first; keep 0 `Manual` values where a reader exists.', '4, 9'],
-    ['**Write-up & analysis:** 7. Link hypothesis & Wiki', '**Project > Hypotheses** (`Attach to hypothesis...`, `Add evidence...`) and **Project > New Wiki**', 'Use `[[item:N]]` and `[[specimen:CODE]]` links; human gates (**Approve** / **Accept**) stay in GUI.', '10, 11'],
-    ['**Write-up & analysis:** 8. Search & correlate', '**Navigate > Search...** (`Ctrl+F`), **Go to Item...** (`Ctrl+G`), and **Tools > Analysis...**', 'Store inputs (`Condition`) on the **Procedure** and outputs (`Result`) on child **Actions**.', '12, 13'],
-    ['**Before review:** 9. Audit & sign', '**Tools > Data Completeness...**, **Check Value Sources...**, then **Signature > Sign Item...**', 'Verify 0 missing files/values and 0 drift *before* signing (`SIGNED` is permanent).', '14, 21'],
-    ['**With an AI agent:** 10. Automate via MCP', '`ELNCommunityMCP.exe` or `ELNMCPServer.exe` (`check_storage`, `check_value_drift`, `report_value_issues`)', 'Enforce the **Value Route** (`Reader` / `Derived` only), save `.xrcx` fits with `curves.job_id`, and review legacy migration plans first.', '15–19, 22'],
+    ['**Planning & write-up:** 7. Hypotheses, Series & Wiki', '**Project > Hypotheses**, **Project > Series...** (Full grid / Taguchi), and **Project > New Wiki**', 'Confirm `planned` series values after deposition; use `[[item:N]]` and `[[specimen:CODE]]` links; human review gates stay in GUI.', '10–13'],
+    ['**Write-up & analysis:** 8. Search & correlate', '**Navigate > Search...** (`Ctrl+F`), **Go to Item...** (`Ctrl+G`), and **Tools > Analysis...**', 'Store inputs (`Condition`) on the **Procedure** and outputs (`Result`) on child **Actions**.', '14, 15'],
+    ['**Before review:** 9. Audit & sign', '**Tools > Data Completeness...**, **Check Value Sources...**, then **Signature > Sign Item...**', 'Verify 0 missing files/values and 0 drift *before* signing (`SIGNED` is permanent).', '16, 23'],
+    ['**With an AI agent:** 10. Automate via MCP', '`ELNCommunityMCP.exe` or `ELNMCPServer.exe` (`check_storage`, `check_value_drift`, `report_value_issues`)', 'Enforce the **Value Route** (`Reader` / `Derived` only), save `.xrcx` fits with `curves.job_id`, and review legacy migration plans first.', '17–21, 24'],
   ]}
 />
 

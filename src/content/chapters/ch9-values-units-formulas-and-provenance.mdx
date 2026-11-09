@@ -17,7 +17,7 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-If you only attach raw files, your notebook is just a file folder. Storing **Values** turns it into a searchable database (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1: The four links in every laboratory result</a>). When you save every deposition pressure, layer thickness, hardness, friction coefficient, and wear rate as a typed value with its unit, tolerance, and source, APS ELN can average repeated scans in the item tree, plot correlations across samples, and verify months later that every number still matches its raw file.
+If you only attach raw files, your notebook is just a file folder. Storing **Values** turns it into a searchable database (<a href={`${import.meta.env.BASE_URL}/ch1-what-an-eln-is-and-why-links-matter#the-four-links-in-every-laboratory-result`}>Chapter 1: The four links in every laboratory result</a>). Save every deposition pressure, layer thickness, hardness, friction coefficient, and wear rate as a typed value with its unit, tolerance, and source. APS ELN can then average repeated scans in the item tree, plot correlations across samples, and verify that every number matches its raw file.
 
 ## Conditions, Results, units, and plausible-range checks
 
@@ -64,7 +64,7 @@ Every value in APS ELN records how its number entered the notebook (<a href="#fi
 1. **`Reader`:** extracted from an attached file. It records the `file_id`, the file's MD5 hash, the `reader_id` and `reader_version`, the original key name, the emitted unit, and the applied conversion factor. It also stores any viewer analysis snapshot (such as ticked indents in `.mit`, step rectangles in `.fibps`, or the applied cycle interval in `.zrw`).
 2. **`Derived`:** calculated by APS ELN from stored input values using a versioned formula (`formula_id`, `formula_version`, and input `value_id` list).
 3. **`Manual`:** typed by hand in **Add Value**, or created when a user edits the number or tolerance of an existing `Reader`, `Derived`, or `Planned` value.
-4. **`Planned`:** written onto a procedure when you create a deposition from an **Experiment Series** (**Project > Series...**, <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#planning-and-running-an-experiment-series`}>Chapter 13</a>). It appears in grey italic (`planned`) and cannot be plotted or used as an input to a `Derived` formula until you confirm it via **Confirm planned values** (or edit the value) after the run finishes.
+4. **`Planned`:** written onto a procedure when you create a deposition from an **Experiment Series** (**Project > Series...**, <a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#making-or-linking-depositions-and-confirming-planned-values`}>Chapter 12</a>). It appears in grey italic (`planned`) and cannot be plotted, cited on a hypothesis, or used as an input to a `Derived` formula until you confirm it via **Confirm planned values** (or edit the value) after the run finishes.
 5. **`Unknown`:** recorded in an older notebook before value-level source tracking was introduced.
 
 <Figure id="fig-9-1" number="9-1" src={`${import.meta.env.BASE_URL}/figures/fig-9-1-value-provenance-sources.svg`} alt="Three columns comparing Reader Source, Derived Source, and Manual/Unknown Source, all feeding into Check Value Sources at the bottom" caption="The value provenance model in APS ELN. Reader values link to an attached file, reader version, and viewer snapshot. Derived values link to a versioned formula and stored input value IDs. Check Value Sources verifies both automatically." />
@@ -83,7 +83,7 @@ To compute a **Derived** value (as you did for Study A's reciprocating wear rate
 
 ## Checking value sources and understanding drift codes
 
-Before you sign an experiment or cite its numbers in a paper, right-click the root **Procedure** in the **Items** panel and choose **Check Value Sources...**. You can also run `check_value_drift` through MCP in Part 4.
+Before you sign an experiment or cite its numbers in a paper, right-click the root **Procedure** in the **Items** panel and choose **Check Value Sources...**. You can also run `check_value_drift` through MCP in Part 5.
 
 APS ELN re-reads every source file of every `Reader` value in the subtree using the currently installed viewer plugins, and re-calculates every `Derived` value recursively from its inputs. If all values match, a dialog reports how many values were verified with zero differences. If any value differs, a table lists the value ID, item, file, key, stored vs. current numbers, and the diagnostic code (<a href="#table-9-1">Table 9-1</a>).
 

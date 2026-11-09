@@ -1,0 +1,61 @@
+---
+title: Ten Things an Agent Can and Cannot Do
+part: '6'
+number: '24'
+order: 240
+inThisChapter:
+  - Five jobs an AI agent can run for you through the MCP server
+  - Five safety and review boundaries an agent can never cross
+  - How to split the work between your agent and yourself
+---
+
+An AI assistant connected through `ELNCommunityMCP.exe` or `ELNMCPServer.exe` (<a href={`${import.meta.env.BASE_URL}/ch17-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 17: What the ELN MCP server does</a>) can save you hours of repetitive clicking. To use it safely, you need to know which jobs belong to the agent and which decisions belong to you. Items 1 through 5 below are what an agent can do for you; items 6 through 10 are what it can never do.
+
+## 1. Can: Build item trees and attach raw files
+
+Give an agent a folder of raw files inside `--upload-root` and a checklist (such as `record_agent.md` in Study A and Study B, or an approved Migration Plan table for a legacy archive in <a href={`${import.meta.env.BASE_URL}/ch21-importing-legacy-folders-with-an-ai-agent#phases-1-and-2-reconnaissance-and-the-migration-plan`}>Chapter 21</a>). It calls `create_project`, `create_folder`, `create_item`, and `upload_file` to construct the full `Procedure -> Specimen -> Action` hierarchy. It then attaches every `.depo.json`, `.tsv`, `.fibps`, `.mit`, `.vk4`, `.zrw`, `.raw`, and `.xrdml` file with verified MD5 hashes in seconds (<a href={`${import.meta.env.BASE_URL}/ch19-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 19: Part 1</a>).
+
+## 2. Can: Extract Reader values with snapshots
+
+An agent calls `extract_file_key_values` and forwards the mapped fields (`converted_value`, `value_type_id`, `tolerance`, `source_file_id`, `reader_id`, `reader_version`, `key_name`, `reader_units`, `conversion_factor`, and `analysis_snapshot`) verbatim into `add_values`. In a single all-or-nothing transaction, it stores up to 200 `Reader` values (<a href={`${import.meta.env.BASE_URL}/ch19-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 19: Why agent-written records need the Value Route</a>). For `.fibps` maps, it can also pass pixel rectangle coordinates in `selection` so the step height and its `regions` snapshot are recorded reproducibly (<a href={`${import.meta.env.BASE_URL}/ch20-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 20</a>).
+
+## 3. Can: Compute Derived values from formulas
+
+An agent never needs to calculate a wear rate in its own prompt and type the result as a `Manual` number. Instead, it calls `add_derived_value` with `formula_id` (such as `wear_rate_reciprocating`) and the stored input `value_id`s (including an array of multiple `Wear Area` value IDs). The ELN server computes the formula result and records the full dependency chain (<a href={`${import.meta.env.BASE_URL}/ch20-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 20: Passing viewer selections and Derived inputs</a>).
+
+## 4. Can: Audit storage, ranges, and drift
+
+Three read-only calls (`check_storage`, `check_value_drift`, and `report_value_issues`) let an agent audit an entire project (<a href={`${import.meta.env.BASE_URL}/ch18-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 18: Running the three project-wide health checks</a>). It checks every attachment's MD5 checksum on disk, re-runs every data file reader and `Derived` formula, and flags any value or tolerance outside its plausible range. It can also search across PDFs, Office files, and notes with `search_semantic` and summarize long `.tsv` logs with `get_file_columns`.
+
+## 5. Can: Stage curves to external fitting tools
+
+Using `download_file`, an agent exports a raw measurement file (such as `XRR-1_Co-C(261014B).xrdml`) from ELN storage into `--upload-root` and passes it to a domain-specific tool server such as `XRC_MCP.exe` (X-Ray Calc 3). After running the multi-seed fitting procedure, it uploads the resulting `.xrcx` fit project back to a child action and extracts the fitted parameters as `Reader` values (<a href={`${import.meta.env.BASE_URL}/ch19-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 19: Part 2</a>).
+
+## 6. Cannot: Approve or accept a hypothesis
+
+An agent can draft a Full Grid or Taguchi experiment series (`create_series`), propose a hypothesis (`propose_hypothesis`), attach runs (`attach_run`), cite evidence (`cite_evidence`), and submit a conclusion (`submit_conclusion`). It can never start a `Draft` series, confirm `planned` values, start or approve a hypothesis proposal, discard or reject a proposal, close or accept a conclusion, or approve a protocol. Those tools do not exist in the MCP server; every scientific approval gate requires a human decision in the GUI (<a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-starting-or-approving-work`}>Chapter 11</a>, <a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#planning-a-series-in-the-series-window`}>Chapter 12</a>, and <a href={`${import.meta.env.BASE_URL}/ch20-drafting-trees-hypotheses-and-wikis#drafting-experiment-series-and-preparing-hypotheses`}>Chapter 20</a>).
+
+## 7. Cannot: Sign an item or edit signed data
+
+The MCP server exposes `get_signatures` to read existing electronic signatures, but has no tool to apply a signature. Signing requires a human scientist to right-click the item in the Desktop GUI and enter their password (<a href={`${import.meta.env.BASE_URL}/ch16-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 16: Signing an item and verifying signature integrity</a>). Once an item is signed (`SIGNED`), the MCP server refuses every write, file replacement, value edit, or deletion on that item.
+
+## 8. Cannot: Read or write outside its scope
+
+The MCP host reloads the active user principal before every tool call and enforces the exact same project permissions as the Desktop client (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#sharing-projects-in-a-team-laboratory`}>Chapter 5</a> and <a href={`${import.meta.env.BASE_URL}/ch17-connecting-an-ai-agent-to-your-notebook#security-upload-root-and-review-boundaries`}>Chapter 17</a>). A missing project or item ID and an inaccessible project or item ID return the same error message, so an agent cannot even discover the existence of private projects outside its account scope.
+
+## 9. Cannot: Access files outside upload-root
+
+Both `upload_file` and `download_file` check the resolved file path against the configured `--upload-root` (`MCPUploadRoot`) before touching the file system. Any path outside that folder, any `..` parent traversal, and any directory junction or symbolic link is rejected immediately (<a href={`${import.meta.env.BASE_URL}/ch17-connecting-an-ai-agent-to-your-notebook#security-upload-root-and-review-boundaries`}>Chapter 17: Security, upload-root, and review boundaries</a>).
+
+## 10. Cannot: Judge physical sample quality
+
+An agent can verify that a `.fibps` file has a valid MD5 hash, that `aps.fibps` v3 returns a step height of $3.58 \times 10^{-7}\,\text{m}$, and that $\chi^2 = 0.943$ passes the XRR acceptance rules. However, it cannot see physical mistakes in the laboratory. It does not know if you dropped the steel coupon on the floor, if the masked step edge peeled during lift-off, or if the tribometer counterbody ball was rusty. Preparing the sample, inspecting the physical surface, and owning the scientific conclusion are always your job.
+
+## Sources
+
+- **APS ELN Community Help:** `MCP.html` (the 70 registered tools, `extract_file_key_values`, `add_values`, `add_derived_value`, `check_storage`, `check_value_drift`, `report_value_issues`, `search_semantic`, `get_file_columns`, and the write/review boundaries: local principal scope, signed-item locks, `--upload-root` confinement, and no MCP tools for hypothesis approval or conclusion acceptance).
+- **APS ELN Commercial ("For Teams") Help:** `AIIntegration.html` (tool categories and validation rules); `Experiments.html` (Section *Agents*: what AI agents can and cannot do on the Hypothesis Tree).
+- **MCP `download_file` specification:** `APS-ELN-Community/docs/note-download-file-mcp-tool.md` (`CheckUploadPathAllowed` path confinement and junction/symlink refusal).
+- **Study A and Study B demonstration deposit (`doi:10.5281/zenodo.23466959`):** `tribo_study/` and `xrr_study/` (demonstrating items 1–5 and stopping before human acceptance).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#sharing-projects-in-a-team-laboratory`}>Chapter 5</a>; <a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-starting-or-approving-work`}>Chapter 11</a>; <a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#planning-a-series-in-the-series-window`}>Chapter 12</a>; <a href={`${import.meta.env.BASE_URL}/ch16-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 16</a>; <a href={`${import.meta.env.BASE_URL}/ch17-connecting-an-ai-agent-to-your-notebook#security-upload-root-and-review-boundaries`}>Chapter 17</a>; <a href={`${import.meta.env.BASE_URL}/ch18-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 18</a>; <a href={`${import.meta.env.BASE_URL}/ch19-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 19</a>; <a href={`${import.meta.env.BASE_URL}/ch20-drafting-trees-hypotheses-and-wikis#drafting-experiment-series-and-preparing-hypotheses`}>Chapter 20</a>; <a href={`${import.meta.env.BASE_URL}/ch21-importing-legacy-folders-with-an-ai-agent#phases-1-and-2-reconnaissance-and-the-migration-plan`}>Chapter 21</a>.

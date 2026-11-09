@@ -1,8 +1,8 @@
 ---
 title: Connecting an AI Agent to Your Notebook
-part: '4'
-number: '15'
-order: 150
+part: '5'
+number: '17'
+order: 170
 inThisChapter:
   - 'Understanding how the ELN Model Context Protocol (MCP) server works'
   - 'Launching ELNCommunityMCP.exe with --notebook, --upload-root, and --plugins'
@@ -18,33 +18,33 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Instead of clicking through menus for every repetitive check, you can connect an AI assistant such as DeepSeek Harness (DSH) or OMP to APS ELN through the **Model Context Protocol (MCP)** server. The assistant can search across projects, inspect time-series logs, and audit every stored value against its raw file in seconds. It can also fit an X-ray reflectivity curve (<a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 17</a>) and build structured experiment trees (<a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18</a>), all under the server's built-in safety boundaries (<a href="#fig-15-1">Figure 15-1</a>).
+Instead of clicking through menus for every repetitive check, you can connect an AI assistant such as DeepSeek Harness (DSH) or OMP to APS ELN through the **Model Context Protocol (MCP)** server. The assistant can search across projects, inspect time-series logs, and audit every stored value against its raw file in seconds. It can also fit an X-ray reflectivity curve (<a href={`${import.meta.env.BASE_URL}/ch19-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 19</a>) and build structured experiment trees (<a href={`${import.meta.env.BASE_URL}/ch20-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 20</a>), all under the server's built-in safety boundaries (<a href="#fig-17-1">Figure 17-1</a>).
 
 ## What the ELN MCP server does
 
-Both editions of APS ELN include a command-line MCP host executable installed right beside the Desktop program (<a href="#fig-15-1">Figure 15-1</a>):
+Both editions of APS ELN include a command-line MCP host executable installed right beside the Desktop program (<a href="#fig-17-1">Figure 17-1</a>):
 
-- **`ELNCommunityMCP.exe` (APS ELN Community):** opens a local format 5 `.sqlite` notebook and its attachment folder on your computer.
+- **`ELNCommunityMCP.exe` (APS ELN Community):** opens a local format 6 `.sqlite` notebook and its attachment folder on your computer.
 - **`ELNMCPServer.exe` (APS ELN "For Teams"):** connects to your shared laboratory MySQL and WebDAV server using your workstation's configuration.
 
-<Figure id="fig-15-1" number="15-1" src={`${import.meta.env.BASE_URL}/figures/fig-15-1-mcp-architecture.svg`} alt="Architecture diagram showing AI Client (DSH / OMP) talking over line-based JSON-RPC stdio to the ELN MCP Host (ELNCommunityMCP.exe or ELNMCPServer.exe with 26 viewer plugins), which accesses the Notebook DB, Attachment Store, and --upload-root sandbox under strict guardrails" caption="How an AI assistant connects to APS ELN. The client launches the MCP host over standard input/output (stdio). The host loads the same 26 viewer plugins (.bpl) and enforces project scope, signed-item locks, upload-root confinement, and human review gates." />
+<Figure id="fig-17-1" number="17-1" src={`${import.meta.env.BASE_URL}/figures/fig-17-1-mcp-architecture.svg`} alt="Architecture diagram showing AI Client (DSH / OMP) talking over line-based JSON-RPC stdio to the ELN MCP Host (ELNCommunityMCP.exe or ELNMCPServer.exe with 26 viewer plugins), which accesses the Notebook DB, Attachment Store, and --upload-root sandbox under strict guardrails" caption="How an AI assistant connects to APS ELN. The client launches the MCP host over standard input/output (stdio). The host loads the same 26 viewer plugins (.bpl) and enforces project scope, signed-item locks, upload-root confinement, and human review gates." />
 
 When an AI client starts the MCP host, they communicate over standard input and standard output (`stdio`) using one UTF-8 JSON-RPC 2.0 message per line. The MCP host loads the same scientific domain model and the same 26 `.bpl` viewer plugins as the Desktop GUI. Calling `extract_file_key_values` from an agent therefore runs the exact same reader code (`aps.deposition`, `aps.fibps`, `aps.mit`, `aps.zrw`, `aps.xrcx`) as clicking **Extract Values** on screen (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>).
 
-<p id="table-15-1" class="table-caption"><strong>Table 15-1:</strong> The nine tool categories exposed by the ELN MCP server.</p>
+<p id="table-17-1" class="table-caption"><strong>Table 17-1:</strong> The nine tool categories exposed by the ELN MCP server.</p>
 
 <DataTable
   headers={['Category', 'Representative MCP tools', 'Chapter']}
   rows={[
-    ['**Navigation**', '`list_projects`, `list_folders`, `list_items`, `get_item`, `search`, `search_semantic`', '16'],
-    ['**Values**', '`get_values`, `query_values`, `list_value_types`, `correlate_values`', '16'],
-    ['**Files & Columns**', '`list_files`, `extract_file_data`, `extract_file_key_values`, `list_file_columns`, `get_file_columns`, `download_file`', '16, 17'],
-    ['**Checks (Read-only)**', '`check_storage`, `check_value_drift`, `report_value_issues`', '16, 17'],
-    ['**Metadata**', '`get_audit_log`, `get_comments`, `get_item_links`, `get_protocols`, `get_signatures`, `list_action_types`, `list_audit_rules`, `list_equipment`, `list_file_types`', '16'],
-    ['**Write (Items & Files)**', '`create_project`, `create_folder`, `create_item`, `update_item`, `move_item`, `reparent_item`, `upload_file`, `rename_file`, `move_file`, `delete_file`', '17, 18'],
-    ['**Write (Values)**', '`add_value`, `add_values`, `add_derived_value`, `update_value`, `remove_value`, `remove_values`', '17, 18'],
-    ['**Wiki & Tags**', '`wiki_create_page`, `wiki_get_page`, `wiki_update_page`, `create_tag`, `assign_tag`, `unassign_tag`, `list_tags`', '18'],
-    ['**Hypotheses**', '`propose_hypothesis`, `update_hypothesis`, `attach_run`, `detach_run`, `cite_evidence`, `remove_evidence`, `submit_conclusion`, `abandon_hypothesis`, `get_hypothesis`, `get_hypothesis_tree`, `list_hypotheses`, `find_hypotheses_for_item`', '18'],
+    ['**Navigation**', '`list_projects`, `list_folders`, `list_items`, `get_item`, `search`, `search_semantic`', '18'],
+    ['**Values & Series**', '`get_values`, `query_values`, `list_value_types`, `correlate_values`, `list_series`, `get_series_table`, `create_series`, `update_series_plan`', '18, 20'],
+    ['**Files & Columns**', '`list_files`, `extract_file_data`, `extract_file_key_values`, `list_file_columns`, `get_file_columns`, `download_file`', '18, 19'],
+    ['**Checks (Read-only)**', '`check_storage`, `check_value_drift`, `report_value_issues`', '18, 19'],
+    ['**Metadata**', '`get_audit_log`, `get_comments`, `get_item_links`, `get_protocols`, `get_signatures`, `list_action_types`, `list_audit_rules`, `list_equipment`, `list_file_types`', '18'],
+    ['**Write (Items & Files)**', '`create_project`, `create_folder`, `create_item`, `update_item`, `move_item`, `reparent_item`, `upload_file`, `rename_file`, `move_file`, `delete_file`', '19, 20, 21'],
+    ['**Write (Values)**', '`add_value`, `add_values`, `add_derived_value`, `update_value`, `remove_value`, `remove_values`', '19, 20, 21'],
+    ['**Wiki & Tags**', '`wiki_create_page`, `wiki_get_page`, `wiki_update_page`, `create_tag`, `assign_tag`, `unassign_tag`, `list_tags`', '20, 21'],
+    ['**Hypotheses**', '`propose_hypothesis`, `update_hypothesis`, `attach_run`, `detach_run`, `cite_evidence`, `remove_evidence`, `submit_conclusion`, `abandon_hypothesis`, `get_hypothesis`, `get_hypothesis_tree`, `list_hypotheses`, `find_hypotheses_for_item`', '20'],
   ]}
 />
 
@@ -62,7 +62,7 @@ ELNCommunityMCP.exe --notebook "C:\ELN\notebook.sqlite" --upload-root "C:\ELN\In
 
 If your `.sqlite` notebook already remembers its attachment folder (<a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2: Creating a local notebook in Community</a>), `ELNCommunityMCP.exe` uses that saved folder automatically. If not, pass `--storage "C:\ELN\notebook files"` as well.
 
-<Warning title="never pass --config to ELNCommunityMCP.exe">`--config` is a Desktop-only flag (`ELNCommunity.exe`). `ELNCommunityMCP.exe` takes `--notebook`, `--upload-root`, `--plugins`, and optional `--storage`, and it only opens an existing format 5 notebook; it never creates or migrates a database.</Warning>
+<Warning title="never pass --config to ELNCommunityMCP.exe">`--config` is a Desktop-only flag (`ELNCommunity.exe`). `ELNCommunityMCP.exe` takes `--notebook`, `--upload-root`, `--plugins`, and optional `--storage`, and it only opens an existing notebook; it never creates or migrates a database.</Warning>
 
 ## Registering with DSH or OMP in a team laboratory
 
@@ -108,13 +108,13 @@ Every MCP tool that returns an item (`list_items`, `get_item`, `create_item`, `u
 
 ## Security, upload-root, and review boundaries
 
-An AI agent can make fast, persistent changes to a notebook, so the ELN MCP server enforces five hard boundaries inside its own code (<a href="#fig-15-1">Figure 15-1</a>):
+An AI agent can make fast, persistent changes to a notebook, so the ELN MCP server enforces five hard boundaries inside its own code (<a href="#fig-17-1">Figure 17-1</a>):
 
 1. **Project and account scope:** Every tool call reloads the active user principal and checks project permissions. Attempting to read or write an item or file in a project you cannot access returns the same `out of scope` error as a non-existent ID. An agent cannot probe private projects.
 2. **Upload-root file confinement (`--upload-root` / `MCPUploadRoot`):** Both `upload_file` (reading a local file into ELN) and `download_file` (copying an attached file out of ELN) are strictly confined to `--upload-root`. The server refuses any path outside that folder, any `..` traversal, any Windows device prefix (`\\?\`, `\\.\`), any alternate data stream, or any directory junction/symlink along the path. Never set `--upload-root` to `C:\` or your entire user profile.
-3. **Signed-item and cited-item locks:** The MCP server refuses to edit, add values to, replace files on, or delete any item carrying an electronic signature (`SIGNED`, <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14</a>). It also refuses to delete files or values cited by a hypothesis in `InReview` or `Accepted` (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#submitting-a-conclusion-and-checking-the-content-seal`}>Chapter 10</a>).
+3. **Signed-item and cited-item locks:** The MCP server refuses to edit, add values to, replace files on, or delete any item carrying an electronic signature (`SIGNED`, <a href={`${import.meta.env.BASE_URL}/ch16-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 16</a>). It also refuses to delete files or values cited by a hypothesis in `InReview` or `Accepted` (<a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#concluding-closing-or-accepting-and-checking-the-content-seal`}>Chapter 11</a>).
 4. **Read-only session mode:** A read-only MCP session hides all write tools from `tools/list` and refuses any call that modifies data (`Tool "name" is not available in a read-only session.`). All read and audit tools (`list_projects`, `get_item`, `get_values`, `search`, `check_value_drift`, `check_storage`) remain available.
-5. **No MCP tools for human review gates:** Calling `approve_hypothesis` or `accept_conclusion` returns `tool-not-found`. Approving protocols (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8</a>), approving or accepting hypotheses (<a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-passing-the-first-gate`}>Chapter 10</a>), and signing items (<a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14</a>) can only be performed by a human in the GUI.
+5. **No MCP tools for human review gates:** Calling `approve_hypothesis` or `accept_conclusion` returns `tool-not-found`. Approving protocols (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8</a>), starting or closing/accepting hypotheses (<a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-starting-or-approving-work`}>Chapter 11</a>), starting a `Draft` series or confirming `planned` values (<a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#making-or-linking-depositions-and-confirming-planned-values`}>Chapter 12</a>), and signing items (<a href={`${import.meta.env.BASE_URL}/ch16-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 16</a>) can only be performed by a human in the GUI.
 
 <GoingDeeper title="line-based JSON-RPC stdio initialization">
 
@@ -137,4 +137,4 @@ Diagnostic messages from viewer packages go to `stderr` so `stdout` carries pure
 - **Download tool specification:** `APS-ELN-Community/docs/note-download-file-mcp-tool.md` (`CheckUploadPathAllowed` confinement rules shared by `upload_file` and `download_file`).
 - **ELN provenance study (`arXiv:2610.27859`):** Section 2.4 (MCP architecture and agent operations).
 
-Cross-references: <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2: Creating a local notebook in Community</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8: The protocol review workflow</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>; <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-passing-the-first-gate`}>Chapter 10: Proposing a hypothesis and passing the first gate</a>; <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 14: Signing an item and verifying signature integrity</a>; <a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#navigating-and-querying-values`}>Chapter 16: Reading Data and Auditing Drift via MCP</a>; <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 17: Study B: XRR Fitting with Provenance</a>; <a href={`${import.meta.env.BASE_URL}/ch18-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 18: Drafting Trees, Hypotheses, and Wikis</a>.
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2: Creating a local notebook in Community</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8: The protocol review workflow</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#reader-mappings-unit-factors-and-standard-deviations`}>Chapter 9: Reader mappings, unit factors, and standard deviations</a>; <a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-starting-or-approving-work`}>Chapter 11: The Hypothesis Tree and Evidence</a>; <a href={`${import.meta.env.BASE_URL}/ch16-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 16: Signing an item and verifying signature integrity</a>; <a href={`${import.meta.env.BASE_URL}/ch18-reading-data-and-auditing-drift-via-mcp#navigating-and-querying-values`}>Chapter 18: Reading Data and Auditing Drift via MCP</a>; <a href={`${import.meta.env.BASE_URL}/ch19-study-b-xrr-fitting-with-provenance#why-agent-written-records-need-the-value-route`}>Chapter 19: Study B: XRR Fitting with Provenance</a>; <a href={`${import.meta.env.BASE_URL}/ch20-drafting-trees-hypotheses-and-wikis#passing-viewer-selections-and-derived-inputs`}>Chapter 20: Drafting Trees, Hypotheses, and Wikis</a>.

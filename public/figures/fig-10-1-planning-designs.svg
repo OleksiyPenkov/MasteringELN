@@ -1,0 +1,42 @@
+<svg viewBox="0 0 600 330" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arr10" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#455a64"/>
+    </marker>
+  </defs>
+
+  <!-- Card 1: 1-Factor Sweep -->
+  <rect x="10" y="10" width="276" height="136" rx="6" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.8"/>
+  <text x="22" y="34" font-size="15" font-weight="700" fill="#0d47a1">1. One-Factor Sweep (1 Factor)</text>
+  <text x="22" y="60" font-size="13.5" fill="#222">Vary Power: 100, 200, 300 W</text>
+  <text x="22" y="84" font-size="13" fill="#37474f">Hold all other conditions fixed</text>
+  <text x="22" y="108" font-size="13" fill="#37474f">Calibrates 1 rate or threshold</text>
+  <text x="22" y="132" font-size="13" font-weight="700" fill="#0d47a1">3 runs along 1 parameter axis</text>
+
+  <!-- Card 2: Full Grid -->
+  <rect x="314" y="10" width="276" height="136" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.8"/>
+  <text x="326" y="34" font-size="15" font-weight="700" fill="#1b5e20">2. Full Grid (2–3 Factors)</text>
+  <text x="326" y="60" font-size="13.5" fill="#222">Every level pair (e.g. 3 × 3 = 9)</text>
+  <text x="326" y="84" font-size="13" fill="#37474f">Maps 2 or 3 factors (≤ 27 pts)</text>
+  <text x="326" y="108" font-size="13" fill="#37474f">Grows as m^k (3^4 = 81 runs)</text>
+  <text x="326" y="132" font-size="13" font-weight="700" fill="#b71c1c">4+ factors refused in Full grid</text>
+
+  <!-- Card 3: Taguchi Orthogonal Array -->
+  <rect x="10" y="166" width="276" height="152" rx="6" fill="#fff8e1" stroke="#ef6c00" stroke-width="1.8"/>
+  <text x="22" y="190" font-size="15" font-weight="700" fill="#e65100">3. Taguchi Array (2–7 Factors)</text>
+  <text x="22" y="216" font-size="13.5" fill="#222">L4, L8, L9, L16, L18, L27 rows</text>
+  <text x="22" y="240" font-size="13" fill="#37474f">Every level &amp; pair occurs equally</text>
+  <text x="22" y="264" font-size="13" fill="#37474f">4 factors × 3 levels = L9 (9 runs)</text>
+  <text x="22" y="290" font-size="13" font-weight="700" fill="#bf360c">9 runs instead of 81 (9× fewer)</text>
+
+  <!-- Arrow 3 -> 4 -->
+  <line x1="286" y1="242" x2="312" y2="242" stroke="#455a64" stroke-width="2" marker-end="url(#arr10)"/>
+
+  <!-- Card 4: Level Means & Delta Rank -->
+  <rect x="314" y="166" width="276" height="152" rx="6" fill="#ede7f6" stroke="#5e35b1" stroke-width="1.8"/>
+  <text x="326" y="190" font-size="15" font-weight="700" fill="#4527a0">4. Level Means &amp; Factor Rank</text>
+  <text x="326" y="216" font-size="13.5" fill="#222">Mean ± SD at each planned level</text>
+  <text x="326" y="240" font-size="13" fill="#311b92">Effect size: Δ = max − min mean</text>
+  <text x="326" y="264" font-size="13" fill="#311b92">Excludes deviated &amp; planned rows</text>
+  <text x="326" y="290" font-size="13" font-weight="700" fill="#4527a0">Rank 1 = dominant process knob</text>
+</svg>

@@ -1,0 +1,111 @@
+---
+title: Experiment Series and Taguchi Arrays in ELN
+part: '3'
+number: '12'
+order: 120
+inThisChapter:
+  - Planning a 1-to-7-factor Experiment Series in the standalone Series window
+  - Generating points with Full grid, Taguchi orthogonal arrays (L4 to L27), or manual points
+  - Making or linking depositions, confirming planned values, and handling failed runs
+  - Analyzing sweeps and Level means (Taguchi) on the Plot tab and exporting to OriginLab
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+After choosing your factors, fixed conditions, responses, and design (<a href={`${import.meta.env.BASE_URL}/ch10-principles-of-experiment-planning#sweeps-full-grids-and-taguchi-orthogonal-arrays`}>Chapter 10</a>) and recording your hypothesis (<a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#proposing-a-hypothesis-and-starting-or-approving-work`}>Chapter 11</a>), build the plan in **Project > Series...**. The Series window generates your sweep or Taguchi array and creates or links the deposition procedures. It also tracks measured points, plots raw curves or Taguchi level means, and exports the table to OriginLab (<a href="#fig-12-1">Figure 12-1</a>).
+
+<Figure id="fig-12-1" number="12-1" src={`${import.meta.env.BASE_URL}/figures/fig-12-1-series-taguchi-workflow.svg`} alt="Four-step workflow of Project > Series: 1. Series Plan Dialog (1 to 7 Factors, Levels, Full grid or Taguchi L4-L27, Fixed and Responses), 2. Make or Link Runs (Make deposition, Confirm planned values, Link to plan point, Mark failed), 3. Table and Taguchi Plot (Column roles, Level means Taguchi with Delta and Rank), and 4. OriginLab Export (Copy table and Save CSV)" caption="The four stages of working with an Experiment Series in APS ELN. Plan the factor levels or Taguchi array (1), make or link depositions and confirm planned values (2), inspect the Table and Taguchi level-means plot (3), and export with paired tolerance columns to OriginLab (4)." />
+
+## Planning a series in the Series window
+
+Select your project in the **Projects** panel and choose **Project > Series...** (or click **Series** on the Projects toolbar). The **Series** view opens in a separate top-level window with its own taskbar button, so it stays open while you work in the main window.
+
+Follow these steps to create a new series plan:
+
+1. Click **New series...** to open the **Series plan** dialog.
+2. Under **Series - what it tests and where its depositions go**, enter the **Title** and **Purpose - what this series tests**. Then choose the **Target folder** where new depositions created from this plan will be placed.
+3. Under **Factors - parameters you vary (up to 7)**, click **Add...** for each factor (`1` to `7`):
+   - Choose a **Category** and a **Value type** (choose **(All)** to list every value type).
+   - Type an optional **Label** (such as `Mo layer` or `Si layer`) so headers distinguish two factors that share the same value type (`Time (Mo layer), s`).
+   - Enter optional **Range** minimum and maximum limits; APS ELN refuses any level or point outside that range.
+   - Enter the factor's semicolon-separated **Levels** (for example, `100; 200; 300`), then click **OK**. The **Levels** column of the factor list displays your entered levels.
+4. Under **Point generation**, select how APS ELN builds the plan points:
+   - **Full grid:** creates every combination of the factor levels (1 to 3 factors, up to 27 points; a grid of 4 or more factors is refused).
+   - **Taguchi orthogonal array:** builds the rows of the matching standard array (`L4`, `L8`, `L9`, `L16`, `L18`, or `L27`; see <a href={`${import.meta.env.BASE_URL}/ch10-principles-of-experiment-planning#table-10-1`}>Chapter 10: Table 10-1</a>). When you add a third factor, APS ELN selects this option automatically.
+   - **No initial points:** starts the series with an empty table so you can add points one by one with **Add point...**.
+5. Check the summary line under **Point generation**. With 1 or 2 factors, you can type semicolon-separated levels directly in the **Levels** boxes. With 3 to 7 factors, select a factor and click **Edit...** to change its levels. The summary line shows the selected array and point count (such as `Taguchi L9: 9 points.`), or explains why the current level counts do not match an array.
+6. Under **Fixed conditions**, click **Add...** for each parameter held constant across the series. Pick its category and value type, enter an optional label, and type its **Value** and optional **Tolerance**.
+7. Under **Responses**, click **Add...** for each result value type (`TEST_RESULT`) you will measure on every point, with an optional label (such as `Total stack`).
+8. Click **OK**. If any entry has an error, APS ELN explains what is wrong and keeps your entries in the dialog so you can fix them.
+
+<Tip>Every number field in the series dialogs (`Range`, `Levels`, `Fixed conditions`, `Tolerance`, and `Add point...`) accepts inline unit conversion. For example, if a pressure value type is stored in $\text{Pa}$, you can type `2 mTorr` directly into the field. APS ELN converts the number to $\text{Pa}$ and previews the converted value right below the box. Note that a **Tolerance** cannot use an offset temperature unit such as `°C` on a value type stored in $\text{K}$.</Tip>
+
+A series created in the Desktop window starts as **Active** immediately. A series created by an AI agent through MCP (`create_series` in <a href={`${import.meta.env.BASE_URL}/ch20-drafting-trees-hypotheses-and-wikis#drafting-experiment-series-and-preparing-hypotheses`}>Chapter 20</a>) starts as **Draft** so you can review it and click **Start**. While a series has points, **Edit plan...** changes the title, purpose, target folder, factor labels, ranges, fixed conditions, and responses. To add, remove, or change factors, remove all points first. When all runs are finished, click **Close** (author only), or click **Abandon...** to stop work while keeping the history.
+
+## Making or linking depositions and confirming planned values
+
+The **Table** tab shows one row for each planned point from the start, and the left list reports progress such as `2/9 measured`. You can populate those rows either by creating new depositions from the table or by linking procedures you already recorded:
+
+1. **Make a new deposition from a planned row:** Double-click a `planned` row (or right-click it and choose **Make deposition...**). APS ELN opens the new-procedure dialog in the target folder with a pre-filled title, item type `Synthesis`, and the action type and equipment of the previous deposition. Click **OK**. APS ELN creates the procedure and writes each factor level and fixed condition onto it as a condition value marked `planned` (shown in grey italic).
+2. **Link an existing procedure from the Series table:** Right-click a `planned` row and choose **Link existing deposition...**. Then pick a top-level procedure from the same project that you recorded before making the plan.
+3. **Link one or more procedures from the Item tree:** In the main window's **Items** panel, select one or more top-level procedures, right-click, and choose **Link to plan point...**. The dialog previews each match: `item -> 200 W` (matches a free point within tolerance), `item -> new point 250 W` (no point matches), or the refusal reason (such as `no Power value`). Tick **Add new points for depositions that match no point** if you want unmatched levels added to the plan as `added` points, then click **Link**.
+4. **Add an extra point at any time:** Click **Add point...** on the Series toolbar. Enter one level per factor (within range and not duplicating an existing point) and an optional reason. On an `Active` series, ELN immediately opens the new-procedure dialog for that point and marks the row `added` in the **Point** column.
+
+<Warning title="always confirm planned values after the deposition finishes">A grey italic `planned` value is only a target from the plan. The **Plot** tab and CSV export ignore `planned` values, **Add > Derived Value...** refuses them as formula inputs, and **Project > Hypotheses** refuses to cite them. When your deposition ran as planned, right-click its row in the Series table (or use the **Item** menu) and choose **Confirm planned values**. If the actual setpoint differed, edit the value on the procedure or extract the real setpoint from your `.depo.json` file; both actions clear the `planned` mark.</Warning>
+
+When a confirmed factor value or fixed condition differs from the plan by more than tolerance, its table cell shows a warning icon with the tooltip `Differs from the plan (planned value)`. If a deposition attempt fails in the chamber (for example, a substrate breaks or a target arcs), right-click its row and choose **Mark failed...** with a reason. The point returns to `planned` so you can run **Make deposition...** for the next attempt, and ticking **Show failed** on the toolbar displays failed attempts in the table.
+
+## Reading the Series Table and setting column roles
+
+Each row and column on the **Table** tab has a specific meaning (<a href="#table-12-1">Table 12-1</a>):
+
+- **Point and State columns:** **Point** shows the factor levels with their units (plus `added` for points appended after the initial plan). **State** shows `planned` (no deposition yet), `deposited` (has a deposition, waiting for one or more response measurements), `measured` (all responses present with confirmed values), or `failed`. Point at any **Point** or **State** cell to see the linked procedure title, or double-click any data cell to open the item that holds that value in the main window.
+- **Separate columns per measurement method:** A response value often sits on a child measurement action below the deposition, such as film thickness measured by `XRR` or `3D Profiling`. Each measurement action type gets its own column named with the method. APS ELN never averages values across different measurement methods.
+- **Ambiguous cells:** Sometimes the same measurement method under one deposition produces more than one value (such as two separate specimens under the same procedure). The cell then shows all values with a warning icon and omits that cell from the plot rather than guessing which one to use.
+- **Column roles:** Right-click any data column header to set its role to **Varied**, **Response**, **Shown**, or **Hidden**. `Hidden` columns remain visible in grey in the table for reference, and are left out of the plot and the OriginLab export.
+
+<p id="table-12-1" class="table-caption"><strong>Table 12-1:</strong> Statuses, row states, cell warnings, and column roles in <strong>Project &gt; Series...</strong>.</p>
+
+<DataTable
+  headers={['Series element', 'Values in Project > Series...', 'Behavior in the Table, Plot, and OriginLab export']}
+  rows={[
+    ['**Series status**', '`Draft`, `Active`, `Closed`, `Abandoned`', 'GUI series start `Active`; MCP `create_series` starts `Draft` until you click **Start**. **Close** marks the series complete (author only).'],
+    ['**Row state**', '`planned`, `deposited`, `measured`, `failed`', '`planned` has no run; `deposited` has a run missing a response; `measured` has all responses recorded; `failed` is shown when **Show failed** is ticked.'],
+    ['**Cell warning icon**', '`Differs from the plan` or `Several values`', 'Flags a factor/fixed value outside tolerance (excluded from Taguchi level means) or multiple values from the same method (not plotted).'],
+    ['**Column role**', '`Varied`, `Response`, `Shown`, `Hidden`', 'Right-click any column header to change its role. `Hidden` columns stay grey in the table and are omitted from the plot and CSV export.'],
+    ['**Excluded runs**', 'Status-bar notice + **Unlink excluded**', 'Depositions moved to the Recycle Bin or another project are omitted from the table; click **Unlink excluded** to remove them from the series.'],
+  ]}
+/>
+
+## Plotting sweeps, Taguchi level means, and exporting to OriginLab
+
+Switch to the **Plot** tab in the **Series** window to visualize your results as measurements come in:
+
+1. Under **X (condition)**, choose the condition column for the horizontal axis (defaults to the first `Varied` column).
+2. Under **Y (results)**, tick one or more result columns (defaults to every `Response` column). Vertical error bars show the stored tolerance of each result value.
+3. For a 1-factor or 2-factor sweep, you can choose **Group by (condition)** to draw a separate curve for each level of a second condition (up to 8 groups). You can also tick **Linear trend** when a single curve is shown.
+4. For a Taguchi array or multi-factor plan, tick **Level means (Taguchi)**. This mode is available whenever **X (condition)** is a factor of the plan (**Group by** and **Linear trend** are disabled):
+   - For each planned level of $X$, the chart plots the mean of the confirmed result values at that level (<a href={`${import.meta.env.BASE_URL}/ch10-principles-of-experiment-planning#reading-main-effects-level-means-delta-and-factor-rank`}>Chapter 10</a>).
+   - With 2 or more values at a level, the vertical error bar is the sample standard deviation; with 1 value, it is that value's stored tolerance.
+   - Read the note below the **Y (results)** list. It reports **Delta** (largest level mean minus smallest level mean) and the **rank** of the $X$ factor among all plan factors, such as `Delta = 10 nm (rank 1 of 3)`. Switch **X (condition)** through each factor in turn to compare their level-mean curves and ranks.
+
+<InELN>When a plotted row holds unconfirmed `planned` values, the Plot note warns `n point(s) wait for confirmed values`. When a factor setpoint missed its planned level beyond tolerance, the note warns `n point(s) differ from the plan and are left out of level means`.</InELN>
+
+When you are ready to prepare publication figures or run multi-factor surface fits in OriginLab or Python, use the two export buttons on the Series toolbar:
+
+- **Copy table:** copies the series table to the clipboard as tab-separated text, ready to paste directly into an Origin worksheet.
+- **Save CSV...:** writes the same table to a `.csv` file using a period (`.`) as the decimal mark.
+
+In both exports, Row 1 holds the column names and Row 2 holds the units. Every value column with a tolerance is followed by its own `±` column so OriginLab can assign error bars in one click. `Hidden` columns, `planned` rows, and unconfirmed `planned` values are omitted automatically.
+
+## Sources
+
+- **APS ELN Community Help:** `Series.html` (**Project > Series...** separate window, **New series...**, 1 to 7 **Factors** with **Label**, **Range**, and semicolon-separated **Levels**, inline unit conversion and offset-unit tolerance rule, **Point generation** modes **Full grid**, **Taguchi orthogonal array** `L4` / `L8` / `L9` / `L16` / `L18` / `L27`, and **No initial points**, **Fixed conditions**, **Responses**, `Draft` vs. `Active` status, **Make deposition...**, **Link existing deposition...**, **Link to plan point...**, **Confirm planned values**, `Differs from the plan` warning, **Add point...**, **Mark failed...** and **Show failed**, **Unlink excluded**, **Table** column roles, **Plot** tab with **Group by**, **Linear trend**, and **Level means (Taguchi)** showing **Delta** and rank, and **Copy table** / **Save CSV...** for OriginLab).
+- **APS ELN Delphi source:** `ELN.Desktop/Forms/frm_SeriesWindow.pas` (standalone Series window with taskbar button and saved geometry), `ELN.Desktop/Dialogs/Series/dlg_SeriesPlan.dfm` and `.pas`, `ELN.Desktop/Views/frame_Series.dfm` and `.pas`, and `ELN.Model/unit_SeriesTaguchi.pas`.
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#working-on-multiple-records-at-once`}>Chapter 6: Working on multiple records at once</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9: The value sources and Derived formulas</a>; <a href={`${import.meta.env.BASE_URL}/ch10-principles-of-experiment-planning#sweeps-full-grids-and-taguchi-orthogonal-arrays`}>Chapter 10: Principles of Experiment Planning and the Taguchi Method</a>; <a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#attaching-runs-promoting-references-and-citing-evidence`}>Chapter 11: The Hypothesis Tree and Evidence</a>; <a href={`${import.meta.env.BASE_URL}/ch15-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 15: Cross-Project Charts, PDF Reports, and Packages</a>; <a href={`${import.meta.env.BASE_URL}/ch18-reading-data-and-auditing-drift-via-mcp#navigating-and-querying-values`}>Chapter 18: Reading Data and Auditing Drift via MCP</a>; <a href={`${import.meta.env.BASE_URL}/ch20-drafting-trees-hypotheses-and-wikis#drafting-experiment-series-and-preparing-hypotheses`}>Chapter 20: Drafting Trees, Hypotheses, and Wikis</a>.

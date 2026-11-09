@@ -24,13 +24,14 @@ Both studies come from our thin-film and tribology laboratory (`arXiv:2610.27859
 
 APS ELN comes in two editions that use the same data model and the same 26 instrument viewers. **APS ELN Community** is the free single-user edition that stores a local SQLite database on your computer. **APS ELN ("For Teams")** is the multi-user laboratory edition connected to a shared server. This book teaches the shared workflow once and marks team-server steps with a dedicated icon. Server installation and IT setup belong in administrator documentation.
 
-The book has five Parts:
+The book has six Parts:
 
 - **Part 1, Getting Started**, explains why links between files and numbers matter and shows how to open a local or team notebook. It also tours the main window and walks you through recording Study A (`261015A`) in twenty minutes.
 - **Part 2, Recording Daily Lab Work**, covers projects, folders, the **Procedure -> Specimen -> Action** hierarchy, and experiment templates. It also shows you how to use the 26 instrument viewers, working drafts, protocols, and value extraction (`Reader`, `Derived`, and `Manual`).
-- **Part 3, Thinking, Searching, and Reviewing**, covers the hypothesis tree, the project wiki, tags and links, full-text and semantic search, correlation charts, completeness rules, and electronic signatures.
-- **Part 4, Working with an AI Agent (MCP)**, shows how to connect DeepSeek Harness (DSH) or OMP to your notebook and audit storage and value drift. It also covers the Study B (`261014B`) XRR fitting workflow, migrating legacy folders from disk, and the human review gates that remain in the Desktop GUI.
-- **Part 5, The Part of Tens**, gives three short checklists for avoiding broken links, preparing a record for supervisor approval, and working safely with an AI agent.
+- **Part 3, Experiment Planning with ELN**, explains why and how to plan experiments before going to the instruments. It covers one-factor sweeps, full factorial grids, **Taguchi orthogonal arrays** (`L4` through `L27`), the standalone **Hypotheses** window, and the standalone **Experiment Series** window (**Level means (Taguchi)** with $\Delta$ and factor rank).
+- **Part 4, Organizing, Searching, and Reviewing**, covers the five-section project wiki, tags and links, full-text and semantic search, cross-project correlation charts, PDF reports, completeness rules, and electronic signatures.
+- **Part 5, Working with an AI Agent (MCP)**, shows how to connect DeepSeek Harness (DSH) or OMP to your notebook and audit storage and value drift. It also covers the Study B (`261014B`) XRR fitting workflow, migrating legacy folders from disk, and the human review gates that remain in the Desktop GUI.
+- **Part 6, The Part of Tens**, gives three short checklists for avoiding broken links, preparing a record for supervisor approval, and working safely with an AI agent.
 
 ### Conventions used in this book
 
@@ -49,7 +50,7 @@ This book makes a few assumptions about you:
 - You have a computer running 64-bit Windows 10 or Windows 11 with the Microsoft Edge WebView2 Runtime installed.
 - You want to spend your time doing science rather than hunting for lost files when you write your thesis or paper.
 
-You do not need to know SQL, database administration, or Delphi programming. Even in Part 4, where an AI assistant talks to the notebook through MCP, you give instructions in plain English.
+You do not need to know SQL, database administration, or Delphi programming. Even in Part 5, where an AI assistant talks to the notebook through MCP, you give instructions in plain English.
 
 ## Icons Used in This Book
 
@@ -77,7 +78,7 @@ The raw instrument files for both running examples (**Study A**, `261015A`, and 
 
 :::web-only
 - **Study A (`261015A`, 11 raw files):** <a href="/MasteringELN/data/Study-A-261015A-raw.zip" download="Study-A-261015A-raw.zip">Download `Study-A-261015A-raw.zip`</a> (manifest: [Study A checksums (`/data/study-a/checksums.md5`)](/MasteringELN/data/study-a/checksums.md5)).
-- **Study B (`261014B`, 7 raw files for agent fitting):** <a href="/MasteringELN/data/Study-B-261014B-raw.zip" download="Study-B-261014B-raw.zip">Download `Study-B-261014B-raw.zip`</a> (manifest: [Study B checksums (`/data/study-b/checksums.md5`)](/MasteringELN/data/study-b/checksums.md5)). The `.xrcx` fit file is omitted from the zip so you fit `XRR-1_Co-C(261014B).xrdml` yourself via `XRC_MCP` in <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 17</a>.
+- **Study B (`261014B`, 7 raw files for agent fitting):** <a href="/MasteringELN/data/Study-B-261014B-raw.zip" download="Study-B-261014B-raw.zip">Download `Study-B-261014B-raw.zip`</a> (manifest: [Study B checksums (`/data/study-b/checksums.md5`)](/MasteringELN/data/study-b/checksums.md5)). The `.xrcx` fit file is omitted from the zip so you fit `XRR-1_Co-C(261014B).xrdml` yourself via `XRC_MCP` in <a href={`${import.meta.env.BASE_URL}/ch19-study-b-xrr-fitting-with-provenance#part-2-fitting-agent-records-xrr-fit-261014b`}>Chapter 19</a>.
 - **Laboratory bench cheat sheet:** print the 1-page <a href="/MasteringELN/ELN-Cheat-Sheet.pdf" download="ELN-Cheat-Sheet.pdf">`ELN-Cheat-Sheet.pdf`</a> workflow reference.
 :::
 

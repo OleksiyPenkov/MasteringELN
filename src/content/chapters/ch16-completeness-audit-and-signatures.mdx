@@ -1,8 +1,8 @@
 ---
 title: Completeness, Audit, and Signatures
-part: '3'
-number: '14'
-order: 140
+part: '4'
+number: '16'
+order: 160
 inThisChapter:
   - Defining and running Completeness Rules for each Action Type and Equipment
   - Finding missing files and missing values with Data Completeness checks
@@ -18,17 +18,17 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Before you mark an experiment finished or hand it to your supervisor, check three things: every action has its raw file, every value matches its reader output, and the finished record is locked against edits. APS ELN checks each of these in turn (<a href="#fig-14-1">Figure 14-1</a>).
+Before you mark an experiment finished or hand it to your supervisor, check three things: every action has its raw file, every value matches its reader output, and the finished record is locked against edits. APS ELN checks each of these in turn (<a href="#fig-16-1">Figure 16-1</a>).
 
 ## Three layers of record integrity
 
-Three tools handle completeness, provenance, and locking (<a href="#fig-14-1">Figure 14-1</a>):
+Three tools handle completeness, provenance, and locking (<a href="#fig-16-1">Figure 16-1</a>):
 
 1. **Completeness Rules (`Tools > Data Completeness...`):** checks whether every **Procedure** and **Action** in a project has the required raw **File Types** and extracted **Value Types** for its **Action Type** and **Equipment**.
 2. **Provenance and Audit (`Check Value Sources...` and `Tools > Audit Log...`):** verifies that every `Reader` and `Derived` value still matches its stored file and formula (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Checking value sources and understanding drift codes</a>). It also records the chronological log of every `Create`, `Update`, and `Delete` event in the notebook.
 3. **Electronic Signatures (`Signature > Sign Item...`):** computes a cryptographic content hash over a finished item, marks it with a dark-red **SIGNED** badge, and locks it permanently against any further edits.
 
-<Figure id="fig-14-1" number="14-1" src={`${import.meta.env.BASE_URL}/figures/fig-14-1-integrity-layers.svg`} alt="Three stacked layers: Layer 1 Completeness Rules (Tools > Data Completeness), Layer 2 Provenance and Audit (Check Value Sources and Tools > Audit Log), and Layer 3 Electronic Signature (Signature > Sign Item)" caption="The three integrity layers in APS ELN. Run Layer 1 (Completeness) and Layer 2 (Check Value Sources) while the item is still editable, then apply Layer 3 (Electronic Signature) to lock the verified record permanently." />
+<Figure id="fig-16-1" number="16-1" src={`${import.meta.env.BASE_URL}/figures/fig-16-1-integrity-layers.svg`} alt="Three stacked layers: Layer 1 Completeness Rules (Tools > Data Completeness), Layer 2 Provenance and Audit (Check Value Sources and Tools > Audit Log), and Layer 3 Electronic Signature (Signature > Sign Item)" caption="The three integrity layers in APS ELN. Run Layer 1 (Completeness) and Layer 2 (Check Value Sources) while the item is still editable, then apply Layer 3 (Electronic Signature) to lock the verified record permanently." />
 
 ## Completeness rules and Data Quality Checks
 
@@ -77,20 +77,20 @@ To inspect a signature and verify that the item's database record still matches 
 2. Read the **Signed By**, **Date**, **Meaning**, **Comment**, and **Content Hash** fields.
 3. Click **Verify Now** (or right-click the item in the tree and choose **Signature > Verify Integrity**). APS ELN recomputes the hash over the item's committed fields, note and protocol entries, file titles and MD5 hashes, and numeric values and tolerances. It then reports whether the hash is `VERIFIED`.
 
-<p id="table-14-1" class="table-caption"><strong>Table 14-1:</strong> Comparing Protocol Approval, Hypothesis Acceptance, and Item Signatures.</p>
+<p id="table-16-1" class="table-caption"><strong>Table 16-1:</strong> Comparing Protocol Approval, Hypothesis Acceptance, and Item Signatures.</p>
 
 <DataTable
   headers={['Integrity mechanism', 'What it locks or seals', 'How it is applied', 'Can an MCP agent apply it?']}
   rows={[
     ['**Protocol Approval** (Chapter 8)', 'One attached protocol form (`Approved` state)', '**Tools > Protocol Review...** > **Approve**', 'No (human GUI gate only).'],
-    ['**Hypothesis Acceptance Seal** (Chapter 10)', 'A hypothesis statement, conclusion, runs, and cited evidence (`Sealed` badge)', '**Project > Hypotheses** > **Accept**', 'No (human GUI gate only).'],
+    ['**Hypothesis Acceptance Seal** (Chapter 11)', 'A hypothesis statement, conclusion, runs, and cited evidence (`Sealed` badge)', '**Project > Hypotheses** > **Close with conclusion** (Community) or **Accept** (Team)', 'No (human GUI gate only).'],
     ['**Item Electronic Signature**', 'An item\'s properties, notes, protocols, file hashes, and values (`SIGNED` badge)', 'Right-click item > **Signature > Sign Item...** + password', 'No (requires interactive user password).'],
   ]}
 />
 
 <GoingDeeper title="what Verify Integrity checks and what check_storage checks">
 
-**Signature > Verify Integrity** checks the committed database records of that single item (including the stored MD5 hashes of its attached files), and it is not recursive over child items. To verify that every physical attachment file on disk or WebDAV still matches its recorded MD5 across a whole project, pair signature verification with the MCP `check_storage` tool (<a href={`${import.meta.env.BASE_URL}/ch16-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 16</a>). Items signed in older versions before versioned canonical hashes existed display **Legacy signature; integrity cannot be verified** while remaining locked.
+**Signature > Verify Integrity** checks the committed database records of that single item (including the stored MD5 hashes of its attached files), and it is not recursive over child items. To verify that every physical attachment file on disk or WebDAV still matches its recorded MD5 across a whole project, pair signature verification with the MCP `check_storage` tool (<a href={`${import.meta.env.BASE_URL}/ch18-reading-data-and-auditing-drift-via-mcp#running-the-three-project-wide-health-checks`}>Chapter 18</a>). Items signed in older versions before versioned canonical hashes existed display **Legacy signature; integrity cannot be verified** while remaining locked.
 
 </GoingDeeper>
 
@@ -100,4 +100,4 @@ To inspect a signature and verify that the item's database record still matches 
 - **APS ELN Commercial ("For Teams") Help:** `Signatures.html` (the dark-red **SIGNED** badge, signature verification, and regulatory context); `Projects.html` (**Data Quality Check...** on the project context menu).
 - **ELN provenance study (`arXiv:2610.27859`):** Sections 2.4 and 4 (audit log verification and completeness gaps on empty placeholder actions).
 
-Cross-references: <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2: Creating a local notebook in Community</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5: Deleting containers and using the Recycle Bin</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8: The protocol review workflow</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Checking value sources and understanding drift codes</a>; <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#submitting-a-conclusion-and-checking-the-content-seal`}>Chapter 10: Submitting a conclusion and checking the content seal</a>.
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch2-opening-a-notebook#creating-a-local-notebook-in-community`}>Chapter 2: Creating a local notebook in Community</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5: Deleting containers and using the Recycle Bin</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#the-protocol-review-workflow`}>Chapter 8: The protocol review workflow</a>; <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Checking value sources and understanding drift codes</a>; <a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#concluding-closing-or-accepting-and-checking-the-content-seal`}>Chapter 11: Concluding, closing or accepting, and checking the content seal</a>.

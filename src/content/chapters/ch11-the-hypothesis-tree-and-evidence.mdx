@@ -1,0 +1,120 @@
+---
+title: The Hypothesis Tree and Evidence
+part: '3'
+number: '11'
+order: 110
+inThisChapter:
+  - Opening the standalone Hypotheses window and proposing a root or follow-up hypothesis
+  - Comparing the Community self-review workflow with Commercial two-gate supervisor review
+  - Attaching experimental Runs and References, promoting a Reference with Make run, and citing Evidence
+  - Closing or accepting a conclusion and verifying the cryptographic content seal
+---
+import Tip from '../../components/textbook/Tip.astro';
+import Remember from '../../components/textbook/Remember.astro';
+import Warning from '../../components/textbook/Warning.astro';
+import GoingDeeper from '../../components/textbook/GoingDeeper.astro';
+import InELN from '../../components/textbook/InELN.astro';
+import InTeamLab from '../../components/textbook/InTeamLab.astro';
+import Figure from '../../components/textbook/Figure.astro';
+import DataTable from '../../components/textbook/DataTable.astro';
+
+Recording procedures, specimens, actions, files, and values (<a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6</a> and <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#the-four-value-sources-and-derived-formulas`}>Chapter 9</a>) tells you *what* you made and *what numbers* you measured. By itself, the item tree does not explain *why* you changed the bias voltage in a new run or *which* scientific question that sample series tested. The **Hypothesis Tree** ties your research question to the exact runs, files, and values that tested it.
+
+## Why connect experiments to a hypothesis tree?
+
+A **hypothesis** in APS ELN sits inside a project and links four things (<a href="#fig-11-1">Figure 11-1</a>):
+
+1. **The Proposal:** what you expect to happen and why (`Statement`), plus what changed compared to the parent hypothesis (`Change`) when you are refining an earlier idea.
+2. **The Runs and References:** the experimental **Procedures**, **Specimens**, or **Actions** you ran to test the hypothesis (`Run`), or earlier records from any readable project that provide background context (`Reference`).
+3. **The Cited Evidence:** the specific items, attached files (`.mit`, `.zrw`, `.xrcx`), or stored values ($H_{\text{IT}}$, $\text{COF}$, $K$, $D$) that support or refute the expectation.
+4. **The Conclusion:** what you found (`What we found`) and the outcome (`Supported`, `Refuted`, or `Inconclusive`).
+
+<Figure id="fig-11-1" number="11-1" src={`${import.meta.env.BASE_URL}/figures/fig-11-1-hypothesis-lifecycle.svg`} alt="Flowchart of the four hypothesis stages in Community (Draft -> Start -> Open -> Close with conclusion -> Closed) and Commercial (Proposed -> Gate 1 Approve -> Approved -> In review -> Gate 2 Accept -> Accepted Sealed)" caption="The lifecycle of a hypothesis in APS ELN. In Community, you start and close your own hypotheses locally (Draft -> Open -> Closed). In the Team edition, a reviewer approves the proposal at Gate 1 and accepts the conclusion at Gate 2." />
+
+A root hypothesis can have **follow-up** hypotheses nested beneath it. Across a multi-month research campaign, the tree shows which ideas were supported, which were refuted, and how each result led to the next experiment (<a href={`${import.meta.env.BASE_URL}/ch10-principles-of-experiment-planning#why-unplanned-experiments-fail-in-the-laboratory`}>Chapter 10</a>).
+
+## Proposing a hypothesis and starting or approving work
+
+Select your active project in the **Projects** panel and choose **Project > Hypotheses** (or click the **Hypotheses** button on the Projects toolbar). The hypotheses open in a **separate top-level window** with its own Windows taskbar button. The window stays open while you work in the main window and remembers its size and position for your next session.
+
+In **APS ELN Community**, you are the only reviewer, so a hypothesis moves **Draft** $\rightarrow$ **Open** $\rightarrow$ **Closed** with no separate supervisor approval gate. In the Commercial ("For Teams") edition, a reviewer with the right role approves proposals and accepts conclusions (**Proposed** $\rightarrow$ **Approved** $\rightarrow$ **In review** $\rightarrow$ **Accepted**; see <a href="#table-11-1">Table 11-1</a>).
+
+Follow these steps to propose and start or approve a hypothesis:
+
+1. Click **New hypothesis...** to create a root hypothesis, or select an existing hypothesis and click **New follow-up...** to propose a child refinement beneath it.
+2. Enter a clear **Title** and **Statement - what you expect, and why** (labeled **We expected** on the **Proposal** tab). For a follow-up hypothesis, also fill in **Change - what differs from the parent hypothesis** (labeled **What changes**).
+3. Optionally select a **headline quantity** (such as `Wear rate` or `Period`). APS ELN summarizes the count, mean, minimum, and maximum of that value across all attached `Run` items right in the hypothesis tree.
+4. Click **OK**. Read-only proposal and conclusion text boxes are tinted with the row's status color so you can tell draft, active, and closed records apart at a glance. While the hypothesis is a `Draft` (`Proposed`), its author can click **Edit...** on the **Proposal** tab to refine the wording and can attach background **Reference** items.
+5. In **APS ELN Community**, click **Start** to make the `Draft` **Open** so you can attach experimental runs, or click **Discard** (with an optional reason) to drop it. In the Commercial edition, a reviewer uses the **Your decision** panel to click **Approve** or **Reject** (which requires a comment).
+
+<InELN>Selecting a parent hypothesis row with follow-ups reveals the same three row buttons used in the **Projects** and **Items** panels (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#reading-the-item-tree-and-its-row-buttons`}>Chapter 3: Reading the item tree and its row buttons</a>). Use them to **Collapse all below**, **Expand all below**, or **Focus**.</InELN>
+
+<InTeamLab title="who approves proposals and conclusions in a team lab">
+
+In **APS ELN Community**, you start and close your own hypotheses locally inside the Desktop GUI. In the Commercial ("For Teams") edition, an administrator or supervisor configures **Administration > Approval Policy...** (including an optional **Four-eyes** rule that prevents anyone from approving their own hypothesis). They can also tick **Can approve proposals** and **Can accept conclusions** on a project's **Share...** dialog (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#sharing-projects-in-a-team-laboratory`}>Chapter 5: Sharing projects in a team laboratory</a>). By default, a student with a `Standard` role submits proposals and conclusions. Their supervisor sees them in the Dashboard's **Waiting for You** list (<a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-dashboard-and-keyboard-navigation`}>Chapter 3</a>) and in the mobile web app's **Waiting for me** tab (<a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#submitting-protocols-from-the-instrument-in-a-team-lab`}>Chapter 8</a>). Projects that hold hypotheses display a **HYP** badge in the project tree, which turns solid when a decision is waiting on you.
+
+</InTeamLab>
+
+## Attaching Runs, promoting References, and citing Evidence
+
+Once a hypothesis is **Open** (Commercial: **Approved**), its status line shows where the laboratory work stands (<a href="#fig-11-2">Figure 11-2</a> and <a href="#table-11-1">Table 11-1</a>).
+
+<Figure id="fig-11-2" number="11-2" src={`${import.meta.env.BASE_URL}/figures/fig-11-2-hypotheses-view.png`} alt="Screenshot of the Project > Hypotheses view showing the hypothesis tree on the left with status In the lab · evidence in and headline Wear rate summary, and the Proposal, Runs, Evidence, and Conclusion tabs on the right" caption="The Project > Hypotheses view in APS ELN Desktop. The left pane lists each hypothesis with its derived lab state and headline key-value summary; the right pane organizes the Proposal, attached Runs, cited Evidence, and Conclusion." />
+
+To connect your experimental items in the main window to the open **Hypotheses** window:
+
+1. Select the **Procedure**, **Specimen**, or **Action** in the **Items** panel of the main window (for example, `Deposition 261015A` in Study A).
+2. Right-click the item in the item tree and choose **Hypothesis > Attach to hypothesis...**. Or switch to the **Hypotheses** window, select the hypothesis, open the **Runs** tab, and click **Attach selected item...**.
+3. Choose **Run** (an experimental item in this project made to test the hypothesis) or **Reference** (existing context from any readable project) and click **OK**. Items attached as runs display a **HYP** badge in the item tree.
+4. Suppose you attached an item from the same project as a **Reference** while the hypothesis was still a `Draft`. Once the hypothesis is **Open**, select that row on the **Runs** tab and click **Make run** to promote it to a `Run`.
+
+<Tip>If an unexpected result in an existing experiment sparks a new idea, right-click that item in the **Items** panel and choose **Hypothesis > New hypothesis from this item...**. APS ELN opens the new-hypothesis dialog with that item already attached as a `Reference` from the very first draft.</Tip>
+
+After your measurements and value extractions are complete, cite the specific records that test the hypothesis:
+
+1. In **Project > Hypotheses**, select the approved hypothesis, switch to the **Evidence** tab, and click **Add evidence...**.
+2. In the left list of the dialog, select an attached `Run` or `Reference` (or any indented child action beneath a run, such as `Indentation 261015A` or `Friction test 261015A`). You do not need to attach every child action as a separate `Run` to cite its files or values.
+3. In the right list, pick what you are citing. You can cite the **item as a whole**, one of its **attached files** (such as `BN-DLC.zrw` or `XRR-fit_Co-C(261014B).xrcx`), or one of its **stored values** ($K = 3.05 \times 10^{-7}\,\text{mm}^3/(\text{N}\cdot\text{mm})$).
+4. Type a short note explaining why this evidence matters and click **OK**.
+
+<Remember>When you cite a file or a value, APS ELN records the file's MD5 checksum or the value's stored number on the citation. If someone later replaces the file or edits the value, the **Evidence** tab flags that row as `changed` (or `missing` if it was deleted). You can see right away if cited evidence changed after the fact.</Remember>
+
+## Concluding, closing or accepting, and checking the content seal
+
+When your runs and cited evidence are in place, you are ready to write the conclusion and seal the record (<a href="#table-11-1">Table 11-1</a>):
+
+1. Select the hypothesis and open the **Conclusion** tab.
+2. In **What we found**, write your summary of the results (you can include Markdown and `[[item:N]]` links).
+3. Under **Outcome**, select **Supported**, **Refuted**, or **Inconclusive**. At least one cited piece of evidence is required.
+4. **In APS ELN Community:** click **Close with conclusion** to move the `Open` hypothesis to `Closed · Supported`, `Closed · Refuted`, or `Closed · Inconclusive` and seal it in one step. (If an AI agent submitted the conclusion via MCP, the status shows `Open · conclusion ready`; click **Close** to seal it. Clicking **Edit conclusion** reopens a closed hypothesis.)
+5. **In the Commercial ("For Teams") edition:** click **Submit conclusion** to move the hypothesis to `In review`. In **Your decision**, the reviewer inspects the runs, evidence, and conclusion text. The reviewer then clicks **Accept** (final seal) or **Return for more work** (requires a comment and returns the hypothesis to `Approved`).
+
+<p id="table-11-1" class="table-caption"><strong>Table 11-1:</strong> Hypothesis status names across MCP JSON, Community, and Commercial ("For Teams") editions.</p>
+
+<DataTable
+  headers={['MCP / JSON status', 'Community label', 'Commercial ("For Teams") label', 'What is allowed in this state']}
+  rows={[
+    ['`Proposed`', '**Draft**', '**Proposed** (`Needs approval`)', 'Author can edit the proposal and attach `Reference` items. Click **Start** (Community) or **Approve** / **Reject** (Commercial).'],
+    ['`Approved`', '**Open**', '**Approved** (`no runs yet` / `no evidence yet` / `evidence in`)', 'Attach `Run` and `Reference` items, promote a reference with **Make run**, and cite items, files, or confirmed values on **Evidence**.'],
+    ['`InReview`', '**Open · conclusion ready**', '**In review** (`Needs acceptance`)', 'Conclusion submitted (via MCP in Community, or **Submit conclusion** in Commercial). Click **Close** (Community) or **Accept** / **Return for more work** (Commercial). Cited items are protected from deletion.'],
+    ['`Accepted`', '**Closed · Supported** / **Refuted** / **Inconclusive**', '**Accepted**', 'Final **Sealed** record. In Community, **Edit conclusion** returns it to `Open`; in Commercial, any later revision is a **New follow-up...** child hypothesis.'],
+    ['`Rejected` / `Abandoned`', '**Discarded** / **Abandoned**', '**Rejected** / **Abandoned**', 'Proposal was discarded or rejected at the first gate, or an open hypothesis was stopped with **Abandon...** and a reason.'],
+  ]}
+/>
+
+<Warning title="Planned values from an Experiment Series cannot be cited as evidence">A grey italic `Planned` value written onto a procedure by **Project > Series...** (<a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#making-or-linking-depositions-and-confirming-planned-values`}>Chapter 12</a>) is excluded from the hypothesis headline key-value summary and cannot be cited as evidence (`planned_value`). Likewise, **Close** and **Accept** refuse to seal a hypothesis while any cited value is still `Planned`; confirm the value on its item first.</Warning>
+
+<Warning title="AI agents cannot start, approve, close, or accept a hypothesis">An AI assistant connected through the MCP server (Part 5) can propose a hypothesis (`propose_hypothesis`), attach runs (`attach_run`), cite evidence (`cite_evidence`), and submit a conclusion (`submit_conclusion`). The MCP server has no tool to start, discard, approve, reject, close, or accept a hypothesis. Those decisions must always be made by a person in the Desktop GUI (or the Team Lab web app).</Warning>
+
+<GoingDeeper title="what the Closed / Accepted content seal covers">
+
+When you click **Close with conclusion** in Community (or **Accept** in the Team edition), APS ELN computes a cryptographic checksum over the hypothesis record. This checksum covers the statement, change description, conclusion text, outcome, attached runs, and cited evidence, and displays **Sealed** on the record. If any underlying record is tampered with or if a cited file or value drifts after sealing, the view warns that the record or its evidence changed. In addition, any item cited by a hypothesis in `InReview` or `Accepted` (`Closed`) is protected from deletion, even when emptying the Recycle Bin (<a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5</a>).
+
+</GoingDeeper>
+
+## Sources
+
+- **APS ELN Community Help:** `Hypotheses.html` (**Project > Hypotheses** separate top-level window with taskbar button and saved geometry, `Draft` -> **Start** / **Discard** -> `Open` -> **Close with conclusion** / **Close** -> `Closed · Supported` / `Refuted` / `Inconclusive`, **Edit conclusion**, status mapping table between MCP JSON, Community, and Commercial, the three row buttons in the hypothesis list, **Runs** tab with **Attach selected item...** and **Make run**, **Evidence** tab refusal of `Planned` values, and **Abandon...**).
+- **APS ELN Commercial ("For Teams") Help:** `Experiments.html` (`Proposed` -> **Approve** / **Reject** -> `Approved` -> **Submit conclusion** -> `In review` -> **Accept** / **Return for more work** -> `Accepted`, derived status lines, **HYP** badges in the project and item trees, right-clicking an item for **Hypothesis > Attach to hypothesis...** and **Hypothesis > New hypothesis from this item...**, **Administration > Approval Policy...** and **Four-eyes**, **Sealed** checksums and `changed` / `missing` evidence flags, deletion protection for cited items, and MCP agent boundaries).
+
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-dashboard-and-keyboard-navigation`}>Chapter 3: The Dashboard and keyboard navigation</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#sharing-projects-in-a-team-laboratory`}>Chapter 5: Sharing projects in a team laboratory</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#deleting-containers-and-using-the-recycle-bin`}>Chapter 5: Deleting containers and using the Recycle Bin</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#submitting-protocols-from-the-instrument-in-a-team-lab`}>Chapter 8: Submitting protocols from the instrument</a>; <a href={`${import.meta.env.BASE_URL}/ch10-principles-of-experiment-planning#why-unplanned-experiments-fail-in-the-laboratory`}>Chapter 10: Principles of Experiment Planning and the Taguchi Method</a>; <a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#making-or-linking-depositions-and-confirming-planned-values`}>Chapter 12: Experiment Series and Taguchi Arrays in ELN</a>; <a href={`${import.meta.env.BASE_URL}/ch16-completeness-audit-and-signatures#signing-an-item-and-verifying-signature-integrity`}>Chapter 16: Completeness, Audit, and Signatures</a>.

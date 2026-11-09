@@ -1,8 +1,8 @@
 ---
 title: Reading Data and Auditing Drift via MCP
-part: '4'
-number: '16'
-order: 160
+part: '5'
+number: '18'
+order: 180
 inThisChapter:
   - 'Browsing projects, items, values, and experiment series (list_series, get_series_table) with MCP read tools'
   - 'Running hybrid Semantic Search (search_semantic) with numeric value filters'
@@ -17,16 +17,16 @@ import InELN from '../../components/textbook/InELN.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-The safest way to start using an AI assistant with APS ELN (<a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 15: What the ELN MCP server does</a>) is through its read-only tools. In one prompt, your assistant can list all specimens in a folder, filter semantic search hits by numeric value ranges, summarize a 10,000-row sputtering log, and check every file hash and value across a project (<a href="#fig-16-1">Figure 16-1</a>).
+The safest way to start using an AI assistant with APS ELN (<a href={`${import.meta.env.BASE_URL}/ch17-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 17: What the ELN MCP server does</a>) is through its read-only tools. In one prompt, your assistant can list all specimens in a folder, filter semantic search hits by numeric value ranges, summarize a 10,000-row sputtering log, and check every file hash and value across a project (<a href="#fig-18-1">Figure 18-1</a>).
 
 ## Navigating and querying values
 
-When you ask an AI assistant a question about your notebook, it uses nine structured read tools to navigate the hierarchy, inspect values, and read experiment series (<a href="#table-16-1">Table 16-1</a>):
+When you ask an AI assistant a question about your notebook, it uses nine structured read tools to navigate the hierarchy, inspect values, and read experiment series (<a href="#table-18-1">Table 18-1</a>):
 
 - **`list_projects` and `list_folders`:** return your readable projects (with item counts, owner, and dates) and the folder tree (`folder_id` and parent references) inside a project.
 - **`list_items` and `get_item`:** `list_items` filters a project by `folder_id`, `item_type` (`Synthesis`, `Specimen`, `Measurement`, `Testing`), or `level` (`Proc`, `Item`, `Action`). `get_item` returns one item's full details: its children, attached files (with `file_id`, `extension`, and MD5 `hash`), recorded values, note/protocol entries, and tags.
 - **`get_values` and `query_values`:** `get_values` returns all values on one item grouped into experimental conditions (`EXP_CONDITION`) and test results (`TEST_RESULT`). It also includes `ancestor_ids` (from the root procedure down to the direct parent) and each value's `source` object (`Reader`, `Derived`, `Manual`, `Planned`, or `Unknown`). `query_values` searches values across a project by `value_type` (title or symbol), `rec_type`, and item creation date (`date_from`, `date_to`).
-- **`correlate_values`:** pairs condition values and result values across items in a project (the MCP counterpart of **Tools > Analysis...** in <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13: Plotting conditions against results</a>).
+- **`correlate_values`:** pairs condition values and result values across items in a project (the MCP counterpart of **Tools > Analysis...** in <a href={`${import.meta.env.BASE_URL}/ch15-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 15: Plotting conditions against results</a>).
 - **`list_series` and `get_series_table`:** `list_series` returns the experiment series of a project (`id`, `title`, `purpose`, `status`, and `member_count`). `get_series_table` returns the full series `plan` (`factors`, `fixed`, `responses`, and `target_folder_id`), every column with its `role` (`Shown`, `Hidden`, `Varied`, or `Response`), and one row per point (`slot_id`, `state`, `origin`, `cell_marks` with `planned_value` and `deviation`, and cell `hits` with `planned: true` when unconfirmed).
 
 For example, when you ask about the friction and wear results on sample `261015A`, you just name the sample:
@@ -39,7 +39,7 @@ For example, when you ask about the friction and wear results on sample `261015A
 
 ## Searching by text and meaning (`search` and `search_semantic`)
 
-The MCP server exposes both search engines from <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#three-ways-to-find-a-record-in-aps-eln`}>Chapter 12: Three ways to find a record in APS ELN</a>:
+The MCP server exposes both search engines from <a href={`${import.meta.env.BASE_URL}/ch14-full-text-panel-and-semantic-search#three-ways-to-find-a-record-in-aps-eln`}>Chapter 14: Three ways to find a record in APS ELN</a>:
 
 - **`search`:** runs full-text search across items, protocols, files, values, and tags (with optional `project_id`). Every file match returns its `file_id`, `full_name` (preserving compound extensions such as `.depo.json` and `.process.log`), and `extension`.
 - **`search_semantic`:** runs hybrid semantic search (`query`, optional `top_k` from 1 to 50, and optional `project_id`) over record fields and attachment text (PDF, Office, Markdown, HTML, JSON, XML, CSV, RTF, and text). When the cross-encoder reranker is installed, it re-sorts the top 20 item groups (`reranked: true`).
@@ -82,7 +82,7 @@ When you ask whether a deposition run was stable, the assistant finds the `.tsv`
 
 ## Running the three project-wide health checks
 
-To check an entire project or item subtree in one pass, have your assistant run these three read-only tools (<a href="#fig-16-1">Figure 16-1</a> and <a href="#table-16-1">Table 16-1</a>):
+To check an entire project or item subtree in one pass, have your assistant run these three read-only tools (<a href="#fig-18-1">Figure 18-1</a> and <a href="#table-18-1">Table 18-1</a>):
 
 1. **`check_storage`:** give `project_id`, `item_id` (which checks the item and all of its descendants), or `file_ids`. The server checks that every attachment's physical file exists in storage and compares its MD5 hash against the hash recorded at upload time. It returns counts of `ok`, `missing`, `content_mismatch`, `no_hash`, and `error`.
 2. **`check_value_drift`:** give `project_id` or `item_id`. The server re-runs the current reader plugin on the source file of every `Reader` value (replaying any saved `.fibps` pixel regions or `.zrw` cycle interval from `analysis_snapshot`). It also recalculates every `Derived` value recursively from its inputs (<a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Table 9-1</a>). In Study A (`261015A`), it returns `{"checked": 24, "unchanged": 24, "drifted": []}`; in Study B (`261014B`), it returns `{"checked": 22, "unchanged": 22, "drifted": []}`.
@@ -95,9 +95,9 @@ To check an entire project or item subtree in one pass, have your assistant run 
 > 2. **Value drift (`check_value_drift`):** all **24 values are `unchanged`** ($0$ drifted). Re-running `aps.deposition` v1 (12 values), `aps.fibps` v3 (6 values, including the saved pixel rectangles on `1.fibps` and `2.fibps`), `aps.mit` v2 (2 values), `aps.zrw` v2 (3 values), and the `Derived` formula `wear_rate_reciprocating` v1 reproduced every stored number.
 > 3. **Ranges and tolerances (`report_value_issues`):** **0 issues** found (`tolerance_factor = 1000`).
 
-<Figure id="fig-16-1" number="16-1" src={`${import.meta.env.BASE_URL}/figures/fig-16-1-mcp-audit-pipeline.svg`} alt="Three side-by-side audit cards: 1. check_storage (verifying file bytes and MD5 hashes), 2. check_value_drift (re-running readers and Derived formulas), and 3. report_value_issues (checking plausible ranges and 1000x tolerance factor)" caption="The three read-only MCP audit tools. Running check_storage (1), check_value_drift (2), and report_value_issues (3) verifies every file hash, reader extraction, derived formula, and unit range in a project." />
+<Figure id="fig-18-1" number="18-1" src={`${import.meta.env.BASE_URL}/figures/fig-18-1-mcp-audit-pipeline.svg`} alt="Three side-by-side audit cards: 1. check_storage (verifying file bytes and MD5 hashes), 2. check_value_drift (re-running readers and Derived formulas), and 3. report_value_issues (checking plausible ranges and 1000x tolerance factor)" caption="The three read-only MCP audit tools. Running check_storage (1), check_value_drift (2), and report_value_issues (3) verifies every file hash, reader extraction, derived formula, and unit range in a project." />
 
-<p id="table-16-1" class="table-caption"><strong>Table 16-1:</strong> Read-only MCP inspection and audit tools.</p>
+<p id="table-18-1" class="table-caption"><strong>Table 18-1:</strong> Read-only MCP inspection and audit tools.</p>
 
 <DataTable
   headers={['MCP tool', 'Key arguments', 'What it returns']}
@@ -120,4 +120,4 @@ To check an entire project or item subtree in one pass, have your assistant run 
 - **APS ELN Commercial ("For Teams") Help:** `AIIntegration.html` (navigation, value, file, metadata, and check tools).
 - **Zenodo demonstration deposit (`doi:10.5281/zenodo.23466959`):** `tribo_study/reports/record_report.md` and `xrr_study/reports/record_report.md` (verbatim outputs of `check_value_drift`, `check_storage`, and `report_value_issues`, and why Part 3 of Study B scopes `check_value_drift` and `check_storage` to `item_id = 12`).
 
-Cross-references: <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Checking value sources and understanding drift codes</a>; <a href={`${import.meta.env.BASE_URL}/ch12-full-text-panel-and-semantic-search#searching-by-meaning-semantic-search-and-reranking`}>Chapter 12: Searching by meaning and reranking</a>; <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13: Plotting conditions against results</a>; <a href={`${import.meta.env.BASE_URL}/ch15-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 15: Connecting an AI Agent to Your Notebook</a>; <a href={`${import.meta.env.BASE_URL}/ch17-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 17: Study B: XRR Fitting with Provenance</a>.
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch9-values-units-formulas-and-provenance#checking-value-sources-and-understanding-drift-codes`}>Chapter 9: Checking value sources and understanding drift codes</a>; <a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#reading-the-series-table-and-setting-column-roles`}>Chapter 12: Reading the Series Table and setting column roles</a>; <a href={`${import.meta.env.BASE_URL}/ch14-full-text-panel-and-semantic-search#searching-by-meaning-semantic-search-and-reranking`}>Chapter 14: Searching by meaning and reranking</a>; <a href={`${import.meta.env.BASE_URL}/ch15-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 15: Plotting conditions against results</a>; <a href={`${import.meta.env.BASE_URL}/ch17-connecting-an-ai-agent-to-your-notebook#what-the-eln-mcp-server-does`}>Chapter 17: Connecting an AI Agent to Your Notebook</a>; <a href={`${import.meta.env.BASE_URL}/ch19-study-b-xrr-fitting-with-provenance#part-1-the-record-agent-builds-study-b-261014b`}>Chapter 19: Study B: XRR Fitting with Provenance</a>.

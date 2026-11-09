@@ -23,8 +23,8 @@ This appendix lists the toolbar controls, item-type icons, tree row buttons, sta
   rows={[
     ['**Projects**', '**New Project** / **Add Folder**', 'Creates a new project (**Project > New Project**) or a folder inside the selected project (**New Folder**).'],
     ['**Projects**', '**New Topic Wiki**', 'Seeds the five-section `Wiki/` folder hierarchy inside the selected project (**Project > New Wiki**).'],
-    ['**Projects**', '**Hypotheses**', 'Opens the Hypothesis Tree view for the selected project (**Project > Hypotheses**).'],
-    ['**Projects**', '**Series**', 'Opens the Experiment Series table and plot view for the selected project (**Project > Series...**, Chapter 13).'],
+    ['**Projects**', '**Hypotheses**', 'Opens the standalone Hypothesis Tree window for the selected project (**Project > Hypotheses**, Chapter 11).'],
+    ['**Projects**', '**Series**', 'Opens the standalone Experiment Series window for the selected project (**Project > Series...**, Chapter 12).'],
     ['**Projects**', '**Move Up**', 'Moves the selected folder one level higher toward the project root (**Move Folder Up**).'],
     ['**Projects**', '**Show Archived**', 'Toggles display of archived projects in the tree (`Ctrl+Shift+A` in the Team client).'],
     ['**Items**', '**New**', 'Opens creation choices (**Procedure**, **Specimen**, **Action**, or **Wiki**) for the current selection.'],
@@ -60,7 +60,7 @@ Every row in the **Projects** and **Items** panels carries a color-coded icon th
     ['**Measurement**', '`Action`', 'Quantitative physical measurement (such as `XRR-1 261014B`).'],
     ['**Testing**', '`Action`', 'Mechanical, tribological, or functional test (such as `Indentation 261015A` or `Friction test 261015A`).'],
     ['**Computing**', '`Action`', 'Data fitting, simulation, or numerical modeling step (such as `XRR fit 261014B`).'],
-    ['**Wiki**', '`Item`', 'Markdown knowledge-base page inside one of the five project Wiki sections (Chapter 11).'],
+    ['**Wiki**', '`Item`', 'Markdown knowledge-base page inside one of the five project Wiki sections (Chapter 13).'],
     ['**Protocol**', 'Attached entry', 'Structured protocol form attached to an item (Chapter 8).'],
     ['**Note / Other**', 'Attached entry or `Item`', 'Rich-text note entry attached to an item, or an uncategorized general item.'],
   ]}
@@ -78,9 +78,9 @@ Selecting a row with children in the **Projects** panel, the **Items** panel, or
     ['**Collapse all below**', 'Right edge of selected parent row', 'Collapses every nested level under the selected row.'],
     ['**Expand all below**', 'Right edge of selected parent row', 'Expands every nested level under the selected row.'],
     ['**Focus**', 'Right edge of selected parent row', 'Tooltip: **Focus: collapse everything else**. Collapses all other branches and scrolls the selected row into view.'],
-    ['**SIGNED** badge', 'Beside item title in Items panel', 'Dark-red rounded badge indicating that the item carries a cryptographic electronic signature and is permanently locked (Chapter 14).'],
-    ['**HYP** badge', 'Beside project or item title', 'Indicates hypotheses in a project (solid when a review decision is pending in Team mode) or an item attached as a hypothesis `Run` (Chapter 10).'],
-    ['**Tag** badge(s)', 'Beside item title in Items panel', 'Colored label(s) assigned via right-click > **Tags...** (Chapter 11).'],
+    ['**SIGNED** badge', 'Beside item title in Items panel', 'Dark-red rounded badge indicating that the item carries a cryptographic electronic signature and is permanently locked (Chapter 16).'],
+    ['**HYP** badge', 'Beside project or item title', 'Indicates hypotheses in a project (solid when a review decision is pending in Team mode) or an item attached as a hypothesis `Run` (Chapter 11).'],
+    ['**Tag** badge(s)', 'Beside item title in Items panel', 'Colored label(s) assigned via right-click > **Tags...** (Chapter 13).'],
   ]}
 />
 
@@ -94,12 +94,12 @@ Selecting a row with children in the **Projects** panel, the **Items** panel, or
   headers={['Menu command / icon', 'Menu location', 'Purpose']}
   rows={[
     ['**Dashboard**', '**Navigate > Dashboard** (Community) or **Edit > Dashboard** (Team)', 'Opens the overview of recent items, project counts, and pending protocol/hypothesis reviews.'],
-    ['**Search...**', '**Navigate > Search...** (Community) or **Edit > Search...** (Team; `Ctrl+F`)', 'Opens the full-text and semantic (**Search by meaning**) search dialog (Chapter 12).'],
-    ['**Analysis...**', '**Tools > Analysis...**', 'Plots procedure-level `Condition` values against child action `Result` values (Chapter 13).'],
+    ['**Search...**', '**Navigate > Search...** (Community) or **Edit > Search...** (Team; `Ctrl+F`)', 'Opens the full-text and semantic (**Search by meaning**) search dialog (Chapter 14).'],
+    ['**Analysis...**', '**Tools > Analysis...**', 'Plots procedure-level `Condition` values against child action `Result` values (Chapter 15).'],
     ['**Unit Converter...**', '**Tools > Unit Converter...**', 'Converts values between compatible physical units (Chapter 9).'],
     ['**Protocol Review...**', '**Tools > Protocol Review...** (`Ctrl+Shift+R`)', 'Opens the queue of protocols in `In Review` state awaiting approval or rejection (Chapter 8).'],
-    ['**Data Completeness...**', '**Tools > Data Completeness...**', 'Scans a project or folder against active completeness rules (Chapter 14).'],
-    ['**Audit Log...**', '**Tools > Audit Log...**', 'Displays timestamped `Create`, `Update`, and `Delete` events across the notebook (Chapter 14).'],
+    ['**Data Completeness...**', '**Tools > Data Completeness...**', 'Scans a project or folder against active completeness rules (Chapter 16).'],
+    ['**Audit Log...**', '**Tools > Audit Log...**', 'Displays timestamped `Create`, `Update`, and `Delete` events across the notebook (Chapter 16).'],
     ['**Recycle Bin...**', '**Tools > Recycle Bin...**', 'Restores or permanently deletes binned item subtrees (Chapter 5).'],
     ['**Value Types / File Types / Equipment**', '**Reference Data** menu', 'Manages the scientific dictionaries, plausible ranges, and reader mappings (Chapter 9).'],
   ]}
@@ -110,4 +110,4 @@ Selecting a row with children in the **Projects** panel, the **Items** panel, or
 - **APS ELN Commercial ("For Teams") Help:** `IconReference.html` (Item Toolbar, Projects Panel Toolbar, Item Type Icons, and Menu Icons); `Signatures.html` (**SIGNED** badge); `Experiments.html` (**HYP** badge).
 - **APS ELN Community Help:** `Items.html` and `Projects.html` (the three inline row buttons **Collapse all below**, **Expand all below**, and **Focus**).
 
-Cross-references: <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#how-groups-projects-and-folders-fit-together`}>Chapter 5</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8</a>; <a href={`${import.meta.env.BASE_URL}/ch10-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 10</a>; <a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11</a>; <a href={`${import.meta.env.BASE_URL}/ch14-completeness-audit-and-signatures#three-layers-of-record-integrity`}>Chapter 14</a>.
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-three-panel-workspace`}>Chapter 3</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#how-groups-projects-and-folders-fit-together`}>Chapter 5</a>; <a href={`${import.meta.env.BASE_URL}/ch6-the-item-tree-and-experiment-templates#designing-a-clean-item-hierarchy`}>Chapter 6</a>; <a href={`${import.meta.env.BASE_URL}/ch8-filling-out-protocols-and-checklists#adding-and-completing-a-protocol-on-an-item`}>Chapter 8</a>; <a href={`${import.meta.env.BASE_URL}/ch11-the-hypothesis-tree-and-evidence#why-connect-experiments-to-a-hypothesis-tree`}>Chapter 11</a>; <a href={`${import.meta.env.BASE_URL}/ch12-experiment-series-and-taguchi-arrays#planning-a-series-in-the-series-window`}>Chapter 12</a>; <a href={`${import.meta.env.BASE_URL}/ch13-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 13</a>; <a href={`${import.meta.env.BASE_URL}/ch16-completeness-audit-and-signatures#three-layers-of-record-integrity`}>Chapter 16</a>.

@@ -1,8 +1,8 @@
 ---
 title: Full-Text, Panel, and Semantic Search
-part: '3'
-number: '12'
-order: 120
+part: '4'
+number: '14'
+order: 140
 inThisChapter:
   - Filtering the Projects and Items panels in real time without losing context
   - Finding exact words and phrases across a notebook with Navigate > Search
@@ -18,17 +18,17 @@ import InTeamLab from '../../components/textbook/InTeamLab.astro';
 import Figure from '../../components/textbook/Figure.astro';
 import DataTable from '../../components/textbook/DataTable.astro';
 
-Once your notebook has dozens of depositions, hundreds of files, and multi-page Wiki notes (<a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 11: The five-section Project Wiki</a>), clicking through folders one by one takes too long. Sometimes you know the exact sample code (`261015A`). Sometimes you remember a phrase from a value note (`masked edge`). Other times you want every record about *delamination after reciprocating wear*, even if the note called it *spallation* or *coating peeling*. APS ELN gives you three search tools for those three jobs (<a href="#fig-12-1">Figure 12-1</a>).
+Once your notebook has dozens of depositions, hundreds of files, and multi-page Wiki notes (<a href={`${import.meta.env.BASE_URL}/ch13-project-wiki-notes-tags-and-links#the-five-section-project-wiki`}>Chapter 13: The five-section Project Wiki</a>), clicking through folders one by one takes too long. Sometimes you know the exact sample code (`261015A`). Sometimes you remember a phrase from a value note (`masked edge`). Other times you want every record about *delamination after reciprocating wear*, even if the note called it *spallation* or *coating peeling*. APS ELN gives you three search tools for those three jobs (<a href="#fig-14-1">Figure 14-1</a>).
 
 ## Three ways to find a record in APS ELN
 
-Each search tool in APS ELN covers a different scope (<a href="#fig-12-1">Figure 12-1</a> and <a href="#table-12-1">Table 12-1</a>):
+Each search tool in APS ELN covers a different scope (<a href="#fig-14-1">Figure 14-1</a> and <a href="#table-14-1">Table 14-1</a>):
 
 1. **Panel filters:** the filter boxes at the top of the **Projects** and **Items** panels narrow the visible tree in real time as you type.
 2. **Notebook text search (`Navigate > Search...` in Community, or `Edit > Search...` in Team; `Ctrl+F`):** searches record titles, descriptions, properties, entry titles, attachment titles, value descriptions, and tag names across every readable project.
 3. **Semantic search (`Search by meaning` inside `Search...`):** a hybrid search engine (`ELN.Search`) that runs offline on your PC in Community or on your lab's search server in the Team edition. It indexes both structured records and the full text inside attached PDF, Office, Markdown, HTML, JSON, XML, CSV, RTF, and text files, matching by conceptual meaning as well as exact terms.
 
-<Figure id="fig-12-1" number="12-1" src={`${import.meta.env.BASE_URL}/figures/fig-12-1-search-architecture.svg`} alt="Three side-by-side cards comparing 1. Panel Filters (real-time tree filtering), 2. Text Search (Navigate > Search, Ctrl+F, exact phrase then all-words fallback), and 3. Search by Meaning (local .search.sqlite index reading PDF, Office, Markdown, and protocols with top-20 reranking)" caption="The three search tools in APS ELN. Use panel filters (1) to narrow the current tree, Text Search (2) for fast exact-word matches on record metadata, and Search by meaning (3) to search inside PDFs, Office files, Markdown notes, and protocols by concept." />
+<Figure id="fig-14-1" number="14-1" src={`${import.meta.env.BASE_URL}/figures/fig-14-1-search-architecture.svg`} alt="Three side-by-side cards comparing 1. Panel Filters (real-time tree filtering), 2. Text Search (Navigate > Search, Ctrl+F, exact phrase then all-words fallback), and 3. Search by Meaning (local .search.sqlite index reading PDF, Office, Markdown, and protocols with top-20 reranking)" caption="The three search tools in APS ELN. Use panel filters (1) to narrow the current tree, Text Search (2) for fast exact-word matches on record metadata, and Search by meaning (3) to search inside PDFs, Office files, Markdown notes, and protocols by concept." />
 
 ## Filtering panels and jumping to a known ID
 
@@ -80,12 +80,12 @@ Once semantic search is available, open **Search...** (`Ctrl+F`) and tick **Sear
 
 - **What it reads:** item titles, descriptions, and properties; tags; note and protocol entries; value descriptions; and attachment filenames. It also indexes the full text inside `.pdf` (up to 2,000 pages with PDFium), `.docx`, `.pptx`, `.xlsx`, `.md`, `.html`, `.htm`, `.json`, `.xml`, `.csv`, `.rtf`, and `.txt` files. Each file is indexed up to 64 MB and the first 200,000 characters.
 - **Pre-ranking filters:** when **Search by meaning** is ticked, three filters below the search box become active: **Project**, **Type** (item type), and **Created** (first and last UTC creation dates). Because these filters run *before* ranking, narrowing to one project or item type surfaces deep matches that might otherwise rank below top-20 hits from other projects.
-- **Rerank results:** when the optional reranking model is installed, the **Rerank results** check box is ticked by default (<a href="#fig-12-2">Figure 12-2</a>). Hybrid search first retrieves the top 20 candidate items. The cross-encoder model then reads your query alongside each item's best passage and full tree path to re-sort those 20 items in about 0.5 seconds. When the reranker order is shown, the result count above the list ends with **reranked**.
+- **Rerank results:** when the optional reranking model is installed, the **Rerank results** check box is ticked by default (<a href="#fig-14-2">Figure 14-2</a>). Hybrid search first retrieves the top 20 candidate items. The cross-encoder model then reads your query alongside each item's best passage and full tree path to re-sort those 20 items in about 0.5 seconds. When the reranker order is shown, the result count above the list ends with **reranked**.
 
-<Figure id="fig-12-2" number="12-2" src={`${import.meta.env.BASE_URL}/figures/fig-12-2-search-dialog.png`} alt="Screenshot of the Navigate > Search dialog with Search by meaning and Rerank results ticked, showing 6 reranked results for the query BN/DLC coating wear and Indexed 50 passages in the bottom status bar" caption="The Navigate > Search dialog (Ctrl+F) with Search by meaning and Rerank results active. Pre-ranking Project, Type, and Created filters sit above the results table, and the status bar at the bottom right reports the local passage index count." />
+<Figure id="fig-14-2" number="14-2" src={`${import.meta.env.BASE_URL}/figures/fig-14-2-search-dialog.png`} alt="Screenshot of the Navigate > Search dialog with Search by meaning and Rerank results ticked, showing 6 reranked results for the query BN/DLC coating wear and Indexed 50 passages in the bottom status bar" caption="The Navigate > Search dialog (Ctrl+F) with Search by meaning and Rerank results active. Pre-ranking Project, Type, and Created filters sit above the results table, and the status bar at the bottom right reports the local passage index count." />
 <Tip>If you type a very short code or two-letter symbol (such as `Co` or `BN`) while **Search by meaning** is active, untick **Rerank results** or switch back to standard text search. Cross-encoder rerankers are trained on natural-language phrases and can rank a two-letter symbol lower than exact keyword search does.</Tip>
 
-<p id="table-12-1" class="table-caption"><strong>Table 12-1:</strong> Choosing the right search or selection tool.</p>
+<p id="table-14-1" class="table-caption"><strong>Table 14-1:</strong> Choosing the right search or selection tool.</p>
 
 <DataTable
   headers={['Goal', 'Tool to use', 'Scope and behavior']}
@@ -94,7 +94,7 @@ Once semantic search is available, open **Search...** (`Ctrl+F`) and tick **Sear
     ['Jump to item `12` or `eln://specimen/261015A`', '**Navigate > Go to Item...** (or **View > Go to item...** in Team; `Ctrl+G`)', 'Direct lookup by integer item ID or specimen code in the active notebook.'],
     ['Find an exact sample code, tag name, or phrase across all projects', '**Navigate > Search...** (or **Edit > Search...** in Team; `Ctrl+F`, standard mode)', 'Phrase match first, then all-words fallback across titles, descriptions, tags, and value notes.'],
     ['Find a concept inside PDF papers, `.docx` reports, `.md` Wiki pages, or protocol forms', '**Search...** (`Ctrl+F`) with **Search by meaning** ticked', 'Hybrid vector + keyword search over records and document text, with optional top-20 **Rerank results** and **Project** / **Type** / **Created** filters.'],
-    ['Compare numeric conditions and results across procedures', '**Tools > Analysis...** (Chapter 13)', 'Pairs procedure `Condition` values (*X*) against child action `Result` values (*Y*).'],
+    ['Compare numeric conditions and results across procedures', '**Tools > Analysis...** (Chapter 15)', 'Pairs procedure `Condition` values (*X*) against child action `Result` values (*Y*).'],
   ]}
 />
 
@@ -110,4 +110,4 @@ When you open a notebook or open the **Search** dialog, `ELN.Search` checks for 
 - **APS ELN Commercial ("For Teams") Desktop and Server source:** `ELN.Desktop/Dialogs/Search/dlg_CommercialSearch.dfm` (**Owner** column in search results), `ELN.Desktop/Dialogs/System/dlg_Settings.dfm` (**Tools > Settings... > Connection > Search server address**), `ELN.Desktop/Units/unit_WebApiSession.pas` (`TSearchServerLink` sign-in), and `ELN.WebAPI/unit_SearchModule.pas` (central `notebook.search.sqlite` index).
 - **APS ELN Community README:** `APS-ELN-Community/README.md` (`ELN.Search` architecture: ONNX Runtime, XLM-RoBERTa Unigram tokenizer, E5 embedder, exact vector + passage store, hybrid searcher, and PDFium extractor).
 
-Cross-references: <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-dashboard-and-keyboard-navigation`}>Chapter 3: The Dashboard and keyboard navigation</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#archiving-finished-projects`}>Chapter 5: Archiving finished projects</a>; <a href={`${import.meta.env.BASE_URL}/ch11-project-wiki-notes-tags-and-links#navigating-between-wiki-pages-and-experimental-records`}>Chapter 11: Navigating between Wiki pages and experimental records</a>; <a href={`${import.meta.env.BASE_URL}/ch13-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 13: Charts, Correlations, and PDF Reports</a>.
+Cross-references: <a href={`${import.meta.env.BASE_URL}/ch3-a-tour-of-the-main-window#the-dashboard-and-keyboard-navigation`}>Chapter 3: The Dashboard and keyboard navigation</a>; <a href={`${import.meta.env.BASE_URL}/ch5-projects-groups-and-folders#archiving-finished-projects`}>Chapter 5: Archiving finished projects</a>; <a href={`${import.meta.env.BASE_URL}/ch13-project-wiki-notes-tags-and-links#navigating-between-wiki-pages-and-experimental-records`}>Chapter 13: Navigating between Wiki pages and experimental records</a>; <a href={`${import.meta.env.BASE_URL}/ch15-charts-correlations-and-pdf-reports#plotting-conditions-against-results`}>Chapter 15: Cross-Project Charts, PDF Reports, and Packages</a>.
